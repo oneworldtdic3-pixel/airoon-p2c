@@ -67,7 +67,7 @@ export default function PhotoDeck() {
             <img src={c.url} alt="" aria-hidden className="absolute inset-0 h-full w-full scale-125 object-cover blur-xl" />
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 to-ink/70" />
             <p className="absolute left-0 right-0 top-2 overflow-hidden whitespace-nowrap px-3 text-[64px] font-extrabold leading-none tracking-[-0.04em] text-white/80">{bigWord}</p>
-            <img src={c.url} alt={c.kind === 'photo' ? `${c.spot} 사진` : c.kind === 'ad' ? c.title : '2026 산사캠프 포스터'} draggable={false} className={`absolute left-[8%] right-[8%] top-[28%] w-[84%] rounded-2xl object-cover ring-1 ring-white/30 ${c.kind === 'event' ? 'h-[42%]' : 'h-[52%]'}`} />
+            <img src={c.url} alt={c.kind === 'photo' ? `${c.spot} 사진` : c.kind === 'ad' ? c.title : '2026 산사캠프 포스터'} draggable={false} className={`absolute left-[8%] right-[8%] top-[28%] w-[84%] rounded-2xl object-cover ring-1 ring-white/30 ${c.kind === 'event' ? 'h-[38%]' : 'h-[52%]'}`} />
             {c.kind === 'ad' && <span className="absolute left-4 top-4 rounded-md bg-white/90 px-1.5 py-0.5 text-[10px] font-extrabold tracking-wider text-ink">AD</span>}
             <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 text-white">
               {c.kind === 'event' ? (
