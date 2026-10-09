@@ -22,7 +22,7 @@ export default function Hero() {
 
       <div className="relative mt-7 px-5">
         <p className="eyebrow">2026.11.6 – 11.8 · 하동 쌍계사</p>
-        <h1 className="mt-1.5 text-[26px] font-extrabold leading-[1.25]">이번 가을 산사는<br />“<span className="text-deep">쌍계사</span>”에서 쉬어갈까요?</h1>
+        <h1 className="mt-1.5 text-[26px] font-extrabold leading-[1.25]">이번 가을 산사는<br /><span className="text-deep">쌍계사</span>에서 쉬어갈까요?</h1>
       </div>
 
       <div className="relative mt-6 flex items-center justify-between px-5">
