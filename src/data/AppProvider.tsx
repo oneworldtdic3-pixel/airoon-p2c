@@ -15,6 +15,8 @@ interface Ctx {
   sendOtp: (phone: string) => Promise<Result>
   verifyOtp: (phone: string, otp: string, profile?: { nickname?: string; consent?: boolean }) => Promise<Result>
   logout: () => Promise<void>
+  /** 카카오·구글 OAuth. 리다이렉트 전에 동의 상태를 보관했다가 로그인 후 프로필에 반영 */
+  signInWithProvider: (provider: 'kakao' | 'google', opts?: { consent?: boolean; returnTo?: string }) => Promise<Result>
 
   programs: Program[]
   sessions: ProgramSession[]
@@ -61,7 +63,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => { setSession(data.session); setReady(true) })
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => setSession(s))
+    const { data: sub } = supabase.auth.onAuthStateChange((event, s) => {
+      setSession(s)
+      // 소셜 로그인 리다이렉트 복귀: 보관해 둔 동의 값을 프로필에 적용
+      if (event === 'SIGNED_IN' && s) {
+        try {
+          const raw = sessionStorage.getItem('sansa:pending-profile')
+          if (raw) {
+            sessionStorage.removeItem('sansa:pending-profile')
+            const pending = JSON.parse(raw) as { consent?: boolean }
+            if (pending.consent !== undefined) void supabase.from('profiles').update({ kakao_alimtalk_consent: pending.consent }).eq('id', s.user.id)
+          }
+        } catch { /* ignore */ }
+      }
+    })
     return () => sub.subscription.unsubscribe()
   }, [])
 
@@ -147,6 +162,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
     await qc.invalidateQueries({ queryKey: ['profile'] })
     return { ok: true }
   }
+  const signInWithProvider: Ctx['signInWithProvider'] = async (provider, opts) => {
+    try { if (opts?.consent !== undefined) sessionStorage.setItem('sansa:pending-profile', JSON.stringify({ consent: opts.consent })) } catch { /* ignore */ }
+    const { error } = await supabase.auth.signInWithOAuth({ provider, options: { redirectTo: window.location.origin + (opts?.returnTo ?? '/') } })
+    return error ? fail(error) : { ok: true }
+  }
   const logout = async () => { await supabase.auth.signOut(); qc.removeQueries({ queryKey: ['mine'] }); qc.removeQueries({ queryKey: ['profile'] }) }
 
   // ---- 예약 -------------------------------------------------------------
@@ -204,7 +224,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }
 
   const value = useMemo<Ctx>(() => ({
-    ready, user: uid ? profileQ.data ?? null : null, sendOtp, verifyOtp, logout,
+    ready, user: uid ? profileQ.data ?? null : null, sendOtp, verifyOtp, logout, signInWithProvider,
     programs: programsQ.data ?? [], sessions: sessionsQ.data ?? [], bookings: mineQ.data?.bookings ?? [], bookSession, cancelBooking,
     slots: slotsQ.data ?? [], showerBookings: mineQ.data?.showerBookings ?? [], bookShower, cancelShower,
     parking: mineQ.data?.parking ?? null, saveParking,

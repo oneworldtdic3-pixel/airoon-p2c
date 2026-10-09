@@ -22,7 +22,7 @@ function Check({ on, onChange, children, required }: { on: boolean; onChange: (v
 }
 
 export default function Login() {
-  const { sendOtp, verifyOtp } = useApp()
+  const { sendOtp, verifyOtp, signInWithProvider } = useApp()
   const nav = useNavigate()
   const [sp] = useSearchParams()
   const from = (useLocation().state as { from?: string } | null)?.from ?? '/'
@@ -52,6 +52,13 @@ export default function Login() {
     else setSent(true)
   }
   const switchMode = (m: Mode) => { setMode(m); setSent(false); setOtp(''); setErr('') }
+  const social = async (provider: 'kakao' | 'google' | 'naver') => {
+    setErr('')
+    if (provider === 'naver') return setErr('네이버 로그인은 준비 중입니다. 카카오·구글 또는 휴대폰 번호로 가입해 주세요.')
+    if (mode === 'signup' && !agree) return setErr('개인정보 수집·이용에 동의해 주세요.')
+    const r = await signInWithProvider(provider, { consent: mode === 'signup' ? consent : undefined, returnTo: from })
+    if (!r.ok) setErr(r.error)
+  }
 
   return (
     <div className="flex min-h-dvh flex-col px-6 pt-[calc(env(safe-area-inset-top)+12px)]">
@@ -109,6 +116,24 @@ export default function Login() {
           )}
         </div>
       </form>
+      {!sent && (
+        <div className="pb-6">
+          <div className="flex items-center gap-3 py-2">
+            <span className="h-px flex-1 bg-line" /><span className="eyebrow">간편 {mode === 'signup' ? '회원가입' : '로그인'}</span><span className="h-px flex-1 bg-line" />
+          </div>
+          <div className="mt-3 grid grid-cols-3 gap-2.5">
+            <button type="button" onClick={() => void social('naver')} className="flex items-center justify-center gap-2 rounded-2xl bg-[#03C75A] py-3.5 text-[14px] font-extrabold text-white transition active:scale-[0.97]">
+              <span className="text-[15px] font-black leading-none">N</span>네이버
+            </button>
+            <button type="button" onClick={() => void social('kakao')} className="flex items-center justify-center gap-2 rounded-2xl bg-[#FEE500] py-3.5 text-[14px] font-extrabold text-[#191919] transition active:scale-[0.97]">
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="#191919" d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.9 5.3 4.7 6.7L5.8 21l4-2.6c.7.1 1.4.2 2.2.2 5.5 0 10-3.6 10-8S17.5 3 12 3Z"/></svg>카카오
+            </button>
+            <button type="button" onClick={() => void social('google')} className="flex items-center justify-center gap-2 rounded-2xl border border-line bg-white py-3.5 text-[14px] font-extrabold text-ink transition active:scale-[0.97]">
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.9h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.8 3-4.4 3-7.4Z"/><path fill="#34A853" d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22Z"/><path fill="#FBBC05" d="M6.4 14a6 6 0 0 1 0-3.9V7.5H3.1a10 10 0 0 0 0 9l3.3-2.6Z"/><path fill="#EA4335" d="M12 6c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3.1 7.5L6.4 10C7.2 7.8 9.4 6 12 6Z"/></svg>구글
+            </button>
+          </div>
+        </div>
+      )}
       {!sent && (
         <p className="pb-8 text-center text-[13px] text-sub">
           {mode === 'login' ? '처음이신가요? ' : '이미 가입하셨나요? '}
