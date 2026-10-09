@@ -29,7 +29,7 @@ export default function Login() {
   return (
     <div className="flex min-h-dvh flex-col px-6 pt-[calc(env(safe-area-inset-top)+12px)]">
       <button onClick={() => nav(-1)} aria-label="뒤로" className="-ml-2 self-start p-2"><Icon name="back" /></button>
-      <img src="/wordmark.png" alt="산사캠프" className="mt-10 h-12 w-auto self-start" draggable={false} />
+      <img src="/wordmark.png" alt="산사캠프" className="mt-10 h-16 w-auto self-start" draggable={false} />
       <h1 className="mt-6 text-[30px] font-extrabold leading-[1.2]">휴대폰 번호로<br />시작합니다</h1>
       <p className="mt-2 text-[14px] text-sub">예약과 사진 올리기에만 필요합니다. 둘러보기는 그냥 하셔도 됩니다.</p>
 

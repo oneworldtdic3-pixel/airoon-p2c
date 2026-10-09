@@ -27,7 +27,7 @@ export default function Hero() {
 
       <div className="relative mt-8 px-5">
         <p className="text-[15px] text-sub">이번 가을, 산사에서 쉬어갈까요?</p>
-        <h1 className="mt-2"><img src="/wordmark.png" alt="산사캠프" className="h-[64px] w-auto" draggable={false} /></h1>
+        <h1 className="mt-2"><img src="/wordmark.png" alt="산사캠프" className="h-[84px] w-auto" draggable={false} /></h1>
       </div>
 
       <div className="relative mt-6 flex items-center justify-between px-5">
