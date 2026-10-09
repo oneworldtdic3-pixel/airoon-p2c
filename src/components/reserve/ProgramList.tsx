@@ -111,7 +111,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
                     <span className="tnum w-16 text-[20px] font-extrabold">{fmtTime(s.starts_at)}</span>
                     <span className="flex-1 text-[13px]">
                       <span className={`tnum font-bold ${left ? 'text-deep' : 'text-gray-400'}`}>{left ? `${left}석 남음` : '마감'}</span>
-                      {left > 0 && left <= 5 && <span className="ml-1.5 text-[11px] font-bold text-red-500">곧 마감</span>}
+                      {left > 0 && left <= 5 && <span className="ml-1.5 text-[11px] font-bold text-ember">곧 마감</span>}
                       <span className="tnum block text-[11px] text-gray-400">정원 {s.capacity}</span>
                     </span>
                     {mineB ? (

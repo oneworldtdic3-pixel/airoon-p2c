@@ -19,7 +19,7 @@ export default function ParkingForm({ toast }: { toast: (m: string) => void }) {
 
   return (
     <div className="space-y-7">
-      <p className="border-l-2 border-sun pl-4 text-[15px] font-bold leading-snug">
+      <p className="border-l-2 border-ember pl-4 text-[15px] font-bold leading-snug">
         쌍계사 경내는 차량이 들어갈 수 없습니다.<span className="mt-1 block text-[13px] font-medium text-sub">아래 두 곳 중 한 곳에 세워 주세요.</span>
       </p>
 

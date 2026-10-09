@@ -19,7 +19,7 @@ export default function Hero() {
           )}
           <span>
             <span className="block text-[15px] font-extrabold leading-tight">{user ? `${user.nickname}님` : '산사캠프'}</span>
-            <span className="block text-[12px] text-sub">{user ? '@sansacamp' : '하동 쌍계사 · 11.6–11.8'}</span>
+            <span className="block text-[12px] text-sub">{user ? '@sansacamp' : 'with 쌍계사 · 11.6–11.8'}</span>
           </span>
         </Link>
         <span className="tnum rounded-full bg-sun px-3.5 py-1.5 text-[13px] font-extrabold">{ddayLabel()}</span>
@@ -31,7 +31,7 @@ export default function Hero() {
       </div>
 
       <div className="relative mt-6 flex items-center justify-between px-5">
-        <p className="text-[13px] font-semibold text-ink">BEST PHOTO & 소식</p>
+        <p className="text-[13px] font-semibold text-ink">지금 산사캠프</p>
         <Link to="/photo" className="text-[12px] font-semibold text-sub">전체</Link>
       </div>
       <PhotoDeck />

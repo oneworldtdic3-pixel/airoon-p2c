@@ -11,6 +11,8 @@ export default {
         ink: '#1F2937',
         sub: '#6B7280',
         line: '#E6EFE9',
+        sky: '#5BC8F5',
+        ember: '#F0552A',
       },
       fontFamily: {
         sans: ['Pretendard Variable', 'Pretendard', '-apple-system', 'system-ui', 'sans-serif'],
