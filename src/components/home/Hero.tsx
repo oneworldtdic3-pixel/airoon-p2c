@@ -12,9 +12,11 @@ export default function Hero() {
 
       <div className="relative flex items-center justify-between px-5">
         <Link to={user ? '/more' : '/login'} className="flex items-center gap-3">
-          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-deep text-[16px] font-extrabold text-white">
-            {user ? user.nickname.slice(0, 1) : '산'}
-          </span>
+          {user ? (
+            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-deep text-[16px] font-extrabold text-white">{user.nickname.slice(0, 1)}</span>
+          ) : (
+            <img src="/icon-192.png" alt="" className="h-11 w-11 rounded-full" />
+          )}
           <span>
             <span className="block text-[15px] font-extrabold leading-tight">{user ? `${user.nickname}님` : '산사캠프'}</span>
             <span className="block text-[12px] text-sub">{user ? '@sansacamp' : '하동 쌍계사 · 11.6–11.8'}</span>
@@ -25,7 +27,7 @@ export default function Hero() {
 
       <div className="relative mt-8 px-5">
         <p className="text-[15px] text-sub">이번 가을, 산사에서 쉬어갈까요?</p>
-        <h1 className="mt-0.5 text-[42px] font-extrabold leading-none tracking-[-0.03em]">산사캠프</h1>
+        <h1 className="mt-2"><img src="/wordmark.png" alt="산사캠프" className="h-[64px] w-auto" draggable={false} /></h1>
       </div>
 
       <div className="relative mt-6 flex items-center justify-between px-5">
