@@ -11,6 +11,11 @@ if ! command -v agent-browser >/dev/null 2>&1; then
   npm i -g agent-browser
 fi
 
+# Pre-install Playwright MCP server (used via .mcp.json) if missing (idempotent)
+if ! command -v playwright-mcp >/dev/null 2>&1; then
+  npm i -g @playwright/mcp
+fi
+
 # Use the pre-installed Chromium instead of `agent-browser install`
 CHROMIUM="/opt/pw-browsers/chromium"
 if [ -n "${CLAUDE_ENV_FILE:-}" ] && [ -x "$CHROMIUM" ]; then
