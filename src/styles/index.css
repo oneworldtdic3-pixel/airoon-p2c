@@ -1,0 +1,54 @@
+@import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand: #35D6BD;
+  --deep: #0AA7A7;
+  --mint: #E8FAF4;
+  --sun: #ffd64a;
+  --ink: #1f2937;
+  --sub: #6b7280;
+  --line: #DDF3EE;
+}
+
+html, body, #root { min-height: 100%; }
+body {
+  margin: 0;
+  background: #e4f6f1;
+  color: var(--ink);
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, system-ui, sans-serif;
+  font-feature-settings: 'ss05' on; /* Pretendard 둥근 쉼표·따옴표 */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+h1, h2, h3 { text-wrap: balance; letter-spacing: -0.02em; }
+p { text-wrap: pretty; }
+button { font: inherit; touch-action: manipulation; }
+input, select, textarea { font-size: 16px; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 6px; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+.tnum { font-variant-numeric: tabular-nums; }
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-full bg-btn-grad px-5 py-3 text-[15px] font-bold text-white transition duration-200 active:scale-[0.97] disabled:bg-none disabled:bg-gray-200 disabled:text-gray-400;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-full border border-line px-4 py-2.5 text-[14px] font-bold text-ink transition active:scale-[0.97];
+  }
+  .hairline { border-color: var(--line); }
+  .eyebrow { @apply text-[11px] font-bold uppercase tracking-[0.18em] text-sub; }
+  .field { @apply w-full rounded-2xl border border-line bg-white px-4 py-3.5 font-medium outline-none transition focus:border-brand; }
+}
+
+@keyframes sheet-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
