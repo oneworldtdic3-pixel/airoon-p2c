@@ -1,15 +1,11 @@
 import { sponsors } from '../../mock/data'
 
 export default function SponsorStrip() {
-  const names = [...sponsors.HOST, ...sponsors.PARTNER]
   return (
-    <section className="pt-8">
-      <p className="px-5 text-[12px] font-bold tracking-widest text-sub">SPONSORS</p>
-      <div className="no-scrollbar mt-3 flex gap-2.5 overflow-x-auto px-5 pb-2">
-        {names.map((n) => (
-          <span key={n} className="shrink-0 rounded-full bg-mint px-4 py-2.5 text-[13px] font-bold text-deep">{n}</span>
-        ))}
-      </div>
+    <section className="mt-12 border-t hairline px-5 pt-8 text-[12px] leading-relaxed text-sub">
+      <p><span className="mr-2 font-bold text-ink">주최</span>{sponsors.HOST.join(' · ')}</p>
+      <p className="mt-1"><span className="mr-2 font-bold text-ink">협력</span>{sponsors.PARTNER.join(' · ')}</p>
+      <p className="mt-6 text-[11px] text-gray-400">2026.11.6 (금) 14:00 – 11.8 (일) 11:00 · 경남 하동군 화개면 쌍계사</p>
     </section>
   )
 }

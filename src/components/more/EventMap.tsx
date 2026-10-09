@@ -1,63 +1,40 @@
-// 행사장 맵 — 개략도(실측 아님). 실제 배치 확정 시 좌표만 교체.
+// 행사장 약도 — 실측 아님. 배치 확정 시 좌표만 교체.
 const legend = [
-  { c: '#43E09A', t: '캠핑존 4인' },
-  { c: '#0FB267', t: '캠핑존 6인' },
-  { c: '#FFD64A', t: '체험부스존' },
-  { c: '#0B9659', t: '메인무대' },
-  { c: '#8FD9F0', t: '샤워동' },
-  { c: '#FFB38A', t: '산사장터' },
-  { c: '#9CA3AF', t: '주차장' },
-  { c: '#fff', t: '일주문·쌍계사', stroke: '#0B9659' },
+  ['#A7E3C7', '캠핑존 4인'], ['#1EC97E', '캠핑존 6인'], ['#FFD64A', '체험부스존'], ['#0B9659', '메인무대'],
+  ['#BFE9F2', '샤워동'], ['#FFD0B5', '산사장터'], ['#D1D5DB', '주차장'], ['#fff', '일주문 · 쌍계사'],
 ]
+
+const Block = ({ x, y, w, h, fill, label, sub, dark }: { x: number; y: number; w: number; h: number; fill: string; label: string; sub?: string; dark?: boolean }) => (
+  <g>
+    <rect x={x} y={y} width={w} height={h} rx="10" fill={fill} stroke={fill === '#fff' ? '#0B9659' : 'none'} strokeWidth="1.5" />
+    <text x={x + 10} y={y + 18} fontSize="11" fontWeight="700" fill={dark ? '#1F2937' : '#fff'}>{label}</text>
+    {sub && <text x={x + 10} y={y + 32} fontSize="10" fill={dark ? '#6B7280' : '#ffffffcc'}>{sub}</text>}
+  </g>
+)
 
 export default function EventMap() {
   return (
     <div>
-      <div className="overflow-hidden rounded-card bg-mint p-2 shadow-card">
-        <svg viewBox="0 0 360 400" role="img" aria-label="행사장 맵" className="w-full">
-          <rect width="360" height="400" rx="16" fill="#E9FAF2" />
-          <path d="M0 330 Q90 290 180 320 T360 300 V400H0Z" fill="#fff" opacity=".7" />
-          {/* 길 */}
-          <path d="M180 392 V300 Q180 270 160 250 T120 200 V70" fill="none" stroke="#fff" strokeWidth="14" strokeLinecap="round" />
-          <path d="M180 300 H300 M120 200 H250 M120 130 H280" fill="none" stroke="#fff" strokeWidth="10" strokeLinecap="round" />
-          {/* 쌍계사 / 일주문 */}
-          <g>
-            <rect x="80" y="14" width="80" height="44" rx="10" fill="#fff" stroke="#0B9659" strokeWidth="2" />
-            <text x="120" y="42" textAnchor="middle" fontSize="12" fontWeight="800" fill="#0B9659">쌍계사</text>
-            <rect x="96" y="78" width="48" height="22" rx="8" fill="#fff" stroke="#0B9659" strokeWidth="2" />
-            <text x="120" y="93" textAnchor="middle" fontSize="10" fontWeight="800" fill="#0B9659">일주문</text>
-          </g>
-          {/* 메인무대 */}
-          <rect x="180" y="26" width="110" height="52" rx="14" fill="#0B9659" />
-          <text x="235" y="57" textAnchor="middle" fontSize="12" fontWeight="800" fill="#fff">메인무대</text>
-          {/* 체험부스존 */}
-          <rect x="176" y="100" width="130" height="48" rx="14" fill="#FFD64A" />
-          <text x="241" y="129" textAnchor="middle" fontSize="12" fontWeight="800" fill="#1F2937">체험부스존</text>
-          {/* 산사장터 */}
-          <rect x="30" y="140" width="76" height="46" rx="14" fill="#FFB38A" />
-          <text x="68" y="168" textAnchor="middle" fontSize="12" fontWeight="800" fill="#fff">산사장터</text>
-          {/* 캠핑존 */}
-          <rect x="30" y="206" width="112" height="70" rx="16" fill="#43E09A" />
-          <text x="86" y="236" textAnchor="middle" fontSize="12" fontWeight="800" fill="#fff">캠핑존</text>
-          <text x="86" y="254" textAnchor="middle" fontSize="11" fontWeight="700" fill="#fff">4인</text>
-          <rect x="158" y="176" width="140" height="84" rx="16" fill="#0FB267" />
-          <text x="228" y="214" textAnchor="middle" fontSize="12" fontWeight="800" fill="#fff">캠핑존</text>
-          <text x="228" y="232" textAnchor="middle" fontSize="11" fontWeight="700" fill="#fff">6인</text>
-          {/* 샤워동 */}
-          <rect x="304" y="176" width="42" height="84" rx="12" fill="#8FD9F0" />
-          <text x="325" y="222" textAnchor="middle" fontSize="11" fontWeight="800" fill="#0B5A73">샤워동</text>
-          {/* 주차장 */}
-          <rect x="40" y="320" width="100" height="50" rx="12" fill="#9CA3AF" />
-          <text x="90" y="350" textAnchor="middle" fontSize="12" fontWeight="800" fill="#fff">제1주차장</text>
-          <rect x="226" y="330" width="100" height="44" rx="12" fill="#9CA3AF" />
-          <text x="276" y="357" textAnchor="middle" fontSize="12" fontWeight="800" fill="#fff">제2주차장</text>
-          <circle cx="330" cy="30" r="8" fill="#FFD64A" /><path d="M326 36 L330 24 L334 36Z" fill="#0B9659" opacity=".0" />
-        </svg>
-      </div>
-      <ul className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2">
-        {legend.map((l) => (
-          <li key={l.t} className="flex items-center gap-2 text-[12px] font-semibold text-sub">
-            <span className="h-3.5 w-3.5 rounded" style={{ background: l.c, border: l.stroke ? `2px solid ${l.stroke}` : undefined }} />{l.t}
+      <svg viewBox="0 0 360 380" role="img" aria-label="행사장 약도" className="w-full rounded-tile border border-line bg-white">
+        <path d="M0 300 Q90 270 180 290 T360 280 V380 H0Z" fill="#E9FAF2" />
+        <path d="M184 380V290q0-30-30-50T124 190V88" fill="none" stroke="#E6EFE9" strokeWidth="12" strokeLinecap="round" />
+        <path d="M184 300H296M124 190h130M124 130h170" fill="none" stroke="#E6EFE9" strokeWidth="8" strokeLinecap="round" />
+        <Block x={80} y={16} w={88} h={44} fill="#fff" label="쌍계사" sub="대웅전 · 경내" dark />
+        <Block x={96} y={74} w={56} h={26} fill="#fff" label="일주문" dark />
+        <Block x={190} y={22} w={120} h={48} fill="#0B9659" label="메인무대" sub="싱잉볼 · 스님과의 대화" />
+        <Block x={190} y={100} w={130} h={44} fill="#FFD64A" label="체험부스존" sub="단주 · 사경 · 싱잉볼" dark />
+        <Block x={28} y={140} w={84} h={40} fill="#FFD0B5" label="산사장터" dark />
+        <Block x={28} y={204} w={120} h={66} fill="#A7E3C7" label="캠핑존 4인" sub="A1–A40" dark />
+        <Block x={164} y={176} w={140} h={84} fill="#1EC97E" label="캠핑존 6인" sub="B1–B60" />
+        <Block x={312} y={176} w={38} h={84} fill="#BFE9F2" label="샤워" sub="A–D" dark />
+        <Block x={40} y={318} w={104} h={42} fill="#D1D5DB" label="제1주차장" sub="도보 10분" dark />
+        <Block x={224} y={322} w={104} h={42} fill="#D1D5DB" label="제2주차장" sub="셔틀" dark />
+        <text x="330" y="370" fontSize="9" fill="#9CA3AF" textAnchor="end">N ↑ · 약도</text>
+      </svg>
+      <ul className="mt-3 grid grid-cols-4 gap-x-2 gap-y-1.5">
+        {legend.map(([c, t]) => (
+          <li key={t} className="flex items-center gap-1.5 text-[11px] font-medium text-sub">
+            <span className="h-2.5 w-2.5 shrink-0 rounded-sm border border-black/5" style={{ background: c }} />{t}
           </li>
         ))}
       </ul>

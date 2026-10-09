@@ -9,22 +9,23 @@ export default function TodaySchedule() {
   const { sessions } = useApp()
   const di = todayEventDay()
   const day = EVENT_DAYS[di ?? 0]
-  const label = di !== null ? '오늘의 일정' : daysUntilStart() > 0 ? '입재일 일정 미리보기' : '일정'
+  const title = di !== null ? '오늘의 일정' : daysUntilStart() > 0 ? '첫날 일정' : '일정'
   const list = sessions
     .filter((s) => dayKey(s.starts_at) === day)
     .sort((a, b) => a.starts_at.localeCompare(b.starts_at))
-    .slice(0, 5)
+    .slice(0, 6)
   return (
-    <section className="px-5 pt-8">
-      <SectionTitle sub={`11월 ${Number(day.slice(-2))}일`} right={<Link to="/reserve" className="text-[13px] font-bold text-deep">예약하기</Link>}>{label}</SectionTitle>
-      <ol className="card divide-y divide-gray-100 px-4">
+    <section className="px-5 pt-12">
+      <SectionTitle eyebrow={`11월 ${Number(day.slice(-2))}일 · Day ${(di ?? 0) + 1}`} right={<Link to="/reserve" className="text-[13px] font-bold text-deep">전체 보기</Link>}>{title}</SectionTitle>
+      <ol>
         {list.map((s) => {
           const p = programs.find((x) => x.id === s.program_id)!
+          const left = s.capacity - s.booked_count
           return (
-            <li key={s.id} className="flex items-center gap-3 py-3.5">
-              <span className="w-12 text-[15px] font-extrabold text-deep tabular-nums">{fmtTime(s.starts_at)}</span>
-              <span className="flex-1 text-[14px] font-semibold">{p.emoji} {p.title}</span>
-              <span className="text-[12px] text-sub">{s.capacity - s.booked_count > 0 ? `잔여 ${s.capacity - s.booked_count}` : '마감'}</span>
+            <li key={s.id} className="flex items-baseline gap-4 border-t hairline py-3.5 first:border-t-0">
+              <span className="tnum w-12 text-[17px] font-extrabold text-ink">{fmtTime(s.starts_at)}</span>
+              <span className="flex-1 text-[15px] font-semibold">{p.title}</span>
+              <span className={`tnum text-[12px] font-bold ${left ? 'text-deep' : 'text-gray-400'}`}>{left ? `${left}석` : '마감'}</span>
             </li>
           )
         })}

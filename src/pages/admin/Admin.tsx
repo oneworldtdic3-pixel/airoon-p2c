@@ -8,7 +8,7 @@ export default function Admin() {
     <div className="flex min-h-dvh flex-col items-center justify-center gap-3 px-8 text-center">
       <h1 className="text-[20px] font-extrabold">관리자</h1>
       <p className="text-[14px] text-sub">{user?.is_admin ? '관리자 페이지는 4단계에서 구현됩니다.' : '접근 권한이 없어요.'}</p>
-      <Link to="/" className="pill-btn">홈으로</Link>
+      <Link to="/" className="btn">홈으로</Link>
     </div>
   )
 }

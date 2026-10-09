@@ -2,18 +2,17 @@ import { useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import PageHeader from '../components/layout/PageHeader'
 import EventMap from '../components/more/EventMap'
-import { Badge, SectionTitle, Toast } from '../components/ui'
-import Icon from '../components/ui/Icon'
-import { Moktak } from '../components/illust'
+import { SectionTitle, Toast } from '../components/ui'
+import { RidgeGlyph, MoktakGlyph } from '../components/illust'
 import { sponsors } from '../mock/data'
 import { useApp } from '../mock/store'
 import { useRequireAuth } from '../hooks/useRequireAuth'
 import { useToast } from '../hooks/useToast'
 
 const guides = [
-  { icon: 'fire', title: '화기 전면 금지 · 취사 없음', body: '라이터·버너·향초 등 불을 쓰는 물품은 반입할 수 없어요. 식사는 공양간과 푸드존에서 해결해요.' },
-  { icon: 'ticket', title: 'QR 팔찌 상시 착용', body: '입장과 프로그램 체크인은 QR 팔찌로 진행돼요. 2박 3일 내내 착용해 주세요.' },
-  { icon: 'sound', title: '고요의 시간 21시', body: '매일 21시부터는 고요의 시간이에요. 대화는 낮은 목소리로, 소리 나는 기기는 꺼 주세요.' },
+  ['화기 전면 금지, 취사 없음', '라이터·버너·향초처럼 불을 쓰는 물품은 가져올 수 없습니다. 식사는 공양간과 산사장터에서.'],
+  ['QR 팔찌는 2박 3일 내내', '입장과 프로그램 체크인 모두 팔찌로 합니다. 끊어지면 안내 부스에서 재발급.'],
+  ['21시부터 고요의 시간', '대화는 낮은 목소리로, 소리 나는 기기는 꺼 둡니다. 가장 조용한 페스티벌의 약속.'],
 ]
 
 export default function More() {
@@ -29,70 +28,67 @@ export default function More() {
 
   return (
     <>
-      <PageHeader title="더보기" sub="행사 안내와 협찬사를 모았어요" />
-      <div className="space-y-9 px-5 pb-4">
-        <section className="card flex items-center gap-3 p-4">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-mint text-deep"><Icon name="user" /></span>
-          <div className="min-w-0 flex-1">
-            <p className="text-[15px] font-extrabold">{user ? user.nickname : '로그인하고 예약해 보세요'}</p>
-            <p className="truncate text-[12px] text-sub">{user ? user.phone : '둘러보기는 로그인 없이 가능해요'}</p>
+      <PageHeader eyebrow="안내" title="더보기" glyph={<RidgeGlyph className="w-16" />} />
+      <div className="px-5 pb-6">
+        <section className="flex items-center justify-between border-y hairline py-4">
+          <div className="min-w-0">
+            <p className="text-[16px] font-extrabold">{user ? user.nickname : '로그인 전'}</p>
+            <p className="tnum truncate text-[12.5px] text-sub">{user ? user.phone : '둘러보기는 로그인 없이, 예약할 때만 번호 인증'}</p>
           </div>
           {user ? (
             <div className="flex gap-2">
-              {user.is_admin && <Link to="/admin" className="rounded-full bg-mint px-3.5 py-2 text-[13px] font-bold text-deep">관리자</Link>}
-              <button onClick={() => { logout(); show('로그아웃했어요') }} className="rounded-full border border-gray-200 px-3.5 py-2 text-[13px] font-bold text-sub">로그아웃</button>
+              {user.is_admin && <Link to="/admin" className="btn-ghost">관리자</Link>}
+              <button onClick={() => { logout(); show('로그아웃했습니다') }} className="btn-ghost text-sub">로그아웃</button>
             </div>
           ) : (
-            <button onClick={() => nav('/login', { state: { from: '/more' } })} className="pill-btn !px-4 !py-2.5 !text-[13px]">로그인</button>
+            <button onClick={() => nav('/login', { state: { from: '/more' } })} className="btn !py-2.5 !text-[14px]">로그인</button>
           )}
         </section>
 
-        <section id="map" className="scroll-mt-4">
-          <SectionTitle sub="약도이며 실제 배치와 다를 수 있어요">행사장 맵</SectionTitle>
+        <section id="map" className="scroll-mt-4 pt-10">
+          <SectionTitle eyebrow="Map">행사장 약도</SectionTitle>
           <EventMap />
         </section>
 
-        <section>
-          <SectionTitle>협찬사</SectionTitle>
-          <div className="space-y-4">
-            {(['HOST', 'PARTNER', 'BOOTH'] as const).map((tier) => (
-              <div key={tier} className="card p-4">
-                <Badge tone={tier === 'HOST' ? 'yellow' : 'green'}>{tier}</Badge>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {sponsors[tier].map((n) => <span key={n} className={`rounded-full bg-mint px-3.5 py-2 font-bold text-deep ${tier === 'HOST' ? 'text-[15px]' : 'text-[13px]'}`}>{n}</span>)}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="relative overflow-hidden rounded-card bg-sun p-5 shadow-card">
-          <Moktak className="absolute -right-2 -top-1 w-24 opacity-50" />
-          <p className="relative text-[12px] font-extrabold tracking-widest text-ink/70">LUCKY DRAW</p>
-          <h2 className="relative mt-1 text-[20px] font-extrabold text-ink">럭키드로우 응모</h2>
-          <p className="relative mt-1 text-[13px] text-ink/75">참가자라면 누구나 1회 응모할 수 있어요.</p>
+        <section className="relative mt-10 overflow-hidden rounded-tile bg-sun p-5">
+          <MoktakGlyph className="absolute -right-3 -bottom-3 w-28 opacity-60" />
+          <p className="eyebrow text-ink/60">Lucky draw</p>
+          <h2 className="mt-1 text-[22px] font-extrabold">럭키드로우</h2>
+          <p className="mt-1 max-w-[70%] text-[13.5px] leading-relaxed text-ink/75">참가자 1인 1회. 마지막 날 아침 메인무대에서 추첨합니다.</p>
           <button
             disabled={luckyEntered}
-            onClick={() => requireAuth(() => { const r = enterLuckyDraw(); show(r.ok ? '응모가 완료되었어요' : r.error) })}
-            className="relative mt-4 rounded-full bg-ink px-6 py-3 text-[15px] font-extrabold text-white transition active:scale-95 disabled:bg-ink/40"
+            onClick={() => requireAuth(() => { const r = enterLuckyDraw(); show(r.ok ? '응모했습니다' : r.error) })}
+            className="relative mt-5 rounded-full bg-ink px-6 py-3 text-[15px] font-bold text-white transition active:scale-95 disabled:bg-ink/35"
           >
-            {luckyEntered ? '응모 완료 ✓' : '응모하기'}
+            {luckyEntered ? '응모 완료' : '응모하기'}
           </button>
         </section>
 
-        <section>
-          <SectionTitle>행사 안내</SectionTitle>
-          <ul className="space-y-3">
-            {guides.map((g) => (
-              <li key={g.title} className="card flex gap-3.5 p-4">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-mint text-deep"><Icon name={g.icon} /></span>
+        <section className="pt-12">
+          <SectionTitle eyebrow="Rules">세 가지 약속</SectionTitle>
+          <ol>
+            {guides.map(([t, b], i) => (
+              <li key={t} className="flex gap-4 border-t hairline py-5 first:border-t-0">
+                <span className="tnum text-[22px] font-extrabold leading-none text-deep">0{i + 1}</span>
                 <div>
-                  <p className="text-[15px] font-extrabold">{g.title}</p>
-                  <p className="mt-1 text-[13px] leading-relaxed text-sub">{g.body}</p>
+                  <p className="text-[16px] font-extrabold">{t}</p>
+                  <p className="mt-1.5 text-[13.5px] leading-relaxed text-ink/75">{b}</p>
                 </div>
               </li>
             ))}
-          </ul>
+          </ol>
+        </section>
+
+        <section className="pt-10">
+          <SectionTitle eyebrow="Sponsors">함께하는 곳</SectionTitle>
+          <dl className="space-y-4 text-[14px]">
+            {(['HOST', 'PARTNER', 'BOOTH'] as const).map((tier) => (
+              <div key={tier} className="grid grid-cols-[72px_1fr] gap-3 border-t hairline pt-4">
+                <dt className="eyebrow pt-1">{tier}</dt>
+                <dd className={`leading-relaxed ${tier === 'HOST' ? 'text-[17px] font-extrabold' : tier === 'PARTNER' ? 'font-bold' : 'text-sub'}`}>{sponsors[tier].join(' · ')}</dd>
+              </div>
+            ))}
+          </dl>
         </section>
       </div>
       <Toast msg={msg} />

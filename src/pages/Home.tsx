@@ -9,12 +9,12 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <LiveBanner />
+      <div className="pt-2"><LiveBanner /></div>
       <BestPhotoCarousel />
       <QuickLinks />
       <TodaySchedule />
       <SponsorStrip />
-      <p className="px-5 pb-6 pt-8 text-center text-[12px] text-gray-400">2026.11.6(금) 14:00 ~ 11.8(일) 11:00 · 하동 쌍계사</p>
+      <div className="h-6" />
     </>
   )
 }

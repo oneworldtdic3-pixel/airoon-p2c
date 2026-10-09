@@ -15,18 +15,19 @@ export default function ShowerGrid({ toast }: { toast: (m: string) => void }) {
   const gender = SHOWER_BUILDINGS.find((b) => b.building === bld)!.gender
 
   return (
-    <div className="space-y-4">
-      <div className="rounded-card bg-mint p-4 text-[13px] leading-relaxed text-deep">
-        <b>이용 안내</b><br />30분 단위 예약 · 팀당 1일 2회까지 · 노쇼 2회 시 당일 예약이 제한돼요.
-      </div>
+    <div>
+      <dl className="mb-6 grid grid-cols-3 gap-3 border-y hairline py-4 text-center">
+        {[['30분', '슬롯 단위'], ['2회', '팀당 하루'], ['2회', '노쇼 시 당일 제한']].map(([v, k]) => (
+          <div key={k}><dt className="text-[11px] text-sub">{k}</dt><dd className="tnum text-[20px] font-extrabold">{v}</dd></div>
+        ))}
+      </dl>
       <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5">
-        {EVENT_DAYS.map((d, i) => <Chip key={d} active={day === d} onClick={() => setDay(d)}>DAY {i + 1}</Chip>)}
+        {EVENT_DAYS.map((d, i) => <Chip key={d} active={day === d} onClick={() => setDay(d)}>{i + 1}일차</Chip>)}
+        <span className="w-px shrink-0 bg-line" />
+        {SHOWER_BUILDINGS.map((b) => <Chip key={b.building} active={bld === b.building} onClick={() => setBld(b.building)}>{b.building.slice(-1)}동 {b.gender === 'F' ? '여' : '남'}</Chip>)}
       </div>
-      <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5">
-        {SHOWER_BUILDINGS.map((b) => <Chip key={b.building} active={bld === b.building} onClick={() => setBld(b.building)}>{b.building} · {b.gender === 'F' ? '여' : '남'}</Chip>)}
-      </div>
-      <p className="text-[13px] font-bold text-sub">{bld} ({gender === 'F' ? '여성' : '남성'}) · 슬롯당 {list[0]?.capacity ?? 4}명</p>
-      <div className="grid grid-cols-3 gap-2.5">
+      <p className="mt-5 text-[13px] text-sub">{bld} · {gender === 'F' ? '여성' : '남성'} · 슬롯당 {list[0]?.capacity ?? 4}명</p>
+      <div className="mt-3 grid grid-cols-4 gap-2">
         {list.map((s) => {
           const left = s.capacity - s.booked_count
           const mine = mineBy(s.id)
@@ -36,14 +37,14 @@ export default function ShowerGrid({ toast }: { toast: (m: string) => void }) {
               key={s.id}
               disabled={full}
               onClick={() => requireAuth(() => {
-                if (mine) { cancelShower(mine.id); return toast('예약을 취소했어요') }
+                if (mine) { cancelShower(mine.id); return toast('예약을 취소했습니다') }
                 const r = bookShower(s.id)
-                toast(r.ok ? '샤워실 예약이 완료되었어요' : r.error)
+                toast(r.ok ? '샤워실을 예약했습니다' : r.error)
               })}
-              className={`rounded-2xl px-2 py-3 text-center transition active:scale-95 ${mine ? 'bg-deep text-white shadow-card' : full ? 'bg-gray-100 text-gray-400' : 'bg-mint text-ink'}`}
+              className={`rounded-xl border py-2.5 text-center transition duration-150 active:scale-95 ${mine ? 'border-deep bg-deep text-white' : full ? 'border-transparent bg-gray-50 text-gray-300' : 'border-line bg-white text-ink'}`}
             >
-              <span className="block text-[15px] font-extrabold tabular-nums">{fmtTime(s.starts_at)}</span>
-              <span className={`block text-[11px] font-semibold ${mine ? 'text-white/90' : full ? '' : 'text-deep'}`}>{mine ? '내 예약' : full ? '마감' : `${left}자리`}</span>
+              <span className="tnum block text-[14px] font-bold">{fmtTime(s.starts_at)}</span>
+              <span className={`tnum block text-[10.5px] ${mine ? 'text-white/80' : full ? '' : 'text-deep'}`}>{mine ? '내 예약' : full ? '마감' : `${left}`}</span>
             </button>
           )
         })}

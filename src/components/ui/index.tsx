@@ -5,7 +5,8 @@ export function Chip({ active, onClick, children }: { active?: boolean; onClick?
   return (
     <button
       onClick={onClick}
-      className={`shrink-0 rounded-full px-4 py-2 text-[14px] font-semibold transition active:scale-95 ${active ? 'bg-deep text-white shadow-card' : 'bg-mint text-deep'}`}
+      aria-pressed={active}
+      className={`shrink-0 rounded-full px-3.5 py-2 text-[13px] font-semibold transition duration-200 active:scale-95 ${active ? 'bg-ink text-white' : 'border border-line bg-white text-ink'}`}
     >
       {children}
     </button>
@@ -14,14 +15,14 @@ export function Chip({ active, onClick, children }: { active?: boolean; onClick?
 
 export function Segmented<T extends string>({ value, onChange, options }: { value: T; onChange: (v: T) => void; options: { value: T; label: string }[] }) {
   return (
-    <div role="tablist" className="flex rounded-full bg-mint p-1">
+    <div role="tablist" className="flex gap-6 border-b hairline">
       {options.map((o) => (
         <button
           key={o.value}
           role="tab"
           aria-selected={value === o.value}
           onClick={() => onChange(o.value)}
-          className={`flex-1 rounded-full py-2.5 text-[14px] font-bold transition ${value === o.value ? 'bg-white text-deep shadow-card' : 'text-sub'}`}
+          className={`-mb-px border-b-2 py-3 text-[16px] font-bold transition ${value === o.value ? 'border-ink text-ink' : 'border-transparent text-gray-400'}`}
         >
           {o.label}
         </button>
@@ -30,15 +31,15 @@ export function Segmented<T extends string>({ value, onChange, options }: { valu
   )
 }
 
-export function Badge({ tone = 'green', children }: { tone?: 'green' | 'yellow' | 'gray' | 'red'; children: ReactNode }) {
-  const t = { green: 'bg-mint text-deep', yellow: 'bg-sun text-ink', gray: 'bg-gray-100 text-sub', red: 'bg-red-50 text-red-600' }[tone]
-  return <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-extrabold tracking-wide ${t}`}>{children}</span>
+export function Tag({ children, tone = 'ink' }: { children: ReactNode; tone?: 'ink' | 'green' | 'sun' | 'red' }) {
+  const t = { ink: 'text-sub', green: 'text-deep', sun: 'bg-sun text-ink px-1.5 rounded-md', red: 'text-red-500' }[tone]
+  return <span className={`text-[11px] font-bold tracking-wide ${t}`}>{children}</span>
 }
 
 export function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boolean) => void; label: string }) {
   return (
-    <button role="switch" aria-checked={on} aria-label={label} onClick={() => onChange(!on)} className={`relative h-8 w-14 shrink-0 rounded-full transition ${on ? 'bg-brand' : 'bg-gray-300'}`}>
-      <span className={`absolute top-1 h-6 w-6 rounded-full bg-white shadow transition-all ${on ? 'left-7' : 'left-1'}`} />
+    <button role="switch" aria-checked={on} aria-label={label} onClick={() => onChange(!on)} className={`relative h-7 w-12 shrink-0 rounded-full transition duration-200 ${on ? 'bg-deep' : 'bg-gray-300'}`}>
+      <span className={`absolute top-0.5 h-6 w-6 rounded-full bg-white shadow transition-all duration-200 ${on ? 'left-[22px]' : 'left-0.5'}`} />
     </button>
   )
 }
@@ -55,11 +56,11 @@ export function BottomSheet({ open, onClose, title, children }: { open: boolean;
   if (!open) return null
   return (
     <div className="fixed inset-0 z-50 mx-auto flex max-w-[430px] items-end" role="dialog" aria-modal="true" aria-label={title}>
-      <div className="absolute inset-0 bg-ink/40" style={{ animation: 'fade-in .2s' }} onClick={onClose} />
-      <div className="relative max-h-[88dvh] w-full overflow-y-auto rounded-t-[28px] bg-white px-5 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-3" style={{ animation: 'sheet-in .28s cubic-bezier(.22,1,.36,1)' }}>
-        <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-gray-200" />
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-[18px] font-extrabold">{title}</h2>
+      <div className="absolute inset-0 bg-ink/35" style={{ animation: 'fade-in .2s' }} onClick={onClose} />
+      <div className="relative max-h-[88dvh] w-full overflow-y-auto rounded-t-[28px] bg-white px-5 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-3" style={{ animation: 'sheet-in .3s cubic-bezier(.22,1,.36,1)' }}>
+        <div className="mx-auto mb-4 h-1 w-9 rounded-full bg-gray-200" />
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="text-[20px] font-extrabold">{title}</h2>
           <button onClick={onClose} aria-label="닫기" className="-mr-2 p-2 text-sub"><Icon name="close" /></button>
         </div>
         {children}
@@ -68,12 +69,12 @@ export function BottomSheet({ open, onClose, title, children }: { open: boolean;
   )
 }
 
-export function SectionTitle({ children, sub, right }: { children: ReactNode; sub?: string; right?: ReactNode }) {
+export function SectionTitle({ children, eyebrow, right }: { children: ReactNode; eyebrow?: string; right?: ReactNode }) {
   return (
-    <div className="mb-3 flex items-end justify-between">
+    <div className="mb-4 flex items-end justify-between">
       <div>
-        <h2 className="text-[19px] font-extrabold tracking-tight">{children}</h2>
-        {sub && <p className="mt-0.5 text-[13px] text-sub">{sub}</p>}
+        {eyebrow && <p className="eyebrow mb-1">{eyebrow}</p>}
+        <h2 className="text-[21px] font-extrabold">{children}</h2>
       </div>
       {right}
     </div>
@@ -83,8 +84,8 @@ export function SectionTitle({ children, sub, right }: { children: ReactNode; su
 export function Toast({ msg }: { msg: string | null }) {
   if (!msg) return null
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-[96px] z-[60] mx-auto flex max-w-[430px] justify-center px-6" style={{ animation: 'fade-in .2s' }}>
-      <div className="rounded-full bg-ink/90 px-5 py-3 text-[14px] font-semibold text-white shadow-float">{msg}</div>
+    <div className="pointer-events-none fixed inset-x-0 bottom-[96px] z-[60] mx-auto flex max-w-[430px] justify-center px-6" style={{ animation: 'rise .25s' }}>
+      <div className="rounded-full bg-ink px-5 py-3 text-[14px] font-semibold text-white shadow-card">{msg}</div>
     </div>
   )
 }

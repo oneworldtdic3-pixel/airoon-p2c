@@ -25,21 +25,21 @@ export default function UploadSheet({ open, onClose, toast }: { open: boolean; o
     setBusy(true)
     const r = await uploadPhoto(file, spot)
     setBusy(false)
-    toast(r.ok ? '사진이 올라갔어요' : r.error)
+    toast(r.ok ? '사진을 올렸습니다' : r.error)
     if (r.ok) onClose()
   }
 
   return (
-    <BottomSheet open={open} onClose={onClose} title="내 사진 올리기">
+    <BottomSheet open={open} onClose={onClose} title="사진 올리기">
       <input ref={input} type="file" accept="image/*" hidden onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
-      <button onClick={() => input.current?.click()} className="flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-card bg-mint text-[14px] font-bold text-deep">
-        {preview ? <img src={preview} alt="선택한 사진 미리보기" className="h-full w-full object-cover" /> : '+ 사진 선택하기'}
+      <button onClick={() => input.current?.click()} className="flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-tile border border-dashed border-gray-300 bg-white text-[14px] font-semibold text-sub">
+        {preview ? <img src={preview} alt="선택한 사진 미리보기" className="h-full w-full object-cover" /> : '사진 선택'}
       </button>
-      <p className="mb-2 mt-5 text-[14px] font-extrabold">스팟 태그 <span className="text-red-500">*필수</span></p>
+      <p className="eyebrow mb-3 mt-6">어디서 찍었나요 <span className="normal-case tracking-normal text-red-500">(필수)</span></p>
       <div className="flex flex-wrap gap-2">
         {SPOTS.map((s) => <Chip key={s} active={spot === s} onClick={() => setSpot(s)}>{s}</Chip>)}
       </div>
-      <button disabled={!file || !spot || busy} onClick={submit} className="pill-btn mt-6 w-full">{busy ? '올리는 중…' : '올리기'}</button>
+      <button disabled={!file || !spot || busy} onClick={submit} className="btn mt-7 w-full">{busy ? '올리는 중' : '올리기'}</button>
     </BottomSheet>
   )
 }
