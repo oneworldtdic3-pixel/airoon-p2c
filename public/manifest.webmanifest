@@ -1,0 +1,15 @@
+{
+  "name": "산사캠프",
+  "short_name": "산사캠프",
+  "description": "가장 조용한 페스티벌, 산사캠프 공식 웹앱",
+  "lang": "ko",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#E9FAF2",
+  "theme_color": "#1EC97E",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

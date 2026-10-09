@@ -1,0 +1,45 @@
+@import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand: #1ec97e;
+  --deep: #0b9659;
+  --mint: #e9faf2;
+  --sun: #ffd64a;
+  --ink: #1f2937;
+  --sub: #6b7280;
+}
+
+html, body, #root { min-height: 100%; }
+body {
+  margin: 0;
+  background: #dff3e9;
+  color: var(--ink);
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+button { font: inherit; touch-action: manipulation; }
+input, select, textarea { font-size: 16px; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+@layer components {
+  .pill-btn {
+    @apply inline-flex items-center justify-center rounded-full bg-deep px-5 py-3 text-[15px] font-bold text-white transition active:scale-[0.97] disabled:bg-gray-300 disabled:text-white;
+  }
+  .card { @apply rounded-card bg-white shadow-card; }
+}
+
+@keyframes sheet-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes float-y { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes drift { 0%,100% { transform: translateX(0); } 50% { transform: translateX(10px); } }
+@keyframes glow { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
