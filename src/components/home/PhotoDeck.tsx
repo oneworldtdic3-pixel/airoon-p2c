@@ -61,7 +61,7 @@ export default function PhotoDeck() {
             key={c.id}
             aria-hidden={pos !== 0}
             className="absolute left-1/2 top-0 h-full w-[72%] overflow-hidden rounded-[26px] transition-[transform,opacity] duration-500 ease-[cubic-bezier(.22,1,.36,1)]"
-            style={{ ...style, background: c.kind === 'ad' ? c.bg : c.kind === 'event' ? '#2EA7E0' : '#00A68A' }}
+            style={{ ...style, background: c.kind === 'ad' ? c.bg : c.kind === 'event' ? '#2EA7E0' : '#35D6BD' }}
           >
             <img src={c.url} alt="" aria-hidden className="absolute inset-0 h-full w-full scale-125 object-cover blur-xl" />
             <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 to-ink/70" />

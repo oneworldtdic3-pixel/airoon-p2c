@@ -13,7 +13,7 @@ export default function Hero() {
       <div className="relative flex items-center justify-between px-5">
         <Link to={user ? '/more' : '/login'} className="flex items-center gap-3">
           {user ? (
-            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-deep text-[16px] font-extrabold text-white">{user.nickname.slice(0, 1)}</span>
+            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-grad text-[16px] font-extrabold text-white">{user.nickname.slice(0, 1)}</span>
           ) : (
             <img src="/icon-192.png" alt="" className="h-11 w-11 rounded-full" />
           )}

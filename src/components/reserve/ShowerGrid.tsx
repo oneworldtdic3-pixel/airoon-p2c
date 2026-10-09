@@ -41,7 +41,7 @@ export default function ShowerGrid({ toast }: { toast: (m: string) => void }) {
                 const r = await bookShower(s.id)
                 toast(r.ok ? '샤워실을 예약했습니다' : r.error)
               })}
-              className={`rounded-xl border py-2.5 text-center transition duration-150 active:scale-95 ${mine ? 'border-deep bg-deep text-white' : full ? 'border-transparent bg-gray-50 text-gray-300' : 'border-line bg-white text-ink'}`}
+              className={`rounded-xl border py-2.5 text-center transition duration-150 active:scale-95 ${mine ? 'border-deep bg-brand-grad text-white' : full ? 'border-transparent bg-gray-50 text-gray-300' : 'border-line bg-white text-ink'}`}
             >
               <span className="tnum block text-[14px] font-bold">{fmtTime(s.starts_at)}</span>
               <span className={`tnum block text-[10.5px] ${mine ? 'text-white/80' : full ? '' : 'text-deep'}`}>{mine ? '내 예약' : full ? '마감' : `${left}`}</span>

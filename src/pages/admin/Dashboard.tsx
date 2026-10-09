@@ -13,7 +13,7 @@ function Rate({ label, booked, capacity, sub }: { label: string; booked: number;
         <span className="tnum text-[13px] text-sub">{booked}/{capacity} · <b className={p >= 90 ? 'text-ember' : 'text-deep'}>{p}%</b></span>
       </div>
       {sub && <p className="text-[11px] text-gray-400">{sub}</p>}
-      <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-gray-100"><div className={`h-full rounded-full ${p >= 90 ? 'bg-ember' : 'bg-deep'}`} style={{ width: `${p}%` }} /></div>
+      <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-gray-100"><div className={`h-full rounded-full ${p >= 90 ? 'bg-ember' : 'bg-brand-grad'}`} style={{ width: `${p}%` }} /></div>
     </li>
   )
 }

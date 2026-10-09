@@ -27,7 +27,7 @@ export default function ParkingForm({ toast }: { toast: (m: string) => void }) {
         <legend className="eyebrow mb-3">주차 구역</legend>
         <div className="grid grid-cols-2 gap-2.5">
           {zones.map((z) => (
-            <button key={z.id} type="button" onClick={() => setZone(z.id)} aria-pressed={zone === z.id} className={`rounded-tile border p-4 text-left transition duration-200 active:scale-[0.97] ${zone === z.id ? 'border-deep bg-deep text-white' : 'border-line bg-white'}`}>
+            <button key={z.id} type="button" onClick={() => setZone(z.id)} aria-pressed={zone === z.id} className={`rounded-tile border p-4 text-left transition duration-200 active:scale-[0.97] ${zone === z.id ? 'border-deep bg-brand-grad text-white' : 'border-line bg-white'}`}>
               <span className="block text-[17px] font-extrabold">{z.name}</span>
               <span className={`mt-3 block text-[13px] font-bold ${zone === z.id ? 'text-sun' : 'text-deep'}`}>{z.how}</span>
               <span className={`block text-[12px] ${zone === z.id ? 'text-white/80' : 'text-sub'}`}>{z.desc}</span>

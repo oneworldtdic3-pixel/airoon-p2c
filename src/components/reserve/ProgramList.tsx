@@ -84,7 +84,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
                         ))}
                       </div>
                       <span className="ml-auto flex items-center gap-2">
-                        <span className="h-1 w-12 overflow-hidden rounded-full bg-gray-100"><span className="block h-full bg-deep" style={{ width: `${ratio * 100}%` }} /></span>
+                        <span className="h-1 w-12 overflow-hidden rounded-full bg-gray-100"><span className="block h-full bg-brand-grad" style={{ width: `${ratio * 100}%` }} /></span>
                         <Tag tone={left ? 'green' : 'ink'}>{left ? `${left}석` : '마감'}</Tag>
                       </span>
                     </div>

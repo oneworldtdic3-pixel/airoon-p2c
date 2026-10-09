@@ -25,7 +25,7 @@ export default function Notifications() {
           {notifications.map((n, i) => (
             <li key={n.id} className="border-t hairline py-4 first:border-t-0">
               <div className="flex items-center gap-2">
-                {i === 0 && <span className="h-1.5 w-1.5 rounded-full bg-deep" aria-label="최신" />}
+                {i === 0 && <span className="h-1.5 w-1.5 rounded-full bg-brand-grad" aria-label="최신" />}
                 <span className="text-[11px] font-bold text-deep">{label[n.type]}</span>
                 <span className="tnum ml-auto text-[11px] text-gray-400">{timeAgo(n.created_at)}</span>
               </div>

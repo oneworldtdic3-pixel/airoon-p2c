@@ -30,7 +30,7 @@ export default function Photos({ toast }: { toast: (m: string) => void }) {
               onClick={() => void setHidden(p.id, !p.is_hidden)}
               aria-pressed={p.is_hidden}
               aria-label={p.is_hidden ? '다시 공개' : '숨기기'}
-              className={`absolute right-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-full text-white ${p.is_hidden ? 'bg-deep' : 'bg-ink/55'}`}
+              className={`absolute right-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-full text-white ${p.is_hidden ? 'bg-brand-grad' : 'bg-ink/55'}`}
             >
               <Icon name={p.is_hidden ? 'check' : 'close'} size={14} />
             </button>

@@ -4,19 +4,19 @@
 @tailwind utilities;
 
 :root {
-  --brand: #00D4AC;
-  --deep: #00A68A;
-  --mint: #E6FBF6;
+  --brand: #35D6BD;
+  --deep: #0AA7A7;
+  --mint: #E8FAF4;
   --sun: #ffd64a;
   --ink: #1f2937;
   --sub: #6b7280;
-  --line: #E0F3EE;
+  --line: #DDF3EE;
 }
 
 html, body, #root { min-height: 100%; }
 body {
   margin: 0;
-  background: #e3f5f0;
+  background: #e4f6f1;
   color: var(--ink);
   font-family: 'Pretendard Variable', Pretendard, -apple-system, system-ui, sans-serif;
   font-feature-settings: 'ss05' on; /* Pretendard 둥근 쉼표·따옴표 */
@@ -35,7 +35,7 @@ input, select, textarea { font-size: 16px; }
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center rounded-full bg-deep px-5 py-3 text-[15px] font-bold text-white transition duration-200 active:scale-[0.97] disabled:bg-gray-200 disabled:text-gray-400;
+    @apply inline-flex items-center justify-center rounded-full bg-brand-grad px-5 py-3 text-[15px] font-bold text-white transition duration-200 active:scale-[0.97] disabled:bg-none disabled:bg-gray-200 disabled:text-gray-400;
   }
   .btn-ghost {
     @apply inline-flex items-center justify-center rounded-full border border-line px-4 py-2.5 text-[14px] font-bold text-ink transition active:scale-[0.97];
