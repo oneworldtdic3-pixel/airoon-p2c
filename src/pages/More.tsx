@@ -34,7 +34,7 @@ export default function More() {
         <section className="flex items-center justify-between border-y hairline py-4">
           <div className="min-w-0">
             <p className="text-[16px] font-extrabold">{user ? user.nickname : '로그인 전'}</p>
-            <p className="tnum truncate text-[12.5px] text-sub">{user ? user.phone : '둘러보기는 로그인 없이, 예약할 때만 번호 인증'}</p>
+            <p className="tnum truncate text-[12.5px] text-sub">{user ? user.phone ?? '소셜 계정' : '예약할 때만 인증하면 됩니다'}</p>
           </div>
           {user ? (
             <div className="flex gap-2">
@@ -42,9 +42,9 @@ export default function More() {
               <button onClick={async () => { await logout(); show('로그아웃했습니다') }} className="btn-ghost text-sub">로그아웃</button>
             </div>
           ) : (
-            <div className="flex gap-2">
-              <button onClick={() => nav('/login?mode=signup', { state: { from: '/more' } })} className="btn-ghost">회원가입</button>
-              <button onClick={() => nav('/login', { state: { from: '/more' } })} className="btn !py-2.5 !text-[14px]">로그인</button>
+            <div className="flex shrink-0 gap-2 whitespace-nowrap">
+              <button onClick={() => nav('/login?mode=signup', { state: { from: '/more' } })} className="btn-ghost !px-3.5 !text-[13px]">회원가입</button>
+              <button onClick={() => nav('/login', { state: { from: '/more' } })} className="btn !px-4 !py-2.5 !text-[13px]">로그인</button>
             </div>
           )}
         </section>
