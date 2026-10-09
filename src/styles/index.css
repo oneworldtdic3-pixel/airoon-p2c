@@ -4,19 +4,19 @@
 @tailwind utilities;
 
 :root {
-  --brand: #1ec97e;
-  --deep: #0b9659;
-  --mint: #e9faf2;
+  --brand: #00D4AC;
+  --deep: #00A68A;
+  --mint: #E6FBF6;
   --sun: #ffd64a;
   --ink: #1f2937;
   --sub: #6b7280;
-  --line: #e6efe9;
+  --line: #E0F3EE;
 }
 
 html, body, #root { min-height: 100%; }
 body {
   margin: 0;
-  background: #e3f3ea;
+  background: #e3f5f0;
   color: var(--ink);
   font-family: 'Pretendard Variable', Pretendard, -apple-system, system-ui, sans-serif;
   font-feature-settings: 'ss05' on; /* Pretendard 둥근 쉼표·따옴표 */

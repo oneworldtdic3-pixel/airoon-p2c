@@ -18,12 +18,12 @@ export function HeroScene(p: P) {
           <stop offset="1" stopColor="#fff" stopOpacity=".06" />
         </linearGradient>
         <linearGradient id="h-mid" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#17B86F" />
-          <stop offset="1" stopColor="#0FA862" />
+          <stop offset="0" stopColor="#13BCA8" />
+          <stop offset="1" stopColor="#0BAC98" />
         </linearGradient>
         <linearGradient id="h-near" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#0B9659" />
-          <stop offset="1" stopColor="#087A48" />
+          <stop offset="0" stopColor="#00A68A" />
+          <stop offset="1" stopColor="#057D70" />
         </linearGradient>
         <radialGradient id="h-glow" cx=".5" cy=".6" r=".5">
           <stop offset="0" stopColor="#FFD64A" stopOpacity=".7" />
@@ -54,12 +54,12 @@ export function HeroScene(p: P) {
 
       {/* 산사 — 능선 위 이층 지붕 */}
       <g transform="translate(228 104)">
-        <path d="M0 50h60v6H0Z" fill="#0A7A48" />
-        <path d="M8 36h44v14H8Z" fill="#0B8C52" />
-        <path d="M-6 38q33-14 72 0l-6-10q-30-9-60 0Z" fill="#086B40" />
-        <path d="M14 20h32v10H14Z" fill="#0B8C52" />
-        <path d="M2 24q28-14 56 0l-5-9q-23-7-46 0Z" fill="#086B40" />
-        <path d="M30 4v10" stroke="#086B40" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M0 50h60v6H0Z" fill="#077D70" />
+        <path d="M8 36h44v14H8Z" fill="#088F7F" />
+        <path d="M-6 38q33-14 72 0l-6-10q-30-9-60 0Z" fill="#066D63" />
+        <path d="M14 20h32v10H14Z" fill="#088F7F" />
+        <path d="M2 24q28-14 56 0l-5-9q-23-7-46 0Z" fill="#066D63" />
+        <path d="M30 4v10" stroke="#066D63" strokeWidth="2.5" strokeLinecap="round" />
         <circle cx="30" cy="3" r="2.2" fill="#FFD64A" />
       </g>
       <ellipse cx="200" cy="214" rx="140" ry="9" fill="#fff" opacity=".16" />
@@ -81,12 +81,12 @@ export function HeroScene(p: P) {
       <g transform="translate(70 232)">
         <circle cx="30" cy="40" r="34" fill="url(#h-glow)" />
         <path d="M30 0 0 48h60Z" fill="#fff" />
-        <path d="M30 0 0 48h30Z" fill="#E9FAF2" />
+        <path d="M30 0 0 48h30Z" fill="#E6FBF6" />
         <path d="M30 18 20 48h20Z" fill="#FFD64A" />
         <path d="M30 18 25 48h5Z" fill="#F2C53D" />
       </g>
       {/* 작은 나무들 */}
-      <g fill="#076B40">
+      <g fill="#046E63">
         <path d="M150 262l8-18 8 18Zm3-10 5-12 5 12Z" /><path d="M338 254l7-16 7 16Zm3-9 4-10 4 10Z" /><path d="M20 268l6-14 6 14Z" />
       </g>
 
@@ -102,9 +102,9 @@ export function HeroScene(p: P) {
 /* ------------------------------------------------------------------ */
 type Palette = { sky: [string, string]; far: string; mid: string; near: string; deep: string; light: string; water: string }
 const TIMES: Palette[] = [
-  { sky: ['#D5F3E4', '#F6FCF9'], far: '#A7E3C7', mid: '#5CCF9B', near: '#1EB874', deep: '#0B8A52', light: '#FFD64A', water: '#CFEFF8' }, // 낮
-  { sky: ['#FFE6B0', '#FFF6E3'], far: '#D9D9A8', mid: '#8BC98F', near: '#3FA86E', deep: '#1C7A4B', light: '#FFB84A', water: '#FFE7C4' }, // 노을
-  { sky: ['#0E6A45', '#1EC97E'], far: '#2E9E6B', mid: '#1B7F52', near: '#0F5E3B', deep: '#083F28', light: '#FFD64A', water: '#9FDFC3' }, // 밤
+  { sky: ['#D4F4EF', '#F6FCFB'], far: '#A5E4DC', mid: '#59D2C4', near: '#1ABCAA', deep: '#088D7F', light: '#FFD64A', water: '#CFEFF8' }, // 낮
+  { sky: ['#FFE6B0', '#FFF6E3'], far: '#D9D9A8', mid: '#89CBA3', near: '#3CAB92', deep: '#1A7C6C', light: '#FFB84A', water: '#FFE7C4' }, // 노을
+  { sky: ['#0C6C66', '#00D4AC'], far: '#2BA192', mid: '#188275', near: '#0D6057', deep: '#07403B', light: '#FFD64A', water: '#9DE1DA' }, // 밤
 ]
 
 export type SpotName = '일주문' | '대웅전 계단' | '차밭 능선' | '불일폭포'
@@ -131,20 +131,20 @@ export function spotSceneDataUri(spot: SpotName, variant: number): string {
 /* ------------------------------------------------------------------ */
 export const LanternGlyph = (p: P) => (
   <svg viewBox="0 0 48 72" {...p}>
-    <path d="M24 2v10" stroke="#0B9659" strokeWidth="2.5" strokeLinecap="round" />
-    <rect x="15" y="11" width="18" height="5" rx="2.5" fill="#0B9659" />
+    <path d="M24 2v10" stroke="#00A68A" strokeWidth="2.5" strokeLinecap="round" />
+    <rect x="15" y="11" width="18" height="5" rx="2.5" fill="#00A68A" />
     <ellipse cx="24" cy="38" rx="17" ry="22" fill="#FFD64A" />
     <path d="M24 16v44M12 24q12 14 0 28M36 24q-12 14 0 28" stroke="#F2C53D" strokeWidth="1.5" fill="none" />
-    <rect x="16" y="59" width="16" height="5" rx="2.5" fill="#0B9659" />
-    <path d="M24 64v6" stroke="#0B9659" strokeWidth="2.5" strokeLinecap="round" />
+    <rect x="16" y="59" width="16" height="5" rx="2.5" fill="#00A68A" />
+    <path d="M24 64v6" stroke="#00A68A" strokeWidth="2.5" strokeLinecap="round" />
   </svg>
 )
 export const MoonGlyph = (p: P) => (
   <svg viewBox="0 0 64 64" {...p}>
-    <circle cx="32" cy="32" r="30" fill="#E9FAF2" />
+    <circle cx="32" cy="32" r="30" fill="#E6FBF6" />
     <circle cx="34" cy="30" r="18" fill="#FFD64A" />
     <path d="M28 22a7 7 0 0 1 10 9 6 6 0 0 0-10-9Z" fill="#F2C53D" />
-    <path d="M6 48q26-14 52 0" stroke="#1EC97E" strokeWidth="3" strokeLinecap="round" fill="none" />
+    <path d="M6 48q26-14 52 0" stroke="#00D4AC" strokeWidth="3" strokeLinecap="round" fill="none" />
   </svg>
 )
 export const MoktakGlyph = (p: P) => (
@@ -152,21 +152,21 @@ export const MoktakGlyph = (p: P) => (
     <ellipse cx="34" cy="36" rx="28" ry="24" fill="#FFD64A" />
     <path d="M10 42q24 12 48-4" stroke="#F2C53D" strokeWidth="3" fill="none" strokeLinecap="round" />
     <ellipse cx="34" cy="40" rx="8" ry="4.5" fill="#F2C53D" />
-    <path d="M56 14 70 4" stroke="#0B9659" strokeWidth="5" strokeLinecap="round" />
+    <path d="M56 14 70 4" stroke="#00A68A" strokeWidth="5" strokeLinecap="round" />
   </svg>
 )
 export const RidgeGlyph = (p: P) => (
   <svg viewBox="0 0 96 48" {...p}>
-    <path d="M0 48 26 14l16 18 18-26 22 30 14-14v26Z" fill="#1EC97E" opacity=".45" />
-    <path d="M0 48V30l20-18 18 20 22-22 20 24 16-10v24Z" fill="#0B9659" />
+    <path d="M0 48 26 14l16 18 18-26 22 30 14-14v26Z" fill="#00D4AC" opacity=".45" />
+    <path d="M0 48V30l20-18 18 20 22-22 20 24 16-10v24Z" fill="#00A68A" />
     <circle cx="80" cy="10" r="6" fill="#FFD64A" />
   </svg>
 )
 export const TentGlyph = (p: P) => (
   <svg viewBox="0 0 80 56" {...p}>
-    <path d="M40 2 4 52h72Z" fill="#CFF2E2" />
-    <path d="M40 2 4 52h36Z" fill="#E9FAF2" />
-    <path d="M40 22 28 52h24Z" fill="#0B9659" />
-    <path d="M40 2v-2M40 0l10 4-10 3" fill="#FFD64A" stroke="#0B9659" strokeWidth="1.5" strokeLinejoin="round" />
+    <path d="M40 2 4 52h72Z" fill="#CEF3EE" />
+    <path d="M40 2 4 52h36Z" fill="#E6FBF6" />
+    <path d="M40 22 28 52h24Z" fill="#00A68A" />
+    <path d="M40 2v-2M40 0l10 4-10 3" fill="#FFD64A" stroke="#00A68A" strokeWidth="1.5" strokeLinejoin="round" />
   </svg>
 )
