@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { useApp } from '../../mock/store'
-import { SPOTS } from '../../mock/data'
+import { useApp } from '../../data/AppProvider'
+import { SPOTS } from '../../data/constants'
 import { BottomSheet, Chip } from '../ui'
-import type { SpotTag } from '../../mock/types'
+import type { SpotTag } from '../../data/types'
 
 export default function UploadSheet({ open, onClose, toast }: { open: boolean; onClose: () => void; toast: (m: string) => void }) {
   const { uploadPhoto } = useApp()

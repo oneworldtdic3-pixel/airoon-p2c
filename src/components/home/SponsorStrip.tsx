@@ -1,4 +1,4 @@
-import { sponsors } from '../../mock/data'
+import { sponsors } from '../../data/constants'
 
 export default function SponsorStrip() {
   return (

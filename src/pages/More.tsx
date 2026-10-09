@@ -4,8 +4,8 @@ import PageHeader from '../components/layout/PageHeader'
 import EventMap from '../components/more/EventMap'
 import { SectionTitle, Toast } from '../components/ui'
 import { RidgeGlyph, MoktakGlyph } from '../components/illust'
-import { sponsors } from '../mock/data'
-import { useApp } from '../mock/store'
+import { sponsors } from '../data/constants'
+import { useApp } from '../data/AppProvider'
 import { useRequireAuth } from '../hooks/useRequireAuth'
 import { useToast } from '../hooks/useToast'
 
@@ -38,7 +38,7 @@ export default function More() {
           {user ? (
             <div className="flex gap-2">
               {user.is_admin && <Link to="/admin" className="btn-ghost">관리자</Link>}
-              <button onClick={() => { logout(); show('로그아웃했습니다') }} className="btn-ghost text-sub">로그아웃</button>
+              <button onClick={async () => { await logout(); show('로그아웃했습니다') }} className="btn-ghost text-sub">로그아웃</button>
             </div>
           ) : (
             <button onClick={() => nav('/login', { state: { from: '/more' } })} className="btn !py-2.5 !text-[14px]">로그인</button>
@@ -57,7 +57,7 @@ export default function More() {
           <p className="mt-1 max-w-[70%] text-[13.5px] leading-relaxed text-ink/75">참가자 1인 1회. 마지막 날 아침 메인무대에서 추첨합니다.</p>
           <button
             disabled={luckyEntered}
-            onClick={() => requireAuth(() => { const r = enterLuckyDraw(); show(r.ok ? '응모했습니다' : r.error) })}
+            onClick={() => requireAuth(async () => { const r = await enterLuckyDraw(); show(r.ok ? '응모했습니다' : r.error) })}
             className="relative mt-5 rounded-full bg-ink px-6 py-3 text-[15px] font-bold text-white transition active:scale-95 disabled:bg-ink/35"
           >
             {luckyEntered ? '응모 완료' : '응모하기'}

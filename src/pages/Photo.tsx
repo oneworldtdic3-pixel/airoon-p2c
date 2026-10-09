@@ -5,12 +5,12 @@ import UploadSheet from '../components/photo/UploadSheet'
 import { BottomSheet, Chip, Toast } from '../components/ui'
 import Icon from '../components/ui/Icon'
 import { MoonGlyph } from '../components/illust'
-import { SPOTS } from '../mock/data'
-import { useApp } from '../mock/store'
+import { SPOTS } from '../data/constants'
+import { useApp } from '../data/AppProvider'
 import { useToast } from '../hooks/useToast'
 import { useRequireAuth } from '../hooks/useRequireAuth'
 import { timeAgo } from '../lib/format'
-import type { Photo as PhotoT, SpotTag } from '../mock/types'
+import type { Photo as PhotoT, SpotTag } from '../data/types'
 
 export default function Photo() {
   const { photos, likedIds, toggleLike } = useApp()
@@ -47,7 +47,7 @@ export default function Photo() {
             <img src={current.url} alt={`${current.spot_tag} 사진`} className="w-full rounded-tile" />
             <div className="mt-4 flex items-center justify-between">
               <span className="text-[13px] text-sub">{current.nickname} · {timeAgo(current.created_at)}</span>
-              <button onClick={() => toggleLike(current.id)} aria-pressed={likedIds.has(current.id)} className="btn-ghost gap-1.5">
+              <button onClick={() => requireAuth(() => { void toggleLike(current.id) })} aria-pressed={likedIds.has(current.id)} className="btn-ghost gap-1.5">
                 <Icon name="heart" fill={likedIds.has(current.id)} size={18} className={likedIds.has(current.id) ? 'text-deep' : ''} />{current.likes_count}
               </button>
             </div>

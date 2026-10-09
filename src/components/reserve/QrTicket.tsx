@@ -1,12 +1,11 @@
 import { QRCodeSVG } from 'qrcode.react'
-import { useApp } from '../../mock/store'
-import { programs } from '../../mock/data'
+import { useApp } from '../../data/AppProvider'
 import { fmtDay, fmtTime } from '../../lib/format'
 import { BottomSheet } from '../ui'
-import type { Booking } from '../../mock/types'
+import type { Booking } from '../../data/types'
 
 export default function QrTicket({ booking, onClose }: { booking: Booking | null; onClose: () => void }) {
-  const { sessions } = useApp()
+  const { programs, sessions } = useApp()
   const s = booking && sessions.find((x) => x.id === booking.session_id)
   const p = s && programs.find((x) => x.id === s.program_id)
   return (

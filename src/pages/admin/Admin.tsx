@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useApp } from '../../mock/store'
+import { useApp } from '../../data/AppProvider'
 
 // 4단계에서 구현: 예약 현황 / 알림 발행 / 부적절 사진 숨김
 export default function Admin() {

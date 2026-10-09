@@ -1,15 +1,15 @@
 import { useMemo, useState } from 'react'
-import { useApp } from '../../mock/store'
-import { EVENT_DAYS, programs } from '../../mock/data'
+import { useApp } from '../../data/AppProvider'
+import { EVENT_DAYS } from '../../data/constants'
 import { dayKey, fmtDay, fmtTime } from '../../lib/format'
 import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { BottomSheet, Chip, Tag } from '../ui'
 import Icon from '../ui/Icon'
 import QrTicket from './QrTicket'
-import type { Booking, Program } from '../../mock/types'
+import type { Booking, Program } from '../../data/types'
 
 export default function ProgramList({ toast }: { toast: (m: string) => void }) {
-  const { sessions, bookings, bookSession, cancelBooking } = useApp()
+  const { programs, sessions, bookings, bookSession, cancelBooking } = useApp()
   const requireAuth = useRequireAuth()
   const [day, setDay] = useState<string>(EVENT_DAYS[0])
   const [open, setOpen] = useState<Program | null>(null)
@@ -20,14 +20,14 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
       programs
         .map((p) => ({ p, ss: sessions.filter((s) => s.program_id === p.id && dayKey(s.starts_at) === day).sort((a, b) => a.starts_at.localeCompare(b.starts_at)) }))
         .filter((x) => x.ss.length),
-    [sessions, day],
+    [programs, sessions, day],
   )
   const mine = bookings.filter((b) => b.status === 'confirmed')
   const bookingOf = (sid: string) => mine.find((b) => b.session_id === sid)
 
   const book = (sid: string) =>
-    requireAuth(() => {
-      const r = bookSession(sid)
+    requireAuth(async () => {
+      const r = await bookSession(sid)
       if (!r.ok) return toast(r.error)
       toast('예약되었습니다')
       setOpen(null)
@@ -115,7 +115,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
                       <span className="tnum block text-[11px] text-gray-400">정원 {s.capacity}</span>
                     </span>
                     {mineB ? (
-                      <button onClick={() => { cancelBooking(mineB.id); toast('예약을 취소했습니다') }} className="btn-ghost">취소</button>
+                      <button onClick={async () => { const r = await cancelBooking(mineB.id); toast(r.ok ? '예약을 취소했습니다' : r.error) }} className="btn-ghost">취소</button>
                     ) : (
                       <button disabled={left === 0} onClick={() => book(s.id)} className="btn !px-5 !py-2.5 !text-[14px]">예약</button>
                     )}

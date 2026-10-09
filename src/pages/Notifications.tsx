@@ -1,7 +1,7 @@
 import PageHeader from '../components/layout/PageHeader'
 import { Toggle } from '../components/ui'
 import { MoktakGlyph } from '../components/illust'
-import { useApp } from '../mock/store'
+import { useApp } from '../data/AppProvider'
 import { timeAgo } from '../lib/format'
 import { useRequireAuth } from '../hooks/useRequireAuth'
 
@@ -19,7 +19,7 @@ export default function Notifications() {
             <p className="text-[14px] font-bold">카카오 알림톡으로도 받기</p>
             <p className="mt-0.5 text-[12px] leading-snug text-sub">예약 10분 전, 마감 임박 소식. 발송은 준비 중입니다.</p>
           </div>
-          <Toggle on={consent} label="카카오 알림톡 수신 동의" onChange={(v) => requireAuth(() => setConsent(v))} />
+          <Toggle on={consent} label="카카오 알림톡 수신 동의" onChange={(v) => requireAuth(() => { void setConsent(v) })} />
         </div>
         <ol className="mt-4">
           {notifications.map((n, i) => (

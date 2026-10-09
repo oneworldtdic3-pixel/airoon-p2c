@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useApp } from '../../mock/store'
-import { banners } from '../../mock/data'
+import { useApp } from '../../data/AppProvider'
 import Icon from '../ui/Icon'
 
 type Card =
@@ -15,14 +14,14 @@ const Arrow = () => (
 
 /** BEST PHOTO 1장 + 광고 배너 2장 이상을 겹친 카드 덱. 3.5초 자동 전환, 스와이프 가능 */
 export default function PhotoDeck() {
-  const { photos } = useApp()
+  const { photos, banners } = useApp()
   const nav = useNavigate()
   const cards = useMemo<Card[]>(() => {
     const best = [...photos].filter((p) => !p.is_hidden).sort((a, b) => b.likes_count - a.likes_count)[0]
     const ads: Card[] = banners.map((b) => ({ kind: 'ad', id: b.id, url: b.image, sponsor: b.sponsor, title: b.title, sub: b.sub, link: b.link, bg: b.bg }))
     const event: Card = { kind: 'event', id: 'poster', url: '/poster-square.jpg' }
     return best ? [event, { kind: 'photo', id: best.id, url: best.url, spot: best.spot_tag, nickname: best.nickname, likes: best.likes_count }, ...ads] : [event, ...ads]
-  }, [photos])
+  }, [photos, banners])
   const [idx, setIdx] = useState(0)
   const [paused, setPaused] = useState(false)
   const startX = useRef<number | null>(null)

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useApp } from '../../mock/store'
+import { useApp } from '../../data/AppProvider'
 import { timeAgo } from '../../lib/format'
 import Icon from '../ui/Icon'
 

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
-import { useApp } from '../../mock/store'
-import { EVENT_DAYS, SHOWER_BUILDINGS } from '../../mock/data'
+import { useApp } from '../../data/AppProvider'
+import { EVENT_DAYS, SHOWER_BUILDINGS } from '../../data/constants'
 import { dayKey, fmtTime } from '../../lib/format'
 import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { Chip } from '../ui'
@@ -36,9 +36,9 @@ export default function ShowerGrid({ toast }: { toast: (m: string) => void }) {
             <button
               key={s.id}
               disabled={full}
-              onClick={() => requireAuth(() => {
-                if (mine) { cancelShower(mine.id); return toast('예약을 취소했습니다') }
-                const r = bookShower(s.id)
+              onClick={() => requireAuth(async () => {
+                if (mine) { const r = await cancelShower(mine.id); return toast(r.ok ? '예약을 취소했습니다' : r.error) }
+                const r = await bookShower(s.id)
                 toast(r.ok ? '샤워실을 예약했습니다' : r.error)
               })}
               className={`rounded-xl border py-2.5 text-center transition duration-150 active:scale-95 ${mine ? 'border-deep bg-deep text-white' : full ? 'border-transparent bg-gray-50 text-gray-300' : 'border-line bg-white text-ink'}`}

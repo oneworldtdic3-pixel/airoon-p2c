@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useApp } from '../../mock/store'
-import { EVENT_DAYS } from '../../mock/data'
+import { useApp } from '../../data/AppProvider'
+import { EVENT_DAYS } from '../../data/constants'
 import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { Chip } from '../ui'
 import Icon from '../ui/Icon'
@@ -52,8 +52,8 @@ export default function ParkingForm({ toast }: { toast: (m: string) => void }) {
 
       <button
         className="btn w-full"
-        onClick={() => requireAuth(() => {
-          const r = saveParking(zone, car, dates)
+        onClick={() => requireAuth(async () => {
+          const r = await saveParking(zone, car, dates)
           toast(r.ok ? '주차 정보를 등록했습니다' : r.error)
         })}
       >

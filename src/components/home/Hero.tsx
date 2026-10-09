@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ddayLabel } from '../../lib/dday'
-import { useApp } from '../../mock/store'
+import { useApp } from '../../data/AppProvider'
 import PhotoDeck from './PhotoDeck'
 
 export default function Hero() {
