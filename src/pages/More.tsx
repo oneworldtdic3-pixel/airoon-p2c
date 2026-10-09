@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import PageHeader from '../components/layout/PageHeader'
 import EventMap from '../components/more/EventMap'
 import { SectionTitle, Toast } from '../components/ui'
+import SocialLinks from '../components/ui/SocialLinks'
 import { RidgeGlyph, MoktakGlyph } from '../components/illust'
 import { SPONSOR_TIERS } from '../data/constants'
 import { useApp } from '../data/AppProvider'
@@ -46,6 +47,12 @@ export default function More() {
               <button onClick={() => nav('/login', { state: { from: '/more' } })} className="btn !py-2.5 !text-[14px]">로그인</button>
             </div>
           )}
+        </section>
+
+        <section className="pt-8">
+          <SectionTitle eyebrow="Follow">산사캠프 소식</SectionTitle>
+          <p className="-mt-2 mb-4 text-[13px] text-sub">라인업과 현장 소식은 SNS에 먼저 올라옵니다.</p>
+          <SocialLinks />
         </section>
 
         <section id="map" className="scroll-mt-4 pt-10">

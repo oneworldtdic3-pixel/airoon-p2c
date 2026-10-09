@@ -18,3 +18,8 @@ export const SPONSOR_TIERS: { tier: string; items: SponsorLogo[] }[] = [
 ]
 /** 개발용 테스트 번호 — Supabase 대시보드 Phone 공급자의 Test phone numbers 에 같은 값을 등록해야 한다 */
 export const TEST_PHONES = { user: '+821012345678', admin: '+821000000000', otp: '123456' }
+
+export const SOCIAL = [
+  { id: 'instagram', name: '인스타그램', handle: '@sansacamp', url: 'https://www.instagram.com/sansacamp' },
+  { id: 'youtube', name: '유튜브', handle: '@sansacamp', url: 'https://www.youtube.com/@sansacamp' },
+] as const

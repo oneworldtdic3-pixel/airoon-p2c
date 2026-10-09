@@ -1,4 +1,5 @@
 import { SPONSOR_TIERS } from '../../data/constants'
+import SocialLinks from '../ui/SocialLinks'
 
 export default function SponsorStrip() {
   return (
@@ -16,6 +17,10 @@ export default function SponsorStrip() {
           </div>
         ))}
       </dl>
+      <div className="mt-7 flex items-center gap-4">
+        <span className="eyebrow w-10 shrink-0">SNS</span>
+        <SocialLinks compact />
+      </div>
       <p className="mt-6 text-[11px] text-gray-400">2026.11.6 (금) 14:00 – 11.8 (일) 11:00 · 하동 쌍계사 일원 · 캠핑존 / 한옥 방사 스테이</p>
     </section>
   )
