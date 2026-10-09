@@ -1,26 +1,38 @@
-import { ddayLabel, daysUntilStart } from '../../lib/dday'
-import { HeroScene } from '../illust'
+import { Link } from 'react-router-dom'
+import { ddayLabel } from '../../lib/dday'
+import { useApp } from '../../mock/store'
+import PhotoDeck from './PhotoDeck'
 
 export default function Hero() {
-  const d = daysUntilStart()
+  const { user } = useApp()
   return (
-    <section className="relative overflow-hidden bg-hero-grad text-white">
-      <div className="relative z-10 px-6 pt-[calc(env(safe-area-inset-top)+22px)]">
-        <div className="flex items-center justify-between">
-          <p className="text-[12px] font-bold tracking-[0.22em]">SANSA CAMP 2026</p>
-          <p className="text-[12px] font-semibold tracking-wide opacity-90">하동 쌍계사</p>
-        </div>
-        <h1 className="mt-9 text-[34px] font-extrabold leading-[1.18]">
-          이번 가을,<br />산사에서 쉬어갈까요?
-        </h1>
-        <div className="mt-5 flex items-baseline gap-3">
-          <span className="tnum text-[40px] font-extrabold leading-none text-sun">{ddayLabel()}</span>
-          <span className="text-[13px] font-semibold opacity-90">
-            {d > 0 ? '11월 6일 금요일 2시 입재' : d >= -2 ? '가장 조용한 페스티벌, 진행 중' : '세 밤의 기록'}
+    <section className="relative overflow-hidden pt-[calc(env(safe-area-inset-top)+16px)]">
+      {/* 아주 옅은 민트 번짐 */}
+      <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-mint blur-3xl" />
+
+      <div className="relative flex items-center justify-between px-5">
+        <Link to={user ? '/more' : '/login'} className="flex items-center gap-3">
+          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-deep text-[16px] font-extrabold text-white">
+            {user ? user.nickname.slice(0, 1) : '산'}
           </span>
-        </div>
+          <span>
+            <span className="block text-[15px] font-extrabold leading-tight">{user ? `${user.nickname}님` : '산사캠프'}</span>
+            <span className="block text-[12px] text-sub">{user ? '@sansacamp' : '하동 쌍계사 · 11.6–11.8'}</span>
+          </span>
+        </Link>
+        <span className="tnum rounded-full bg-sun px-3.5 py-1.5 text-[13px] font-extrabold">{ddayLabel()}</span>
       </div>
-      <HeroScene className="-mt-6 block h-[260px] w-full" />
+
+      <div className="relative mt-8 px-5">
+        <p className="text-[15px] text-sub">이번 가을, 산사에서 쉬어갈까요?</p>
+        <h1 className="mt-0.5 text-[42px] font-extrabold leading-none tracking-[-0.03em]">산사캠프</h1>
+      </div>
+
+      <div className="relative mt-6 flex items-center justify-between px-5">
+        <p className="text-[13px] font-semibold text-ink">BEST PHOTO</p>
+        <Link to="/photo" className="text-[12px] font-semibold text-sub">전체</Link>
+      </div>
+      <PhotoDeck />
     </section>
   )
 }
