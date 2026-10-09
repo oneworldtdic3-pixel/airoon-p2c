@@ -4,7 +4,7 @@ import { useApp } from '../../data/AppProvider'
 import Icon from '../ui/Icon'
 
 type Card =
-  | { kind: 'event'; id: string; url: string }
+  | { kind: 'event'; id: string; url: string; full?: boolean }
   | { kind: 'photo'; id: string; url: string; spot: string; nickname: string; likes: number }
   | { kind: 'ad'; id: string; url: string; sponsor: string; title: string; sub: string; link: string; bg: string }
 
@@ -19,8 +19,11 @@ export default function PhotoDeck() {
   const cards = useMemo<Card[]>(() => {
     const best = [...photos].filter((p) => !p.is_hidden).sort((a, b) => b.likes_count - a.likes_count)[0]
     const ads: Card[] = banners.map((b) => ({ kind: 'ad', id: b.id, url: b.image, sponsor: b.sponsor, title: b.title, sub: b.sub, link: b.link, bg: b.bg }))
-    const event: Card = { kind: 'event', id: 'poster', url: '/poster-square.jpg' }
-    return best ? [event, { kind: 'photo', id: best.id, url: best.url, spot: best.spot_tag, nickname: best.nickname, likes: best.likes_count }, ...ads] : [event, ...ads]
+    const events: Card[] = [
+      { kind: 'event', id: 'poster', url: '/poster-square.jpg' },
+      { kind: 'event', id: 'poster-music', url: '/banner-music.jpg', full: true },
+    ]
+    return best ? [events[0], { kind: 'photo', id: best.id, url: best.url, spot: best.spot_tag, nickname: best.nickname, likes: best.likes_count }, events[1], ...ads] : [...events, ...ads]
   }, [photos, banners])
   const [idx, setIdx] = useState(0)
   const [paused, setPaused] = useState(false)
@@ -64,12 +67,18 @@ export default function PhotoDeck() {
             style={{ ...style, background: c.kind === 'ad' ? c.bg : c.kind === 'event' ? '#2EA7E0' : '#35D6BD' }}
           >
             <img src={c.url} alt="" aria-hidden className="absolute inset-0 h-full w-full scale-125 object-cover blur-xl" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 to-ink/70" />
-            <p className="absolute left-0 right-0 top-2 overflow-hidden whitespace-nowrap px-3 text-[64px] font-extrabold leading-none tracking-[-0.04em] text-white/80">{bigWord}</p>
-            <img src={c.url} alt={c.kind === 'photo' ? `${c.spot} 사진` : c.kind === 'ad' ? c.title : '2026 산사캠프 포스터'} draggable={false} className={`absolute left-[8%] right-[8%] top-[28%] w-[84%] rounded-2xl object-cover ring-1 ring-white/30 ${c.kind === 'event' ? 'h-[38%]' : 'h-[52%]'}`} />
+            <div className={`absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 ${c.kind === 'event' && c.full ? 'to-ink/25' : 'to-ink/70'}`} />
+            {!(c.kind === 'event' && c.full) && <p className="absolute left-0 right-0 top-2 overflow-hidden whitespace-nowrap px-3 text-[64px] font-extrabold leading-none tracking-[-0.04em] text-white/80">{bigWord}</p>}
+            {c.kind === 'event' && c.full ? (
+              <img src={c.url} alt="행사 포스터" draggable={false} className="absolute inset-0 h-full w-full object-cover object-top" />
+            ) : (
+              <img src={c.url} alt={c.kind === 'photo' ? `${c.spot} 사진` : c.kind === 'ad' ? c.title : '2026 산사캠프 포스터'} draggable={false} className={`absolute left-[8%] right-[8%] top-[28%] w-[84%] rounded-2xl object-cover ring-1 ring-white/30 ${c.kind === 'event' ? 'h-[38%]' : 'h-[52%]'}`} />
+            )}
             {c.kind === 'ad' && <span className="absolute left-4 top-4 rounded-md bg-white/90 px-1.5 py-0.5 text-[10px] font-extrabold tracking-wider text-ink">AD</span>}
             <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 text-white">
-              {c.kind === 'event' ? (
+              {c.kind === 'event' && c.full ? (
+                <div />
+              ) : c.kind === 'event' ? (
                 <div>
                   <p className="text-[12px] font-semibold tracking-wide opacity-85">2026 산사에서 즐기는 마인드 디톡스</p>
                   <p className="mt-0.5 text-[20px] font-extrabold leading-tight">11.06 FRI – 11.08 SUN</p>
