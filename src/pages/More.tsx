@@ -4,7 +4,7 @@ import PageHeader from '../components/layout/PageHeader'
 import EventMap from '../components/more/EventMap'
 import { SectionTitle, Toast } from '../components/ui'
 import { RidgeGlyph, MoktakGlyph } from '../components/illust'
-import { sponsors } from '../data/constants'
+import { SPONSOR_TIERS } from '../data/constants'
 import { useApp } from '../data/AppProvider'
 import { useRequireAuth } from '../hooks/useRequireAuth'
 import { useToast } from '../hooks/useToast'
@@ -81,11 +81,16 @@ export default function More() {
 
         <section className="pt-10">
           <SectionTitle eyebrow="Sponsors">함께하는 곳</SectionTitle>
-          <dl className="space-y-4 text-[14px]">
-            {(['HOST', 'PARTNER', 'BOOTH'] as const).map((tier) => (
-              <div key={tier} className="grid grid-cols-[72px_1fr] gap-3 border-t hairline pt-4">
-                <dt className="eyebrow pt-1">{tier}</dt>
-                <dd className={`leading-relaxed ${tier === 'HOST' ? 'text-[17px] font-extrabold' : tier === 'PARTNER' ? 'font-bold' : 'text-sub'}`}>{sponsors[tier].join(' · ')}</dd>
+          <dl>
+            {SPONSOR_TIERS.map(({ tier, items }) => (
+              <div key={tier} className="grid grid-cols-[64px_1fr] items-center gap-3 border-t hairline py-4">
+                <dt className="eyebrow">{tier}</dt>
+                <dd className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                  {items.map((it) =>
+                    it.src ? <img key={it.name} src={it.src} alt={it.name} style={{ height: (it.h ?? 22) * 1.3 }} className="w-auto" loading="lazy" />
+                           : <span key={it.name} className="text-[16px] font-extrabold">{it.name}</span>,
+                  )}
+                </dd>
               </div>
             ))}
           </dl>

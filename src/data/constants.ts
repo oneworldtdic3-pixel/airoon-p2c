@@ -8,11 +8,13 @@ export const SHOWER_BUILDINGS = [
   { building: '샤워동 C', gender: 'F' as const },
   { building: '샤워동 D', gender: 'M' as const },
 ]
-// 포스터 하단 표기 확인 전 임시값
-export const sponsors = {
-  HOST: ['하동군', '쌍계사'],
-  PARTNER: ['하동녹차협동조합', '지리산 로컬푸드', '산책 아웃도어'],
-  BOOTH: ['차담', '고요 향초', '달빛 베이커리', '연등공방', '숲 커피', '돌담 문구', '온기 담요', '솔향 비누'],
-}
+export interface SponsorLogo { name: string; src?: string; h?: number }
+/** 주최·주관·후원·언론사. 로고는 public/sponsors (투명 PNG, 높이 160px) */
+export const SPONSOR_TIERS: { tier: string; items: SponsorLogo[] }[] = [
+  { tier: '주최', items: [{ name: '하동 쌍계사', src: '/sponsors/ssanggyesa.png', h: 22 }, { name: '한국불교문화사업단', src: '/sponsors/kbcc.png', h: 24 }] },
+  { tier: '주관', items: [{ name: '산사캠프 사무국', src: '/wordmark.png', h: 30 }] },
+  { tier: '후원', items: [{ name: '농협', src: '/sponsors/nh.png', h: 26 }, { name: 'NH투자증권', src: '/sponsors/nhis.png', h: 20 }, { name: '㈜도반HC', src: '/sponsors/dobanhc.png', h: 22 }] },
+  { tier: '언론사', items: [{ name: '불교닷컴' }] },
+]
 /** 개발용 테스트 번호 — Supabase 대시보드 Phone 공급자의 Test phone numbers 에 같은 값을 등록해야 한다 */
 export const TEST_PHONES = { user: '+821012345678', admin: '+821000000000', otp: '123456' }
