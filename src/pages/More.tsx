@@ -41,7 +41,10 @@ export default function More() {
               <button onClick={async () => { await logout(); show('로그아웃했습니다') }} className="btn-ghost text-sub">로그아웃</button>
             </div>
           ) : (
-            <button onClick={() => nav('/login', { state: { from: '/more' } })} className="btn !py-2.5 !text-[14px]">로그인</button>
+            <div className="flex gap-2">
+              <button onClick={() => nav('/login?mode=signup', { state: { from: '/more' } })} className="btn-ghost">회원가입</button>
+              <button onClick={() => nav('/login', { state: { from: '/more' } })} className="btn !py-2.5 !text-[14px]">로그인</button>
+            </div>
           )}
         </section>
 

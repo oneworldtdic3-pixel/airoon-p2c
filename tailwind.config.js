@@ -26,6 +26,7 @@ export default {
       backgroundImage: {
         'hero-grad': 'linear-gradient(180deg, #72E1B8 0%, #35D6BD 50%, #05C7C7 100%)',
         'brand-grad': 'linear-gradient(160deg, #72E1B8 0%, #35D6BD 50%, #05C7C7 100%)',
+        'btn-grad': 'linear-gradient(135deg, #35D6BD 0%, #05C7C7 100%)',
       },
     },
   },

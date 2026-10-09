@@ -35,7 +35,7 @@ input, select, textarea { font-size: 16px; }
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center rounded-full bg-brand-grad px-5 py-3 text-[15px] font-bold text-white transition duration-200 active:scale-[0.97] disabled:bg-none disabled:bg-gray-200 disabled:text-gray-400;
+    @apply inline-flex items-center justify-center rounded-full bg-btn-grad px-5 py-3 text-[15px] font-bold text-white transition duration-200 active:scale-[0.97] disabled:bg-none disabled:bg-gray-200 disabled:text-gray-400;
   }
   .btn-ghost {
     @apply inline-flex items-center justify-center rounded-full border border-line px-4 py-2.5 text-[14px] font-bold text-ink transition active:scale-[0.97];

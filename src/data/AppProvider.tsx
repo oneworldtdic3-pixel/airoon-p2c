@@ -13,7 +13,7 @@ interface Ctx {
   ready: boolean
   user: Profile | null
   sendOtp: (phone: string) => Promise<Result>
-  verifyOtp: (phone: string, otp: string, nickname?: string) => Promise<Result>
+  verifyOtp: (phone: string, otp: string, profile?: { nickname?: string; consent?: boolean }) => Promise<Result>
   logout: () => Promise<void>
 
   programs: Program[]
@@ -137,10 +137,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const { error } = await supabase.auth.signInWithOtp({ phone: toE164(phone) })
     return error ? fail(error) : { ok: true }
   }
-  const verifyOtp: Ctx['verifyOtp'] = async (phone, otp, nickname) => {
+  const verifyOtp: Ctx['verifyOtp'] = async (phone, otp, profile) => {
     const { data, error } = await supabase.auth.verifyOtp({ phone: toE164(phone), token: otp, type: 'sms' })
     if (error) return fail(error)
-    if (nickname?.trim() && data.user) await supabase.from('profiles').update({ nickname: nickname.trim() }).eq('id', data.user.id)
+    const patch: Record<string, unknown> = {}
+    if (profile?.nickname?.trim()) patch.nickname = profile.nickname.trim()
+    if (profile?.consent !== undefined) patch.kakao_alimtalk_consent = profile.consent
+    if (Object.keys(patch).length && data.user) await supabase.from('profiles').update(patch).eq('id', data.user.id)
     await qc.invalidateQueries({ queryKey: ['profile'] })
     return { ok: true }
   }
