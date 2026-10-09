@@ -12,3 +12,4 @@ export type SpotTag = '일주문' | '대웅전 계단' | '차밭 능선' | '불�
 export interface Photo { id: string; user_id: string; spot_tag: SpotTag; url: string; likes_count: number; is_hidden: boolean; created_at: string; nickname: string }
 export interface AppNotification { id: string; type: 'booth' | 'luckydraw' | 'reminder' | 'market' | 'notice'; title: string; body: string; created_at: string }
 export interface User { id: string; nickname: string; phone: string; team_id: string | null; is_admin: boolean }
+export interface Banner { id: string; sponsor: string; title: string; sub: string; image: string; link: string; bg: string }

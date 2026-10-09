@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <div className="pt-8"><LiveBanner /></div>
+      <div className="pt-10"><LiveBanner /></div>
       <QuickLinks />
       <TodaySchedule />
       <SponsorStrip />

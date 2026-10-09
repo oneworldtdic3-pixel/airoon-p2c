@@ -1,4 +1,4 @@
-import type { AppNotification, Photo, Program, ProgramSession, ShowerSlot, SpotTag } from './types'
+import type { AppNotification, Banner, Photo, Program, ProgramSession, ShowerSlot, SpotTag } from './types'
 import { sceneArt } from './art'
 
 export const EVENT_DAYS = ['2026-11-06', '2026-11-07', '2026-11-08'] as const
@@ -104,3 +104,13 @@ export const sponsors = {
   PARTNER: ['하동녹차협동조합', '지리산 로컬푸드', '산책 아웃도어'],
   BOOTH: ['차담', '고요 향초', '달빛 베이커리', '연등공방', '숲 커피', '돌담 문구', '온기 담요', '솔향 비누'],
 }
+
+// 홈 덱 광고 배너 (협찬사). 2단계에서 banners 테이블로 이관
+const bannerArt = (a: string, b: string, accent: string, seed: number) =>
+  `data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 200"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="300" height="200" fill="url(#g)"/><circle cx="${230 - seed * 40}" cy="${60 + seed * 20}" r="46" fill="${accent}" opacity=".9"/><path d="M-10 170q80-50 160-10t160-20v70H-10Z" fill="#fff" opacity=".25"/><path d="M-10 190q90-40 170-6t150-14v40H-10Z" fill="#fff" opacity=".35"/></svg>`)}`
+
+export const banners: Banner[] = [
+  { id: 'b1', sponsor: '하동녹차협동조합', title: '첫물 녹차 시음', sub: '산사장터 3번 부스 · 무료', image: bannerArt('#2F8F5B', '#9BD9B3', '#FFD64A', 0), link: '/more', bg: '#1F6B45' },
+  { id: 'b2', sponsor: '산책 아웃도어', title: '캠핑 체어 현장 20% 할인', sub: '팔찌 제시 시 · 11.6–11.8', image: bannerArt('#2C5E8A', '#9DCBEA', '#FFD64A', 1), link: '/more', bg: '#1E3F5C' },
+  { id: 'b3', sponsor: '달빛 베이커리', title: '새벽 예불 후 따뜻한 빵', sub: '공양간 앞 · 05:30–07:00', image: bannerArt('#8A5A2C', '#E8C79A', '#FFD64A', 2), link: '/more', bg: '#5C3A1E' },
+]

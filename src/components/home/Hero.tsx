@@ -31,7 +31,7 @@ export default function Hero() {
       </div>
 
       <div className="relative mt-6 flex items-center justify-between px-5">
-        <p className="text-[13px] font-semibold text-ink">BEST PHOTO</p>
+        <p className="text-[13px] font-semibold text-ink">BEST PHOTO & 소식</p>
         <Link to="/photo" className="text-[12px] font-semibold text-sub">전체</Link>
       </div>
       <PhotoDeck />
