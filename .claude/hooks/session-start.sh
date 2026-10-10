@@ -16,6 +16,11 @@ if ! command -v playwright-mcp >/dev/null 2>&1; then
   npm i -g @playwright/mcp
 fi
 
+# Install MarkItDown (CLI + MCP server used via .mcp.json) if missing (idempotent)
+if ! command -v markitdown-mcp >/dev/null 2>&1; then
+  pip install "markitdown[all]" markitdown-mcp
+fi
+
 # Use the pre-installed Chromium instead of `agent-browser install`
 CHROMIUM="/opt/pw-browsers/chromium"
 if [ -n "${CLAUDE_ENV_FILE:-}" ] && [ -x "$CHROMIUM" ]; then
