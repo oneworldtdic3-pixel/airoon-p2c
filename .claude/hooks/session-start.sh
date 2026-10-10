@@ -33,6 +33,11 @@ if command -v claude >/dev/null 2>&1 && ! claude plugin list 2>/dev/null | grep 
   claude plugin install ecc@ecc --scope user >/dev/null 2>&1 || true
 fi
 
+# Install Graphify (knowledge-graph builder; CLI `graphify`, PyPI name graphifyy) if missing (idempotent)
+if ! command -v graphify >/dev/null 2>&1; then
+  pip install graphifyy
+fi
+
 # Use the pre-installed Chromium instead of `agent-browser install`
 CHROMIUM="/opt/pw-browsers/chromium"
 if [ -n "${CLAUDE_ENV_FILE:-}" ] && [ -x "$CHROMIUM" ]; then
