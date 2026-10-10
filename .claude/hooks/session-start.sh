@@ -33,6 +33,12 @@ if command -v claude >/dev/null 2>&1 && ! claude plugin list 2>/dev/null | grep 
   claude plugin install ecc@ecc --scope user >/dev/null 2>&1 || true
 fi
 
+# Install prompts.chat plugin (prompt/skill search; its MCP server needs prompts.chat egress) if missing (idempotent)
+if command -v claude >/dev/null 2>&1 && ! claude plugin list 2>/dev/null | grep -q 'prompts.chat@prompts.chat'; then
+  claude plugin marketplace add f/prompts.chat >/dev/null 2>&1 || true
+  claude plugin install prompts.chat@prompts.chat --scope user >/dev/null 2>&1 || true
+fi
+
 # Install Graphify (knowledge-graph builder; CLI `graphify`, PyPI name graphifyy) if missing (idempotent)
 if ! command -v graphify >/dev/null 2>&1; then
   pip install graphifyy
