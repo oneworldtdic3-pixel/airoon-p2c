@@ -21,6 +21,11 @@ if ! command -v markitdown-mcp >/dev/null 2>&1; then
   pip install "markitdown[all]" markitdown-mcp
 fi
 
+# Install Agent Reach (read-only; no --system, no login channels) if missing (idempotent)
+if ! command -v agent-reach >/dev/null 2>&1; then
+  pip install "git+https://github.com/Panniantong/agent-reach.git@main"
+fi
+
 # Use the pre-installed Chromium instead of `agent-browser install`
 CHROMIUM="/opt/pw-browsers/chromium"
 if [ -n "${CLAUDE_ENV_FILE:-}" ] && [ -x "$CHROMIUM" ]; then
