@@ -21,7 +21,7 @@ export default function PhotoDeck() {
     const ads: Card[] = banners.map((b) => ({ kind: 'ad', id: b.id, url: b.image, sponsor: b.sponsor, title: b.title, sub: b.sub, link: b.link, bg: b.bg }))
     const events: Card[] = [
       { kind: 'event', id: 'poster', url: '/poster-square.jpg' },
-      { kind: 'event', id: 'poster-music', url: '/banner-music.jpg', full: true },
+      { kind: 'event', id: 'poster-full', url: '/poster-card.jpg', full: true },
     ]
     return best ? [events[0], { kind: 'photo', id: best.id, url: best.url, spot: best.spot_tag, nickname: best.nickname, likes: best.likes_count }, events[1], ...ads] : [...events, ...ads]
   }, [photos, banners])
@@ -117,7 +117,7 @@ export default function PhotoDeck() {
             <div className={`absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 ${c.kind === 'event' && c.full ? 'to-ink/25' : 'to-ink/70'}`} />
             {!(c.kind === 'event' && c.full) && <p className="absolute left-0 right-0 top-2 overflow-hidden whitespace-nowrap px-3 text-[64px] font-extrabold leading-none tracking-[-0.04em] text-white/80">{bigWord}</p>}
             {c.kind === 'event' && c.full ? (
-              <img src={c.url} alt="행사 포스터" draggable={false} className="absolute inset-0 h-full w-full object-cover object-top" />
+              <img src={c.url} alt="2026 산사캠프 with 쌍계사 포스터" draggable={false} className="absolute inset-0 h-full w-full object-cover object-top" />
             ) : (
               <img src={c.url} alt={c.kind === 'photo' ? `${c.spot} 사진` : c.kind === 'ad' ? c.title : '2026 산사캠프 포스터'} draggable={false} className={`absolute left-[8%] right-[8%] top-[28%] w-[84%] rounded-2xl object-cover ring-1 ring-white/30 ${c.kind === 'event' ? 'h-[38%]' : 'h-[52%]'}`} />
             )}
