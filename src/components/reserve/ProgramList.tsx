@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useApp } from '../../data/AppProvider'
 import { EVENT_DAYS } from '../../data/constants'
-import { dayKey, fmtDay, fmtPrice, fmtTime } from '../../lib/format'
+import { dayKey, fmtDay, fmtTime } from '../../lib/format'
 import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { BottomSheet, Chip, Tag } from '../ui'
 import Icon from '../ui/Icon'
@@ -75,7 +75,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
                       <h3 className="text-[18px] font-extrabold">{p.title}</h3>
                       {p.pet_allowed && <Icon name="paw" size={16} className="text-deep" />}
                     </div>
-                    <p className="mt-1 text-[12.5px] text-sub">{p.location} · {p.duration} · <span className={`tnum font-bold ${p.price ? 'text-ink' : 'text-deep'}`}>{fmtPrice(p.price)}</span></p>
+                    <p className="mt-1 text-[12.5px] text-sub">{p.location} · {p.duration}</p>
                     <p className="mt-2 text-[14px] leading-relaxed text-ink/80">{p.description}</p>
                     <div className="mt-3 flex items-center gap-3">
                       <div className="flex gap-1.5">
@@ -99,8 +99,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
       <BottomSheet open={!!open} onClose={() => setOpen(null)} title={open?.title}>
         {open && (
           <div>
-            <p className="text-[13px] text-sub">{open.location} · {open.duration} · <span className="tnum font-bold text-ink">{fmtPrice(open.price)}</span>{open.pet_allowed && ' · 반려견 동반 가능'}</p>
-            {open.price > 0 && <p className="mt-1 text-[12px] text-sub">참가비는 현장에서 결제합니다. 앱에서는 자리만 예약합니다.</p>}
+            <p className="text-[13px] text-sub">{open.location} · {open.duration}{open.pet_allowed && ' · 반려견 동반 가능'}</p>
             <p className="mt-2 text-[14px] leading-relaxed">{open.description}</p>
             <p className="eyebrow mb-2 mt-6">{fmtDay(`${day}T00:00:00+09:00`)}</p>
             <ul className="divide-y hairline border-y">
