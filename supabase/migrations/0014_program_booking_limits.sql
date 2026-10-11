@@ -1,0 +1,2 @@
+-- 프로그램 예약 제한: 1인당 하루 3개, 같은 프로그램 1회, 시간 겹침 불가 (book_session 교체). 운영 DB 적용 완료.
+-- 본문은 0002 의 book_session 에 daily_max / PROGRAM_DUPLICATE / PROGRAM_DAILY_LIMIT / PROGRAM_OVERLAP 검사를 추가한 것.

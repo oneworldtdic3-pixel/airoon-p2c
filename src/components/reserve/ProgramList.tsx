@@ -24,6 +24,10 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
     [programs, sessions, day],
   )
   const mine = bookings.filter((b) => b.status === 'confirmed')
+  const DAILY_MAX = 3 // 1인당 하루 프로그램 예약 상한 (DB book_session 과 동일)
+  const myToday = mine.filter((b) => { const s = sessions.find((x) => x.id === b.session_id); return s && dayKey(s.starts_at) === day })
+  const atLimit = myToday.length >= DAILY_MAX
+  const bookedProgramIds = new Set(mine.map((b) => sessions.find((x) => x.id === b.session_id)?.program_id))
   const bookingOf = (sid: string) => mine.find((b) => b.session_id === sid)
 
   const cancel = async (b: Booking, title: string, when: string) => {
@@ -94,6 +98,9 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
       <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5">
         {EVENT_DAYS.map((d, i) => <Chip key={d} active={day === d} onClick={() => setDay(d)}>{i + 1}일차 · 11.{Number(d.slice(-2))}</Chip>)}
       </div>
+      <p className={`tnum mt-3 text-[12.5px] font-bold ${atLimit ? 'text-ember' : 'text-sub'}`}>
+        이 날 내 예약 {myToday.length}/{DAILY_MAX}{atLimit ? ' · 더 예약하려면 하나를 취소하세요' : ' · 같은 프로그램은 1회, 시간이 겹치면 예약할 수 없습니다'}
+      </p>
 
       <ol className="mt-2">
         {list.map(({ p, ss }, i) => {
@@ -154,7 +161,9 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
                         <button type="button" onClick={() => void cancel(mineB, open.title, `${fmtDay(s.starts_at)} ${fmtTime(s.starts_at)}`)} className="px-2 py-1 text-[12px] font-semibold text-sub underline underline-offset-2">취소하기</button>
                       </span>
                     ) : (
-                      <button type="button" disabled={left === 0} onClick={() => book(s.id)} className="btn !px-5 !py-2.5 !text-[14px]">{left === 0 ? '마감' : '예약하기'}</button>
+                      <button type="button" disabled={left === 0 || atLimit || bookedProgramIds.has(open.id)} onClick={() => book(s.id)} className="btn !px-5 !py-2.5 !text-[14px]">
+                        {left === 0 ? '마감' : bookedProgramIds.has(open.id) ? '다른 회차 예약됨' : atLimit ? '하루 3개 초과' : '예약하기'}
+                      </button>
                     )}
                   </li>
                 )
