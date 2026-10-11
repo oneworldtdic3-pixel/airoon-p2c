@@ -6,7 +6,7 @@ import Icon from '../ui/Icon'
 type Card =
   | { kind: 'event'; id: string; url: string; full?: boolean }
   | { kind: 'photo'; id: string; url: string; spot: string; nickname: string; likes: number }
-  | { kind: 'ad'; id: string; url: string; sponsor: string; title: string; sub: string; link: string; bg: string }
+  | { kind: 'ad'; id: string; url: string; sponsor: string; title: string; sub: string; link: string; bg: string; full: boolean }
 
 const Arrow = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
@@ -18,7 +18,8 @@ export default function PhotoDeck() {
   const nav = useNavigate()
   const cards = useMemo<Card[]>(() => {
     const best = [...photos].filter((p) => !p.is_hidden).sort((a, b) => b.likes_count - a.likes_count)[0]
-    const ads: Card[] = banners.map((b) => ({ kind: 'ad', id: b.id, url: b.image, sponsor: b.sponsor, title: b.title, sub: b.sub, link: b.link, bg: b.bg }))
+    // 실제 배너 이미지(seed 가 아닌 것)는 카드 전면에 채우고, 개발용 일러스트는 안쪽 액자형으로
+    const ads: Card[] = banners.map((b) => ({ kind: 'ad', id: b.id, url: b.image, sponsor: b.sponsor, title: b.title, sub: b.sub, link: b.link, bg: b.bg, full: !b.image_path.startsWith('seed:') }))
     const events: Card[] = [
       { kind: 'event', id: 'poster', url: '/poster-square.jpg' },
       { kind: 'event', id: 'poster-full', url: '/poster-card.jpg', full: true },
@@ -101,6 +102,7 @@ export default function PhotoDeck() {
           : pos === n - 1 ? { transform: `translateX(calc(-59% + ${drag * 0.35}px)) translateY(${12 - Math.max(0, p) * 12}px) scale(${0.9 + Math.max(0, p) * 0.1})`, opacity: 0.4 + Math.max(0, p) * 0.6, zIndex: p > 0 ? 2 : 1 }
           : { transform: 'translateX(-50%) translateY(16px) scale(.85)', opacity: 0, zIndex: 0 }
         const bigWord = c.kind === 'photo' ? c.spot : c.kind === 'ad' ? c.sponsor : '산사캠프'
+        const full = c.kind !== 'photo' && c.full
         const go = () => nav(c.kind === 'photo' ? '/photo' : c.kind === 'ad' ? c.link : '/reserve')
         return (
           <article
@@ -115,12 +117,13 @@ export default function PhotoDeck() {
           >
             <img src={c.url} alt="" aria-hidden className="absolute inset-0 h-full w-full scale-125 object-cover blur-xl" />
             <div className={`absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 ${c.kind === 'event' && c.full ? 'to-ink/25' : 'to-ink/70'}`} />
-            {!(c.kind === 'event' && c.full) && <p className="absolute left-0 right-0 top-2 overflow-hidden whitespace-nowrap px-3 text-[64px] font-extrabold leading-none tracking-[-0.04em] text-white/80">{bigWord}</p>}
-            {c.kind === 'event' && c.full ? (
-              <img src={c.url} alt="2026 산사캠프 with 쌍계사 포스터" draggable={false} className="absolute inset-0 h-full w-full object-cover object-top" />
+            {!full && <p className="absolute left-0 right-0 top-2 overflow-hidden whitespace-nowrap px-3 text-[64px] font-extrabold leading-none tracking-[-0.04em] text-white/80">{bigWord}</p>}
+            {full ? (
+              <img src={c.url} alt={c.kind === 'ad' ? `${c.sponsor} · ${c.title}` : '2026 산사캠프 with 쌍계사 포스터'} draggable={false} className="absolute inset-0 h-full w-full object-cover object-top" />
             ) : (
               <img src={c.url} alt={c.kind === 'photo' ? `${c.spot} 사진` : c.kind === 'ad' ? c.title : '2026 산사캠프 포스터'} draggable={false} className={`absolute left-[8%] right-[8%] top-[28%] w-[84%] rounded-2xl object-cover ring-1 ring-white/30 ${c.kind === 'event' ? 'h-[38%]' : 'h-[52%]'}`} />
             )}
+            {c.kind === 'ad' && c.full && <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-ink/85 via-ink/40 to-transparent" />}
             {c.kind === 'ad' && <span className="absolute left-4 top-4 rounded-md bg-white/90 px-1.5 py-0.5 text-[10px] font-extrabold tracking-wider text-ink">AD</span>}
             <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 text-white">
               {c.kind === 'event' && c.full ? (
