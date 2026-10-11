@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useCooldown } from '../hooks/useCooldown'
+import { useInstall } from '../hooks/useInstall'
+import InstallSheet from '../components/InstallSheet'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import PageHeader from '../components/layout/PageHeader'
 import EventMap from '../components/more/EventMap'
@@ -27,6 +29,8 @@ export default function More() {
   const [phoneSheet, setPhoneSheet] = useState(false)
   const [lp, setLp] = useState({ phone: '', otp: '', sent: false, busy: false })
   const lpCooldown = useCooldown(60)
+  const [installSheet, setInstallSheet] = useState(false)
+  const { installed } = useInstall()
   const requireAuth = useRequireAuth()
   const { msg, show } = useToast()
 
@@ -108,6 +112,18 @@ export default function More() {
             </ul>
           </section>
         )}
+
+        <section className="pt-8">
+          <SectionTitle eyebrow="App">홈 화면에 추가</SectionTitle>
+          <div className="flex items-center gap-3 border-y hairline py-3">
+            <img src="/icon-192.png" alt="" width={40} height={40} className="h-10 w-10 rounded-[11px]" />
+            <div className="min-w-0 flex-1">
+              <p className="text-[15px] font-bold">산사캠프 앱으로 열기</p>
+              <p className="text-[12px] text-sub">{installed ? '홈 화면에서 실행 중입니다' : '아이콘 하나로 예약·QR 팔찌를 바로 꺼내요'}</p>
+            </div>
+            {installed ? <span className="text-[12px] font-bold text-deep">추가됨</span> : <button type="button" onClick={() => setInstallSheet(true)} className="btn-ghost !py-2 !text-[13px]">추가</button>}
+          </div>
+        </section>
 
         <section className="pt-8">
           <SectionTitle eyebrow="Follow">산사캠프 소식</SectionTitle>
@@ -194,6 +210,7 @@ export default function More() {
           )}
         </form>
       </BottomSheet>
+      <InstallSheet open={installSheet} onClose={() => setInstallSheet(false)} />
       <Toast msg={msg} />
     </>
   )
