@@ -36,6 +36,13 @@ npm run build
 발송 실패 시 앱에는 "인증 문자를 보내지 못했습니다. 잠시 후 다시 시도해주세요." 가 뜨고, 재발송은 60초 쿨다운 뒤에 가능하다.
 원인은 Edge Functions → `send-sms` → Logs 에서 본다.
 
+### 카카오 알림톡 (솔라피)
+
+- 흐름: 매 분 pg_cron → `alimtalk_call('reminder')` / 알림 발행 트리거 → `alimtalk_call('notice')` → Edge Function `send-alimtalk` → 솔라피 알림톡 API. 결과는 `alimtalk_log`.
+- 템플릿 문구와 승인 절차: `docs/alimtalk-templates.md`
+- 시크릿: `SOLAPI_PF_ID`, `SOLAPI_TPL_REMINDER`, `SOLAPI_TPL_NOTICE` (+ SMS 와 공용 키 3개). 템플릿 ID 가 비어 있으면 함수는 아무것도 보내지 않는다.
+- 호출 인증은 Vault 의 `alimtalk_cron_secret` 으로만 한다. 값은 어디에도 복사하지 않는다.
+
 ### 테스트 번호 (실제 문자 없이 개발)
 
 훅이 켜져 있어도 테스트 번호는 Auth 가 훅을 호출하지 않으므로 그대로 쓸 수 있다. 출시 전에 삭제한다.

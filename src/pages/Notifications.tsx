@@ -25,7 +25,7 @@ export default function Notifications() {
         <div className="flex items-center gap-4 rounded-tile bg-mint px-4 py-3.5">
           <div className="min-w-0 flex-1">
             <p className="text-[14px] font-bold">카카오 알림톡으로도 받기</p>
-            <p className="mt-0.5 text-[12px] leading-snug text-sub">예약 10분 전, 마감 임박 소식. 발송은 준비 중입니다.</p>
+            <p className="mt-0.5 text-[12px] leading-snug text-sub">예약한 프로그램 시작 10분 전 안내와 운영 공지를 카카오톡으로 받습니다. 휴대폰 번호가 연결된 계정만 받을 수 있어요.</p>
           </div>
           <Toggle on={consent} label="카카오 알림톡 수신 동의" onChange={(v) => requireAuth(() => { void setConsent(v) })} />
         </div>
