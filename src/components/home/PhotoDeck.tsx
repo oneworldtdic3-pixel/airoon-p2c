@@ -28,6 +28,7 @@ export default function PhotoDeck() {
   const [idx, setIdx] = useState(0)
   const [paused, setPaused] = useState(false)
   const startX = useRef<number | null>(null)
+  const swiped = useRef(false) // 스와이프 뒤에 따라오는 click 을 탭으로 오인하지 않게
   const n = cards.length
 
   useEffect(() => {
@@ -41,10 +42,10 @@ export default function PhotoDeck() {
   return (
     <div
       className="relative mt-3 h-[320px] select-none"
-      onPointerDown={(e) => { startX.current = e.clientX; setPaused(true) }}
+      onPointerDown={(e) => { startX.current = e.clientX; swiped.current = false; setPaused(true) }}
       onPointerUp={(e) => {
         const dx = startX.current === null ? 0 : e.clientX - startX.current
-        if (Math.abs(dx) > 30) setIdx((i) => (i + (dx < 0 ? 1 : n - 1)) % n)
+        if (Math.abs(dx) > 30) { swiped.current = true; setIdx((i) => (i + (dx < 0 ? 1 : n - 1)) % n) }
         startX.current = null
         setPaused(false)
       }}
@@ -63,7 +64,11 @@ export default function PhotoDeck() {
           <article
             key={c.id}
             aria-hidden={pos !== 0}
-            className="absolute left-1/2 top-0 h-full w-[72%] overflow-hidden rounded-[26px] transition-[transform,opacity] duration-500 ease-[cubic-bezier(.22,1,.36,1)]"
+            role={pos === 0 ? 'link' : undefined}
+            tabIndex={pos === 0 ? 0 : -1}
+            onClick={() => { if (pos === 0 && !swiped.current) go() }}
+            onKeyDown={(e) => { if (pos === 0 && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); go() } }}
+            className={`absolute left-1/2 top-0 h-full w-[72%] overflow-hidden rounded-[26px] transition-[transform,opacity] duration-500 ease-[cubic-bezier(.22,1,.36,1)] ${pos === 0 ? 'cursor-pointer active:scale-[0.985]' : 'pointer-events-none'}`}
             style={{ ...style, background: c.kind === 'ad' ? c.bg : c.kind === 'event' ? '#2EA7E0' : '#35D6BD' }}
           >
             <img src={c.url} alt="" aria-hidden className="absolute inset-0 h-full w-full scale-125 object-cover blur-xl" />
@@ -96,7 +101,7 @@ export default function PhotoDeck() {
                   <p className="mt-1 text-[12px] opacity-80">{c.sub}</p>
                 </div>
               )}
-              <button onClick={go} aria-label={c.kind === 'photo' ? '포토 전체 보기' : c.kind === 'ad' ? `${c.sponsor} 자세히` : '예약하기'} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-ink transition active:scale-90"><Arrow /></button>
+              <button onClick={(e) => { e.stopPropagation(); go() }} aria-label={c.kind === 'photo' ? '포토 전체 보기' : c.kind === 'ad' ? `${c.sponsor} 자세히` : '예약하기'} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-ink transition active:scale-90"><Arrow /></button>
             </div>
           </article>
         )
