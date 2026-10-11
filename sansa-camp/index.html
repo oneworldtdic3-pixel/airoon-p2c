@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>산사캠프 with 쌍계사</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
 /* MZ 타겟: 오트밀 바탕 + 먹 + 숲 초록, 포인트는 라임·포스터 태양 주황 두 개만 */
 :root{
@@ -22,19 +22,19 @@
 body{background:var(--ink);font-family:'Noto Sans KR',sans-serif;color:var(--ink);line-height:1.6;word-break:keep-all;-webkit-font-smoothing:antialiased}
 .wrap{max-width:645px;margin:0 auto;background:var(--oat);overflow:hidden}
 img{display:block;width:100%}
-.en{font-family:'Space Grotesk',sans-serif}
+.en{font-family:'IBM Plex Mono',sans-serif}
 section{padding:80px 28px}
-.kicker{display:flex;justify-content:space-between;font:700 12px 'Space Grotesk';letter-spacing:.14em;text-transform:uppercase;border-bottom:1.5px solid currentColor;padding-bottom:10px;margin-bottom:28px}
+section>h2{margin-top:0}
 h2{font-weight:900;font-size:42px;line-height:1.18;letter-spacing:-.045em;margin-bottom:22px}
 .hl{background:linear-gradient(transparent 55%,var(--lime) 55%,var(--lime) 92%,transparent 92%);padding:0 2px}
 .dark .hl{background:none;color:var(--lime)}
 .tags{display:flex;flex-wrap:wrap;gap:6px}
-.tags span{font-size:12.5px;font-weight:700;border:1.5px solid var(--ink);border-radius:99px;padding:3px 11px;background:var(--oat)}
+.tags span{font-size:12.5px;font-weight:700;border:1.5px solid var(--ink);border-radius:99px;padding:5px 13px;background:var(--oat)}
 .tags span.on{background:var(--lime)}
 .dark{background:var(--forest);color:var(--oat)}
 
 /* 마퀴 띠 */
-.marquee{background:var(--sun);color:var(--ink);white-space:nowrap;overflow:hidden;font:700 15px 'Space Grotesk';letter-spacing:.06em;padding:12px 0;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+.marquee{background:var(--sun);color:var(--ink);white-space:nowrap;overflow:hidden;font:700 15px 'IBM Plex Mono';letter-spacing:.02em;padding:12px 0;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
 .marquee.l{background:var(--lime)}
 .marquee span{display:inline-block;padding-left:12px}
 
@@ -48,34 +48,34 @@ h2{font-weight:900;font-size:42px;line-height:1.18;letter-spacing:-.045em;margin
 .stub::before{top:-11px}.stub::after{bottom:-11px}
 .stub .main{padding:22px 22px 20px;border-right:2px dashed rgba(243,239,230,.35)}
 .stub dl{display:grid;grid-template-columns:52px 1fr;row-gap:9px;font-size:14.5px}
-.stub dt{font:700 11px 'Space Grotesk';letter-spacing:.12em;color:var(--lime);padding-top:4px}
+.stub dt{font:700 11px 'IBM Plex Mono';letter-spacing:.05em;color:var(--lime);padding-top:4px}
 .stub dd{font-weight:700}
 .stub .side{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:14px;background:var(--lime);color:var(--ink)}
-.stub .side b{font:700 44px/1 'Space Grotesk';letter-spacing:-.03em}
+.stub .side b{font:700 44px/1 'IBM Plex Mono';letter-spacing:-.03em}
 .stub .side small{font-size:12px;font-weight:700;margin-top:6px}
-.stub .side i{font:700 10px 'Space Grotesk';letter-spacing:.16em;font-style:normal;margin-bottom:8px}
+.stub .side i{font:700 11px 'IBM Plex Mono';letter-spacing:.05em;font-style:normal;margin-bottom:8px}
 
 /* POINT 영수증 */
 .receipt{background:#fffdf7;color:var(--ink);padding:28px 24px 34px;font-size:14.5px;
   -webkit-mask:radial-gradient(8px at 50% 100%,#0000 97%,#000) 50% 100%/16px 100% repeat-x;
   mask:radial-gradient(8px at 50% 100%,#0000 97%,#000) 50% 100%/16px 100% repeat-x}
-.receipt .head{text-align:center;font:700 13px 'Space Grotesk';letter-spacing:.2em;padding-bottom:14px;border-bottom:1.5px dashed var(--ink)}
+.receipt .head{text-align:center;font:700 13px 'IBM Plex Mono';letter-spacing:.05em;padding-bottom:14px;border-bottom:1.5px dashed var(--ink)}
 .receipt .head b{display:block;font:900 22px 'Noto Sans KR';letter-spacing:-.02em;margin-bottom:2px}
 .item{display:grid;grid-template-columns:30px 1fr auto;gap:4px 8px;padding:15px 0;border-bottom:1px dashed var(--line)}
-.item .n{font:700 13px 'Space Grotesk';color:var(--mute);padding-top:2px}
+.item .n{font:700 13px 'IBM Plex Mono';color:var(--mute);padding-top:2px}
 .item b{font-size:16px;letter-spacing:-.02em}
-.item em{font:700 13px 'Space Grotesk';font-style:normal;align-self:start;padding-top:3px}
+.item em{font:700 13px 'IBM Plex Mono';font-style:normal;align-self:start;padding-top:3px}
 .item p{grid-column:2/4;font-size:13.5px;color:var(--mute)}
 .total{display:flex;justify-content:space-between;align-items:baseline;padding-top:18px;border-top:2px solid var(--ink);margin-top:2px}
 .total b{font-size:16px}
-.total span{font:700 30px 'Space Grotesk';letter-spacing:-.02em}
+.total span{font:700 30px 'IBM Plex Mono';letter-spacing:-.02em}
 .total span small{font:900 18px 'Noto Sans KR'}
 .receipt .bar{margin-top:22px;height:38px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 7px,transparent 7px 9px,var(--ink) 9px 10px,transparent 10px 13px)}
 
 /* PROGRAM */
 .list{border-top:2px solid var(--ink)}
 .pg{display:grid;grid-template-columns:62px 1fr;gap:4px 14px;padding:20px 0;border-bottom:1.5px solid var(--ink)}
-.pg .no{font:700 34px/1 'Space Grotesk';letter-spacing:-.04em;grid-row:1/4}
+.pg .no{font:700 34px/1 'IBM Plex Mono';letter-spacing:-.04em;grid-row:1/4}
 .pg h3{font-weight:900;font-size:21px;letter-spacing:-.035em;line-height:1.3}
 .pg p{font-size:14px;color:#4a463d}
 .pg .tags{margin-top:8px}
@@ -85,20 +85,20 @@ h2{font-weight:900;font-size:42px;line-height:1.18;letter-spacing:-.045em;margin
 .pg.star .tags span{background:transparent;border-color:var(--oat);color:var(--oat)}
 .pg.star .tags span.on{background:var(--lime);color:var(--ink);border-color:var(--lime)}
 .note-pill{margin-top:28px;font-size:14px;font-weight:700;display:flex;gap:10px;align-items:center}
-.note-pill::before{content:"APP";font:700 11px 'Space Grotesk';letter-spacing:.1em;background:var(--ink);color:var(--lime);padding:3px 8px;border-radius:5px}
+.note-pill::before{content:"APP";font:700 11px 'IBM Plex Mono';letter-spacing:.05em;background:var(--ink);color:var(--lime);padding:5px 10px;border-radius:5px}
 
 /* SCHEDULE */
 .day{display:grid;grid-template-columns:92px 1fr;gap:18px;padding:24px 0;border-top:1px solid rgba(243,239,230,.2)}
-.day .d b{display:block;font:700 15px 'Space Grotesk';letter-spacing:.08em;color:var(--lime)}
-.day .d span{font:700 38px/1.05 'Space Grotesk';letter-spacing:-.04em}
-.day .d small{display:block;font:700 12px 'Space Grotesk';letter-spacing:.12em;opacity:.7}
+.day .d b{display:block;font:700 15px 'IBM Plex Mono';letter-spacing:.05em;color:var(--lime)}
+.day .d span{font:700 38px/1.05 'IBM Plex Mono';letter-spacing:-.04em}
+.day .d small{display:block;font:700 12px 'IBM Plex Mono';letter-spacing:.05em;opacity:.7}
 .day ul{list-style:none;font-size:15px}
 .day li{padding:5px 0;display:flex;gap:10px}
-.day li i{flex:none;font:700 13px 'Space Grotesk';font-style:normal;color:var(--lime);width:46px;padding-top:2px}
+.day li i{flex:none;font:700 13px 'IBM Plex Mono';font-style:normal;color:var(--lime);width:46px;padding-top:2px}
 .day li.night{color:var(--lime);font-weight:700}
 .moon{display:flex;justify-content:space-between;align-items:center;background:var(--lime);color:var(--ink);border-radius:14px;padding:18px 20px;margin-top:10px}
 .moon b{font-weight:900;font-size:19px;letter-spacing:-.03em}
-.moon span{font:700 22px 'Space Grotesk'}
+.moon span{font:700 22px 'IBM Plex Mono'}
 .sm{font-size:13px;opacity:.7;margin-top:16px}
 
 /* TICKET */
@@ -106,14 +106,14 @@ h2{font-weight:900;font-size:42px;line-height:1.18;letter-spacing:-.045em;margin
 .tk{background:#fffdf7;border:2px solid var(--ink);border-radius:18px;margin-bottom:18px;overflow:hidden}
 .tk .top{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:2px dashed var(--ink)}
 .tk .top h3{font-weight:900;font-size:22px;letter-spacing:-.035em}
-.tk .top small{font-size:12px;font-weight:700;border:1.5px solid var(--ink);border-radius:99px;padding:2px 10px;background:var(--oat);color:var(--ink)}
+.tk .top small{font-size:12px;font-weight:700;border:1.5px solid var(--ink);border-radius:99px;padding:5px 13px;background:var(--oat);color:var(--ink)}
 .tk .in{padding:8px 22px 18px}
 .row{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line);font-size:15px}
 .row:last-of-type{border-bottom:0}
-.p{font:700 19px 'Space Grotesk';letter-spacing:-.02em}
+.p{font:700 19px 'IBM Plex Mono';letter-spacing:-.02em}
 .p small{font:900 14px 'Noto Sans KR'}
 .p.hot{color:#c23e0c}
-.badge{font:700 10.5px 'Space Grotesk';letter-spacing:.08em;background:var(--sun);color:#fff;border-radius:4px;padding:2px 6px;margin-left:6px;vertical-align:2px}
+.badge{font:700 10.5px 'IBM Plex Mono';letter-spacing:.05em;background:var(--sun);color:#fff;border-radius:4px;padding:2px 6px;margin-left:6px;vertical-align:2px}
 .fine{font-size:12.5px;color:var(--mute);margin-top:6px}
 .tk.hanok .top{background:var(--forest);color:var(--oat)}
 .tk.hanok .top small{background:var(--lime);border-color:var(--lime)}
@@ -121,7 +121,7 @@ h2{font-weight:900;font-size:42px;line-height:1.18;letter-spacing:-.045em;margin
 .mini{border:2px solid var(--ink);border-radius:18px;padding:18px;background:var(--sand)}
 .mini h3{font-weight:900;font-size:19px;letter-spacing:-.03em}
 .mini p{font-size:13.5px;color:#4a463d;margin:4px 0 12px}
-.soon{display:inline-block;font:700 11px 'Space Grotesk';letter-spacing:.06em;background:var(--ink);color:var(--lime);padding:4px 9px;border-radius:5px}
+.soon{display:inline-block;font:700 12px 'Noto Sans KR';background:var(--ink);color:var(--lime);padding:6px 12px;border-radius:5px}
 .tk.opt{background:var(--lime)}
 .tk.opt .row{border-color:rgba(20,20,20,.2)}
 
@@ -134,13 +134,13 @@ h2{font-weight:900;font-size:42px;line-height:1.18;letter-spacing:-.045em;margin
 .chk b{font-size:17px;letter-spacing:-.025em}
 .chk span{font-size:13.5px;color:var(--mute)}
 .cta{display:flex;justify-content:space-between;align-items:center;margin-top:40px;background:var(--ink);color:var(--oat);text-decoration:none;border-radius:99px;padding:8px 8px 8px 30px;font-weight:900;font-size:21px;letter-spacing:-.03em}
-.cta i{font-style:normal;width:58px;height:58px;border-radius:50%;background:var(--lime);color:var(--ink);display:grid;place-items:center;font:700 26px 'Space Grotesk'}
+.cta i{font-style:normal;width:58px;height:58px;border-radius:50%;background:var(--lime);color:var(--ink);display:grid;place-items:center;font:700 26px 'IBM Plex Mono'}
 .cta-sub{text-align:center;font-size:12.5px;color:var(--mute);margin-top:12px}
 
 /* FOOTER */
 footer{background:var(--ink);color:var(--oat);padding:46px 28px 52px;font-size:13.5px}
 footer dl{display:grid;grid-template-columns:76px 1fr;gap:7px 0;margin-bottom:30px}
-footer dt{font:700 11px 'Space Grotesk';letter-spacing:.12em;opacity:.55;padding-top:3px}
+footer dt{font:700 11px 'IBM Plex Mono';letter-spacing:.05em;opacity:.55;padding-top:3px}
 footer .ct{border-top:1px solid rgba(243,239,230,.2);padding-top:24px;display:flex;justify-content:space-between;align-items:end}
 footer .ct b{font-weight:900;font-size:18px;display:block}
 footer .ct .en{color:var(--lime);font-size:13px;text-align:right}
@@ -156,7 +156,6 @@ footer .ct .en{color:var(--lime);font-size:13px;text-align:right}
 
 <!-- INTRO -->
 <section>
-  <div class="kicker"><span>Intro</span><span>01 / 05</span></div>
   <h2><span class="hl">비우고,</span> 채우고,<br>돌아가는 2박 3일</h2>
   <p class="lead">지리산 자락, 천년 고찰 하동 쌍계사 숲속에서<br>낮에는 걷고 마시고 배우고,<br>밤에는 핸드폰 대신 별과 계곡 소리를 듣습니다.</p>
   <div class="tags"><span class="on">#마인드디톡스</span><span>#템플캠핑</span><span>#지리산</span><span>#별멍</span><span>#물멍</span></div>
@@ -174,7 +173,6 @@ footer .ct .en{color:var(--lime);font-size:13px;text-align:right}
 
 <!-- POINT -->
 <section class="dark">
-  <div class="kicker"><span>What's included</span><span>02 / 05</span></div>
   <h2>티켓 한 장에<br><span class="hl">전부</span> 들어 있어요</h2>
   <div class="receipt">
     <div class="head"><b>산사캠프 영수증</b>SANSA CAMP · 2N3D</div>
@@ -192,7 +190,6 @@ footer .ct .en{color:var(--lime);font-size:13px;text-align:right}
 
 <!-- PROGRAM -->
 <section>
-  <div class="kicker"><span>Program</span><span>03 / 05</span></div>
   <h2>산사에서 즐기는<br><span class="hl">9가지</span> 마인드 디톡스</h2>
   <div class="list">
     <div class="pg"><span class="no">01</span><h3>불일폭포 트래킹</h3><p>쌍계사 숲길을 따라 불일폭포까지 걷는 산사 트래킹.</p><div class="tags"><span class="on">#펫동반</span><span>#해설투어</span></div></div>
@@ -210,7 +207,6 @@ footer .ct .en{color:var(--lime);font-size:13px;text-align:right}
 
 <!-- SCHEDULE -->
 <section class="dark">
-  <div class="kicker"><span>Timetable</span><span>04 / 05</span></div>
   <h2>낮엔 채우고<br><span class="hl">밤엔 비우고</span></h2>
   <div class="day"><div class="d"><b>DAY</b><span>01</span><small>11.6 FRI</small></div><ul><li><i>14:00</i>입장 · 체크인 · 웰컴키트 수령</li><li><i>PM</i>오후 프로그램 · 산사장터</li><li><i>EVE</i>저녁 공양 · 산사토크 &amp; 공연</li><li class="night"><i>21:00</i>고요의 시간</li></ul></div>
   <div class="day"><div class="d"><b>DAY</b><span>02</span><small>11.7 SAT</small></div><ul><li><i>07:00</i>요가 · 선명상</li><li><i>DAY</i>트래킹 · 역사 탐방 · 차명상 · 체험 클래스</li><li><i>EVE</i>저녁 공양 · 산사토크 &amp; 공연</li><li class="night"><i>21:00</i>고요의 시간</li></ul></div>
@@ -221,7 +217,6 @@ footer .ct .en{color:var(--lime);font-size:13px;text-align:right}
 
 <!-- TICKET -->
 <section>
-  <div class="kicker"><span>Ticket &amp; Stay</span><span>05 / 05</span></div>
   <h2>어디서 잘까?<br><span class="hl">숙박 &amp; 티켓</span> 안내</h2>
   <p class="sub">2박 3일 · 식사 5식 · 전 프로그램 · 웰컴키트 포함가</p>
 
@@ -252,7 +247,6 @@ footer .ct .en{color:var(--lime);font-size:13px;text-align:right}
 
 <!-- CHECK -->
 <section style="background:var(--sand)">
-  <div class="kicker"><span>Before you go</span><span>Checklist</span></div>
   <h2>오기 전에<br><span class="hl">꼭</span> 알아두세요</h2>
   <ul class="chk">
     <li><i class="box no">✕</i><b>경내 차량 진입 불가</b><span>외부 주차장 이용 후 도보 또는 셔틀버스로 입장해요.</span></li>
