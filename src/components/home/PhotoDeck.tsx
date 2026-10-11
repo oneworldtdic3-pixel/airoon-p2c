@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type PointerEvent as RPointerEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../../data/AppProvider'
 import Icon from '../ui/Icon'
@@ -12,7 +12,7 @@ const Arrow = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
 )
 
-/** BEST PHOTO 1장 + 광고 배너 2장 이상을 겹친 카드 덱. 3.5초 자동 전환, 스와이프 가능 */
+/** BEST PHOTO 1장 + 광고 배너 2장 이상을 겹친 카드 덱. 손가락을 따라오는 가로 스와이프, 3.5초 자동 전환(조작 후 8초간 멈춤) */
 export default function PhotoDeck() {
   const { photos, banners } = useApp()
   const nav = useNavigate()
@@ -26,37 +26,79 @@ export default function PhotoDeck() {
     return best ? [events[0], { kind: 'photo', id: best.id, url: best.url, spot: best.spot_tag, nickname: best.nickname, likes: best.likes_count }, events[1], ...ads] : [...events, ...ads]
   }, [photos, banners])
   const [idx, setIdx] = useState(0)
-  const [paused, setPaused] = useState(false)
-  const startX = useRef<number | null>(null)
-  const swiped = useRef(false) // 스와이프 뒤에 따라오는 click 을 탭으로 오인하지 않게
+  const [drag, setDrag] = useState(0)          // 손가락을 따라가는 가로 이동(px)
+  const [dragging, setDragging] = useState(false)
+  const start = useRef<{ x: number; y: number; t: number } | null>(null)
+  const axis = useRef<'x' | 'y' | null>(null)   // 첫 움직임으로 가로/세로 판정
+  const swiped = useRef(false)                 // 스와이프 뒤에 따라오는 click 을 탭으로 오인하지 않게
+  const lastTouch = useRef(0)                  // 마지막 조작 시각: 이후 8초 동안 자동 전환 멈춤
   const n = cards.length
 
   useEffect(() => {
-    if (paused || n < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const t = window.setInterval(() => setIdx((i) => (i + 1) % n), 3500)
+    if (n < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const t = window.setInterval(() => {
+      if (Date.now() - lastTouch.current < 8000) return
+      setIdx((i) => (i + 1) % n)
+    }, 3500)
     return () => window.clearInterval(t)
-  }, [paused, n])
+  }, [n])
+
+  const step = (d: 1 | -1) => { lastTouch.current = Date.now(); setIdx((i) => (i + d + n) % n) }
+
+  const onDown = (e: RPointerEvent<HTMLDivElement>) => {
+    start.current = { x: e.clientX, y: e.clientY, t: Date.now() }
+    axis.current = null
+    swiped.current = false
+    lastTouch.current = Date.now()
+  }
+  const onMove = (e: RPointerEvent<HTMLDivElement>) => {
+    if (!start.current) return
+    const dx = e.clientX - start.current.x
+    const dy = e.clientY - start.current.y
+    if (!axis.current) {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return
+      axis.current = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y'
+      if (axis.current === 'x') { setDragging(true); e.currentTarget.setPointerCapture(e.pointerId) }
+    }
+    if (axis.current !== 'x') return
+    // 끝까지 끌어도 카드가 날아가지 않게 살짝 저항
+    const w = e.currentTarget.clientWidth
+    setDrag(Math.max(-w, Math.min(w, dx)) * 0.9)
+    lastTouch.current = Date.now()
+  }
+  const onUp = (e: RPointerEvent<HTMLDivElement>) => {
+    if (!start.current) return
+    const dx = e.clientX - start.current.x
+    const dt = Math.max(1, Date.now() - start.current.t)
+    const fast = Math.abs(dx) / dt > 0.4 // px/ms: 짧고 빠른 플릭
+    if (axis.current === 'x' && (Math.abs(dx) > 50 || (fast && Math.abs(dx) > 15))) { swiped.current = true; step(dx < 0 ? 1 : -1) }
+    else if (axis.current === 'x') swiped.current = true
+    start.current = null
+    axis.current = null
+    setDrag(0)
+    setDragging(false)
+  }
 
   if (!n) return null
 
+  const w = 0.72 // 카드 너비 비율(컨테이너 대비)
   return (
     <div
       className="relative mt-3 h-[320px] select-none"
-      onPointerDown={(e) => { startX.current = e.clientX; swiped.current = false; setPaused(true) }}
-      onPointerUp={(e) => {
-        const dx = startX.current === null ? 0 : e.clientX - startX.current
-        if (Math.abs(dx) > 30) { swiped.current = true; setIdx((i) => (i + (dx < 0 ? 1 : n - 1)) % n) }
-        startX.current = null
-        setPaused(false)
-      }}
-      onPointerCancel={() => { startX.current = null; setPaused(false) }}
+      style={{ touchAction: 'pan-y' }}
+      onPointerDown={onDown}
+      onPointerMove={onMove}
+      onPointerUp={onUp}
+      onPointerCancel={onUp}
     >
       {cards.map((c, i) => {
         const pos = (i - idx + n) % n
+        // 드래그 진행도(-1~1): 앞 카드는 손가락을 따라가고, 옆 카드는 중앙으로 끌려 들어온다
+        const p = Math.max(-1, Math.min(1, drag / 260))
         const style =
-          pos === 0 ? { transform: 'translateX(-50%) scale(1)', opacity: 1, zIndex: 3 }
-          : pos === 1 ? { transform: 'translateX(-41%) translateY(12px) scale(.9)', opacity: 0.4, zIndex: 1 }
-          : pos === n - 1 ? { transform: 'translateX(-59%) translateY(12px) scale(.9)', opacity: 0.4, zIndex: 1 }
+          pos === 0 ? { transform: `translateX(calc(-50% + ${drag}px)) scale(${1 - Math.abs(p) * 0.06})`, opacity: 1 - Math.abs(p) * 0.25, zIndex: 3 }
+          : pos === 1 ? { transform: `translateX(calc(-41% + ${drag * 0.35}px)) translateY(${12 - Math.max(0, -p) * 12}px) scale(${0.9 + Math.max(0, -p) * 0.1})`, opacity: 0.4 + Math.max(0, -p) * 0.6, zIndex: p < 0 ? 2 : 1 }
+          : pos === n - 1 ? { transform: `translateX(calc(-59% + ${drag * 0.35}px)) translateY(${12 - Math.max(0, p) * 12}px) scale(${0.9 + Math.max(0, p) * 0.1})`, opacity: 0.4 + Math.max(0, p) * 0.6, zIndex: p > 0 ? 2 : 1 }
           : { transform: 'translateX(-50%) translateY(16px) scale(.85)', opacity: 0, zIndex: 0 }
         const bigWord = c.kind === 'photo' ? c.spot : c.kind === 'ad' ? c.sponsor : '산사캠프'
         const go = () => nav(c.kind === 'photo' ? '/photo' : c.kind === 'ad' ? c.link : '/reserve')
@@ -68,8 +110,8 @@ export default function PhotoDeck() {
             tabIndex={pos === 0 ? 0 : -1}
             onClick={() => { if (pos === 0 && !swiped.current) go() }}
             onKeyDown={(e) => { if (pos === 0 && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); go() } }}
-            className={`absolute left-1/2 top-0 h-full w-[72%] overflow-hidden rounded-[26px] transition-[transform,opacity] duration-500 ease-[cubic-bezier(.22,1,.36,1)] ${pos === 0 ? 'cursor-pointer active:scale-[0.985]' : 'pointer-events-none'}`}
-            style={{ ...style, background: c.kind === 'ad' ? c.bg : c.kind === 'event' ? '#2EA7E0' : '#35D6BD' }}
+            className={`absolute left-1/2 top-0 h-full overflow-hidden rounded-[26px] ${dragging ? '' : 'transition-[transform,opacity] duration-500 ease-[cubic-bezier(.22,1,.36,1)]'} ${pos === 0 ? 'cursor-grab active:cursor-grabbing' : 'pointer-events-none'}`}
+            style={{ ...style, width: `${w * 100}%`, background: c.kind === 'ad' ? c.bg : c.kind === 'event' ? '#2EA7E0' : '#35D6BD' }}
           >
             <img src={c.url} alt="" aria-hidden className="absolute inset-0 h-full w-full scale-125 object-cover blur-xl" />
             <div className={`absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 ${c.kind === 'event' && c.full ? 'to-ink/25' : 'to-ink/70'}`} />
@@ -109,6 +151,7 @@ export default function PhotoDeck() {
       <div className="absolute inset-x-0 -bottom-5 flex justify-center gap-1.5" aria-hidden="true">
         {cards.map((c, i) => <span key={c.id} className={`h-1.5 rounded-full transition-all ${i === idx ? 'w-4 bg-ink' : 'w-1.5 bg-gray-300'}`} />)}
       </div>
+      <p className="sr-only">카드를 좌우로 밀어 넘길 수 있습니다</p>
     </div>
   )
 }
