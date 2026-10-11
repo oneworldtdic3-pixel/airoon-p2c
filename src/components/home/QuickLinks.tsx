@@ -11,6 +11,7 @@ const items = [
 export default function QuickLinks() {
   return (
     <section className="px-5 pt-12">
+      <p className="eyebrow mb-3 text-deep">사전예약 하기</p>
       <div className="grid grid-cols-2 gap-2.5">
         {items.map((it, i) => (
           <Link key={it.label} to={it.to} className={`flex aspect-[1.55] flex-col justify-between rounded-tile p-4 transition duration-200 active:scale-[0.97] ${i === 0 ? 'bg-brand-grad text-onbrand font-extrabold' : 'border border-line bg-white text-ink'}`}>
