@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState, t
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import type { Session } from '@supabase/supabase-js'
 import { supabase, photoUrl } from '../lib/supabase'
+import { shrinkImage } from '../lib/image'
 import { resolveSeedArt } from './art'
 import { toMessage } from './errors'
 import type { AppNotification, Banner, Booking, ParkingBooking, Photo, Profile, Program, ProgramSession, ShowerBooking, ShowerSlot, SpotTag } from './types'
@@ -110,6 +111,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   })
   const photosQ = useQuery({
     queryKey: ['photos'],
+    staleTime: 0,
+    refetchInterval: 20_000, // Realtime 이 끊겨도(백그라운드 전환 등) 20초 안에는 따라잡는다
     queryFn: async () => {
       const { data } = await supabase.from('photos').select('*, profiles!photos_user_id_fkey(nickname)').order('created_at', { ascending: false }).limit(200)
       return ((data ?? []) as (Omit<Photo, 'url' | 'nickname'> & { profiles: { nickname: string } | null })[]).map(({ profiles, ...p }) => ({
@@ -148,7 +151,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
       .on('postgres_changes', { event: '*', schema: 'public', table: 'shower_slots' }, () => qc.invalidateQueries({ queryKey: ['slots'] }))
       .on('postgres_changes', { event: '*', schema: 'public', table: 'banners' }, () => qc.invalidateQueries({ queryKey: ['banners'] }))
       .subscribe()
-    return () => { supabase.removeChannel(ch) }
+    // 모바일 브라우저는 백그라운드에서 웹소켓을 끊는다 — 앞으로 돌아오면 바뀐 것을 한 번에 다시 받는다
+    const onVisible = () => {
+      if (document.visibilityState !== 'visible') return
+      for (const k of ['photos', 'notifications', 'sessions', 'slots', 'banners']) void qc.invalidateQueries({ queryKey: [k] })
+    }
+    document.addEventListener('visibilitychange', onVisible)
+    return () => { document.removeEventListener('visibilitychange', onVisible); supabase.removeChannel(ch) }
   }, [qc])
 
   const refreshMine = useCallback(() => qc.invalidateQueries({ queryKey: ['mine', uid] }), [qc, uid])
@@ -254,15 +263,19 @@ export function AppProvider({ children }: { children: ReactNode }) {
     try { await rpc('toggle_like', { p_photo: photoId }); return { ok: true } }
     catch (e) { await Promise.all([qc.invalidateQueries({ queryKey: ['photos'] }), refreshMine()]); return fail(e) }
   }
-  const uploadPhoto: Ctx['uploadPhoto'] = async (file, spot) => {
+  const uploadPhoto: Ctx['uploadPhoto'] = async (raw, spot) => {
     if (!uid) return fail('AUTH_REQUIRED')
+    const file = await shrinkImage(raw)
     const ext = (file.name.split('.').pop() || 'jpg').toLowerCase()
     const path = `${uid}/${Date.now()}.${ext}`
     const up = await supabase.storage.from('photos').upload(path, file, { contentType: file.type || 'image/jpeg', upsert: false })
     if (up.error) return fail(up.error)
-    const { error } = await supabase.from('photos').insert({ user_id: uid, spot_tag: spot, storage_path: path })
+    const { data, error } = await supabase.from('photos').insert({ user_id: uid, spot_tag: spot, storage_path: path }).select('*').single()
     if (error) return fail(error)
-    await qc.invalidateQueries({ queryKey: ['photos'] })
+    // 서버 응답을 기다리지 않고 목록 맨 앞에 바로 끼워 넣는다 (이후 refetch 로 정합)
+    const mine: Photo = { ...(data as Omit<Photo, 'url' | 'nickname'>), nickname: profileQ.data?.nickname ?? '산사러', url: photoUrl(path) }
+    qc.setQueryData<Photo[]>(['photos'], (prev) => [mine, ...(prev ?? []).filter((p) => p.id !== mine.id)])
+    void qc.invalidateQueries({ queryKey: ['photos'] })
     return { ok: true }
   }
 
