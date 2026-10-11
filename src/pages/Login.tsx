@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useApp } from '../data/AppProvider'
 import { TEST_PHONES } from '../data/constants'
 import { toMessage } from '../data/errors'
@@ -114,7 +114,7 @@ export default function Login() {
         )}
         {!sent && mode === 'signup' && (
           <div className="rounded-tile bg-mint px-4 py-2">
-            <Check on={agree} onChange={setAgree} required>개인정보 수집·이용에 동의합니다 (예약·입장 확인 목적, 행사 종료 후 30일 내 파기)</Check>
+            <Check on={agree} onChange={setAgree} required><Link to="/terms" className="font-bold underline underline-offset-2">이용약관</Link>과 <Link to="/privacy" className="font-bold underline underline-offset-2">개인정보처리방침</Link>에 동의합니다</Check>
             <Check on={consent} onChange={setConsent}>카카오 알림톡으로 예약 리마인드를 받겠습니다</Check>
           </div>
         )}

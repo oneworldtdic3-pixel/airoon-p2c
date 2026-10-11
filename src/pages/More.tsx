@@ -154,6 +154,10 @@ export default function More() {
             ))}
           </dl>
         </section>
+        <p className="mt-10 flex gap-4 text-[12px] text-gray-400">
+          <Link to="/privacy" className="underline underline-offset-2">개인정보처리방침</Link>
+          <Link to="/terms" className="underline underline-offset-2">이용약관</Link>
+        </p>
       </div>
       <BottomSheet open={phoneSheet} onClose={() => setPhoneSheet(false)} title="휴대폰 번호 연결">
         <p className="text-[13px] text-sub">번호로 받은 인증번호를 확인해야 연결됩니다. 다른 계정에서 이미 쓰는 번호는 연결할 수 없습니다.</p>

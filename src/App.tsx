@@ -7,6 +7,7 @@ import Notifications from './pages/Notifications'
 import More from './pages/More'
 import Login from './pages/Login'
 import Admin from './pages/admin/Admin'
+import { Privacy, Terms } from './pages/legal/Legal'
 
 export default function App() {
   return (
@@ -19,6 +20,8 @@ export default function App() {
         <Route path="more" element={<More />} />
         <Route path="login" element={<Login />} />
         <Route path="admin" element={<Admin />} />
+        <Route path="privacy" element={<Privacy />} />
+        <Route path="terms" element={<Terms />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
