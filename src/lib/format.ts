@@ -11,3 +11,10 @@ export function timeAgo(iso: string) {
   if (m < 1440) return `${Math.floor(m / 60)}시간 전`
   return `${Math.floor(m / 1440)}일 전`
 }
+
+/** '821012345678' / '+821012345678' → '010-1234-5678' */
+export function fmtPhone(p: string | null | undefined) {
+  if (!p) return ''
+  const d = p.replace(/\D/g, '').replace(/^82/, '0')
+  return d.length === 11 ? `${d.slice(0, 3)}-${d.slice(3, 7)}-${d.slice(7)}` : d.length === 10 ? `${d.slice(0, 3)}-${d.slice(3, 6)}-${d.slice(6)}` : p
+}

@@ -9,6 +9,7 @@ import { SPONSOR_TIERS } from '../data/constants'
 import { useApp } from '../data/AppProvider'
 import { useRequireAuth } from '../hooks/useRequireAuth'
 import { useToast } from '../hooks/useToast'
+import { fmtPhone } from '../lib/format'
 
 const guides = [
   ['화기 전면 금지, 취사 없음', '라이터·버너·향초처럼 불을 쓰는 물품은 가져올 수 없습니다. 식사는 공양간과 산사장터에서.'],
@@ -34,7 +35,7 @@ export default function More() {
         <section className="flex items-center justify-between border-y hairline py-4">
           <div className="min-w-0">
             <p className="text-[16px] font-extrabold">{user ? user.nickname : '로그인 전'}</p>
-            <p className="tnum truncate text-[12.5px] text-sub">{user ? user.phone ?? '소셜 계정' : '예약할 때만 인증하면 됩니다'}</p>
+            <p className="tnum truncate text-[12.5px] text-sub">{user ? (user.phone ? fmtPhone(user.phone) : '소셜 계정') : '예약할 때만 인증하면 됩니다'}</p>
           </div>
           {user ? (
             <div className="flex gap-2">
