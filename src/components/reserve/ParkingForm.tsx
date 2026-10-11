@@ -42,7 +42,7 @@ export default function ParkingForm({ toast }: { toast: (m: string) => void }) {
       </div>
 
       <div>
-        <p className="eyebrow mb-3">이용 일자</p>
+        <p className="eyebrow mb-3">이용 일자 <span className="ml-1 font-semibold normal-case tracking-normal text-sub">(날짜를 체크해 주세요.)</span></p>
         <div className="flex gap-2">
           {EVENT_DAYS.map((d, i) => (
             <Chip key={d} active={dates.includes(d)} onClick={() => setDates((cur) => (cur.includes(d) ? cur.filter((x) => x !== d) : [...cur, d].sort()))}>{i + 1}일차 · 11.{Number(d.slice(-2))}</Chip>
