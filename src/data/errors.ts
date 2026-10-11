@@ -16,6 +16,9 @@ const MESSAGES: Record<string, string> = {
   TITLE_REQUIRED: '제목을 입력해 주세요',
   NAVER_NOT_CONFIGURED: '네이버 로그인이 아직 설정되지 않았습니다. 운영자에게 문의하거나 다른 방법으로 로그인해 주세요.',
   NAVER_ERROR: '네이버 로그인에 실패했습니다. 잠시 후 다시 시도해 주세요.',
+  not_configured: '네이버 로그인이 아직 설정되지 않았습니다. 운영자에게 문의하거나 다른 방법으로 로그인해 주세요.',
+  naver_error: '네이버 로그인에 실패했습니다. 잠시 후 다시 시도해 주세요.',
+  internal: '서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.',
   origin_not_allowed: '이 주소에서는 네이버 로그인을 쓸 수 없습니다 (허용 도메인 설정 필요).',
   auth_required: '먼저 로그인해 주세요.',
 }
