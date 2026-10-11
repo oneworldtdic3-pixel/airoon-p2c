@@ -21,6 +21,8 @@ const MESSAGES: Record<string, string> = {
   internal: '서버 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.',
   origin_not_allowed: '이 주소에서는 네이버 로그인을 쓸 수 없습니다 (허용 도메인 설정 필요).',
   auth_required: '먼저 로그인해 주세요.',
+  identity_already_exists: '이미 다른 계정에 연결된 로그인 수단입니다.',
+  'Identity is already linked': '이미 다른 계정에 연결된 로그인 수단입니다.',
 }
 
 /** Supabase/Postgres 오류 → 사용자 문구 */

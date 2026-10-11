@@ -10,6 +10,7 @@ import { useApp } from '../data/AppProvider'
 import { useRequireAuth } from '../hooks/useRequireAuth'
 import { useToast } from '../hooks/useToast'
 import { fmtPhone } from '../lib/format'
+import { toMessage } from '../data/errors'
 
 const guides = [
   ['화기 전면 금지, 취사 없음', '라이터·버너·향초처럼 불을 쓰는 물품은 가져올 수 없습니다. 식사는 공양간과 산사장터에서.'],
@@ -33,8 +34,10 @@ export default function More() {
   // 연결 복귀 알림 (?linked=kakao / ?naver=linked|already_linked)
   useEffect(() => {
     const linked = sp.get('linked'); const naver = sp.get('naver')
-    if (!linked && !naver) return
-    if (linked) show(`${linked === 'kakao' ? '카카오' : '구글'} 계정을 연결했습니다`)
+    const errCode = sp.get('error_code') || sp.get('error')
+    if (!linked && !naver && !errCode) return
+    if (errCode) show(toMessage(sp.get('error_description') || errCode))
+    else if (linked) show(`${linked === 'kakao' ? '카카오' : '구글'} 계정을 연결했습니다`)
     if (naver === 'linked') show('네이버 계정을 연결했습니다')
     if (naver === 'already_linked') show('그 네이버 계정은 이미 다른 계정에 연결되어 있습니다')
     setSp({}, { replace: true })
