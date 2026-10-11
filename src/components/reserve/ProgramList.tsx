@@ -39,16 +39,30 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
       {mine.length > 0 && (
         <section className="mb-6 rounded-tile bg-mint p-4">
           <p className="eyebrow mb-2 text-deep">내 예약 {mine.length}</p>
+          <p className="-mt-1 mb-2 text-[12px] text-sub">참여가 어려우면 미리 취소해 주세요. 노쇼 2회면 당일 예약이 제한됩니다.</p>
           <ul className="divide-y divide-white">
             {mine.map((b) => {
               const s = sessions.find((x) => x.id === b.session_id)!
               const p = programs.find((x) => x.id === s.program_id)!
               return (
-                <li key={b.id}>
-                  <button onClick={() => setTicket(b)} className="flex w-full items-center gap-3 py-2.5 text-left">
-                    <Icon name="qr" size={18} className="text-deep" />
-                    <span className="flex-1 text-[14px] font-bold">{p.title}</span>
-                    <span className="tnum text-[12px] text-sub">{fmtDay(s.starts_at)} {fmtTime(s.starts_at)}</span>
+                <li key={b.id} className="flex items-center gap-2">
+                  <button type="button" onClick={() => setTicket(b)} className="flex min-w-0 flex-1 items-center gap-3 py-2.5 text-left">
+                    <Icon name="qr" size={18} className="shrink-0 text-deep" />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[14px] font-bold">{p.title}</span>
+                      <span className="tnum block text-[12px] text-sub">{fmtDay(s.starts_at)} {fmtTime(s.starts_at)} · QR 보기</span>
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (!window.confirm(`${p.title} ${fmtTime(s.starts_at)} 예약을 취소할까요?\n취소한 자리는 다른 분이 예약할 수 있습니다.`)) return
+                      const r = await cancelBooking(b.id)
+                      toast(r.ok ? '예약을 취소했습니다' : r.error)
+                    }}
+                    className="shrink-0 rounded-full border border-deep/30 px-3 py-1.5 text-[12px] font-bold text-deep active:bg-white"
+                  >
+                    취소
                   </button>
                 </li>
               )
@@ -129,7 +143,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
           </div>
         )}
       </BottomSheet>
-      <QrTicket booking={ticket} onClose={() => setTicket(null)} />
+      <QrTicket booking={ticket} onClose={() => setTicket(null)} toast={toast} />
     </div>
   )
 }

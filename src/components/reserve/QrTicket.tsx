@@ -4,8 +4,8 @@ import { fmtDay, fmtTime } from '../../lib/format'
 import { BottomSheet } from '../ui'
 import type { Booking } from '../../data/types'
 
-export default function QrTicket({ booking, onClose }: { booking: Booking | null; onClose: () => void }) {
-  const { programs, sessions } = useApp()
+export default function QrTicket({ booking, onClose, toast }: { booking: Booking | null; onClose: () => void; toast?: (m: string) => void }) {
+  const { programs, sessions, cancelBooking } = useApp()
   const s = booking && sessions.find((x) => x.id === booking.session_id)
   const p = s && programs.find((x) => x.id === s.program_id)
   return (
@@ -33,6 +33,18 @@ export default function QrTicket({ booking, onClose }: { booking: Booking | null
             </div>
           </div>
           <p className="mt-4 text-center text-[12.5px] text-sub">현장에서 이 화면 또는 QR 팔찌를 보여주세요.</p>
+          <button
+            type="button"
+            onClick={async () => {
+              if (!window.confirm(`${p.title} ${fmtTime(s.starts_at)} 예약을 취소할까요?`)) return
+              const r = await cancelBooking(booking.id)
+              toast?.(r.ok ? '예약을 취소했습니다' : r.error)
+              if (r.ok) onClose()
+            }}
+            className="mt-3 w-full py-3 text-center text-[13px] font-semibold text-sub underline underline-offset-2"
+          >
+            참여가 어려우면 예약 취소하기
+          </button>
         </div>
       )}
     </BottomSheet>
