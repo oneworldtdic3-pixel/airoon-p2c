@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom'
 import PageHeader from '../components/layout/PageHeader'
+import Icon from '../components/ui/Icon'
 import { Toggle } from '../components/ui'
 import { MoktakGlyph } from '../components/illust'
 import { useApp } from '../data/AppProvider'
@@ -6,6 +8,12 @@ import { timeAgo } from '../lib/format'
 import { useRequireAuth } from '../hooks/useRequireAuth'
 
 const label: Record<string, string> = { booth: '잔여석', luckydraw: '럭키드로우', reminder: '리마인드', market: '산사장터', notice: '안내' }
+// 알림 종류별 바로 가기: 프로그램 관련(잔여석·리마인드)은 예약 탭으로, 럭키드로우는 더보기로
+const shortcut: Record<string, { to: string; label: string } | undefined> = {
+  booth: { to: '/reserve?tab=program', label: '예약하기' },
+  reminder: { to: '/reserve?tab=program', label: '내 예약 보기' },
+  luckydraw: { to: '/more', label: '응모하기' },
+}
 
 export default function Notifications() {
   const { notifications, consent, setConsent } = useApp()
@@ -31,6 +39,11 @@ export default function Notifications() {
               </div>
               <p className="mt-1.5 text-[16px] font-extrabold">{n.title}</p>
               <p className="mt-1 text-[14px] leading-relaxed text-ink/75">{n.body}</p>
+              {shortcut[n.type] && (
+                <Link to={shortcut[n.type]!.to} className="mt-3 inline-flex items-center gap-1 rounded-full bg-btn-grad px-4 py-2 text-[13px] font-extrabold text-onbrand active:scale-95">
+                  {shortcut[n.type]!.label} <Icon name="chevron" size={14} />
+                </Link>
+              )}
             </li>
           ))}
         </ol>
