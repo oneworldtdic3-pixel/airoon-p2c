@@ -8,8 +8,9 @@ import Dashboard from './Dashboard'
 import Publish from './Publish'
 import Photos from './Photos'
 import Banners from './Banners'
+import Parking from './Parking'
 
-type Tab = 'stats' | 'publish' | 'photos' | 'banners'
+type Tab = 'stats' | 'parking' | 'publish' | 'photos' | 'banners'
 
 export default function Admin() {
   const { ready, user } = useApp()
@@ -37,11 +38,12 @@ export default function Admin() {
           <span className="w-8" />
         </div>
         <div className="mt-2">
-          <Segmented<Tab> value={tab} onChange={setTab} options={[{ value: 'stats', label: '예약 현황' }, { value: 'publish', label: '알림' }, { value: 'photos', label: '사진' }, { value: 'banners', label: '배너' }]} />
+          <Segmented<Tab> value={tab} onChange={setTab} options={[{ value: 'stats', label: '현황' }, { value: 'parking', label: '주차' }, { value: 'publish', label: '알림' }, { value: 'photos', label: '사진' }, { value: 'banners', label: '배너' }]} />
         </div>
       </header>
       <div className="px-5 pb-12 pt-5">
         {tab === 'stats' && <Dashboard />}
+        {tab === 'parking' && <Parking toast={show} />}
         {tab === 'publish' && <Publish toast={show} />}
         {tab === 'photos' && <Photos toast={show} />}
         {tab === 'banners' && <Banners toast={show} />}
