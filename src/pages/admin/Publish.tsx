@@ -16,7 +16,15 @@ export default function Publish({ toast }: { toast: (m: string) => void }) {
   const [body, setBody] = useState('')
   const [busy, setBusy] = useState(false)
 
+  const remove = async (id: string) => {
+    if (!window.confirm('이 알림을 삭제할까요?')) return
+    const { error } = await supabase.from('notifications').delete().eq('id', id)
+    if (error) return toast(toMessage(error))
+    await qc.invalidateQueries({ queryKey: ['notifications'] })
+    toast('삭제했습니다')
+  }
   const submit = async () => {
+    if (!title.trim()) return toast('제목을 입력해 주세요')
     setBusy(true)
     const { error } = await supabase.rpc('admin_publish_notification', { p_type: type, p_title: title.trim(), p_body: body.trim() })
     setBusy(false)
@@ -49,7 +57,10 @@ export default function Publish({ toast }: { toast: (m: string) => void }) {
         <ul className="divide-y hairline">
           {notifications.slice(0, 10).map((n) => (
             <li key={n.id} className="py-3">
-              <div className="flex justify-between text-[11px]"><span className="font-bold text-deep">{TYPES.find((t) => t[0] === n.type)?.[1]}</span><span className="tnum text-gray-400">{timeAgo(n.created_at)}</span></div>
+              <div className="flex items-center justify-between text-[11px]">
+                <span className="font-bold text-deep">{TYPES.find((t) => t[0] === n.type)?.[1]}</span>
+                <span className="flex items-center gap-3"><span className="tnum text-gray-400">{timeAgo(n.created_at)}</span><button type="button" onClick={() => void remove(n.id)} className="font-bold text-red-500">삭제</button></span>
+              </div>
               <p className="mt-0.5 text-[14px] font-bold">{n.title}</p>
               <p className="text-[12.5px] text-sub">{n.body}</p>
             </li>

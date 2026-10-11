@@ -4,6 +4,7 @@ import Icon from './Icon'
 export function Chip({ active, onClick, children }: { active?: boolean; onClick?: () => void; children: ReactNode }) {
   return (
     <button
+      type="button"
       onClick={onClick}
       aria-pressed={active}
       className={`shrink-0 rounded-full px-3.5 py-2 text-[13px] font-semibold transition duration-200 active:scale-95 ${active ? 'bg-ink text-white' : 'border border-line bg-white text-ink'}`}
@@ -18,6 +19,7 @@ export function Segmented<T extends string>({ value, onChange, options }: { valu
     <div role="tablist" className="flex gap-6 border-b hairline">
       {options.map((o) => (
         <button
+          type="button"
           key={o.value}
           role="tab"
           aria-selected={value === o.value}
@@ -38,7 +40,7 @@ export function Tag({ children, tone = 'ink' }: { children: ReactNode; tone?: 'i
 
 export function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boolean) => void; label: string }) {
   return (
-    <button role="switch" aria-checked={on} aria-label={label} onClick={() => onChange(!on)} className={`relative h-7 w-12 shrink-0 rounded-full transition duration-200 ${on ? 'bg-brand-grad' : 'bg-gray-300'}`}>
+    <button type="button" role="switch" aria-checked={on} aria-label={label} onClick={() => onChange(!on)} className={`relative h-7 w-12 shrink-0 rounded-full transition duration-200 ${on ? 'bg-brand-grad' : 'bg-gray-300'}`}>
       <span className={`absolute top-0.5 h-6 w-6 rounded-full bg-white shadow transition-all duration-200 ${on ? 'left-[22px]' : 'left-0.5'}`} />
     </button>
   )

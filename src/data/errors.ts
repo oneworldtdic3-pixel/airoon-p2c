@@ -13,6 +13,7 @@ const MESSAGES: Record<string, string> = {
   PHOTO_NOT_FOUND: '사진을 찾을 수 없습니다',
   ALREADY_ENTERED: '이미 응모했습니다',
   FORBIDDEN: '권한이 없습니다',
+  TITLE_REQUIRED: '제목을 입력해 주세요',
 }
 
 /** Supabase/Postgres 오류 → 사용자 문구 */

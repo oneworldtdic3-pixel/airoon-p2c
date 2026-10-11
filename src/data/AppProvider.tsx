@@ -101,7 +101,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const photosQ = useQuery({
     queryKey: ['photos'],
     queryFn: async () => {
-      const { data } = await supabase.from('photos').select('*, profiles(nickname)').order('created_at', { ascending: false }).limit(200)
+      const { data } = await supabase.from('photos').select('*, profiles!photos_user_id_fkey(nickname)').order('created_at', { ascending: false }).limit(200)
       return ((data ?? []) as (Omit<Photo, 'url' | 'nickname'> & { profiles: { nickname: string } | null })[]).map(({ profiles, ...p }) => ({
         ...p, nickname: profiles?.nickname ?? '산사러', url: p.storage_path.startsWith('seed:') ? resolveSeedArt(p.storage_path) : photoUrl(p.storage_path),
       })) as Photo[]
