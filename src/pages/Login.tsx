@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useApp } from '../data/AppProvider'
+import { useCooldown } from '../hooks/useCooldown'
 import { TEST_PHONES } from '../data/constants'
 import { toMessage } from '../data/errors'
 import Icon from '../components/ui/Icon'
@@ -36,6 +37,7 @@ export default function Login() {
   const [sent, setSent] = useState(false)
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
+  const cooldown = useCooldown(60)
 
   // 네이버 복귀: ?naver_token=… 이면 세션 확립, ?naver_error=… 이면 안내
   useEffect(() => {
@@ -67,7 +69,17 @@ export default function Login() {
     setBusy(false)
     if (!r.ok) return setErr(r.error)
     if (sent) nav(from, { replace: true })
-    else setSent(true)
+    else { setSent(true); cooldown.start() }
+  }
+  const resend = async () => {
+    if (!cooldown.ready || busy) return
+    setErr('')
+    setBusy(true)
+    const r = await sendOtp(phone)
+    setBusy(false)
+    if (!r.ok) return setErr(r.error)
+    setOtp('')
+    cooldown.start()
   }
   const switchMode = (m: Mode) => { setMode(m); setSent(false); setOtp(''); setErr('') }
   const social = async (provider: 'kakao' | 'google' | 'naver') => {
@@ -131,7 +143,12 @@ export default function Login() {
             {busy ? '잠시만요' : sent ? (mode === 'signup' ? '가입 완료' : '로그인') : '인증번호 받기'}
           </button>
           {sent ? (
-            <button type="button" onClick={() => { setSent(false); setOtp('') }} className="mt-2 w-full py-3 text-[13px] font-semibold text-sub">번호 다시 입력</button>
+            <div className="mt-2 flex">
+              <button type="button" onClick={() => { setSent(false); setOtp('') }} className="flex-1 py-3 text-[13px] font-semibold text-sub">번호 다시 입력</button>
+              <button type="button" onClick={() => void resend()} disabled={!cooldown.ready || busy} className="flex-1 py-3 text-[13px] font-semibold text-deep disabled:text-sub">
+                {cooldown.ready ? '인증번호 다시 받기' : <>다시 받기 <span className="tnum">{cooldown.left}</span>초 후</>}
+              </button>
+            </div>
           ) : (
             <button type="button" onClick={() => nav('/')} className="mt-2 w-full py-3 text-[13px] font-semibold text-sub">나중에 하기</button>
           )}

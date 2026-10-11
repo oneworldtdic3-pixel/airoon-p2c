@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useCooldown } from '../hooks/useCooldown'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import PageHeader from '../components/layout/PageHeader'
 import EventMap from '../components/more/EventMap'
@@ -25,6 +26,7 @@ export default function More() {
   const [sp, setSp] = useSearchParams()
   const [phoneSheet, setPhoneSheet] = useState(false)
   const [lp, setLp] = useState({ phone: '', otp: '', sent: false, busy: false })
+  const lpCooldown = useCooldown(60)
   const requireAuth = useRequireAuth()
   const { msg, show } = useToast()
 
@@ -55,7 +57,16 @@ export default function More() {
     const r = lp.sent ? await verifyPhoneLink(lp.phone, lp.otp) : await startPhoneLink(lp.phone)
     setLp((x) => ({ ...x, busy: false, sent: x.sent || r.ok }))
     if (!r.ok) return show(r.error)
-    if (lp.sent) { setPhoneSheet(false); setLp({ phone: '', otp: '', sent: false, busy: false }); show('휴대폰 번호를 연결했습니다') }
+    if (lp.sent) { setPhoneSheet(false); setLp({ phone: '', otp: '', sent: false, busy: false }); lpCooldown.reset(); show('휴대폰 번호를 연결했습니다') }
+    else lpCooldown.start()
+  }
+  const phoneResend = async () => {
+    if (!lpCooldown.ready || lp.busy) return
+    setLp((x) => ({ ...x, busy: true }))
+    const r = await startPhoneLink(lp.phone)
+    setLp((x) => ({ ...x, busy: false, otp: r.ok ? '' : x.otp }))
+    if (!r.ok) return show(r.error)
+    lpCooldown.start()
   }
 
   return (
@@ -173,6 +184,14 @@ export default function More() {
             </div>
           )}
           <button type="submit" disabled={lp.busy || (lp.sent ? lp.otp.length < 6 : !/^01\d{8,9}$/.test(lp.phone.replace(/\D/g, '')))} className="btn w-full">{lp.busy ? '잠시만요' : lp.sent ? '연결하기' : '인증번호 받기'}</button>
+          {lp.sent && (
+            <div className="flex">
+              <button type="button" onClick={() => { setLp((x) => ({ ...x, sent: false, otp: '' })); lpCooldown.reset() }} className="flex-1 py-2 text-[13px] font-semibold text-sub">번호 다시 입력</button>
+              <button type="button" onClick={() => void phoneResend()} disabled={!lpCooldown.ready || lp.busy} className="flex-1 py-2 text-[13px] font-semibold text-deep disabled:text-sub">
+                {lpCooldown.ready ? '인증번호 다시 받기' : <>다시 받기 <span className="tnum">{lpCooldown.left}</span>초 후</>}
+              </button>
+            </div>
+          )}
         </form>
       </BottomSheet>
       <Toast msg={msg} />

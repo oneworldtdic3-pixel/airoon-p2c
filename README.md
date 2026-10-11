@@ -18,9 +18,26 @@ npm run build
 - 정원·제한 검사는 전부 DB 함수(`book_session`, `book_shower`, `toggle_like` …)에서 트랜잭션으로 처리
 - RLS: 본인 예약·사진만 읽고 쓰기, 쓰기는 함수 경유. 관리자는 `profiles.is_admin`
 
-### 전화번호 로그인 (개발 단계)
+### 전화번호 인증 SMS (솔라피)
 
-SMS 공급자 연동 전까지는 대시보드의 테스트 번호를 쓴다.
+실제 문자는 Supabase Auth **Send SMS Hook** → Edge Function `send-sms` → 솔라피(SOLAPI) API 로 보낸다.
+키 값은 코드에 두지 않고 대시보드에만 넣는다.
+
+1. Edge Functions → `send-sms` → Secrets 에 입력
+   - `SOLAPI_API_KEY`, `SOLAPI_API_SECRET` — 솔라피 콘솔의 API Key / Secret
+   - `SOLAPI_SENDER_NUMBER` — 솔라피에 등록·승인된 발신번호 (`01012345678` 형식)
+2. Authentication → Hooks → **Send SMS** → Enable, HTTPS 선택
+   - URL: `https://<project-ref>.supabase.co/functions/v1/send-sms`
+   - Generate secret 로 만든 `v1,whsec_…` 값을 그대로 `send-sms` 의 `SEND_SMS_HOOK_SECRET` 시크릿에 넣는다 (회전 시 `|` 로 이어 붙이면 둘 다 허용)
+3. 함수는 `verify_jwt=false` 로 배포되며 훅의 Standard Webhooks 서명으로 호출자를 검증한다.
+
+문자 내용: `[산사캠프] 인증번호 123456 / 5분 안에 입력해 주세요.`
+발송 실패 시 앱에는 "인증 문자를 보내지 못했습니다. 잠시 후 다시 시도해주세요." 가 뜨고, 재발송은 60초 쿨다운 뒤에 가능하다.
+원인은 Edge Functions → `send-sms` → Logs 에서 본다.
+
+### 테스트 번호 (실제 문자 없이 개발)
+
+훅이 켜져 있어도 테스트 번호는 Auth 가 훅을 호출하지 않으므로 그대로 쓸 수 있다. 출시 전에 삭제한다.
 Authentication → Providers → Phone → **Test phone numbers** 에 등록:
 
 | 번호 | OTP | 용도 |
