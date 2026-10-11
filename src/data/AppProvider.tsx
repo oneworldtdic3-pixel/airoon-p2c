@@ -17,6 +17,16 @@ interface Ctx {
   logout: () => Promise<void>
   /** 카카오·구글 OAuth. 리다이렉트 전에 동의 상태를 보관했다가 로그인 후 프로필에 반영 */
   signInWithProvider: (provider: 'kakao' | 'google', opts?: { consent?: boolean; returnTo?: string }) => Promise<Result>
+  /** 네이버 — Edge Function 경유. link=true 면 로그인한 계정에 연결 */
+  signInWithNaver: (opts?: { consent?: boolean; returnTo?: string; link?: boolean }) => Promise<Result>
+  /** 네이버 복귀 토큰(magic link hashed token)으로 세션 확립 */
+  completeNaver: (tokenHash: string) => Promise<Result>
+  /** 계정 연결 — 카카오/구글은 Supabase linkIdentity, 휴대폰은 phone_change OTP */
+  linkProvider: (provider: 'kakao' | 'google', returnTo?: string) => Promise<Result>
+  startPhoneLink: (phone: string) => Promise<Result>
+  verifyPhoneLink: (phone: string, otp: string) => Promise<Result>
+  /** 현재 계정에 붙은 로그인 수단 */
+  identities: { phone: string | null; providers: string[]; naver: boolean }
 
   programs: Program[]
   sessions: ProgramSession[]
@@ -162,6 +172,50 @@ export function AppProvider({ children }: { children: ReactNode }) {
     await qc.invalidateQueries({ queryKey: ['profile'] })
     return { ok: true }
   }
+  const fnUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/naver-auth`
+  const signInWithNaver: Ctx['signInWithNaver'] = async (opts) => {
+    try { if (opts?.consent !== undefined) sessionStorage.setItem('sansa:pending-profile', JSON.stringify({ consent: opts.consent })) } catch { /* ignore */ }
+    try {
+      const headers: Record<string, string> = { 'Content-Type': 'application/json', apikey: import.meta.env.VITE_SUPABASE_ANON_KEY }
+      if (opts?.link) {
+        const { data } = await supabase.auth.getSession()
+        if (!data.session) return fail('AUTH_REQUIRED')
+        headers.Authorization = `Bearer ${data.session.access_token}`
+      }
+      const res = await fetch(fnUrl, { method: 'POST', headers, body: JSON.stringify({ return_to: opts?.returnTo ?? '/', link: !!opts?.link }) })
+      const body = (await res.json().catch(() => ({}))) as { url?: string; error?: string }
+      if (body.error === 'not_configured') return fail('NAVER_NOT_CONFIGURED')
+      if (!res.ok || !body.url) return fail(body.error ?? 'NAVER_ERROR')
+      window.location.assign(body.url)
+      return { ok: true }
+    } catch (e) { return fail(e) }
+  }
+  const completeNaver: Ctx['completeNaver'] = async (tokenHash) => {
+    const { error } = await supabase.auth.verifyOtp({ token_hash: tokenHash, type: 'magiclink' })
+    if (error) return fail(error)
+    await qc.invalidateQueries({ queryKey: ['profile'] })
+    return { ok: true }
+  }
+  const linkProvider: Ctx['linkProvider'] = async (provider, returnTo) => {
+    const { error } = await supabase.auth.linkIdentity({ provider, options: { redirectTo: window.location.origin + (returnTo ?? '/more') + '?linked=' + provider } })
+    return error ? fail(error) : { ok: true }
+  }
+  const startPhoneLink: Ctx['startPhoneLink'] = async (phone) => {
+    const { error } = await supabase.auth.updateUser({ phone: toE164(phone) })
+    return error ? fail(error) : { ok: true }
+  }
+  const verifyPhoneLink: Ctx['verifyPhoneLink'] = async (phone, otp) => {
+    const { error } = await supabase.auth.verifyOtp({ phone: toE164(phone), token: otp, type: 'phone_change' })
+    if (error) return fail(error)
+    await Promise.all([supabase.auth.refreshSession(), qc.invalidateQueries({ queryKey: ['profile'] })])
+    return { ok: true }
+  }
+  const identities = useMemo(() => {
+    const u = session?.user
+    const providers = (u?.identities ?? []).map((i) => i.provider).filter((x) => x !== 'phone' && x !== 'email')
+    return { phone: u?.phone || null, providers, naver: !!(u?.app_metadata as { naver_id?: string } | undefined)?.naver_id }
+  }, [session])
+
   const signInWithProvider: Ctx['signInWithProvider'] = async (provider, opts) => {
     try { if (opts?.consent !== undefined) sessionStorage.setItem('sansa:pending-profile', JSON.stringify({ consent: opts.consent })) } catch { /* ignore */ }
     const { error } = await supabase.auth.signInWithOAuth({ provider, options: { redirectTo: window.location.origin + (opts?.returnTo ?? '/') } })
@@ -224,7 +278,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }
 
   const value = useMemo<Ctx>(() => ({
-    ready, user: uid ? profileQ.data ?? null : null, sendOtp, verifyOtp, logout, signInWithProvider,
+    ready, user: uid ? profileQ.data ?? null : null, sendOtp, verifyOtp, logout, signInWithProvider, signInWithNaver, completeNaver, linkProvider, startPhoneLink, verifyPhoneLink, identities,
     programs: programsQ.data ?? [], sessions: sessionsQ.data ?? [], bookings: mineQ.data?.bookings ?? [], bookSession, cancelBooking,
     slots: slotsQ.data ?? [], showerBookings: mineQ.data?.showerBookings ?? [], bookShower, cancelShower,
     parking: mineQ.data?.parking ?? null, saveParking,
@@ -233,7 +287,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     consent: profileQ.data?.kakao_alimtalk_consent ?? false, setConsent,
     luckyEntered: mineQ.data?.luckyEntered ?? false, enterLuckyDraw,
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [ready, uid, profileQ.data, programsQ.data, sessionsQ.data, slotsQ.data, notiQ.data, bannersQ.data, photosQ.data, mineQ.data])
+  }), [ready, uid, identities, profileQ.data, programsQ.data, sessionsQ.data, slotsQ.data, notiQ.data, bannersQ.data, photosQ.data, mineQ.data])
 
   return <AppCtx.Provider value={value}>{children}</AppCtx.Provider>
 }

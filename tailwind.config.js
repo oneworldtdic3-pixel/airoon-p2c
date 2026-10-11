@@ -11,6 +11,7 @@ export default {
         ink: '#1F2937',
         sub: '#6B7280',
         line: '#DDF3EE',
+        onbrand: '#0B3D38',
         sky: '#5BC8F5',
         ember: '#F0552A',
       },

@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { useApp } from '../data/AppProvider'
 import { TEST_PHONES } from '../data/constants'
+import { toMessage } from '../data/errors'
 import Icon from '../components/ui/Icon'
 
 type Mode = 'login' | 'signup'
@@ -10,7 +11,7 @@ function Check({ on, onChange, children, required }: { on: boolean; onChange: (v
   return (
     <label className="flex cursor-pointer items-start gap-3 py-1.5">
       <input type="checkbox" checked={on} onChange={(e) => onChange(e.target.checked)} className="peer sr-only" />
-      <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition ${on ? 'border-transparent bg-brand-grad text-white' : 'border-gray-300 bg-white'}`}>
+      <span className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition ${on ? 'border-transparent bg-brand-grad text-onbrand' : 'border-gray-300 bg-white'}`}>
         {on && <Icon name="check" size={13} />}
       </span>
       <span className="text-[13.5px] leading-snug">
@@ -22,10 +23,10 @@ function Check({ on, onChange, children, required }: { on: boolean; onChange: (v
 }
 
 export default function Login() {
-  const { sendOtp, verifyOtp, signInWithProvider } = useApp()
+  const { sendOtp, verifyOtp, signInWithProvider, signInWithNaver, completeNaver } = useApp()
   const nav = useNavigate()
   const [sp] = useSearchParams()
-  const from = (useLocation().state as { from?: string } | null)?.from ?? '/'
+  const from = (useLocation().state as { from?: string } | null)?.from ?? sp.get('rt') ?? '/'
   const [mode, setMode] = useState<Mode>(sp.get('mode') === 'signup' ? 'signup' : 'login')
   const [phone, setPhone] = useState('')
   const [nickname, setNickname] = useState('')
@@ -35,6 +36,23 @@ export default function Login() {
   const [sent, setSent] = useState(false)
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
+
+  // 네이버 복귀: ?naver_token=… 이면 세션 확립, ?naver_error=… 이면 안내
+  useEffect(() => {
+    const token = sp.get('naver_token')
+    const nerr = sp.get('naver_error')
+    if (token) {
+      setBusy(true)
+      void completeNaver(token).then((r) => {
+        setBusy(false)
+        if (r.ok) nav(from, { replace: true })
+        else setErr(r.error)
+      })
+    } else if (nerr) {
+      setErr(nerr === 'cancelled' ? '네이버 로그인을 취소했습니다.' : toMessage(nerr === 'naver_error' ? 'NAVER_ERROR' : nerr))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const validPhone = /^01\d{8,9}$/.test(phone.replace(/\D/g, ''))
   const validNick = nickname.trim().length >= 2 && nickname.trim().length <= 12
@@ -54,9 +72,12 @@ export default function Login() {
   const switchMode = (m: Mode) => { setMode(m); setSent(false); setOtp(''); setErr('') }
   const social = async (provider: 'kakao' | 'google' | 'naver') => {
     setErr('')
-    if (provider === 'naver') return setErr('네이버 로그인은 준비 중입니다. 카카오·구글 또는 휴대폰 번호로 가입해 주세요.')
     if (mode === 'signup' && !agree) return setErr('개인정보 수집·이용에 동의해 주세요.')
-    const r = await signInWithProvider(provider, { consent: mode === 'signup' ? consent : undefined, returnTo: from })
+    setBusy(true)
+    const r = provider === 'naver'
+      ? await signInWithNaver({ consent: mode === 'signup' ? consent : undefined, returnTo: from })
+      : await signInWithProvider(provider, { consent: mode === 'signup' ? consent : undefined, returnTo: from })
+    setBusy(false)
     if (!r.ok) setErr(r.error)
   }
 
@@ -118,10 +139,13 @@ export default function Login() {
       </form>
       {!sent && (
         <div className="pb-6">
-          <div className="flex items-center gap-3 py-2">
+          <div className="flex items-center gap-3 py-1">
             <span className="h-px flex-1 bg-line" /><span className="eyebrow">간편 {mode === 'signup' ? '회원가입' : '로그인'}</span><span className="h-px flex-1 bg-line" />
           </div>
-          <div className="mt-3 grid grid-cols-3 gap-2.5">
+          <p className="mb-3 mt-2 text-center text-[12px] leading-relaxed text-sub">
+            {mode === 'login' ? '가입할 때 쓴 방법으로 로그인하세요. 다른 방법으로 들어오면 새 계정이 만들어집니다.' : '가입 후 더보기 → 계정 연결에서 휴대폰·카카오·구글·네이버를 한 계정으로 묶을 수 있습니다.'}
+          </p>
+          <div className="grid grid-cols-3 gap-2.5">
             <button type="button" onClick={() => void social('naver')} className="flex items-center justify-center gap-2 rounded-2xl bg-[#03C75A] py-3.5 text-[14px] font-extrabold text-white transition active:scale-[0.97]">
               <span className="text-[15px] font-black leading-none">N</span>네이버
             </button>

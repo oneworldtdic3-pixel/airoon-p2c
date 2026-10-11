@@ -13,8 +13,8 @@ export default function QuickLinks() {
     <section className="px-5 pt-12">
       <div className="grid grid-cols-2 gap-2.5">
         {items.map((it, i) => (
-          <Link key={it.label} to={it.to} className={`flex aspect-[1.55] flex-col justify-between rounded-tile p-4 transition duration-200 active:scale-[0.97] ${i === 0 ? 'bg-brand-grad text-white' : 'border border-line bg-white text-ink'}`}>
-            <Icon name={it.icon} size={28} className={i === 0 ? 'text-sun' : 'text-deep'} />
+          <Link key={it.label} to={it.to} className={`flex aspect-[1.55] flex-col justify-between rounded-tile p-4 transition duration-200 active:scale-[0.97] ${i === 0 ? 'bg-brand-grad text-onbrand font-extrabold' : 'border border-line bg-white text-ink'}`}>
+            <Icon name={it.icon} size={28} className={i === 0 ? 'text-onbrand' : 'text-deep'} />
             <span className="text-[15px] font-bold">{it.label}</span>
           </Link>
         ))}

@@ -14,12 +14,19 @@ const MESSAGES: Record<string, string> = {
   ALREADY_ENTERED: '이미 응모했습니다',
   FORBIDDEN: '권한이 없습니다',
   TITLE_REQUIRED: '제목을 입력해 주세요',
+  NAVER_NOT_CONFIGURED: '네이버 로그인이 아직 설정되지 않았습니다. 운영자에게 문의하거나 다른 방법으로 로그인해 주세요.',
+  NAVER_ERROR: '네이버 로그인에 실패했습니다. 잠시 후 다시 시도해 주세요.',
+  origin_not_allowed: '이 주소에서는 네이버 로그인을 쓸 수 없습니다 (허용 도메인 설정 필요).',
+  auth_required: '먼저 로그인해 주세요.',
 }
 
 /** Supabase/Postgres 오류 → 사용자 문구 */
 export function toMessage(e: unknown): string {
   const msg = typeof e === 'object' && e && 'message' in e ? String((e as { message: unknown }).message) : String(e)
   for (const code of Object.keys(MESSAGES)) if (msg.includes(code)) return MESSAGES[code]
+  if (/manual linking/i.test(msg)) return '계정 연결 기능이 꺼져 있습니다. 운영자가 Supabase에서 Manual linking을 켜야 합니다.'
+  if (/identity.*already.*linked|already.*(exists|registered)/i.test(msg)) return '이미 다른 계정에 연결된 로그인 수단입니다.'
+  if (/phone.*already|already.*phone/i.test(msg)) return '이미 다른 계정에서 쓰는 휴대폰 번호입니다.'
   if (/otp|token/i.test(msg) && /invalid|expired/i.test(msg)) return '인증번호가 올바르지 않거나 만료되었습니다'
   if (/rate limit|too many/i.test(msg)) return '요청이 너무 잦습니다. 잠시 후 다시 시도해 주세요'
   if (/network|fetch/i.test(msg)) return '네트워크 연결을 확인해 주세요'

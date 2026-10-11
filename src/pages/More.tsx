@@ -1,8 +1,8 @@
-import { useEffect } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import PageHeader from '../components/layout/PageHeader'
 import EventMap from '../components/more/EventMap'
-import { SectionTitle, Toast } from '../components/ui'
+import { BottomSheet, SectionTitle, Toast } from '../components/ui'
 import SocialLinks from '../components/ui/SocialLinks'
 import { RidgeGlyph, MoktakGlyph } from '../components/illust'
 import { SPONSOR_TIERS } from '../data/constants'
@@ -20,13 +20,40 @@ const guides = [
 export default function More() {
   const { hash } = useLocation()
   const nav = useNavigate()
-  const { user, logout, luckyEntered, enterLuckyDraw } = useApp()
+  const { user, logout, luckyEntered, enterLuckyDraw, identities, linkProvider, signInWithNaver, startPhoneLink, verifyPhoneLink } = useApp()
+  const [sp, setSp] = useSearchParams()
+  const [phoneSheet, setPhoneSheet] = useState(false)
+  const [lp, setLp] = useState({ phone: '', otp: '', sent: false, busy: false })
   const requireAuth = useRequireAuth()
   const { msg, show } = useToast()
 
   useEffect(() => {
     if (hash === '#map') document.getElementById('map')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [hash])
+  // 연결 복귀 알림 (?linked=kakao / ?naver=linked|already_linked)
+  useEffect(() => {
+    const linked = sp.get('linked'); const naver = sp.get('naver')
+    if (!linked && !naver) return
+    if (linked) show(`${linked === 'kakao' ? '카카오' : '구글'} 계정을 연결했습니다`)
+    if (naver === 'linked') show('네이버 계정을 연결했습니다')
+    if (naver === 'already_linked') show('그 네이버 계정은 이미 다른 계정에 연결되어 있습니다')
+    setSp({}, { replace: true })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const linkRows = user ? [
+    { key: 'phone', name: '휴대폰', on: !!identities.phone, sub: identities.phone ? fmtPhone(identities.phone) : '예약 알림과 본인 확인에 사용', act: () => setPhoneSheet(true) },
+    { key: 'kakao', name: '카카오', on: identities.providers.includes('kakao'), act: async () => { const r = await linkProvider('kakao', '/more'); if (!r.ok) show(r.error) } },
+    { key: 'google', name: '구글', on: identities.providers.includes('google'), act: async () => { const r = await linkProvider('google', '/more'); if (!r.ok) show(r.error) } },
+    { key: 'naver', name: '네이버', on: identities.naver, act: async () => { const r = await signInWithNaver({ link: true, returnTo: '/more' }); if (!r.ok) show(r.error) } },
+  ] : []
+  const phoneLink = async () => {
+    setLp((x) => ({ ...x, busy: true }))
+    const r = lp.sent ? await verifyPhoneLink(lp.phone, lp.otp) : await startPhoneLink(lp.phone)
+    setLp((x) => ({ ...x, busy: false, sent: x.sent || r.ok }))
+    if (!r.ok) return show(r.error)
+    if (lp.sent) { setPhoneSheet(false); setLp({ phone: '', otp: '', sent: false, busy: false }); show('휴대폰 번호를 연결했습니다') }
+  }
 
   return (
     <>
@@ -49,6 +76,24 @@ export default function More() {
             </div>
           )}
         </section>
+
+        {user && (
+          <section className="pt-8">
+            <SectionTitle eyebrow="Account">계정 연결</SectionTitle>
+            <p className="-mt-2 mb-3 text-[13px] text-sub">어떤 방법으로 들어와도 같은 예약·사진을 보려면 여기서 연결하세요. 연결은 본인 확인 후에만 됩니다.</p>
+            <ul className="divide-y hairline border-y">
+              {linkRows.map((r) => (
+                <li key={r.key} className="flex items-center gap-3 py-3">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[15px] font-bold">{r.name}</p>
+                    {r.sub && <p className="tnum truncate text-[12px] text-sub">{r.sub}</p>}
+                  </div>
+                  {r.on ? <span className="text-[12px] font-bold text-deep">연결됨</span> : <button type="button" onClick={() => void r.act()} className="btn-ghost !py-2 !text-[13px]">연결</button>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <section className="pt-8">
           <SectionTitle eyebrow="Follow">산사캠프 소식</SectionTitle>
@@ -107,6 +152,22 @@ export default function More() {
           </dl>
         </section>
       </div>
+      <BottomSheet open={phoneSheet} onClose={() => setPhoneSheet(false)} title="휴대폰 번호 연결">
+        <p className="text-[13px] text-sub">번호로 받은 인증번호를 확인해야 연결됩니다. 다른 계정에서 이미 쓰는 번호는 연결할 수 없습니다.</p>
+        <form className="mt-5 space-y-4" onSubmit={(e) => { e.preventDefault(); void phoneLink() }}>
+          <div>
+            <label htmlFor="lp-phone" className="eyebrow mb-2 block">휴대폰 번호</label>
+            <input id="lp-phone" inputMode="tel" value={lp.phone} onChange={(e) => setLp((x) => ({ ...x, phone: e.target.value }))} disabled={lp.sent} placeholder="010 0000 0000" className="field tnum text-[18px] font-bold disabled:text-sub" />
+          </div>
+          {lp.sent && (
+            <div>
+              <label htmlFor="lp-otp" className="eyebrow mb-2 block">인증번호</label>
+              <input id="lp-otp" inputMode="numeric" value={lp.otp} onChange={(e) => setLp((x) => ({ ...x, otp: e.target.value }))} maxLength={6} placeholder="6자리" autoFocus className="field tnum text-[22px] font-bold tracking-[0.3em]" />
+            </div>
+          )}
+          <button type="submit" disabled={lp.busy || (lp.sent ? lp.otp.length < 6 : !/^01\d{8,9}$/.test(lp.phone.replace(/\D/g, '')))} className="btn w-full">{lp.busy ? '잠시만요' : lp.sent ? '연결하기' : '인증번호 받기'}</button>
+        </form>
+      </BottomSheet>
       <Toast msg={msg} />
     </>
   )
