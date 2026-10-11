@@ -14,6 +14,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
   const [day, setDay] = useState<string>(EVENT_DAYS[0])
   const [open, setOpen] = useState<Program | null>(null)
   const [ticket, setTicket] = useState<Booking | null>(null)
+  const [cancelled, setCancelled] = useState<{ id: string; title: string; when: string }[]>([]) // 방금 취소한 예약 — 화면에 '취소되었습니다' 로 남긴다
 
   const list = useMemo(
     () =>
@@ -25,6 +26,12 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
   const mine = bookings.filter((b) => b.status === 'confirmed')
   const bookingOf = (sid: string) => mine.find((b) => b.session_id === sid)
 
+  const cancel = async (b: Booking, title: string, when: string) => {
+    const r = await cancelBooking(b.id)
+    if (!r.ok) return toast(r.error)
+    setCancelled((cur) => [{ id: b.id, title, when }, ...cur])
+    toast('예약을 취소했습니다')
+  }
   const book = (sid: string) =>
     requireAuth(async () => {
       const r = await bookSession(sid)
@@ -36,6 +43,20 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
 
   return (
     <div>
+      {cancelled.length > 0 && (
+        <section className="mb-4 rounded-tile border hairline bg-white p-4" role="status" aria-live="polite">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-[14px] font-extrabold text-ember">예약이 취소되었습니다</p>
+              <ul className="mt-1 space-y-0.5">
+                {cancelled.map((c) => <li key={c.id} className="text-[13px] text-sub"><span className="font-bold text-ink line-through decoration-ember/60">{c.title}</span> · <span className="tnum">{c.when}</span></li>)}
+              </ul>
+              <p className="mt-2 text-[12px] text-sub">자리는 다른 분이 예약할 수 있게 열렸습니다. 다시 참여하려면 아래에서 예약해 주세요.</p>
+            </div>
+            <button type="button" onClick={() => setCancelled([])} aria-label="닫기" className="-mr-1 -mt-1 p-1 text-sub"><Icon name="close" size={18} /></button>
+          </div>
+        </section>
+      )}
       {mine.length > 0 && (
         <section className="mb-6 rounded-tile bg-mint p-4">
           <p className="eyebrow mb-2 text-deep">내 예약 {mine.length}</p>
@@ -57,8 +78,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
                     type="button"
                     onClick={async () => {
                       if (!window.confirm(`${p.title} ${fmtTime(s.starts_at)} 예약을 취소할까요?\n취소한 자리는 다른 분이 예약할 수 있습니다.`)) return
-                      const r = await cancelBooking(b.id)
-                      toast(r.ok ? '예약을 취소했습니다' : r.error)
+                      await cancel(b, p.title, `${fmtDay(s.starts_at)} ${fmtTime(s.starts_at)}`)
                     }}
                     className="shrink-0 rounded-full border border-deep/30 px-3 py-1.5 text-[12px] font-bold text-deep active:bg-white"
                   >
@@ -131,7 +151,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
                     {mineB ? (
                       <span className="flex flex-col items-end gap-1">
                         <span className="rounded-full bg-mint px-3 py-1 text-[12px] font-extrabold text-deep">예약 완료</span>
-                        <button type="button" onClick={async () => { const r = await cancelBooking(mineB.id); toast(r.ok ? '예약을 취소했습니다' : r.error) }} className="px-2 py-1 text-[12px] font-semibold text-sub underline underline-offset-2">취소하기</button>
+                        <button type="button" onClick={() => void cancel(mineB, open.title, `${fmtDay(s.starts_at)} ${fmtTime(s.starts_at)}`)} className="px-2 py-1 text-[12px] font-semibold text-sub underline underline-offset-2">취소하기</button>
                       </span>
                     ) : (
                       <button type="button" disabled={left === 0} onClick={() => book(s.id)} className="btn !px-5 !py-2.5 !text-[14px]">{left === 0 ? '마감' : '예약하기'}</button>
@@ -143,7 +163,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
           </div>
         )}
       </BottomSheet>
-      <QrTicket booking={ticket} onClose={() => setTicket(null)} toast={toast} />
+      <QrTicket booking={ticket} onClose={() => setTicket(null)} onCancel={cancel} />
     </div>
   )
 }
