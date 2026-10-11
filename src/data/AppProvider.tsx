@@ -196,8 +196,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
     await qc.invalidateQueries({ queryKey: ['profile'] })
     return { ok: true }
   }
+  // 카카오: 비즈 앱 전환 전에는 이메일 동의항목이 없어 account_email 을 요청하면 KOE205. 닉네임·프로필만 요청한다.
+  const oauthScopes = (provider: 'kakao' | 'google') => (provider === 'kakao' ? 'profile_nickname profile_image' : undefined)
   const linkProvider: Ctx['linkProvider'] = async (provider, returnTo) => {
-    const { error } = await supabase.auth.linkIdentity({ provider, options: { redirectTo: window.location.origin + (returnTo ?? '/more') + '?linked=' + provider } })
+    const { error } = await supabase.auth.linkIdentity({ provider, options: { scopes: oauthScopes(provider), redirectTo: window.location.origin + (returnTo ?? '/more') + '?linked=' + provider } })
     return error ? fail(error) : { ok: true }
   }
   const startPhoneLink: Ctx['startPhoneLink'] = async (phone) => {
@@ -218,7 +220,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const signInWithProvider: Ctx['signInWithProvider'] = async (provider, opts) => {
     try { if (opts?.consent !== undefined) sessionStorage.setItem('sansa:pending-profile', JSON.stringify({ consent: opts.consent })) } catch { /* ignore */ }
-    const { error } = await supabase.auth.signInWithOAuth({ provider, options: { redirectTo: window.location.origin + (opts?.returnTo ?? '/') } })
+    const { error } = await supabase.auth.signInWithOAuth({ provider, options: { scopes: oauthScopes(provider), redirectTo: window.location.origin + (opts?.returnTo ?? '/') } })
     return error ? fail(error) : { ok: true }
   }
   const logout = async () => { await supabase.auth.signOut(); qc.removeQueries({ queryKey: ['mine'] }); qc.removeQueries({ queryKey: ['profile'] }) }
