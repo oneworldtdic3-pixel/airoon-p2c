@@ -28,8 +28,9 @@ export function toMessage(e: unknown): string {
   const msg = typeof e === 'object' && e && 'message' in e ? String((e as { message: unknown }).message) : String(e)
   for (const code of Object.keys(MESSAGES)) if (msg.includes(code)) return MESSAGES[code]
   if (/manual linking/i.test(msg)) return '계정 연결 기능이 꺼져 있습니다. 운영자가 Supabase에서 Manual linking을 켜야 합니다.'
+  if (/phone/i.test(msg) && /already|exists|registered|in use/i.test(msg)) return '이미 다른 계정에서 쓰는 휴대폰 번호입니다.'
   if (/identity.*already.*linked|already.*(exists|registered)/i.test(msg)) return '이미 다른 계정에 연결된 로그인 수단입니다.'
-  if (/phone.*already|already.*phone/i.test(msg)) return '이미 다른 계정에서 쓰는 휴대폰 번호입니다.'
+  if (/sending sms|sms.*(fail|error)|twilio|messaging service/i.test(msg)) return '인증 문자를 보내지 못했습니다. SMS 발송 설정이 아직 안 된 번호입니다.'
   if (/otp|token/i.test(msg) && /invalid|expired/i.test(msg)) return '인증번호가 올바르지 않거나 만료되었습니다'
   if (/rate limit|too many/i.test(msg)) return '요청이 너무 잦습니다. 잠시 후 다시 시도해 주세요'
   if (/network|fetch/i.test(msg)) return '네트워크 연결을 확인해 주세요'
