@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import Icon from '../../components/ui/Icon'
 
-const OPERATOR = { name: '주식회사 아이룬 (산사캠프 사무국)', email: 'info@airoon.kr', site: 'https://airoon-p2c.vercel.app' }
+const OPERATOR = { name: '주식회사 아이룬 (산사캠프 사무국)', email: 'info@airoon.kr', site: 'https://sansacamp.com' }
 const UPDATED = '2026년 10월 11일'
 
 function Doc({ title, children }: { title: string; children: React.ReactNode }) {
