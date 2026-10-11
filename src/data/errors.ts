@@ -6,7 +6,7 @@ const MESSAGES: Record<string, string> = {
   BOOKING_NOT_FOUND: '예약을 찾을 수 없습니다',
   SLOT_NOT_FOUND: '슬롯을 찾을 수 없습니다',
   SLOT_FULL: '마감된 슬롯입니다',
-  DAILY_LIMIT: '샤워실은 팀당 하루 2회까지 예약할 수 있습니다',
+  DAILY_LIMIT: '샤워실은 1인당 하루 2회까지 예약할 수 있습니다',
   NOSHOW_LIMIT: '노쇼 2회로 오늘은 샤워실 예약이 제한됩니다',
   CAR_NUMBER_INVALID: '차량번호 형식을 확인해 주세요 (예: 123가 4567)',
   DATES_REQUIRED: '이용 일자를 선택해 주세요',
