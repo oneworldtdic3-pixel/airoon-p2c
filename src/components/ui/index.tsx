@@ -71,7 +71,7 @@ export function BottomSheet({ open, onClose, title, children }: { open: boolean;
   )
 }
 
-export function SectionTitle({ children, eyebrow, right }: { children: ReactNode; eyebrow?: string; right?: ReactNode }) {
+export function SectionTitle({ children, eyebrow, right }: { children: ReactNode; eyebrow?: ReactNode; right?: ReactNode }) {
   return (
     <div className="mb-4 flex items-end justify-between">
       <div>

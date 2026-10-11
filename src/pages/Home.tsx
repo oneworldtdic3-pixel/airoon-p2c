@@ -4,6 +4,7 @@ import QuickLinks from '../components/home/QuickLinks'
 import TodaySchedule from '../components/home/TodaySchedule'
 import SponsorStrip from '../components/home/SponsorStrip'
 import InstallStrip from '../components/home/InstallStrip'
+import LivePhotos from '../components/home/LivePhotos'
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <div className="pt-8"><LiveBanner /></div>
       <QuickLinks />
       <TodaySchedule />
+      <LivePhotos />
       <SponsorStrip />
       <div className="h-6" />
     </>
