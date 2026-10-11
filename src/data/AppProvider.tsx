@@ -121,12 +121,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
     queryKey: ['mine', uid],
     enabled: !!uid,
     queryFn: async () => {
+      // 관리자는 RLS 상 모든 사람의 예약을 읽을 수 있으므로, '내 것' 은 반드시 user_id 로 걸러낸다
       const [b, s, p, l, ld] = await Promise.all([
-        supabase.from('bookings').select('*').eq('status', 'confirmed'),
-        supabase.from('shower_bookings').select('*').eq('status', 'confirmed'),
-        supabase.from('parking_bookings').select('*').maybeSingle(),
-        supabase.from('photo_likes').select('photo_id'),
-        supabase.from('lucky_draw_entries').select('id').maybeSingle(),
+        supabase.from('bookings').select('*').eq('user_id', uid!).eq('status', 'confirmed'),
+        supabase.from('shower_bookings').select('*').eq('user_id', uid!).eq('status', 'confirmed'),
+        supabase.from('parking_bookings').select('*').eq('user_id', uid!).maybeSingle(),
+        supabase.from('photo_likes').select('photo_id').eq('user_id', uid!),
+        supabase.from('lucky_draw_entries').select('id').eq('user_id', uid!).maybeSingle(),
       ])
       return {
         bookings: (b.data ?? []) as Booking[],
