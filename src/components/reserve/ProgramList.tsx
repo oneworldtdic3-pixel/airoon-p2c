@@ -115,9 +115,12 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
                       <span className="tnum block text-[11px] text-gray-400">정원 {s.capacity}</span>
                     </span>
                     {mineB ? (
-                      <button onClick={async () => { const r = await cancelBooking(mineB.id); toast(r.ok ? '예약을 취소했습니다' : r.error) }} className="btn-ghost">취소</button>
+                      <span className="flex flex-col items-end gap-1">
+                        <span className="rounded-full bg-mint px-3 py-1 text-[12px] font-extrabold text-deep">예약 완료</span>
+                        <button type="button" onClick={async () => { const r = await cancelBooking(mineB.id); toast(r.ok ? '예약을 취소했습니다' : r.error) }} className="px-2 py-1 text-[12px] font-semibold text-sub underline underline-offset-2">취소하기</button>
+                      </span>
                     ) : (
-                      <button disabled={left === 0} onClick={() => book(s.id)} className="btn !px-5 !py-2.5 !text-[14px]">예약</button>
+                      <button type="button" disabled={left === 0} onClick={() => book(s.id)} className="btn !px-5 !py-2.5 !text-[14px]">{left === 0 ? '마감' : '예약하기'}</button>
                     )}
                   </li>
                 )
