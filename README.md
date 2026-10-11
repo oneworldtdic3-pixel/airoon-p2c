@@ -30,6 +30,7 @@ npm run build
    - URL: `https://<project-ref>.supabase.co/functions/v1/send-sms`
    - Generate secret 로 만든 `v1,whsec_…` 값을 그대로 `send-sms` 의 `SEND_SMS_HOOK_SECRET` 시크릿에 넣는다 (회전 시 `|` 로 이어 붙이면 둘 다 허용)
 3. 함수는 `verify_jwt=false` 로 배포되며 훅의 Standard Webhooks 서명으로 호출자를 검증한다.
+4. Authentication → Providers → Phone → **SMS OTP Expiry** 를 `300`(5분)으로 둔다. 문자 문구 "5분 안에 입력"과 맞춘 값이며 기본값 60초면 참가자가 자주 만료를 겪는다. 늘리면 `send-sms` 의 문구도 같이 바꾼다.
 
 문자 내용: `[산사캠프] 인증번호 123456 / 5분 안에 입력해 주세요.`
 발송 실패 시 앱에는 "인증 문자를 보내지 못했습니다. 잠시 후 다시 시도해주세요." 가 뜨고, 재발송은 60초 쿨다운 뒤에 가능하다.
