@@ -18,3 +18,11 @@ export function fmtPhone(p: string | null | undefined) {
   const d = p.replace(/\D/g, '').replace(/^82/, '0')
   return d.length === 11 ? `${d.slice(0, 3)}-${d.slice(3, 7)}-${d.slice(7)}` : d.length === 10 ? `${d.slice(0, 3)}-${d.slice(3, 6)}-${d.slice(6)}` : p
 }
+
+/** 참가비: 0 → 무료, 10000 → 1만원, 4000 → 4천원, 12500 → 12,500원 */
+export function fmtPrice(won: number | null | undefined) {
+  if (!won) return '무료'
+  if (won % 10000 === 0) return `${won / 10000}만원`
+  if (won < 10000 && won % 1000 === 0) return `${won / 1000}천원`
+  return `${won.toLocaleString('ko-KR')}원`
+}
