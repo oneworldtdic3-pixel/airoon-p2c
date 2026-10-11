@@ -24,7 +24,7 @@ function Check({ on, onChange, children, required }: { on: boolean; onChange: (v
 }
 
 export default function Login() {
-  const { sendOtp, verifyOtp, signInWithProvider, signInWithNaver, completeNaver } = useApp()
+  const { ready, user, sendOtp, verifyOtp, signInWithProvider, signInWithNaver, completeNaver } = useApp()
   const nav = useNavigate()
   const [sp] = useSearchParams()
   const from = (useLocation().state as { from?: string } | null)?.from ?? sp.get('rt') ?? '/'
@@ -55,6 +55,12 @@ export default function Login() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  // 이미 로그인된 상태로 /login 에 오면(인증 직후 프로필 로딩 중 튕긴 경우 포함) 원래 가려던 곳으로
+  useEffect(() => {
+    if (ready && user && !sp.get('naver_token')) nav(from, { replace: true })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, user])
 
   const validPhone = /^01\d{8,9}$/.test(phone.replace(/\D/g, ''))
   const validNick = nickname.trim().length >= 2 && nickname.trim().length <= 12

@@ -278,7 +278,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }
 
   const value = useMemo<Ctx>(() => ({
-    ready, user: uid ? profileQ.data ?? null : null, sendOtp, verifyOtp, logout, signInWithProvider, signInWithNaver, completeNaver, linkProvider, startPhoneLink, verifyPhoneLink, identities,
+    // ready: 세션 확인이 끝났고, 로그인 상태라면 프로필까지 한 번 받은 뒤 — 그 전에 화면이 '비로그인'으로 오판해 /login 으로 튕기지 않게
+    ready: ready && (!uid || profileQ.isFetched), user: uid ? profileQ.data ?? null : null, sendOtp, verifyOtp, logout, signInWithProvider, signInWithNaver, completeNaver, linkProvider, startPhoneLink, verifyPhoneLink, identities,
     programs: programsQ.data ?? [], sessions: sessionsQ.data ?? [], bookings: mineQ.data?.bookings ?? [], bookSession, cancelBooking,
     slots: slotsQ.data ?? [], showerBookings: mineQ.data?.showerBookings ?? [], bookShower, cancelShower,
     parking: mineQ.data?.parking ?? null, saveParking,
@@ -287,7 +288,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     consent: profileQ.data?.kakao_alimtalk_consent ?? false, setConsent,
     luckyEntered: mineQ.data?.luckyEntered ?? false, enterLuckyDraw,
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [ready, uid, identities, profileQ.data, programsQ.data, sessionsQ.data, slotsQ.data, notiQ.data, bannersQ.data, photosQ.data, mineQ.data])
+  }), [ready, uid, identities, profileQ.data, profileQ.isFetched, programsQ.data, sessionsQ.data, slotsQ.data, notiQ.data, bannersQ.data, photosQ.data, mineQ.data])
 
   return <AppCtx.Provider value={value}>{children}</AppCtx.Provider>
 }
