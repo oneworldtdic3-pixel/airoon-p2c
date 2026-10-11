@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>산사캠프 with 쌍계사</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* 팔레트: 공식 포스터의 초록·하늘·주황·노랑을 채도만 낮춰 이어받음 */
+:root{
+  --ink:#1f1d19;        /* 먹 */
+  --paper:#fbf6ea;      /* 카드 바탕 */
+  --hanji:#f1e8d4;      /* 한지 */
+  --clay:#d8c09a;       /* 황토 (포스터 흙색) */
+  --pine:#2e5a46;       /* 솔잎 (포스터 초록의 깊은 톤) */
+  --pine-d:#244837;
+  --moss:#7c9a77;
+  --persimmon:#bf5a33;  /* 단청 감색 (포스터 태양) */
+  --ochre:#d6a84b;      /* 겨자 (포스터 의자) */
+  --mist:#b8cfcb;       /* 청자빛 안개 (포스터 하늘) */
+  --mist-d:#8fb0b1;
+}
+*{box-sizing:border-box;margin:0}
+body{background:var(--ink);font-family:'Noto Sans KR',sans-serif;color:var(--ink);line-height:1.6;word-break:keep-all}
+.wrap{max-width:645px;margin:0 auto;background:var(--hanji);overflow:hidden}
+img{display:block;width:100%}
+section{padding:72px 28px;border-top:3px solid var(--ink);text-align:center}
+.tag{color:var(--ink);display:inline-block;font:400 22px 'Black Han Sans';letter-spacing:.04em;background:var(--paper);border:2.5px solid var(--ink);border-radius:40px;padding:4px 30px;box-shadow:3px 3px 0 var(--ink)}
+h2{font:400 34px/1.35 'Black Han Sans';margin:26px 0 30px}
+.card{background:var(--paper);border:2.5px solid var(--ink);border-radius:18px;box-shadow:5px 5px 0 var(--ink);text-align:left;overflow:hidden}
+.chip{display:inline-block;font-size:12.5px;font-weight:700;border:1.5px solid var(--ink);border-radius:20px;padding:1px 11px;margin:0 6px 0 0;background:var(--paper)}
+.chip.f{background:var(--ochre)}
+.price{font:400 20px 'Black Han Sans'}
+.row{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-bottom:1.5px dashed rgba(31,29,25,.4)}
+.row:last-of-type{border-bottom:0}
+.note{font-size:13px;color:#5b5648;margin-top:6px}
+
+/* INTRO */
+#intro{background:var(--hanji)}
+#intro p.lead{font-size:16px;color:#3b372e}
+#intro .em{margin:26px auto 28px;font-weight:700;font-size:15px;background:var(--pine);color:var(--hanji);border-radius:12px;padding:14px 18px;border:2.5px solid var(--ink)}
+.info{padding:6px 22px}
+.info .row span:first-child{color:var(--persimmon);font-weight:700}
+.info .row span:last-child{font-weight:700;text-align:right}
+
+/* POINT */
+#point{background:var(--pine);color:var(--hanji)}
+#point h2{color:var(--hanji)}
+#point .tag{color:var(--ink)}
+.pt{display:flex;gap:16px;align-items:center;padding:18px 20px;margin-bottom:18px;color:var(--ink)}
+.num{flex:none;width:42px;height:42px;border-radius:50%;border:2.5px solid var(--ink);display:grid;place-items:center;font:400 18px 'Black Han Sans'}
+.pt b{font:400 18px 'Black Han Sans';display:block}
+.pt span{font-size:14px}
+
+/* PROGRAM */
+#program{background:var(--hanji)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.pg h3{font:400 17px 'Black Han Sans';padding:12px 16px;border-bottom:2.5px solid var(--ink)}
+.pg .b{padding:14px 16px 16px;font-size:14px}
+.pg .b div{margin-top:12px}
+.pg.wide{grid-column:1/3}
+.pg.wide h3{background:var(--ink);color:var(--hanji)}
+.c1{background:var(--ochre)}.c2{background:var(--mist)}.c3{background:var(--moss)}.c4{background:var(--persimmon);color:var(--paper)}
+.pill{display:inline-block;margin-top:26px;font-weight:700;font-size:14.5px;background:var(--paper);border:2.5px solid var(--ink);border-radius:40px;padding:8px 22px}
+
+/* SCHEDULE */
+#schedule{background:var(--mist)}
+.day{display:flex;margin-bottom:20px}
+.day .d{flex:none;width:118px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:2.5px solid var(--ink);padding:18px 6px}
+.day .d b{font:400 24px 'Black Han Sans'}
+.day .d small{font-size:12.5px;font-weight:700}
+.day ul{list-style:none;padding:18px 20px;font-size:14.5px;font-weight:500;flex:1}
+.day li{padding:2px 0}.day li em{font-style:normal;color:var(--persimmon);font-weight:700}
+
+/* TICKET */
+#ticket{background:var(--pine-d);color:var(--hanji)}
+#ticket .sub{font-size:14px;margin:-10px 0 28px;opacity:.85}
+.tk{margin-bottom:20px;color:var(--ink)}
+.tk>h3{font:400 20px 'Black Han Sans';padding:16px 22px;display:flex;justify-content:space-between;align-items:center;border-bottom:2.5px solid var(--ink)}
+.tk>h3 small{font:700 12px 'Noto Sans KR';border:1.5px solid var(--ink);border-radius:20px;padding:2px 12px;background:var(--paper);color:var(--ink)}
+.tk .in{padding:6px 22px 16px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.two .card{padding:18px 20px;font-size:14px;color:var(--ink)}
+.two h3{font:400 18px 'Black Han Sans'}
+.tbd{display:block;margin-top:10px;color:var(--persimmon);font-weight:700}
+.price.hl{color:var(--persimmon)}
+
+/* CHECK */
+#check{background:var(--hanji)}
+.ck{display:flex;gap:14px;padding:16px 20px;margin-bottom:14px}
+.ic{flex:none;width:30px;height:30px;border-radius:50%;border:2.5px solid var(--ink);display:grid;place-items:center;font-weight:700;font-size:15px}
+.ic.w{background:var(--persimmon);color:var(--paper)}
+.ic.o{background:var(--moss)}
+.ck b{display:block;font-size:15.5px}.ck span{font-size:13.5px;color:#4a463a}
+.cta{display:block;margin-top:34px;background:var(--persimmon);color:var(--paper);font:400 22px 'Black Han Sans';padding:18px;border:2.5px solid var(--ink);border-radius:50px;box-shadow:5px 5px 0 var(--ink);text-decoration:none}
+
+/* FOOTER */
+footer{background:var(--ink);color:var(--hanji);padding:44px 28px;font-size:13.5px}
+footer dl{display:grid;grid-template-columns:64px 1fr;gap:6px 0;margin-bottom:28px}
+footer dt{opacity:.6}
+footer .ct{text-align:center;border-top:1px solid rgba(241,232,212,.25);padding-top:24px}
+@media(max-width:480px){.grid,.two{grid-template-columns:1fr}.pg.wide{grid-column:auto}h2{font-size:29px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<img src="poster.jpg" alt="산사캠프 with 쌍계사 공식 포스터 — 2026.11.06 FRI 14:00 – 11.08 SUN 11:00">
+
+<section id="intro">
+  <span class="tag">INTRO</span>
+  <h2>비우고, 채우고,<br>돌아가는 2박 3일</h2>
+  <p class="lead">지리산 자락, 천년 고찰 하동 쌍계사 숲속에서<br>낮에는 걷고 마시고 배우고,<br>밤에는 핸드폰 대신 별과 계곡 소리를 듣습니다.</p>
+  <p class="em">집으로 가져가는 건 기념품이 아니라,<br>오래 남을 좋은 습관 하나.</p>
+  <div class="card info">
+    <div class="row"><span>일시</span><span>2026. 11. 6 (금) 14:00 – 11. 8 (일) 11:00</span></div>
+    <div class="row"><span>장소</span><span>하동 쌍계사 일원</span></div>
+    <div class="row"><span>정원</span><span>700명 한정</span></div>
+    <div class="row"><span>숙박</span><span>캠핑존 / 한옥 방사 스테이</span></div>
+    <div class="row"><span>예매</span><span>100% 사전예약제 · 현장 판매 없음</span></div>
+  </div>
+</section>
+
+<section id="point">
+  <span class="tag">POINT</span>
+  <h2>티켓 한 장에<br>전부 들어 있어요</h2>
+  <div class="card pt"><i class="num" style="background:var(--persimmon);color:var(--paper)">1</i><div><b>사찰음식 5식 포함</b><span>2박 3일 동안의 모든 끼니를 쌍계사 사찰음식으로.</span></div></div>
+  <div class="card pt"><i class="num" style="background:var(--ochre)">2</i><div><b>전 프로그램 포함</b><span>트래킹·차명상·요가·선명상·공연까지 추가 결제 없이.</span></div></div>
+  <div class="card pt"><i class="num" style="background:var(--mist)">3</i><div><b>웰컴키트 증정</b><span>입장과 함께 산사캠프 웰컴키트를 드려요. (PET ZONE은 반려견용 별도 구성)</span></div></div>
+  <div class="card pt"><i class="num" style="background:var(--moss)">4</i><div><b>산사장터 &amp; 럭키드로우</b><span>로컬마켓·불교굿즈·체험 부스, 그리고 행운의 추첨까지.</span></div></div>
+  <div class="card pt"><i class="num" style="background:var(--clay)">5</i><div><b>고요의 시간 21:00 – 06:00</b><span>밤과 새벽은 지켜지는 침묵. 진짜 마인드 디톡스는 여기서 시작돼요.</span></div></div>
+</section>
+
+<section id="program">
+  <span class="tag">PROGRAM</span>
+  <h2>산사에서 즐기는<br>9가지 마인드 디톡스</h2>
+  <div class="grid">
+    <div class="card pg"><h3 class="c4">01 불일폭포 트래킹</h3><div class="b">쌍계사 숲길을 따라 불일폭포까지 걷는 산사 트래킹.<div><span class="chip f">펫 동반</span><span class="chip">해설 투어</span></div></div></div>
+    <div class="card pg"><h3 class="c3">02 쌍계사 역사 탐방</h3><div class="b">육조 혜능대사의 이야기가 깃든 천년 고찰을 해설과 함께 걸어요.<div><span class="chip f">해설 투어</span></div></div></div>
+    <div class="card pg"><h3 class="c1">03 108선다 차명상</h3><div class="b">차 시배지 쌍계사에서 차 한 잔으로 마음을 비우는 쌍계사 특별 프로그램.<div><span class="chip f">100명 한정</span><span class="chip">쌍계사 특별</span></div></div></div>
+    <div class="card pg"><h3 class="c2">04 스님과의 대화</h3><div class="b">일상의 고민을 스님과 편하게 나누는 담화 시간.<div><span class="chip f">토크</span></div></div></div>
+    <div class="card pg"><h3 class="c3">05 싱잉볼 체험</h3><div class="b">울림과 진동에 몸을 맡기는 사운드 힐링.<div><span class="chip f">힐링</span></div></div></div>
+    <div class="card pg"><h3 class="c4">06 요가 · 선명상</h3><div class="b">매일 아침 7시, 산사의 공기 속에서 몸과 마음을 깨워요.<div><span class="chip f">매일 07:00</span><span class="chip">펫 동반</span></div></div></div>
+    <div class="card pg"><h3 class="c1">07 사찰음식 · 예불 체험</h3><div class="b">사찰의 식사 예절과 저녁 예불을 직접 경험해요.<div><span class="chip f">전통 체험</span></div></div></div>
+    <div class="card pg"><h3 class="c2">08 산사장터</h3><div class="b">지역 농산물·불교굿즈·체험 클래스가 모인 로컬마켓.<div><span class="chip f">로컬마켓</span></div></div></div>
+    <div class="card pg wide"><h3>09 아티스트와 산사토크 &amp; 공연</h3><div class="b">금·토 저녁, 산사의 밤을 여는 토크와 공연. 공연은 21시 전에 끝나고 고요의 시간이 시작됩니다.<div><span class="chip f">11.6 FRI · 11.7 SAT</span><span class="chip">라인업 [추후 공개]</span></div></div></div>
+  </div>
+  <span class="pill">모든 프로그램은 산사캠프 앱에서 사전예약으로 운영돼요</span>
+</section>
+
+<section id="schedule">
+  <span class="tag">2박 3일</span>
+  <h2>낮엔 채우고<br>밤엔 비우고</h2>
+  <div class="card day"><div class="d" style="background:var(--persimmon);color:var(--paper)"><b>DAY 1</b><small>11.6 FRI</small></div><ul><li><em>14:00</em> 입장 · 체크인 · 웰컴키트 수령</li><li>오후 프로그램 · 산사장터</li><li>저녁 공양 · 산사토크 &amp; 공연</li><li><b>21:00 고요의 시간</b></li></ul></div>
+  <div class="card day"><div class="d" style="background:var(--ochre)"><b>DAY 2</b><small>11.7 SAT</small></div><ul><li><em>07:00</em> 요가 · 선명상</li><li>트래킹 · 역사 탐방 · 차명상 · 체험 클래스</li><li>저녁 공양 · 산사토크 &amp; 공연</li><li><b>21:00 고요의 시간</b></li></ul></div>
+  <div class="card day"><div class="d" style="background:var(--moss)"><b>DAY 3</b><small>11.8 SUN</small></div><ul><li>새벽 선명상</li><li>아침 공양 · 정리</li><li><em>11:00</em> 퇴장</li></ul></div>
+  <p class="note" style="text-align:center">※ 세부 시간표는 산사캠프 앱에서 공개됩니다.</p>
+</section>
+
+<section id="ticket">
+  <span class="tag">TICKET</span>
+  <h2>어디서 잘까?<br>숙박 &amp; 티켓 안내</h2>
+  <p class="sub">2박 3일 · 식사 5식 · 전 프로그램 · 웰컴키트 포함가</p>
+
+  <div class="card tk"><h3 style="background:var(--paper)">캠핑존 · 4인존 <small>사이트 단위 결제</small></h3><div class="in">
+    <div class="row"><span>1인</span><span class="price">350,000원</span></div>
+    <div class="row"><span>2인</span><span class="price">500,000원</span></div>
+    <div class="row"><span>3인</span><span class="price">650,000원</span></div>
+    <div class="row"><span>4인 (만석)</span><span class="price hl">800,000원</span></div>
+    <p class="note">기본 1인 + 추가 1인당 150,000원 · 개인 텐트 지참 가능</p></div></div>
+
+  <div class="two">
+    <div class="card"><h3>캠핑존 · 6인존</h3><p>가족·친구 단위 넉넉한 사이트</p><span class="tbd">[가격 확정 예정]</span></div>
+    <div class="card"><h3>PET ZONE</h3><p>반려견과 함께하는 전용 캠핑존 · 펫 웰컴키트</p><span class="tbd">[가격 확정 예정]</span></div>
+  </div>
+
+  <div class="card tk"><h3 style="background:var(--persimmon);color:var(--paper)">한옥 방사 스테이 <small>객실 단위 결제 · 73명 한정</small></h3><div class="in">
+    <div class="row"><span>2인실</span><span>1인 이용 <span class="price">400,000원</span> · 2인 <span class="price">600,000원</span></span></div>
+    <div class="row"><span>3인실</span><span class="price">690,000원</span></div>
+    <div class="row"><span>4인 가족실</span><span class="price">920,000원</span></div>
+    <div class="row"><span>5인 가족실</span><span class="price">1,150,000원</span></div>
+    <div class="row"><span>8인 단체실</span><span class="price">1,600,000원</span></div>
+    <p class="note">3인실 이상은 만실 기준 가격 (1인 230,000원 / 8인실 1인 200,000원)</p></div></div>
+
+  <div class="card tk"><h3 style="background:var(--ochre)">추가 옵션</h3><div class="in">
+    <div class="row"><span>텐트 렌탈 (4인용)</span><span class="price">130,000원 / 동</span></div>
+    <div class="row"><span>셔틀버스 왕복</span><span><span class="price">18,000원</span> <small>(D-14 판매 마감)</small></span></div></div></div>
+</section>
+
+<section id="check">
+  <span class="tag">CHECK!</span>
+  <h2>오기 전에 꼭 알아두세요</h2>
+  <div class="card ck"><i class="ic w">!</i><div><b>경내 차량 진입 불가</b><span>외부 주차장 이용 후 도보 또는 셔틀버스로 입장해요.</span></div></div>
+  <div class="card ck"><i class="ic w">!</i><div><b>전 구역 화기 사용 금지</b><span>버너·화로대·모닥불 불가, 취사 없음. 식사는 사찰음식으로 제공돼요.</span></div></div>
+  <div class="card ck"><i class="ic o">✓</i><div><b>QR 입장 팔찌 상시 착용</b><span>2박 3일 내내 착용해 주세요. 미착용 시 퇴장 조치됩니다.</span></div></div>
+  <div class="card ck"><i class="ic o">✓</i><div><b>고요의 시간 21:00 – 06:00</b><span>밤과 새벽에는 모두의 침묵을 지켜 주세요.</span></div></div>
+  <div class="card ck"><i class="ic o">✓</i><div><b>100% 사전예약제</b><span>현장 판매는 없어요. 프로그램 예약은 산사캠프 앱에서.</span></div></div>
+  <a class="cta" href="#">지금 사전예약하기</a>
+</section>
+
+<footer>
+  <dl><dt>주최</dt><dd>[주최처 확인] · 한국불교문화사업단</dd><dt>주관</dt><dd>산사캠프</dd><dt>후원</dt><dd>NH농협 · NH투자증권 · (주)도반HC</dd><dt>언론사</dt><dd>불교닷컴</dd></dl>
+  <div class="ct">문의 산사캠프 사무국<br>info@airoon.kr · 010.2743.4249</div>
+</footer>
+
+</div>
+</body>
+</html>
