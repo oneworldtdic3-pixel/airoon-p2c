@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5000 900" width="5000" height="900"><defs>
+<pattern id="dotsO" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="7" cy="7" r="2.8" fill="#b5300d"/></pattern>
+<style>@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;display=block');
+.h{font-family:'Black Han Sans','Noto Sans KR',sans-serif} .j{font-family:'Jua','Noto Sans KR',sans-serif}</style></defs><rect width="5000" height="900" fill="#fff"/>
+<circle cx="2500" cy="940" r="290" fill="#F8E36C"/><circle cx="3300" cy="-40" r="250" fill="#BFE5F6" opacity=".8"/>
+<g stroke="#111" stroke-width="9"><circle cx="40" cy="450" r="430" fill="#BFE5F6"/><circle cx="40" cy="450" r="320" fill="#F8E36C"/><circle cx="40" cy="450" r="215" fill="#EE4A17"/><circle cx="40" cy="450" r="120" fill="#fff"/></g>
+<g transform="translate(50,450) rotate(0) scale(1.9)"><path d="M0,-40 L12,-22 L34,-28 L26,-6 L44,6 L22,14 L26,38 L4,26 L0,48 L-6,26 L-28,36 L-22,12 L-44,4 L-26,-8 L-32,-30 L-10,-22Z" fill="#23A468" stroke="#111" stroke-width="7" stroke-linejoin="round"/></g>
+<text class="h" x="620" y="270" font-size="230" fill="#3FA9E0">예매는 사전예약제,</text>
+<text class="h" x="620" y="520" font-size="250" fill="#F0562B">700명 한정으로</text>
+<text class="h" x="620" y="770" font-size="250" fill="#F0562B">만나요~</text>
+<g>
+<text class="h" x="3330" y="250" font-size="76" fill="#111">일시</text><text class="j" x="3540" y="250" font-size="72" fill="#222">2026.11.06(금) 14:00 ~</text>
+<text class="j" x="3540" y="335" font-size="72" fill="#222">11.08(일) 11:00</text>
+<text class="h" x="3330" y="445" font-size="76" fill="#111">장소</text><text class="j" x="3540" y="445" font-size="72" fill="#222">하동 쌍계사 일원</text>
+<text class="h" x="3330" y="555" font-size="76" fill="#111">숙박</text><text class="j" x="3540" y="555" font-size="72" fill="#222">캠핑존 / 한옥 방사 스테이</text>
+<text class="h" x="3330" y="665" font-size="76" fill="#111">예매</text><text class="j" x="3540" y="665" font-size="72" fill="#222">사전예약제 (700명 한정)</text>
+</g>
+<g transform="translate(4850,760) rotate(15) scale(1.1)"><path d="M0,-40 L12,-22 L34,-28 L26,-6 L44,6 L22,14 L26,38 L4,26 L0,48 L-6,26 L-28,36 L-22,12 L-44,4 L-26,-8 L-32,-30 L-10,-22Z" fill="#23A468" stroke="#111" stroke-width="7" stroke-linejoin="round"/></g><path transform="translate(4930,800) scale(1.1)" d="M0,0 L10,-34 L22,-6 L36,-40 L46,-4 L62,-28 L64,0Z" fill="#23A468" stroke="#111" stroke-width="6" stroke-linejoin="round"/>
+<text class="j" x="620" y="872" font-size="40" fill="#222"><tspan class="h">주최</tspan> 山寺캠프 · 한국불교문화사업단   <tspan class="h">주관</tspan> 山寺캠프   <tspan class="h">후원</tspan> NH농협 · NH투자증권 · (주)도반HC   <tspan class="h">언론사</tspan> 불교닷컴</text>
+</svg>
