@@ -4,6 +4,10 @@ const MARQUEE = 'ARTIST LINE-UP · DIVA-X · SANSA CAMP 2026 · 11.06 – 11.08 
 export default function ArtistTeaser() {
   return (
     <section className="px-5 pt-10">
+      <h2 className="mb-4 flex items-end gap-1.5">
+        <img src="/line-up.png" alt="LINE UP" width={103} height={98} className="h-[46px] w-auto" />
+        <span className="pb-0.5 text-[15px] font-extrabold tracking-[-0.02em]">아티스트 라인업</span>
+      </h2>
       <div role="img" aria-label="아티스트 라인업 예정: DIVA-X" className="relative block aspect-[5/4] select-none overflow-hidden rounded-tile bg-[#0A0A0B] text-white">
         <img
           src="/artists/diva-x.jpg"
