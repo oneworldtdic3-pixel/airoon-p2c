@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp } from '../../data/AppProvider'
 import { timeAgo } from '../../lib/format'
-import { SectionTitle } from '../ui'
+import { SectionTitle, Toast } from '../ui'
+import PhotoViewer from '../photo/PhotoViewer'
+import { useToast } from '../../hooks/useToast'
 import Icon from '../ui/Icon'
 
 const LIMIT = 9
@@ -14,6 +16,8 @@ export default function LivePhotos() {
   // 새로 들어온 사진 id 를 잠깐 기억해 '새 사진' 강조를 준다
   const seen = useRef<Set<string> | null>(null)
   const [fresh, setFresh] = useState<Set<string>>(new Set())
+  const [view, setView] = useState<string | null>(null)
+  const { msg, show } = useToast()
   useEffect(() => {
     // 첫 데이터가 도착하기 전(빈 목록)에는 기준을 잡지 않는다 — 안 그러면 처음 받은 사진이 전부 NEW 로 뜬다
     if (!seen.current) { if (list.length) seen.current = new Set(list.map((p) => p.id)); return }
@@ -39,7 +43,7 @@ export default function LivePhotos() {
         <ul className="no-scrollbar -mt-1 flex snap-x gap-2.5 overflow-x-auto px-5 pb-1 scroll-px-5">
           {list.map((p, i) => (
             <li key={p.id} className="w-[132px] shrink-0 snap-start" style={{ animation: fresh.has(p.id) ? 'rise .5s' : undefined }}>
-              <Link to="/photo" className="block">
+              <button type="button" onClick={() => setView(p.id)} className="block w-full text-left" aria-label={`${p.spot_tag} 사진 크게 보기`}>
                 <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-mint">
                   <img src={p.url} alt={`${p.spot_tag} · ${p.nickname}`} loading={i < 3 ? 'eager' : 'lazy'} className="h-full w-full object-cover" />
                   {fresh.has(p.id) && <span className="absolute left-2 top-2 rounded-md bg-ember px-1.5 py-0.5 text-[10px] font-extrabold text-white">NEW</span>}
@@ -47,7 +51,7 @@ export default function LivePhotos() {
                 </div>
                 <p className="mt-1.5 truncate text-[12.5px] font-bold">{p.spot_tag}</p>
                 <p className="truncate text-[11px] text-sub">{p.nickname} · {timeAgo(p.created_at)}</p>
-              </Link>
+              </button>
             </li>
           ))}
           <li className="w-[132px] shrink-0 snap-start">
@@ -64,6 +68,8 @@ export default function LivePhotos() {
           <Link to="/photo" className="btn mt-3 !px-5 !py-2.5 !text-[13px]">사진 올리기</Link>
         </div>
       )}
+      <PhotoViewer photoId={view} onClose={() => setView(null)} toast={show} />
+      <Toast msg={msg} />
     </section>
   )
 }

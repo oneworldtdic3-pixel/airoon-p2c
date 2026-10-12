@@ -2,19 +2,18 @@ import { useMemo, useState } from 'react'
 import PageHeader from '../components/layout/PageHeader'
 import PhotoGrid from '../components/photo/PhotoGrid'
 import UploadSheet from '../components/photo/UploadSheet'
-import PhotoComments from '../components/photo/PhotoComments'
-import { BottomSheet, Chip, Toast } from '../components/ui'
+import PhotoViewer from '../components/photo/PhotoViewer'
+import { Chip, Toast } from '../components/ui'
 import Icon from '../components/ui/Icon'
 import { MoonGlyph } from '../components/illust'
 import { SPOTS } from '../data/constants'
 import { useApp } from '../data/AppProvider'
 import { useToast } from '../hooks/useToast'
 import { useRequireAuth } from '../hooks/useRequireAuth'
-import { timeAgo } from '../lib/format'
 import type { Photo as PhotoT, SpotTag } from '../data/types'
 
 export default function Photo() {
-  const { photos, likedIds, toggleLike } = useApp()
+  const { photos } = useApp()
   const [spot, setSpot] = useState<SpotTag | 'ALL'>('ALL')
   const [upload, setUpload] = useState(false)
   const [view, setView] = useState<PhotoT | null>(null)
@@ -24,7 +23,6 @@ export default function Photo() {
     () => photos.filter((p) => !p.is_hidden && (spot === 'ALL' || p.spot_tag === spot)).sort((a, b) => b.created_at.localeCompare(a.created_at)),
     [photos, spot],
   )
-  const current = view && photos.find((p) => p.id === view.id)
   return (
     <>
       <PageHeader eyebrow={`${photos.filter((p) => !p.is_hidden).length}장의 기록`} title="포토" glyph={<MoonGlyph className="w-11" />}>
@@ -42,20 +40,7 @@ export default function Photo() {
       </div>
 
       <UploadSheet open={upload} onClose={() => setUpload(false)} toast={show} />
-      <BottomSheet open={!!current} onClose={() => setView(null)} title={current?.spot_tag}>
-        {current && (
-          <div>
-            <img src={current.url} alt={`${current.spot_tag} 사진`} className="w-full rounded-tile" />
-            <div className="mt-4 flex items-center justify-between">
-              <span className="text-[13px] text-sub">{current.nickname} · {timeAgo(current.created_at)}</span>
-              <button onClick={() => requireAuth(() => { void toggleLike(current.id) })} aria-pressed={likedIds.has(current.id)} className="btn-ghost gap-1.5">
-                <Icon name="heart" fill={likedIds.has(current.id)} size={18} className={likedIds.has(current.id) ? 'text-deep' : ''} />{current.likes_count}
-              </button>
-            </div>
-            <PhotoComments photoId={current.id} toast={show} />
-          </div>
-        )}
-      </BottomSheet>
+      <PhotoViewer photoId={view?.id ?? null} onClose={() => setView(null)} toast={show} />
       <Toast msg={msg} />
     </>
   )
