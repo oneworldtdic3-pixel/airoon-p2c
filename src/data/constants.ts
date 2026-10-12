@@ -22,3 +22,14 @@ export const SOCIAL = [
   { id: 'instagram', name: '인스타그램', handle: '@sansacamp', url: 'https://www.instagram.com/sansacamp' },
   { id: 'youtube', name: '유튜브', handle: '@sansacamp', url: 'https://www.youtube.com/@sansacamp' },
 ] as const
+
+/** 공양(식사) 시간 — 예약 없는 안내 일정. 첫날은 14:00 입재라 저녁부터, 마지막 날은 11:00 회향이라 아침까지 */
+export interface MealSlot { id: string; day: (typeof EVENT_DAYS)[number]; time: string; title: string; location: string }
+export const MEALS: MealSlot[] = [
+  { id: 'meal-1-d', day: '2026-11-06', time: '17:00', title: '저녁공양', location: '공양간' },
+  { id: 'meal-2-b', day: '2026-11-07', time: '06:00', title: '아침공양', location: '공양간' },
+  { id: 'meal-2-l', day: '2026-11-07', time: '12:00', title: '점심공양', location: '공양간' },
+  { id: 'meal-2-d', day: '2026-11-07', time: '17:00', title: '저녁공양', location: '공양간' },
+  { id: 'meal-3-b', day: '2026-11-08', time: '06:00', title: '아침공양', location: '공양간' },
+]
+export const mealAt = (m: MealSlot) => `${m.day}T${m.time}:00+09:00`

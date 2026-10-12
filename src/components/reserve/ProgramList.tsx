@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useApp } from '../../data/AppProvider'
-import { EVENT_DAYS } from '../../data/constants'
+import { EVENT_DAYS, MEALS } from '../../data/constants'
 import { dayKey, fmtDay, fmtTime } from '../../lib/format'
 import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { BottomSheet, Chip, Tag } from '../ui'
@@ -102,6 +102,15 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
         이 날 내 예약 {myToday.length}/{DAILY_MAX}{atLimit ? ' · 더 예약하려면 하나를 취소하세요' : ' · 같은 프로그램은 1회, 시간이 겹치면 예약할 수 없습니다'}
       </p>
 
+      {MEALS.some((m) => m.day === day) && (
+        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-tile bg-sun/30 px-4 py-3">
+          <span className="rounded-md bg-sun px-1.5 py-0.5 text-[10.5px] font-extrabold text-ink">공양</span>
+          {MEALS.filter((m) => m.day === day).map((m) => (
+            <span key={m.id} className="text-[13px] font-bold"><span className="tnum">{m.time}</span> {m.title}</span>
+          ))}
+          <span className="basis-full text-[11.5px] text-sub">공양간 · 예약 없이 이용합니다</span>
+        </div>
+      )}
       <ol className="mt-2">
         {list.map(({ p, ss }, i) => {
           const left = ss.reduce((a, s) => a + (s.capacity - s.booked_count), 0)
