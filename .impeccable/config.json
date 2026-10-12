@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "ssangyesa-camping/card.html"
+        ],
+        "createdAt": "2026-10-12T02:53:18.561Z",
+        "reason": "Claude triage: .frame/.row use top/bottom hairline rules only (editorial poster grid); text is intentionally flush-left with no side border, and has 18–20px vertical clearance from each rule"
+      }
+    ]
+  }
+}
