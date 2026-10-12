@@ -100,7 +100,7 @@ export default function QuoteSheet({ open, onClose, toast }: { open: boolean; on
             const on = likedIds.has(qt.id)
             return (
               <li key={qt.id} className={`flex items-center gap-3 py-3 ${qt.is_hidden ? 'opacity-40' : ''}`}>
-                <span className={`tnum w-5 shrink-0 text-[12px] font-extrabold ${i === 0 ? 'text-ember' : 'text-gray-400'}`}>{i + 1}</span>
+                <span className={`tnum min-w-[1.4em] shrink-0 text-[12px] font-extrabold ${i === 0 ? 'text-ember' : 'text-gray-400'}`}>{i + 1}</span>
                 <div className="min-w-0 flex-1">
                   <p className="text-[15px] font-bold leading-snug">{qt.body}</p>
                   <p className="text-[11.5px] text-sub">{qt.profiles?.nickname ?? '산사러'}{qt.user_id === user?.id ? ' · 내 문구' : ''}{qt.is_hidden ? ' · 숨김' : ''}</p>

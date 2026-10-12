@@ -16,7 +16,7 @@ export function Chip({ active, onClick, children }: { active?: boolean; onClick?
 
 export function Segmented<T extends string>({ value, onChange, options }: { value: T; onChange: (v: T) => void; options: { value: T; label: string }[] }) {
   return (
-    <div role="tablist" className="flex gap-6 border-b hairline">
+    <div role="tablist" className="no-scrollbar flex gap-6 overflow-x-auto border-b hairline">
       {options.map((o) => (
         <button
           type="button"
@@ -24,7 +24,7 @@ export function Segmented<T extends string>({ value, onChange, options }: { valu
           role="tab"
           aria-selected={value === o.value}
           onClick={() => onChange(o.value)}
-          className={`-mb-px border-b-2 py-3 text-[16px] font-bold transition ${value === o.value ? 'border-ink text-ink' : 'border-transparent text-gray-400'}`}
+          className={`-mb-px shrink-0 whitespace-nowrap border-b-2 py-3 text-[16px] font-bold transition ${value === o.value ? 'border-ink text-ink' : 'border-transparent text-gray-400'}`}
         >
           {o.label}
         </button>
@@ -73,12 +73,12 @@ export function BottomSheet({ open, onClose, title, children }: { open: boolean;
 
 export function SectionTitle({ children, eyebrow, right }: { children: ReactNode; eyebrow?: ReactNode; right?: ReactNode }) {
   return (
-    <div className="mb-4 flex items-end justify-between">
-      <div>
+    <div className="mb-4 flex flex-wrap items-end justify-between gap-x-3 gap-y-1">
+      <div className="min-w-0">
         {eyebrow && <p className="eyebrow mb-1">{eyebrow}</p>}
-        <h2 className="text-[21px] font-extrabold">{children}</h2>
+        <h2 className="text-[21px] font-extrabold [text-wrap:balance]">{children}</h2>
       </div>
-      {right}
+      {right && <div className="shrink-0">{right}</div>}
     </div>
   )
 }
