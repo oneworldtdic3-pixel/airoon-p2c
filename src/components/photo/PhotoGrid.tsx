@@ -12,9 +12,9 @@ export default function PhotoGrid({ list, onOpen }: { list: Photo[]; onOpen: (p:
   return (
     <ul className="grid grid-cols-3 gap-[3px]">
       {list.map((p, i) => (
-        <li key={p.id} className={`relative overflow-hidden bg-mint ${i === 0 ? 'col-span-2 row-span-2' : 'aspect-square'}`}>
+        <li key={p.id} className={`cv-auto relative overflow-hidden bg-mint ${i === 0 ? 'col-span-2 row-span-2' : 'aspect-square'}`}>
           <button onClick={() => onOpen(p)} className="block h-full w-full" aria-label={`${p.spot_tag} 사진 크게 보기`}>
-            <img src={p.url} alt="" loading="lazy" className="h-full w-full object-cover" />
+            <img src={p.url} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
           </button>
           {isNew(p.created_at) && <span className="absolute left-2 top-2 h-2 w-2 rounded-full bg-ember ring-2 ring-white" aria-label="새 사진" />}
           <button onClick={() => requireAuth(() => { void toggleLike(p.id) })} aria-pressed={likedIds.has(p.id)} aria-label="좋아요" className="absolute bottom-1.5 right-1.5 flex items-center gap-1 text-[11px] font-bold text-white drop-shadow">

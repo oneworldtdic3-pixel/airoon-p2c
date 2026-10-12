@@ -14,7 +14,11 @@
 }
 
 html, body, #root { min-height: 100%; }
-html, body { overflow-x: hidden; }
+html, body { overflow-x: clip; }
+/* 화면 밖에서 계속 도는 애니메이션은 합성 레이어에 올려 스크롤 중 다시 그리지 않게 */
+.animate-\[float_2\.4s_ease-in-out_infinite\], .animate-\[marquee_14s_linear_infinite\], .animate-ping { will-change: transform; }
+/* 긴 목록(사진·댓글)은 화면 밖 영역을 그리지 않는다 */
+.cv-auto { content-visibility: auto; contain-intrinsic-size: auto 300px; }
 body {
   margin: 0;
   background: #e4f6f1;

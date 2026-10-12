@@ -10,7 +10,7 @@ export default function ArtistTeaser() {
         <span aria-hidden className="absolute -inset-x-10 top-[38%] h-[120%] -skew-y-[14deg] bg-[linear-gradient(100deg,#72E1B8_0%,#35D6BD_28%,#FFD64A_58%,#F0552A_100%)]" />
         <span aria-hidden className="absolute -inset-x-10 top-[36%] h-[3px] -skew-y-[14deg] bg-white/90" />
         {/* 노이즈 질감 */}
-        <span aria-hidden className="absolute inset-0 opacity-[0.16] mix-blend-overlay" style={{ backgroundImage: NOISE }} />
+        <span aria-hidden className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: NOISE }} />
 
         {/* 상단 라벨 */}
         <div className="absolute left-5 top-4 flex items-center gap-2 text-[10px] font-extrabold tracking-[0.28em]">

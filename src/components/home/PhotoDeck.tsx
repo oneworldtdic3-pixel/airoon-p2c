@@ -34,15 +34,25 @@ export default function PhotoDeck() {
   const swiped = useRef(false)                 // 스와이프 뒤에 따라오는 click 을 탭으로 오인하지 않게
   const lastTouch = useRef(0)                  // 마지막 조작 시각: 이후 8초 동안 자동 전환 멈춤
   const n = cards.length
+  const root = useRef<HTMLDivElement>(null)
+  const [onScreen, setOnScreen] = useState(true) // 덱이 화면 밖이면 자동 전환·재렌더를 멈춘다
 
   useEffect(() => {
-    if (n < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const el = root.current
+    if (!el || !('IntersectionObserver' in window)) return
+    const io = new IntersectionObserver(([e]) => setOnScreen(e.isIntersecting), { threshold: 0.1 })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (n < 2 || !onScreen || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     const t = window.setInterval(() => {
       if (Date.now() - lastTouch.current < 8000) return
       setIdx((i) => (i + 1) % n)
     }, 3500)
     return () => window.clearInterval(t)
-  }, [n])
+  }, [n, onScreen])
 
   const step = (d: 1 | -1) => { lastTouch.current = Date.now(); setIdx((i) => (i + d + n) % n) }
 
@@ -85,6 +95,7 @@ export default function PhotoDeck() {
   const w = 0.72 // 카드 너비 비율(컨테이너 대비)
   return (
     <div
+      ref={root}
       className="relative mt-3 h-[320px] select-none"
       style={{ touchAction: 'pan-y' }}
       onPointerDown={onDown}
@@ -94,6 +105,7 @@ export default function PhotoDeck() {
     >
       {cards.map((c, i) => {
         const pos = (i - idx + n) % n
+        const near = pos === 0 || pos === 1 || pos === n - 1 // 앞·양옆 카드만 실제로 그린다
         // 드래그 진행도(-1~1): 앞 카드는 손가락을 따라가고, 옆 카드는 중앙으로 끌려 들어온다
         const p = Math.max(-1, Math.min(1, drag / 260))
         const style =
@@ -113,9 +125,9 @@ export default function PhotoDeck() {
             onClick={() => { if (pos === 0 && !swiped.current) go() }}
             onKeyDown={(e) => { if (pos === 0 && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); go() } }}
             className={`absolute left-1/2 top-0 h-full overflow-hidden rounded-[26px] ${dragging ? '' : 'transition-[transform,opacity] duration-500 ease-[cubic-bezier(.22,1,.36,1)]'} ${pos === 0 ? 'cursor-grab active:cursor-grabbing' : 'pointer-events-none'}`}
-            style={{ ...style, width: `${w * 100}%`, background: c.kind === 'ad' ? c.bg : c.kind === 'event' ? '#2EA7E0' : '#35D6BD' }}
+            style={{ ...style, willChange: 'transform, opacity', visibility: near ? 'visible' : 'hidden', width: `${w * 100}%`, background: c.kind === 'ad' ? c.bg : c.kind === 'event' ? '#2EA7E0' : '#35D6BD' }}
           >
-            <img src={c.url} alt="" aria-hidden className="absolute inset-0 h-full w-full scale-125 object-cover blur-xl" />
+            {near && <img src={c.url} alt="" aria-hidden decoding="async" className="absolute inset-0 h-full w-full scale-125 object-cover blur-xl" />}
             <div className={`absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 ${c.kind === 'event' && c.full ? 'to-ink/25' : 'to-ink/70'}`} />
             {!full && <p className="absolute left-0 right-0 top-2 overflow-hidden whitespace-nowrap px-3 text-[64px] font-extrabold leading-none tracking-[-0.04em] text-white/80">{bigWord}</p>}
             {full ? (

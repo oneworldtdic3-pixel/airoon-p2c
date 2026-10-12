@@ -15,7 +15,7 @@ export default function Hero() {
   const { msg, show } = useToast()
   return (
     <section className="relative overflow-hidden pt-[calc(env(safe-area-inset-top)+14px)]">
-      <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-mint blur-3xl" />
+      <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(closest-side,#E8FAF4_55%,transparent)]" />
 
       {/* 최상단: CI 좌측, D-day 우측 */}
       <div className="relative flex items-center justify-between px-5">
