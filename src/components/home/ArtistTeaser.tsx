@@ -1,14 +1,11 @@
-import { SOCIAL } from '../../data/constants'
-
 const NOISE = "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")"
 const MARQUEE = 'COMING SOON · ARTIST LINE-UP · SANSA CAMP 2026 · 11.06 – 11.08 · HADONG SSANGGYESA · '
 
 /** 아티스트 라인업 티저 — K-pop 컴백 티저 포스터 톤. 라인업 확정 시 실제 아티스트 카드로 교체 */
 export default function ArtistTeaser() {
-  const ig = SOCIAL.find((s) => s.id === 'instagram')!.url
   return (
     <section className="px-5 pt-10">
-      <a href={ig} target="_blank" rel="noreferrer" aria-label="아티스트 라인업 공개 예정, 인스타그램에서 먼저 확인" className="group relative block aspect-[4/3] overflow-hidden rounded-tile bg-[#0A0A0B] text-white transition active:scale-[0.985]">
+      <div role="img" aria-label="아티스트 라인업 공개 예정" className="relative block aspect-[4/3] overflow-hidden rounded-tile bg-[#0A0A0B] text-white select-none">
         {/* 사선 홀로그램 색면 */}
         <span aria-hidden className="absolute -inset-x-10 top-[38%] h-[120%] -skew-y-[14deg] bg-[linear-gradient(100deg,#72E1B8_0%,#35D6BD_28%,#FFD64A_58%,#F0552A_100%)]" />
         <span aria-hidden className="absolute -inset-x-10 top-[36%] h-[3px] -skew-y-[14deg] bg-white/90" />
@@ -52,7 +49,7 @@ export default function ArtistTeaser() {
             <span className="inline-block animate-[marquee_14s_linear_infinite] text-[11px] font-extrabold tracking-[0.3em] text-white/85">{MARQUEE}{MARQUEE}</span>
           </div>
         </div>
-      </a>
+      </div>
     </section>
   )
 }
