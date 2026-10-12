@@ -33,7 +33,7 @@ export default function ShowerGrid({ toast }: { toast: (m: string) => void }) {
         {SHOWER_BUILDINGS.map((b) => <Chip key={b.building} active={bld === b.building} onClick={() => setBld(b.building)}>{b.building.slice(-1)}동 {b.gender === 'F' ? '여' : '남'}</Chip>)}
       </div>
       <div className="mt-5 flex items-end justify-between">
-        <p className="text-[13px] text-sub">{bld} · {gender === 'F' ? '여성' : '남성'} · 슬롯당 {list[0]?.capacity ?? 4}명</p>
+        <p className="text-[13px] text-sub">{bld} · {gender === 'F' ? '여성' : '남성'} · 30분당 {list[0]?.capacity ?? 50}명</p>
         {user && (
           <p className={`tnum text-[12.5px] font-bold ${atLimit ? 'text-ember' : 'text-deep'}`}>
             오늘 내 예약 {myToday.length}/{DAILY_MAX}{atLimit ? ' · 더 예약하려면 하나를 취소하세요' : ''}
@@ -64,11 +64,9 @@ export default function ShowerGrid({ toast }: { toast: (m: string) => void }) {
               <span className={`tnum block text-[10.5px] ${mine ? 'text-onbrand/80' : full ? '' : blocked ? 'text-gray-400' : 'text-deep'}`}>
                 {mine ? '내 예약' : full ? '예약 완료' : `${left}자리`}
               </span>
-              {/* 정원 점: 찬 칸은 진하게 — 다른 사람 예약이 얼마나 찼는지 한눈에 */}
-              <span className="mt-1 flex justify-center gap-[3px]" aria-hidden="true">
-                {Array.from({ length: s.capacity }, (_, i) => (
-                  <span key={i} className={`h-1 w-1 rounded-full ${i < s.booked_count ? (mine ? 'bg-onbrand' : 'bg-deep') : mine ? 'bg-onbrand/30' : 'bg-gray-200'}`} />
-                ))}
+              {/* 채움 막대: 다른 사람 예약이 얼마나 찼는지 한눈에 (정원이 커도 칸을 넘지 않게) */}
+              <span className={`mx-auto mt-1.5 block h-1 w-[70%] overflow-hidden rounded-full ${mine ? 'bg-onbrand/25' : 'bg-gray-200'}`} aria-hidden="true">
+                <span className={`block h-full rounded-full ${mine ? 'bg-onbrand' : full ? 'bg-gray-300' : 'bg-deep'}`} style={{ width: `${Math.min(100, (s.booked_count / Math.max(1, s.capacity)) * 100)}%` }} />
               </span>
             </button>
           )
