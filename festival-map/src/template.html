@@ -1,0 +1,421 @@
+<title>쌍계사 페스티벌 맵</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<style>
+/* Layout: overview strip map (north up) on the left, selected zone drawn to scale on the right; stacks on phones. */
+:root {
+  --bg: #eff2ec; --surface: #fbfcfa; --ink: #1c2a1f; --muted: #5c6b5f; --line: #d3dbcd;
+  --tea: #3b6a3d; --tea-soft: #dde8d6;
+  --tent: #df7a37; --tent-ink: #3a1d08;
+  --path: #c4d3e4; --fac: #5d9549; --fac-ink: #ffffff;
+  --river: #a9cbe0; --road: #cfc8b8; --warn: #a85a17; --warn-soft: #f6e6d4;
+  --f-display: "Gowun Batang", "Nanum Myeongjo", "Apple SD Gothic Neo", serif;
+  --f-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111612; --surface: #182019; --ink: #e3eae0; --muted: #98a69a; --line: #2b362d;
+  --tea: #93c283; --tea-soft: #22301f;
+  --tent: #e5874a; --tent-ink: #2a1405;
+  --path: #2c3f55; --fac: #4c8a3b; --fac-ink: #f3f8f0;
+  --river: #24465a; --road: #4a4538; --warn: #e3a467; --warn-soft: #33261a;
+  color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #111612; --surface: #182019; --ink: #e3eae0; --muted: #98a69a; --line: #2b362d;
+  --tea: #93c283; --tea-soft: #22301f;
+  --tent: #e5874a; --tent-ink: #2a1405;
+  --path: #2c3f55; --fac: #4c8a3b; --fac-ink: #f3f8f0;
+  --river: #24465a; --road: #4a4538; --warn: #e3a467; --warn-soft: #33261a;
+  color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 56px; }
+header { display: grid; gap: 6px; margin-bottom: 22px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; color: var(--muted); }
+h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(28px, 4.4vw, 40px); line-height: 1.15; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--f-display); font-weight: 700; font-size: 24px; line-height: 1.25; margin: 0; text-wrap: balance; }
+h3 { font-size: 13px; font-weight: 600; letter-spacing: .04em; color: var(--muted); margin: 0; }
+p { margin: 0; }
+.lede { color: var(--muted); max-width: 62ch; }
+
+.totals { display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: baseline; padding-block: 14px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 24px; }
+.totals .big { font-family: var(--f-display); font-size: 34px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.totals .item { display: flex; gap: 8px; align-items: baseline; }
+.totals .k { color: var(--muted); font-size: 13px; }
+.totals .v { font-family: var(--f-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+.totals button { all: unset; cursor: pointer; display: flex; gap: 8px; align-items: baseline; border-bottom: 1px dashed transparent; }
+.totals button:hover, .totals button:focus-visible { border-bottom-color: var(--tea); }
+.totals button:focus-visible { outline: 2px solid var(--tea); outline-offset: 3px; }
+
+.grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
+
+.overview { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 14px 10px; min-width: 0; }
+.ov-scroll { overflow-x: auto; }
+.overview svg { width: 100%; min-width: 720px; height: auto; display: block; }
+.routes { display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 13px; margin-top: 10px; }
+.routes span { font-family: var(--f-mono); font-variant-numeric: tabular-nums; color: var(--ink); }
+.routes em { font-style: normal; color: var(--muted); font-family: var(--f-body); }
+.ov-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--muted); margin-top: 8px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
+.sw.dash { background: transparent; border: 1.5px dashed var(--warn); }
+
+.node { cursor: pointer; }
+.node:focus { outline: none; }
+.node:focus-visible .hit, .node:hover .hit { stroke: var(--ink); stroke-width: 2.5; }
+.node.on .hit { stroke: var(--ink); stroke-width: 3.5; }
+.ov-label { font-family: var(--f-body); font-size: 15px; fill: var(--ink); font-weight: 600; paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+.ov-sub { font-family: var(--f-mono); font-size: 12px; fill: var(--muted); paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; }
+.ov-mark { font-family: var(--f-body); font-size: 12.5px; fill: var(--muted); paint-order: stroke; stroke: var(--surface); stroke-width: 3px; stroke-linejoin: round; }
+.ov-tag { font-family: var(--f-body); font-size: 11.5px; fill: var(--warn); font-weight: 600; paint-order: stroke; stroke: var(--surface); stroke-width: 3px; }
+.ov-route { font-family: var(--f-mono); font-size: 12px; fill: var(--tea); font-weight: 500; paint-order: stroke; stroke: var(--surface); stroke-width: 3px; }
+
+.detail { display: grid; gap: 18px; min-width: 0; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.tab { font: inherit; font-size: 13.5px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.tab[aria-selected="true"] { background: var(--tea); border-color: var(--tea); color: var(--surface); }
+.tab:focus-visible { outline: 2px solid var(--tea); outline-offset: 2px; }
+.d-head { display: grid; gap: 6px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; width: fit-content; }
+.chip.ok { background: var(--tea-soft); color: var(--tea); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.facts div { background: var(--surface); padding: 10px 12px; display: grid; gap: 2px; min-width: 0; }
+.facts .k { font-size: 12px; color: var(--muted); }
+.facts .v { font-family: var(--f-mono); font-size: 15px; font-weight: 500; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.plan { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px; overflow-x: auto; }
+.plan svg { display: block; width: 100%; min-width: 520px; height: auto; }
+.plan img { display: block; width: 100%; border-radius: 6px; }
+.caption { font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+.notes { display: grid; gap: 6px; padding-left: 18px; margin: 0; }
+.notes li { max-width: 68ch; }
+.readout { font-family: var(--f-mono); font-size: 13px; color: var(--muted); min-height: 1.4em; }
+.readout b { color: var(--ink); font-weight: 500; }
+
+.todo { margin-top: 36px; border-top: 1px solid var(--line); padding-top: 18px; display: grid; gap: 10px; }
+.todo ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.todo li { max-width: 72ch; }
+
+svg text { user-select: none; }
+.t-tent { cursor: default; }
+.t-tent:hover rect { fill: var(--ink); }
+.t-tent:hover text { fill: var(--surface); }
+@media (prefers-reduced-motion: no-preference) { .node .hit, .t-tent rect { transition: stroke .15s, fill .15s; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">경남 하동군 화개면 운수리 · 쌍계로 일대</div>
+    <h1>쌍계사 페스티벌 맵</h1>
+    <p class="lede">텐트존 세 곳과 메인 무대, 부스 구역을 한 장에 모았습니다. 지도나 탭에서 구역을 고르면 아래에 텐트 배치가 실제 비율로 그려집니다.</p>
+  </header>
+
+  <div class="totals" id="totals"></div>
+
+  <div class="grid">
+    <section class="overview" aria-label="전체 지도">
+      <div class="ov-head"><h3>전체 지도 · 북쪽 위</h3><span class="eyebrow">카카오맵 실측 기준 · 1칸 100m</span></div>
+      <div class="ov-scroll"><svg id="ov" viewBox="30 -110 960 900" role="group" aria-label="화개면 운수리 페스티벌 구역 지도"></svg></div>
+      <div class="legend">
+        <span><i class="sw" style="background:var(--tent)"></i>텐트존</span>
+        <span><i class="sw" style="background:var(--tea)"></i>무대·부스</span>
+        <span><i class="sw" style="background:var(--muted)"></i>주요 건물</span>
+        <span><i class="sw" style="background:var(--road)"></i>도로</span>
+        <span><i class="sw" style="background:var(--river)"></i>화개천</span>
+        <span><i class="sw dash"></i>위치 추정</span>
+      </div>
+      <div class="routes">
+        <div><em>메인 무대 → 쌍계사 일주문</em> <span>864m · 도보 12분</span></div>
+        <div><em>쌍계초 → 쌍계사 일주문</em> <span>501m · 도보 7분</span></div>
+      </div>
+    </section>
+
+    <section class="detail" aria-live="polite">
+      <div class="tabs" role="tablist" id="tabs"></div>
+      <div id="detail" class="detail"></div>
+    </section>
+  </div>
+
+  <section class="todo">
+    <h2>확정 전에 확인할 것</h2>
+    <ol>
+      <li><b>쌍계사 내부 텐트존의 정확한 자리.</b> 일주문에서 금강문 사이 진입로로 추정해 점선으로 그렸습니다. 다른 자리라면 캡처 한 장 부탁드립니다.</li>
+      <li><b>운수리 669-6 필지의 용도.</b> 캡처에서 강조된 필지를 부스·먹거리 구역 가안으로 두었습니다. 다른 용도라면 알려 주세요.</li>
+      <li><b>부스 수와 크기.</b> 정해지면 무대 광장과 669-6 필지에 부스 칸을 그려 넣겠습니다.</li>
+      <li><b>주차장 배치 방향.</b> 실측 주차장은 약 50m × 51m이고 주차 줄이 북서–남동 방향입니다. PPTX 배치(가로로 긴 6줄)는 면적은 맞지만 모양이 달라, 실제 주차 줄에 맞춘 배치가 필요한지 확인해 주세요.</li>
+    </ol>
+  </section>
+</div>
+
+<script>
+const ZONES = __ZONES__;
+const IMG_STAGE = "__STAGE__";
+const IMG_PARCEL = "__PARCEL__";
+const PREFIX = { temple: "A", school: "B", parking: "C" };
+
+// Overview geometry in metres (x east, y south), traced from the Kakao map captures (~1px = 1m).
+const ZONE_SHAPES = {
+  school:  { c: [365, 15],  w: 60, h: 30, rot: 49.5, confirmed: true,  label: "쌍계초등학교", sub: "텐트 85동", lx: 300, ly: 70 },
+  parking: { c: [590, 95],  w: 50, h: 51, rot: 25,   confirmed: true,  label: "쌍계사 주차장", sub: "텐트 135동 · 샤워실 4동", lx: 520, ly: 150 },
+  temple:  { c: [805, 20],  w: 50, h: 9,  rot: -40,  confirmed: false, label: "쌍계사 내부 텐트존", sub: "텐트 30동", lx: 690, ly: -30 },
+  booth:   { c: [210, 470], w: 16, h: 26, rot: 0,    confirmed: true,  label: "부스 · 먹거리 (가안)", sub: "운수리 669-6", lx: 232, ly: 466 },
+};
+const STAGE_POLY = [[185, 630], [242, 628], [268, 659], [254, 692], [187, 703]];
+const LANDMARKS = [
+  { p: [839, -32], t: "쌍계사", strong: true },
+  { p: [928, 4], t: "대웅전" },
+  { p: [777, 48], t: "일주문" },
+  { p: [320, 195], t: "쌍계석문" },
+  { p: [268, 272], t: "회전교차로" },
+  { p: [215, 365], t: "쌍계2교" },
+  { p: [60, 150], t: "쌍계사 정류소 · 공영주차장" },
+  { p: [200, 520], t: "하동야생차박물관" },
+  { p: [230, 584], t: "야생차문화센터" },
+  { p: [285, 712], t: "티카페하동" },
+];
+const RIVER = [[140, 790], [150, 600], [165, 450], [200, 330], [235, 230], [258, 120], [278, 0], [300, -110]];
+const ROADS = [
+  { pts: [[60, 790], [95, 600], [130, 450], [175, 300], [205, 180], [222, 0], [230, -110]], w: 9, name: "화개로", at: [150, 380] },
+  { pts: [[185, 790], [185, 600], [195, 450], [215, 365], [268, 272]], w: 5 },
+  { pts: [[268, 272], [300, 215], [318, 150], [335, 80], [345, 20], [350, -110]], w: 5, name: "쌍계로", at: [330, 130] },
+  { pts: [[268, 272], [330, 240], [420, 225], [511, 222], [622, 193], [700, 120], [777, 48], [839, -32]], w: 5, name: "쌍계사길", at: [560, 228] },
+  { pts: [[462, 138], [511, 222]], w: 4 },
+  { pts: [[620, 120], [650, 180]], w: 4 },
+];
+const WALK = [[195, 640], [180, 538], [222, 323], [315, 245], [622, 193], [777, 48]];
+
+function rectPoly(c, w, h, rot) {
+  const r = rot * Math.PI / 180, cs = Math.cos(r), sn = Math.sin(r);
+  return [[-w / 2, -h / 2], [w / 2, -h / 2], [w / 2, h / 2], [-w / 2, h / 2]].map(([x, y]) => [c[0] + x * cs - y * sn, c[1] + x * sn + y * cs]);
+}
+const pts = a => a.map(p => p.join(",")).join(" ");
+const curve = a => "M" + a.map(p => p.join(" ")).join(" L");
+
+const PAGES = [
+  { id: "temple" }, { id: "school" }, { id: "parking" }, { id: "stage" }, { id: "booth" },
+];
+const NAMES = { temple: "쌍계사 내부", school: "쌍계초", parking: "주차장", stage: "메인 무대", booth: "부스·먹거리" };
+
+const NS = "http://www.w3.org/2000/svg";
+function el(tag, attrs = {}, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (parent) parent.appendChild(e);
+  return e;
+}
+// Chromium clamps very large SVG font sizes, so convert EMU geometry to 0.1 m units first.
+for (const z of ZONES) {
+  const f = 10 / z.emu_m;
+  for (const it of z.items) for (const k of ["x", "y", "w", "h"]) it[k] *= f;
+  z.bbox = z.bbox.map(v => v * f); z.entryPt = z.entryPt.map(v => v * f); z.emu_m = 10;
+}
+const zoneById = Object.fromEntries(ZONES.map(z => [z.id, z]));
+const total = ZONES.reduce((s, z) => s + z.tents, 0);
+
+// Totals strip
+(function totals() {
+  const t = document.getElementById("totals");
+  t.innerHTML = `<div class="item"><span class="big">${total}</span><span class="k">동 · 전체 텐트</span></div>` +
+    ZONES.map(z => `<button type="button" data-go="${z.id}"><span class="k">${NAMES[z.id]}</span><span class="v">${z.tents}</span></button>`).join("");
+  t.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) select(b.dataset.go); });
+})();
+
+// Overview map
+(function overview() {
+  const svg = document.getElementById("ov");
+  // 100 m grid
+  for (let x = 100; x <= 900; x += 100) el("line", { x1: x, y1: -110, x2: x, y2: 790, stroke: "var(--line)", "stroke-width": 1 }, svg);
+  for (let y = -100; y <= 700; y += 100) el("line", { x1: 30, y1: y, x2: 990, y2: y, stroke: "var(--line)", "stroke-width": 1 }, svg);
+  el("polyline", { points: pts(RIVER), fill: "none", stroke: "var(--river)", "stroke-width": 22, "stroke-linecap": "round", "stroke-linejoin": "round" }, svg);
+  const rv = el("text", { x: 150, y: 700, class: "ov-mark", transform: "rotate(-84 150 700)" }, svg); rv.textContent = "화개천";
+  for (const r of ROADS) {
+    el("polyline", { points: pts(r.pts), fill: "none", stroke: "var(--road)", "stroke-width": r.w, "stroke-linecap": "round", "stroke-linejoin": "round" }, svg);
+    if (r.name) { const t = el("text", { x: r.at[0], y: r.at[1], class: "ov-sub" }, svg); t.textContent = r.name; }
+  }
+  // walking route stage -> 일주문
+  el("path", { d: curve(WALK), fill: "none", stroke: "var(--tea)", "stroke-width": 2.5, "stroke-dasharray": "2 6", "stroke-linecap": "round" }, svg);
+  const wl = el("text", { x: 340, y: 268, class: "ov-route" }, svg); wl.textContent = "무대 → 일주문 864m · 도보 12분";
+
+  for (const m of LANDMARKS) {
+    el("circle", { cx: m.p[0], cy: m.p[1], r: m.strong ? 6 : 4, fill: m.strong ? "var(--ink)" : "var(--muted)" }, svg);
+    const t = el("text", { x: m.p[0] + 9, y: m.p[1] + 4, class: m.strong ? "ov-label" : "ov-mark" }, svg); t.textContent = m.t;
+  }
+
+  function node(id, shape, fill, label, sub, lx, ly, confirmed) {
+    const g = el("g", { class: "node", "data-id": id, tabindex: "0", role: "button", "aria-label": label + " 보기" }, svg);
+    el("polygon", { class: "hit", points: pts(shape), fill, "fill-opacity": 0.85, stroke: confirmed ? "var(--surface)" : "var(--warn)", "stroke-width": 2, "stroke-dasharray": confirmed ? "" : "5 3" }, g);
+    const t1 = el("text", { x: lx, y: ly, class: "ov-label" }, g); t1.textContent = label;
+    if (sub) { const t2 = el("text", { x: lx, y: ly + 17, class: "ov-sub" }, g); t2.textContent = sub; }
+    if (!confirmed) { const tg = el("text", { x: lx, y: ly - 18, class: "ov-tag" }, g); tg.textContent = "위치 추정"; }
+    // generous invisible hit area around the label
+    el("rect", { x: lx - 6, y: ly - 18, width: 210, height: sub ? 42 : 26, fill: "transparent" }, g);
+    g.addEventListener("click", () => select(id));
+    g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(id); } });
+  }
+  for (const [id, z] of Object.entries(ZONE_SHAPES)) {
+    node(id, rectPoly(z.c, z.w, z.h, z.rot), id === "booth" ? "var(--tea)" : "var(--tent)", z.label, z.sub, z.lx, z.ly, z.confirmed);
+  }
+  node("stage", STAGE_POLY, "var(--tea)", "메인 무대", "관람 광장 · 무대는 동쪽 끝", 290, 650, true);
+  el("rect", { x: 249, y: 655, width: 9, height: 22, rx: 2, fill: "var(--ink)" }, svg);
+
+  // north arrow + scale bar
+  el("path", { d: "M960 -96 L970 -70 L960 -77 L950 -70 Z", fill: "var(--ink)" }, svg);
+  const n = el("text", { x: 960, y: -52, class: "ov-sub", "text-anchor": "middle" }, svg); n.textContent = "N";
+  el("path", { d: "M780 760 V770 H880 V760 M830 770 V764", fill: "none", stroke: "var(--ink)", "stroke-width": 2 }, svg);
+  const sc = el("text", { x: 890, y: 772, class: "ov-sub" }, svg); sc.textContent = "100 m";
+})();
+
+// Tabs
+(function tabs() {
+  const box = document.getElementById("tabs");
+  box.innerHTML = PAGES.map(p => `<button class="tab" role="tab" id="tab-${p.id}" data-id="${p.id}" aria-selected="false">${NAMES[p.id]}</button>`).join("");
+  box.addEventListener("click", e => { const b = e.target.closest(".tab"); if (b) select(b.dataset.id); });
+})();
+
+// Number tents row by row (top to bottom, left to right) inside each zone.
+function numberTents(z) {
+  const tents = z.items.filter(i => i.k === "tent").map(t => ({ ...t, cy: t.y + t.h / 2 }));
+  const rowTol = Math.min(...tents.map(t => t.h)) * 0.5;
+  tents.sort((a, b) => Math.abs(a.cy - b.cy) < rowTol ? a.x - b.x : a.cy - b.cy);
+  return tents.map((t, i) => ({ ...t, no: PREFIX[z.id] + "-" + String(i + 1).padStart(3, "0") }));
+}
+
+function drawZone(z) {
+  const [bx, by, bw, bh] = z.bbox;
+  const pad = z.emu_m * 2.5;
+  const scaleH = z.emu_m * 4;
+  const svg = el("svg", { viewBox: `${bx - pad} ${by - pad} ${bw + pad * 2} ${bh + pad * 2 + scaleH}`, role: "img", "aria-label": `${z.name} 텐트 배치도` });
+  for (const it of z.items.filter(i => i.k === "ground")) el("rect", { x: it.x, y: it.y, width: it.w, height: it.h, fill: "var(--path)" }, svg);
+  const tents = numberTents(z);
+  const fs = Math.min(tents[0].w, tents[0].h) * 0.26;
+  for (const t of tents) {
+    const g = el("g", { class: "t-tent", "data-no": t.no }, svg);
+    el("rect", { x: t.x, y: t.y, width: t.w, height: t.h, fill: "var(--tent)", stroke: "var(--surface)", "stroke-width": z.emu_m * 0.12 }, g);
+    const tx = el("text", { x: t.x + t.w / 2, y: t.y + t.h / 2 + fs * 0.35, "text-anchor": "middle", "font-size": fs, "font-family": "IBM Plex Mono, monospace", fill: "var(--tent-ink)" }, g);
+    tx.textContent = t.no.slice(2);
+    el("title", {}, g).textContent = `${t.no} · 3m × 4m`;
+  }
+  for (const f of z.items.filter(i => i.k === "fac")) {
+    el("rect", { x: f.x, y: f.y, width: f.w, height: f.h, rx: z.emu_m * 0.3, fill: "var(--fac)" }, svg);
+    const lines = f.t.split("\n");
+    const vertical = f.h > f.w * 1.6 && lines.length === 1;
+    const ffs = Math.min(z.emu_m * 1.6, (vertical ? f.w : f.h) * 0.42);
+    if (vertical) {
+      const chars = [...f.t.replace(/\s/g, "")];
+      chars.forEach((c, i) => {
+        const t = el("text", { x: f.x + f.w / 2, y: f.y + f.h / 2 + (i - (chars.length - 1) / 2) * ffs * 1.15 + ffs * 0.35, "text-anchor": "middle", "font-size": ffs, fill: "var(--fac-ink)", "font-weight": 600 }, svg);
+        t.textContent = c;
+      });
+    } else {
+      lines.forEach((ln, i) => {
+        const t = el("text", { x: f.x + f.w / 2, y: f.y + f.h / 2 + (i - (lines.length - 1) / 2) * ffs * 1.2 + ffs * 0.35, "text-anchor": "middle", "font-size": ffs, fill: "var(--fac-ink)", "font-weight": 600 }, svg);
+        t.textContent = ln;
+      });
+    }
+  }
+  for (const l of z.items.filter(i => i.k === "label")) {
+    const t = el("text", { x: l.x, y: l.y + l.h * 0.8, "font-size": z.emu_m * 1.6, fill: "var(--ink)", "font-weight": 600 }, svg);
+    t.textContent = l.t;
+  }
+  // entrance arrow
+  const [ex, ey] = z.entryPt, L = z.emu_m * 4.5;
+  const g = el("g", { transform: `translate(${ex} ${ey}) rotate(${z.entry})` }, svg);
+  el("path", { d: `M ${-L / 2} ${-L * 0.14} L ${L * 0.05} ${-L * 0.14} L ${L * 0.05} ${-L * 0.32} L ${L / 2} 0 L ${L * 0.05} ${L * 0.32} L ${L * 0.05} ${L * 0.14} L ${-L / 2} ${L * 0.14} Z`, fill: "var(--tea)" }, g);
+  const et = el("text", { x: ex, y: ey + L * 0.62, "text-anchor": "middle", "font-size": z.emu_m * 1.3, fill: "var(--tea)", "font-weight": 600 }, svg);
+  et.textContent = "입구";
+  // scale bar: 10 m
+  const sy = by + bh + pad * 0.6 + scaleH * 0.3, sx = bx, ten = z.emu_m * 10, tick = z.emu_m * 0.8;
+  el("path", { d: `M${sx} ${sy - tick} V${sy} H${sx + ten} V${sy - tick} M${sx + ten / 2} ${sy} V${sy - tick * 0.6}`, fill: "none", stroke: "var(--ink)", "stroke-width": z.emu_m * 0.14 }, svg);
+  const s1 = el("text", { x: sx + ten + z.emu_m, y: sy, "font-size": z.emu_m * 1.3, fill: "var(--muted)", "font-family": "IBM Plex Mono, monospace" }, svg);
+  s1.textContent = "10 m";
+  return svg;
+}
+
+function facList(z) {
+  const c = {};
+  for (const f of z.items.filter(i => i.k === "fac")) { const k = f.t.replace(/\s+/g, " ").replace(/\s?\d+\s?동$/, ""); c[k] = (c[k] || 0) + 1; }
+  const shower = z.items.find(i => i.k === "fac" && /샤워/.test(i.t));
+  return Object.entries(c).map(([k, n]) => k.startsWith("샤워") && shower ? `샤워실 ${shower.t.match(/\d+/)[0]}동` : (n > 1 ? `${k} ${n}` : k)).join(" · ");
+}
+
+const ZONE_NOTES = {
+  temple: ["일주문–금강문 진입로로 추정한 자리입니다. 쌍계초에서 일주문까지 501m, 도보 7분.", "두 줄 배치, 가운데 통로 하나. 입구는 동쪽 끝입니다.", "캐노피는 위쪽 줄 동쪽 끝, 입구 바로 옆입니다."],
+  school: ["카카오맵 실측 운동장 약 58m × 28m로, PPTX의 30m × 60m와 맞습니다.", "다섯 줄 배치, 줄 사이마다 통로가 있습니다. 입구는 동쪽 통로입니다.", "캐노피 2동은 북동쪽 모서리, 화장실은 남동쪽 모서리입니다."],
+  parking: ["카카오맵 실측 약 50m × 51m(약 2,500㎡). PPTX 배치를 3m × 4m 텐트로 환산한 면적(약 30m × 84m)과 비슷하지만 모양은 다릅니다.", "본 구역 125동과 언덕 사이트 10동을 합한 수입니다.", "샤워실 4동은 북쪽, 화장실은 서쪽, 템플스테이는 동쪽 끝입니다.", "입구는 남서쪽, 캐노피 2동이 입구 옆에 있습니다."],
+};
+
+function renderZone(z) {
+  const d = document.getElementById("detail");
+  const t = numberTents(z);
+  const tw = Math.round(t[0].w / z.emu_m), th = Math.round(t[0].h / z.emu_m);
+  const stop = ZONE_SHAPES[z.id];
+  d.innerHTML = `
+    <div class="d-head">
+      ${stop.confirmed ? `<span class="chip ok">위치 확인됨</span>` : `<span class="chip warn">위치 추정 · 배치는 PPTX 기준</span>`}
+      <h2>${z.name}</h2>
+    </div>
+    <div class="facts">
+      <div><span class="k">텐트</span><span class="v">${z.tents}동</span></div>
+      <div><span class="k">구역 크기</span><span class="v">${z.size}</span></div>
+      <div><span class="k">텐트 1동</span><span class="v">${tw}m × ${th}m</span></div>
+      <div><span class="k">번호</span><span class="v">${t[0].no} ~ ${t[t.length - 1].no}</span></div>
+      <div><span class="k">시설</span><span class="v">${facList(z)}</span></div>
+    </div>
+    <div class="plan" id="plan"></div>
+    <div class="readout" id="readout">텐트에 마우스를 올리면 번호가 표시됩니다.</div>
+    <ul class="notes">${ZONE_NOTES[z.id].map(n => `<li>${n}</li>`).join("")}</ul>`;
+  const svg = drawZone(z);
+  document.getElementById("plan").appendChild(svg);
+  const ro = document.getElementById("readout");
+  svg.addEventListener("pointerover", e => { const g = e.target.closest(".t-tent"); if (g) ro.innerHTML = `<b>${g.dataset.no}</b> · ${z.name} · ${tw}m × ${th}m`; });
+}
+
+function renderImagePage(id) {
+  const d = document.getElementById("detail");
+  if (id === "stage") {
+    d.innerHTML = `
+      <div class="d-head"><span class="chip ok">위치 확인됨</span><h2>메인 무대</h2></div>
+      <div class="facts">
+        <div><span class="k">위치</span><span class="v">하동야생차문화센터 남쪽</span></div>
+        <div><span class="k">무대 방향</span><span class="v">동쪽 끝 · 서쪽을 향함</span></div>
+        <div><span class="k">관람 구역</span><span class="v">쌍계로와 문화센터 진입로 사이 광장</span></div>
+      </div>
+      <div class="plan"><img src="${IMG_STAGE}" alt="위성지도: 하동야생차박물관과 문화센터 남쪽 광장에 파란 관람 구역과 동쪽 끝 무대 표시"></div>
+      <p class="caption">보내 주신 캡처입니다. 파란 영역이 관람 구역, 주황색 표시가 무대입니다.</p>
+      <ul class="notes">
+        <li>관람 구역은 서쪽 쌍계로와 붙어 있어 도로 쪽 안전 펜스가 필요합니다.</li>
+        <li>남쪽 티카페하동 방향과 북쪽 문화센터 방향 두 곳에서 진입할 수 있습니다.</li>
+      </ul>`;
+  } else {
+    d.innerHTML = `
+      <div class="d-head"><span class="chip warn">용도 가안 · 위치 확인됨</span><h2>부스 · 먹거리</h2></div>
+      <div class="facts">
+        <div><span class="k">필지</span><span class="v">운수리 669-6</span></div>
+        <div><span class="k">위치</span><span class="v">야생차박물관 바로 북쪽</span></div>
+        <div><span class="k">부스 수</span><span class="v">미정</span></div>
+      </div>
+      <div class="plan"><img src="${IMG_PARCEL}" alt="스마트 국토정보 지적도: 회차로 남쪽 669-6 필지가 보라색으로 강조됨, 아래쪽에 야생차박물관"></div>
+      <p class="caption">스마트 국토정보 지적도 캡처입니다. 보라색 테두리가 669-6 필지, 왼쪽 흰 지붕은 669-2 필지입니다.</p>
+      <ul class="notes">
+        <li>무대 광장에서 북쪽으로 약 150m, 걸어서 2~3분 거리입니다.</li>
+        <li>부스 수와 규격(예: 3m × 3m)을 정하면 이 필지 안에 칸을 그려 넣겠습니다.</li>
+      </ul>`;
+  }
+}
+
+function select(id) {
+  if (!id) return;
+  document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", String(b.dataset.id === id)));
+  document.querySelectorAll(".node").forEach(n => n.classList.toggle("on", n.dataset.id === id));
+  if (zoneById[id]) renderZone(zoneById[id]); else renderImagePage(id);
+  try { history.replaceState(null, "", "#" + id); } catch (e) {}
+  try { localStorage.setItem("fest-zone", id); } catch (e) {}
+}
+
+let start = (location.hash || "").slice(1);
+if (!PAGES.some(p => p.id === start)) { try { start = localStorage.getItem("fest-zone") || ""; } catch (e) { start = ""; } }
+select(PAGES.some(p => p.id === start) ? start : "school");
+</script>
