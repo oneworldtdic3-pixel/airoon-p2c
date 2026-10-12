@@ -1,0 +1,30 @@
+<style>
+@page { size: A4; margin: 12mm; }
+html, body { background: #fff !important; }
+.wrap { max-width: none !important; padding: 0 !important; }
+.map-scroll { overflow: visible !important; }
+.map-box { width: 100% !important; }
+.map { box-shadow: none !important; break-inside: avoid; }
+.map-hint, .tabs, .readout { display: none !important; }
+.print-page { break-before: page; display: grid; gap: 16px; }
+.plan { break-inside: avoid; }
+.plan svg { min-width: 0 !important; }
+.plan img { max-height: 150mm; width: auto !important; max-width: 100%; margin: 0 auto; }
+.todo { break-before: page; }
+.strip { break-inside: avoid; }
+</style>
+<script>
+document.documentElement.dataset.theme = "light";
+window.addEventListener("load", () => {
+  const sec = document.getElementById("detailSec"), frag = document.createDocumentFragment();
+  for (const id of PAGES) {
+    select(id);
+    const p = document.createElement("section"); p.className = "print-page";
+    const src = document.getElementById("detail");
+    while (src.firstChild) p.appendChild(src.firstChild);
+    frag.appendChild(p);
+  }
+  sec.replaceWith(frag);
+  document.querySelectorAll(".zone.on").forEach(z => z.classList.remove("on"));
+});
+</script>

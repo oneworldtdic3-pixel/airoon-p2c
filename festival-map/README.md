@@ -16,3 +16,5 @@ python3 build.py . ../festival-map.html
 ```
 
 전체 지도 좌표는 카카오맵 캡처(약 1px = 1m)에서 미터 단위로 옮겨 `template.html`의 `ZONE_SHAPES`, `LANDMARKS`, `ROADS`에 적어 두었습니다.
+
+PDF(`산사캠프_페스티벌맵.pdf`)은 `festival-map.html` 뒤에 `src/print-extra.html`을 붙여 헤드리스 Chromium으로 인쇄한 것입니다 (`--window-size=703,1000 --print-to-pdf`).
