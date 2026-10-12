@@ -37,6 +37,7 @@ export function toMessage(e: unknown): string {
   if (/identity.*already.*linked|already.*(exists|registered)/i.test(msg)) return '이미 다른 계정에 연결된 로그인 수단입니다.'
   if (/SMS_SEND_FAILED|SMS_NOT_CONFIGURED|hook|sending sms|sms.*(fail|error)|twilio|messaging service/i.test(msg)) return '인증 문자를 보내지 못했습니다. 잠시 후 다시 시도해주세요.'
   if (/otp|token/i.test(msg) && /invalid|expired/i.test(msg)) return '인증번호가 올바르지 않거나 만료되었습니다'
+  if (/PGRST202|could not find the function/i.test(msg)) return '서버에 이 기능의 SQL이 아직 적용되지 않았습니다. 운영자에게 알려주세요.'
   if (/rate limit|too many/i.test(msg)) return '요청이 너무 잦습니다. 잠시 후 다시 시도해 주세요'
   if (/network|fetch/i.test(msg)) return '네트워크 연결을 확인해 주세요'
   return msg || '알 수 없는 오류가 발생했습니다'
