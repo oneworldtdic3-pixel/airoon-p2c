@@ -14,6 +14,8 @@ const MESSAGES: Record<string, string> = {
   CAR_NUMBER_INVALID: '차량번호 형식을 확인해 주세요 (예: 123가 4567)',
   DATES_REQUIRED: '이용 일자를 선택해 주세요',
   PHOTO_NOT_FOUND: '사진을 찾을 수 없습니다',
+  QUOTE_NOT_FOUND: '문구를 찾을 수 없습니다',
+  QUOTE_LENGTH: '문구는 2자 이상 40자 이하로 적어 주세요',
   ALREADY_ENTERED: '이미 응모했습니다',
   FORBIDDEN: '권한이 없습니다',
   TITLE_REQUIRED: '제목을 입력해 주세요',

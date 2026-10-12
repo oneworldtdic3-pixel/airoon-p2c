@@ -150,6 +150,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       .on('postgres_changes', { event: '*', schema: 'public', table: 'program_sessions' }, () => qc.invalidateQueries({ queryKey: ['sessions'] }))
       .on('postgres_changes', { event: '*', schema: 'public', table: 'shower_slots' }, () => qc.invalidateQueries({ queryKey: ['slots'] }))
       .on('postgres_changes', { event: '*', schema: 'public', table: 'banners' }, () => qc.invalidateQueries({ queryKey: ['banners'] }))
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'quotes' }, () => qc.invalidateQueries({ queryKey: ['quotes'] }))
       .subscribe()
     // 모바일 브라우저는 백그라운드에서 웹소켓을 끊는다 — 앞으로 돌아오면 바뀐 것을 한 번에 다시 받는다
     const onVisible = () => {
