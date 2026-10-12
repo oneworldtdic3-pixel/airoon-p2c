@@ -112,6 +112,7 @@ svg text { user-select: none; }
       <li><b>안내도의 구역 크기는 과장되어 있습니다.</b> 위치는 카카오맵 실측이지만, 잘 보이도록 구역을 실제보다 약 1.8배 크게 그렸습니다. 정확한 텐트 배치는 위 배치도를 보세요.</li>
       <li><b>쌍계사 경내 텐트존의 정확한 자리.</b> 일주문에서 금강문 사이 진입로로 추정했습니다.</li>
       <li><b>운수리 669-6 필지의 용도.</b> 부스·먹거리 구역 가안입니다.</li>
+      <li><b>주차장 화장실·샤워실 핀의 방향.</b> 쌍계초 핀은 PPTX 배치를 실제 운동장 방향(입구가 남동쪽)에 맞춰 찍었습니다. 주차장은 PPTX 배치를 실제 주차장에 어느 방향으로 놓을지 아직 정해지지 않아, 핀이 PPTX 기준 위치입니다.</li>
       <li><b>주차장 배치 방향.</b> 실측 주차장은 약 50m × 51m입니다. PPTX 배치는 면적은 맞지만 가로로 긴 모양입니다.</li>
     </ol>
   </section>
@@ -128,7 +129,7 @@ const VB = { x: 30, y: -110, w: 960, h: 900 };
 const ENLARGE = 1.8;
 const ZONE_STYLE = {
   temple:  { color: "#2f6fe0", dark: "#1d48a0", name: "A 쌍계사 경내", sub: "텐트 30동 · 캐노피", c: [805, 20],  w: 50, h: 9,  rot: -40, k: 2.0, confirmed: false, pill: [905, 118] },
-  school:  { color: "#7a55e6", dark: "#4b2fa6", name: "B 쌍계초", sub: "텐트 85동 · 캐노피 2 · 화장실", c: [358, 18], w: 60, h: 30, rot: 49.5, k: ENLARGE, confirmed: true, pill: [520, 0] },
+  school:  { color: "#7a55e6", dark: "#4b2fa6", name: "B 쌍계초", sub: "텐트 85동 · 캐노피 2 · 화장실", c: [358, 18], w: 60, h: 30, rot: 49.5, k: ENLARGE, confirmed: true, pill: [300, -72] },
   parking: { color: "#d847c9", dark: "#8f2386", name: "C 주차장", sub: "텐트 135동 · 샤워실 4 · 화장실", c: [590, 95], w: 50, h: 51, rot: 25, k: ENLARGE, confirmed: true, pill: [600, 190] },
   booth:   { color: "#f5b82e", dark: "#a8740a", name: "부스 · 먹거리", sub: "운수리 669-6 (가안)", c: [212, 470], w: 16, h: 26, rot: 0, k: 2.2, confirmed: true, pill: [300, 456], ink: "#3a2600" },
 };
@@ -399,6 +400,8 @@ function buildOverlay() {
     g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(id); jump(); } });
   }
 
+  facilityPins(svg);
+
   // landmarks
   for (const m of LANDMARKS) {
     const x = m.p[0] + m.d[0], y = m.p[1] + m.d[1];
@@ -436,6 +439,44 @@ function buildOverlay() {
 
   sizePills();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizePills);
+}
+
+// toilet and shower pins: PPTX facility positions mapped onto each drawn zone
+const FAC_STYLE = { wc: { color: "#e2552d", label: "화장실" }, shower: { color: "#178f9a", label: "샤워실" } };
+function pinShape(g, x, y, kind, r = 11) {
+  const cy = y - 19, c = FAC_STYLE[kind].color;
+  el("path", { d: `M${x} ${y} C${x - 3} ${y - 6} ${x - r} ${cy + 7} ${x - r} ${cy} A${r} ${r} 0 1 1 ${x + r} ${cy} C${x + r} ${cy + 7} ${x + 3} ${y - 6} ${x} ${y}Z`, fill: c, stroke: "#fff", "stroke-width": 2.5, "stroke-linejoin": "round", filter: "url(#shadow)" }, g);
+  if (kind === "wc") {
+    const t = el("text", { x, y: cy + 3.6, "text-anchor": "middle", "font-size": 10, fill: "#fff", "font-family": "Bagel Fat One, sans-serif" }, g); t.textContent = "WC";
+  } else {
+    el("path", { d: `M${x - 6} ${cy - 6} H${x + 1} V${cy - 3.5}`, fill: "none", stroke: "#fff", "stroke-width": 1.6, "stroke-linecap": "round" }, g);
+    el("path", { d: `M${x - 3.5} ${cy - 1} H${x + 5.5} L${x + 3.8} ${cy - 3.6} H${x - 1.8}Z`, fill: "#fff" }, g);
+    for (const [dx, dy] of [[-1.8, 2.6], [1, 4.6], [3.8, 2.6]]) el("circle", { cx: x + dx, cy: cy + dy, r: 1.1, fill: "#fff" }, g);
+  }
+}
+function facilityPins(svg) {
+  const g = el("g", { "pointer-events": "none" }, svg);
+  for (const id of ["school", "parking", "temple"]) {
+    const zd = ZONES.find(q => q.id === id); if (!zd) continue;
+    const gr = zd.items.find(i => i.k === "ground"), poly = ZONE_POLYS[id], [a, b, , d] = poly;
+    for (const f of zd.items.filter(i => i.k === "fac" && /화장실|샤워/.test(i.t))) {
+      const kind = /샤워/.test(f.t) ? "shower" : "wc";
+      const cl = v => Math.min(1.1, Math.max(-.1, v));
+      const u = cl((f.x + f.w / 2 - gr.x) / gr.w), v = cl((f.y + f.h / 2 - gr.y) / gr.h);
+      const x = a[0] + (b[0] - a[0]) * u + (d[0] - a[0]) * v, y = a[1] + (b[1] - a[1]) * u + (d[1] - a[1]) * v;
+      const n = (f.t.match(/\d+/) || [])[0];
+      const text = FAC_STYLE[kind].label + (n ? ` ${n}동` : "");
+      pill(g, x, y - 46, text, { bg: FAC_STYLE[kind].color, fs: 11.5, bw: 2 });
+      pinShape(g, x, y, kind);
+    }
+  }
+  // legend
+  const lg = el("g", { transform: "translate(560 760)" }, svg);
+  el("rect", { x: -14, y: -26, width: 240, height: 44, rx: 22, fill: "rgba(251,247,234,.94)", filter: "url(#shadow)" }, lg);
+  pinShape(lg, 8, 10, "wc", 9);
+  const l1 = el("text", { x: 24, y: 2, "font-size": 13, fill: "#2b3a26", "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 600 }, lg); l1.textContent = "화장실";
+  pinShape(lg, 110, 10, "shower", 9);
+  const l2 = el("text", { x: 126, y: 2, "font-size": 13, fill: "#2b3a26", "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 600 }, lg); l2.textContent = "샤워실";
 }
 
 function jump() {
