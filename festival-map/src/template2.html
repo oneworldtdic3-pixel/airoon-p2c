@@ -1,0 +1,620 @@
+<title>山寺캠프 페스티벌 맵</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@900&text=%E5%B1%B1%E5%AF%BA&display=swap">
+<style>
+/* Layout: illustrated guide map as the hero (pans sideways on phones), zone layouts drawn to scale below. */
+:root {
+  --bg: #eef1e8; --surface: #fbfcf8; --ink: #1d2a1c; --muted: #5d6b5a; --line: #d2dacb;
+  --tea: #2f6a34; --tea-soft: #dce9d3;
+  --tent: #df7a37; --tent-ink: #3a1d08;
+  --path: #c4d3e4; --fac: #5d9549; --fac-ink: #ffffff;
+  --warn: #a85a17; --warn-soft: #f6e6d4;
+  --f-display: "Bagel Fat One", "Black Han Sans", "Apple SD Gothic Neo", sans-serif;
+  --f-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #10150f; --surface: #172016; --ink: #e2eadc; --muted: #97a693; --line: #2a3628;
+  --tea: #93c283; --tea-soft: #22301f;
+  --tent: #e5874a; --tent-ink: #2a1405;
+  --path: #2c3f55; --fac: #4c8a3b; --fac-ink: #f3f8f0;
+  --warn: #e3a467; --warn-soft: #33261a;
+  color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #10150f; --surface: #172016; --ink: #e2eadc; --muted: #97a693; --line: #2a3628;
+  --tea: #93c283; --tea-soft: #22301f;
+  --tent: #e5874a; --tent-ink: #2a1405;
+  --path: #2c3f55; --fac: #4c8a3b; --fac-ink: #f3f8f0;
+  --warn: #e3a467; --warn-soft: #33261a;
+  color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.55; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 56px; }
+h2 { font-family: var(--f-display); font-weight: 400; font-size: 26px; line-height: 1.25; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+
+/* the illustrated map is a printed object: one fixed look in both themes */
+.map { position: relative; border-radius: 14px; overflow: hidden; background: #6f8f4a; box-shadow: 0 1px 0 rgba(0,0,0,.05), 0 12px 32px -18px rgba(20,40,10,.5); }
+.map-scroll { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; }
+.map-box { position: relative; width: max(100%, 780px); aspect-ratio: 960 / 900; }
+.map-box canvas, .map-box svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.map-hint { position: absolute; left: 12px; bottom: 12px; font-size: 12px; color: #fff; background: rgba(20,32,18,.7); padding: 4px 10px; border-radius: 999px; pointer-events: none; }
+@media (min-width: 812px) { .map-hint { display: none; } }
+
+.zone { cursor: pointer; }
+.zone .area { transition: fill-opacity .15s; }
+.zone:hover .area, .zone:focus-visible .area { fill-opacity: .82; }
+.zone.on .area { fill-opacity: .86; stroke: #fff; stroke-width: 4; }
+.zone:focus { outline: none; }
+.zone:focus-visible .pill rect { stroke: #ffe55c; }
+
+.strip { display: flex; flex-wrap: wrap; gap: 10px 26px; align-items: baseline; padding-block: 16px; border-bottom: 1px solid var(--line); margin-bottom: 22px; }
+.strip .big { font-family: var(--f-display); font-size: 34px; line-height: 1; font-variant-numeric: tabular-nums; }
+.strip .k { color: var(--muted); font-size: 13px; }
+.strip .v { font-family: var(--f-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+.strip > div { display: flex; gap: 8px; align-items: baseline; }
+
+.detail { display: grid; gap: 18px; min-width: 0; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.tab { font: inherit; font-size: 13.5px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; display: inline-flex; gap: 7px; align-items: center; }
+.tab i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.tab[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+.tab:focus-visible { outline: 2px solid var(--tea); outline-offset: 2px; }
+.d-head { display: grid; gap: 6px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 2px 9px; border-radius: 999px; width: fit-content; }
+.chip.ok { background: var(--tea-soft); color: var(--tea); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.facts div { background: var(--surface); padding: 10px 12px; display: grid; gap: 2px; min-width: 0; }
+.facts .k { font-size: 12px; color: var(--muted); }
+.facts .v { font-family: var(--f-mono); font-size: 15px; font-weight: 500; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.plan { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px; overflow-x: auto; }
+.plan svg { display: block; width: 100%; min-width: 520px; height: auto; }
+.plan img { display: block; width: 100%; border-radius: 6px; }
+.caption { font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+.notes { display: grid; gap: 6px; padding-left: 18px; margin: 0; }
+.notes li { max-width: 68ch; }
+.readout { font-family: var(--f-mono); font-size: 13px; color: var(--muted); min-height: 1.4em; }
+.readout b { color: var(--ink); font-weight: 500; }
+.todo { margin-top: 36px; border-top: 1px solid var(--line); padding-top: 18px; display: grid; gap: 10px; }
+.todo ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.todo li { max-width: 72ch; }
+svg text { user-select: none; }
+.t-tent:hover rect { fill: var(--ink); }
+.t-tent:hover text { fill: var(--surface); }
+@media (prefers-reduced-motion: reduce) { .zone .area { transition: none; } }
+</style>
+
+<div class="wrap">
+  <section class="map" aria-label="山寺캠프 안내 지도">
+    <div class="map-scroll" id="mapScroll">
+      <div class="map-box" id="mapBox">
+        <canvas id="terrain" aria-hidden="true"></canvas>
+        <svg id="ov" viewBox="30 -110 960 900" role="group" aria-label="구역을 누르면 아래에 배치도가 열립니다"></svg>
+      </div>
+    </div>
+    <div class="map-hint">← 옆으로 밀어서 보기 →</div>
+  </section>
+
+  <div class="strip" id="strip"></div>
+
+  <section class="detail" id="detailSec" aria-live="polite">
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div id="detail" class="detail"></div>
+  </section>
+
+  <section class="todo">
+    <h2>확정 전에 확인할 것</h2>
+    <ol>
+      <li><b>안내도의 구역 크기는 과장되어 있습니다.</b> 위치는 카카오맵 실측이지만, 잘 보이도록 구역을 실제보다 약 1.8배 크게 그렸습니다. 정확한 텐트 배치는 위 배치도를 보세요.</li>
+      <li><b>쌍계사 경내 텐트존의 정확한 자리.</b> 일주문에서 금강문 사이 진입로로 추정했습니다.</li>
+      <li><b>운수리 669-6 필지의 용도.</b> 부스·먹거리 구역 가안입니다.</li>
+      <li><b>주차장 배치 방향.</b> 실측 주차장은 약 50m × 51m입니다. PPTX 배치는 면적은 맞지만 가로로 긴 모양입니다.</li>
+    </ol>
+  </section>
+</div>
+
+<script>
+const ZONES = __ZONES__;
+const IMG_STAGE = "__STAGE__";
+const IMG_PARCEL = "__PARCEL__";
+const PREFIX = { temple: "A", school: "B", parking: "C" };
+
+// ---------- map data, metres (x east, y south), traced from Kakao map captures ----------
+const VB = { x: 30, y: -110, w: 960, h: 900 };
+const ENLARGE = 1.8;
+const ZONE_STYLE = {
+  temple:  { color: "#2f6fe0", dark: "#1d48a0", name: "A 쌍계사 경내", sub: "텐트 30동 · 캐노피", c: [805, 20],  w: 50, h: 9,  rot: -40, k: 2.0, confirmed: false, pill: [905, 118] },
+  school:  { color: "#7a55e6", dark: "#4b2fa6", name: "B 쌍계초", sub: "텐트 85동 · 캐노피 2 · 화장실", c: [358, 18], w: 60, h: 30, rot: 49.5, k: ENLARGE, confirmed: true, pill: [520, 0] },
+  parking: { color: "#d847c9", dark: "#8f2386", name: "C 주차장", sub: "텐트 135동 · 샤워실 4 · 화장실", c: [590, 95], w: 50, h: 51, rot: 25, k: ENLARGE, confirmed: true, pill: [600, 190] },
+  booth:   { color: "#f5b82e", dark: "#a8740a", name: "부스 · 먹거리", sub: "운수리 669-6 (가안)", c: [212, 470], w: 16, h: 26, rot: 0, k: 2.2, confirmed: true, pill: [300, 456], ink: "#3a2600" },
+};
+const STAGE_POLY = [[185, 630], [242, 628], [268, 659], [254, 692], [187, 703]];
+const RIVER = [[140, 800], [150, 600], [165, 450], [200, 330], [235, 230], [258, 120], [278, 0], [300, -120]];
+const ROADS = [
+  { pts: [[58, 800], [95, 600], [130, 450], [175, 300], [205, 180], [222, 0], [230, -120]], w: 11, main: true },
+  { pts: [[186, 800], [185, 600], [195, 450], [215, 365], [268, 272]], w: 6 },
+  { pts: [[268, 272], [300, 215], [318, 150], [335, 80], [345, 20], [352, -120]], w: 6 },
+  { pts: [[268, 272], [330, 240], [420, 225], [511, 222], [622, 193], [700, 120], [777, 48], [839, -32]], w: 6 },
+  { pts: [[268, 272], [300, 330], [320, 420], [330, 560], [335, 800]], w: 6 },
+  { pts: [[408, 51], [440, 100], [462, 138], [511, 222]], w: 4 },
+  { pts: [[650, 180], [620, 120]], w: 4 },
+  { pts: [[175, 300], [215, 365]], w: 5 },
+];
+const WALK = [[215, 650], [182, 540], [205, 380], [268, 272], [330, 240], [420, 225], [511, 222], [622, 193], [700, 120], [777, 48]];
+const TEA = [
+  { c: [372, 505], rx: 46, ry: 30, a: -20 }, { c: [470, 470], rx: 38, ry: 24, a: 15 }, { c: [520, 565], rx: 44, ry: 26, a: -10 },
+  { c: [400, 340], rx: 30, ry: 20, a: 30 }, { c: [92, 560], rx: 34, ry: 22, a: -60 }, { c: [96, 690], rx: 30, ry: 22, a: -70 },
+  { c: [440, 610], rx: 34, ry: 20, a: 5 }, { c: [560, 300], rx: 30, ry: 18, a: -25 },
+];
+const SCARS = [{ c: [705, 365], rx: 46, ry: 22, a: -25 }, { c: [785, 430], rx: 38, ry: 18, a: 10 }, { c: [640, 470], rx: 26, ry: 14, a: -40 }];
+const VILLAGES = [
+  { c: [380, 400], rx: 70, ry: 55, n: 26 }, { c: [300, 300], rx: 40, ry: 30, n: 10 }, { c: [90, 210], rx: 45, ry: 60, n: 14 },
+  { c: [80, 460], rx: 30, ry: 40, n: 8 }, { c: [470, 205], rx: 30, ry: 14, n: 5 },
+];
+// buildings: [x, y, w, h, rot, roof]
+const BUILDINGS = [
+  [200, 520, 40, 22, 0, "#4f8a55"], [230, 584, 34, 20, 0, "#cfc9bb"], [285, 712, 18, 12, 0, "#c4663a"], [205, 488, 18, 12, 0, "#f2f2ee"],
+  [393, -14, 86, 16, 49.5, "#71b06f"], [445, 40, 20, 14, 49.5, "#71b06f"],
+  [128, 168, 22, 14, 10, "#8aa3b8"], [70, 140, 16, 12, 10, "#c9b48a"],
+];
+const HANOK = [ // temple roofs: [x, y, w, h, rot]
+  [830, -40, 32, 14, -12], [872, -12, 34, 16, -12], [925, 6, 44, 20, -10], [800, -72, 26, 12, -12], [862, -82, 30, 12, -12],
+  [955, -40, 24, 12, -10], [892, 42, 28, 12, -10], [944, 62, 22, 10, -10], [810, -10, 18, 9, -12], [968, 20, 18, 10, -10], [777, 48, 13, 6, -40], [905, -60, 22, 10, -12],
+];
+const COURTYARD = [[790, -95], [985, -70], [990, 80], [880, 70], [800, 20], [770, -20]];
+const LOTS = [ // asphalt lots: centre, w, h, rot
+  { c: [95, 238], w: 46, h: 78, rot: 15 }, { c: [130, 140], w: 40, h: 36, rot: 12 },
+];
+const LANDMARKS = [
+  { p: [880, -50], t: "쌍계사", strong: true, d: [10, -30] },
+  { p: [925, 6], t: "대웅전", d: [0, 30] },
+  { p: [777, 48], t: "일주문", d: [-50, 22] },
+  { p: [200, 520], t: "하동야생차박물관", d: [100, 12] },
+  { p: [230, 584], t: "야생차문화센터", d: [95, 10] },
+  { p: [285, 712], t: "티카페하동", d: [62, 20] },
+  { p: [372, 505], t: "쌍계사 차나무 시배지", d: [70, -34] },
+  { p: [320, 195], t: "쌍계석문", d: [62, -6] },
+];
+const SHUTTLE = { p: [110, 200], t: "쌍계사 정류소 · 공영주차장" };
+
+// ---------- helpers ----------
+function rng(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function rectPoly(c, w, h, rot) {
+  const r = rot * Math.PI / 180, cs = Math.cos(r), sn = Math.sin(r);
+  return [[-w / 2, -h / 2], [w / 2, -h / 2], [w / 2, h / 2], [-w / 2, h / 2]].map(([x, y]) => [c[0] + x * cs - y * sn, c[1] + x * sn + y * cs]);
+}
+function scalePoly(p, k) { const cx = p.reduce((s, q) => s + q[0], 0) / p.length, cy = p.reduce((s, q) => s + q[1], 0) / p.length; return p.map(([x, y]) => [cx + (x - cx) * k, cy + (y - cy) * k]); }
+function inPoly(pt, poly) { let c = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, yi] = poly[i], [xj, yj] = poly[j]; if ((yi > pt[1]) !== (yj > pt[1]) && pt[0] < (xj - xi) * (pt[1] - yi) / (yj - yi) + xi) c = !c; } return c; }
+function distSeg(p, a, b) { const dx = b[0] - a[0], dy = b[1] - a[1], l = dx * dx + dy * dy; let t = l ? ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / l : 0; t = Math.max(0, Math.min(1, t)); return Math.hypot(p[0] - a[0] - t * dx, p[1] - a[1] - t * dy); }
+function distLine(p, pts) { let m = Infinity; for (let i = 1; i < pts.length; i++) m = Math.min(m, distSeg(p, pts[i - 1], pts[i])); return m; }
+function inEllipse(p, e, pad = 0) { const a = -e.a * Math.PI / 180, dx = p[0] - e.c[0], dy = p[1] - e.c[1]; const x = dx * Math.cos(a) - dy * Math.sin(a), y = dx * Math.sin(a) + dy * Math.cos(a); return (x * x) / ((e.rx + pad) ** 2) + (y * y) / ((e.ry + pad) ** 2) < 1; }
+function roundedPath(poly, r) {
+  const n = poly.length; let d = "";
+  for (let i = 0; i < n; i++) {
+    const p0 = poly[(i - 1 + n) % n], p1 = poly[i], p2 = poly[(i + 1) % n];
+    const v1 = [p0[0] - p1[0], p0[1] - p1[1]], v2 = [p2[0] - p1[0], p2[1] - p1[1]];
+    const l1 = Math.hypot(...v1), l2 = Math.hypot(...v2), rr = Math.min(r, l1 / 2, l2 / 2);
+    const a = [p1[0] + v1[0] / l1 * rr, p1[1] + v1[1] / l1 * rr], b = [p1[0] + v2[0] / l2 * rr, p1[1] + v2[1] / l2 * rr];
+    d += (i ? "L" : "M") + a[0].toFixed(1) + " " + a[1].toFixed(1) + "Q" + p1[0] + " " + p1[1] + " " + b[0].toFixed(1) + " " + b[1].toFixed(1);
+  }
+  return d + "Z";
+}
+function smoothLine(ctx, pts) { ctx.moveTo(...pts[0]); for (let i = 1; i < pts.length - 1; i++) { const m = [(pts[i][0] + pts[i + 1][0]) / 2, (pts[i][1] + pts[i + 1][1]) / 2]; ctx.quadraticCurveTo(pts[i][0], pts[i][1], m[0], m[1]); } ctx.lineTo(...pts[pts.length - 1]); }
+
+const ZONE_POLYS = {};
+for (const [id, z] of Object.entries(ZONE_STYLE)) ZONE_POLYS[id] = rectPoly(z.c, z.w * z.k, z.h * z.k, z.rot);
+ZONE_POLYS.stage = scalePoly(STAGE_POLY, 1.35);
+
+// ---------- terrain (canvas) ----------
+function paintTerrain() {
+  const box = document.getElementById("mapBox"), cv = document.getElementById("terrain");
+  const W = box.clientWidth, H = box.clientHeight, dpr = Math.min(window.devicePixelRatio || 1, 2);
+  if (!W) return;
+  cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+  const s = W / VB.w, ctx = cv.getContext("2d");
+  ctx.setTransform(s * dpr, 0, 0, s * dpr, -VB.x * s * dpr, -VB.y * s * dpr);
+  const R = rng(22);
+
+  // ground: valley floor lighter, slopes darker
+  ctx.fillStyle = "#7f9d52"; ctx.fillRect(VB.x, VB.y, VB.w, VB.h);
+  const glow = (x, y, r, c0, c1) => { const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, c0); g.addColorStop(1, c1); ctx.fillStyle = g; ctx.fillRect(VB.x, VB.y, VB.w, VB.h); };
+  glow(220, 420, 330, "rgba(190,200,120,.55)", "rgba(190,200,120,0)");
+  glow(400, 260, 220, "rgba(190,200,120,.35)", "rgba(190,200,120,0)");
+  glow(900, 560, 420, "rgba(20,50,25,.45)", "rgba(20,50,25,0)");
+  glow(980, -110, 380, "rgba(20,50,25,.35)", "rgba(20,50,25,0)");
+  glow(30, 0, 260, "rgba(20,50,25,.3)", "rgba(20,50,25,0)");
+
+  // logging scars and tea fields
+  for (const e of SCARS) { ctx.save(); ctx.translate(...e.c); ctx.rotate(e.a * Math.PI / 180); ctx.fillStyle = "#b08a5c"; ctx.beginPath(); ctx.ellipse(0, 0, e.rx, e.ry, 0, 0, 7); ctx.fill(); ctx.restore(); }
+  for (const e of TEA) {
+    ctx.save(); ctx.translate(...e.c); ctx.rotate(e.a * Math.PI / 180);
+    ctx.beginPath(); ctx.ellipse(0, 0, e.rx, e.ry, 0, 0, 7); ctx.fillStyle = "#c3cf86"; ctx.fill(); ctx.clip();
+    ctx.strokeStyle = "#5f8e3a"; ctx.lineWidth = 3.2; ctx.lineCap = "round";
+    for (let y = -e.ry; y <= e.ry; y += 6) { ctx.beginPath(); ctx.moveTo(-e.rx, y); ctx.quadraticCurveTo(0, y + 5, e.rx, y - 2); ctx.stroke(); }
+    ctx.restore();
+    ctx.save(); ctx.translate(...e.c); ctx.rotate(e.a * Math.PI / 180); ctx.strokeStyle = "rgba(60,80,30,.35)"; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.ellipse(0, 0, e.rx, e.ry, 0, 0, 7); ctx.stroke(); ctx.restore();
+  }
+
+  // temple courtyard, lots
+  ctx.fillStyle = "#d9cba4"; ctx.beginPath(); COURTYARD.forEach((p, i) => i ? ctx.lineTo(...p) : ctx.moveTo(...p)); ctx.closePath(); ctx.fill();
+  for (const l of LOTS) {
+    const p = rectPoly(l.c, l.w, l.h, l.rot); ctx.fillStyle = "#8c8f8a"; ctx.beginPath(); p.forEach((q, i) => i ? ctx.lineTo(...q) : ctx.moveTo(...q)); ctx.closePath(); ctx.fill();
+  }
+  // school field, parking asphalt, stage plaza sit under the zone tint
+  const fill = (poly, c) => { ctx.fillStyle = c; ctx.beginPath(); poly.forEach((q, i) => i ? ctx.lineTo(...q) : ctx.moveTo(...q)); ctx.closePath(); ctx.fill(); };
+  fill(scalePoly(ZONE_POLYS.school, 1.08), "#d8c08e");
+  fill(scalePoly(ZONE_POLYS.parking, 1.06), "#8d908a");
+  fill(scalePoly(ZONE_POLYS.stage, 1.08), "#d9cfae");
+  fill(scalePoly(ZONE_POLYS.booth, 1.1), "#d7caa2");
+  fill(scalePoly(ZONE_POLYS.temple, 1.1), "#d9cba4");
+
+  // river with rocky banks
+  ctx.lineCap = "round"; ctx.lineJoin = "round";
+  ctx.beginPath(); smoothLine(ctx, RIVER); ctx.strokeStyle = "#c9bfa5"; ctx.lineWidth = 40; ctx.stroke();
+  ctx.beginPath(); smoothLine(ctx, RIVER); ctx.strokeStyle = "#3f8fb0"; ctx.lineWidth = 26; ctx.stroke();
+  ctx.beginPath(); smoothLine(ctx, RIVER); ctx.strokeStyle = "#5fb3cf"; ctx.lineWidth = 15; ctx.stroke();
+  for (let i = 0; i < 260; i++) { // boulders
+    const t = R(), seg = Math.min(RIVER.length - 2, Math.floor(t * (RIVER.length - 1))), f = t * (RIVER.length - 1) - seg;
+    const a = RIVER[seg], b = RIVER[seg + 1], x = a[0] + (b[0] - a[0]) * f, y = a[1] + (b[1] - a[1]) * f;
+    const side = R() < .5 ? -1 : 1, off = (8 + R() * 13) * side, nx = -(b[1] - a[1]), ny = b[0] - a[0], nl = Math.hypot(nx, ny);
+    const rx = 1.6 + R() * 3.4; ctx.fillStyle = ["#e8e2d2", "#cfc6b1", "#b9ae96"][Math.floor(R() * 3)];
+    ctx.beginPath(); ctx.ellipse(x + nx / nl * off, y + ny / nl * off, rx, rx * .75, R() * 3, 0, 7); ctx.fill();
+  }
+  ctx.strokeStyle = "rgba(255,255,255,.55)"; ctx.lineWidth = 1.1;
+  for (let i = 0; i < 90; i++) { const t = R(), seg = Math.min(RIVER.length - 2, Math.floor(t * (RIVER.length - 1))), f = t * (RIVER.length - 1) - seg; const a = RIVER[seg], b = RIVER[seg + 1]; const x = a[0] + (b[0] - a[0]) * f + (R() - .5) * 10, y = a[1] + (b[1] - a[1]) * f; ctx.beginPath(); ctx.arc(x, y, 3 + R() * 3, 3.6, 5.6); ctx.stroke(); }
+
+  // roads
+  for (const r of ROADS) { ctx.beginPath(); smoothLine(ctx, r.pts); ctx.strokeStyle = "#a8996f"; ctx.lineWidth = r.w + 3; ctx.stroke(); }
+  for (const r of ROADS) { ctx.beginPath(); smoothLine(ctx, r.pts); ctx.strokeStyle = r.main ? "#f1e3b4" : "#ece2c6"; ctx.lineWidth = r.w; ctx.stroke(); }
+  ctx.setLineDash([6, 7]); ctx.strokeStyle = "#e0a93a"; ctx.lineWidth = 1.4; ctx.beginPath(); smoothLine(ctx, ROADS[0].pts); ctx.stroke(); ctx.setLineDash([]);
+
+  // houses in villages
+  const houses = [];
+  for (const v of VILLAGES) for (let i = 0; i < v.n * 3 && houses.filter(h => h.v === v).length < v.n; i++) {
+    const a = R() * 6.283, rr = Math.sqrt(R()), p = [v.c[0] + Math.cos(a) * v.rx * rr, v.c[1] + Math.sin(a) * v.ry * rr];
+    if (distLine(p, RIVER) < 22 || ROADS.some(r => distLine(p, r.pts) < r.w / 2 + 6) || TEA.some(e => inEllipse(p, e, 3))) continue;
+    if (houses.some(h => Math.hypot(h.p[0] - p[0], h.p[1] - p[1]) < 13)) continue;
+    houses.push({ v, p, w: 9 + R() * 6, h: 6 + R() * 4, rot: (R() - .5) * 40, roof: ["#5d8fb8", "#4f9a8a", "#c4663a", "#7d8a96", "#d9a441", "#6fa86b"][Math.floor(R() * 6)] });
+  }
+  const box2 = (x, y, w, h, rot, roof, hanok) => {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot * Math.PI / 180);
+    ctx.fillStyle = "rgba(25,40,20,.35)"; ctx.fillRect(-w / 2 + 2, -h / 2 + 3, w, h);
+    if (hanok) {
+      ctx.fillStyle = "#3e434a"; ctx.beginPath(); ctx.moveTo(-w / 2 - 3, -h / 2 + 1); ctx.quadraticCurveTo(0, -h / 2 + 4, w / 2 + 3, -h / 2 + 1); ctx.lineTo(w / 2, h / 2); ctx.quadraticCurveTo(0, h / 2 - 2, -w / 2, h / 2); ctx.closePath(); ctx.fill();
+      ctx.strokeStyle = "#7c838c"; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(-w / 2 + 2, 0); ctx.lineTo(w / 2 - 2, 0); ctx.stroke();
+      ctx.strokeStyle = "rgba(255,255,255,.18)"; ctx.lineWidth = .7; for (let i = -w / 2 + 3; i < w / 2 - 2; i += 2.6) { ctx.beginPath(); ctx.moveTo(i, -h / 2 + 2.5); ctx.lineTo(i, h / 2 - 1.5); ctx.stroke(); }
+    } else {
+      ctx.fillStyle = roof; ctx.fillRect(-w / 2, -h / 2, w, h);
+      ctx.fillStyle = "rgba(255,255,255,.28)"; ctx.fillRect(-w / 2, -h / 2, w, h / 2);
+      ctx.strokeStyle = "rgba(0,0,0,.25)"; ctx.lineWidth = .8; ctx.strokeRect(-w / 2, -h / 2, w, h);
+    }
+    ctx.restore();
+  };
+  houses.forEach(h => box2(h.p[0], h.p[1], h.w, h.h, h.rot, h.roof));
+  BUILDINGS.forEach(b => box2(...b));
+  HANOK.forEach(b => box2(b[0], b[1], b[2], b[3], b[4], null, true));
+  // parking stall lines on lots
+  ctx.strokeStyle = "rgba(255,255,255,.7)"; ctx.lineWidth = .8;
+  for (const l of LOTS) { ctx.save(); ctx.translate(...l.c); ctx.rotate(l.rot * Math.PI / 180); for (let x = -l.w / 2 + 4; x < l.w / 2; x += 4) { ctx.beginPath(); ctx.moveTo(x, -l.h / 2 + 3); ctx.lineTo(x, -l.h / 2 + 12); ctx.moveTo(x, l.h / 2 - 12); ctx.lineTo(x, l.h / 2 - 3); ctx.stroke(); } ctx.restore(); }
+
+  // forest: jittered grid, kept off water, roads, buildings and clearings
+  const clear = [...Object.values(ZONE_POLYS).map(p => scalePoly(p, 1.18)), COURTYARD, ...LOTS.map(l => rectPoly(l.c, l.w + 8, l.h + 8, l.rot))];
+  const valley = p => distLine(p, RIVER) < 70 || distLine(p, ROADS[3].pts) < 40 || distLine(p, ROADS[2].pts) < 34 || distLine(p, ROADS[4].pts) < 34;
+  const trees = [];
+  for (let gy = VB.y - 10; gy < VB.y + VB.h + 10; gy += 8.5) for (let gx = VB.x - 10; gx < VB.x + VB.w + 10; gx += 8.5) {
+    const p = [gx + (R() - .5) * 7, gy + (R() - .5) * 7];
+    if (distLine(p, RIVER) < 22) continue;
+    if (ROADS.some(r => distLine(p, r.pts) < r.w / 2 + 4)) continue;
+    if (TEA.some(e => inEllipse(p, e, 2)) || SCARS.some(e => inEllipse(p, e, -4))) continue;
+    if (clear.some(c => inPoly(p, c))) continue;
+    if (houses.some(h => Math.hypot(h.p[0] - p[0], h.p[1] - p[1]) < 9) || BUILDINGS.some(b => Math.hypot(b[0] - p[0], b[1] - p[1]) < Math.max(b[2], b[3]) / 2 + 5) || HANOK.some(b => Math.hypot(b[0] - p[0], b[1] - p[1]) < b[2] / 2 + 4)) continue;
+    if (valley(p) && R() < .72) continue;
+    if (VILLAGES.some(v => inEllipse(p, { c: v.c, rx: v.rx, ry: v.ry, a: 0 })) && R() < .8) continue;
+    trees.push({ p, r: 5.2 + R() * 4.6, c: Math.floor(R() * 4) });
+  }
+  trees.sort((a, b) => a.p[1] - b.p[1]);
+  const body = ["#2c5a29", "#376a2f", "#467b34", "#2a4c2a"], hi = ["#4f8a3f", "#5f9a45", "#6faa4f", "#476f3c"];
+  ctx.fillStyle = "rgba(18,35,15,.38)";
+  for (const t of trees) { ctx.beginPath(); ctx.ellipse(t.p[0] + t.r * .35, t.p[1] + t.r * .5, t.r, t.r * .8, 0, 0, 7); ctx.fill(); }
+  for (const t of trees) {
+    ctx.fillStyle = body[t.c]; ctx.beginPath(); ctx.arc(t.p[0], t.p[1], t.r, 0, 7); ctx.fill();
+    ctx.fillStyle = hi[t.c]; ctx.beginPath(); ctx.arc(t.p[0] - t.r * .28, t.p[1] - t.r * .3, t.r * .55, 0, 7); ctx.fill();
+  }
+}
+
+// ---------- overlay (svg) ----------
+const NS = "http://www.w3.org/2000/svg";
+function el(tag, attrs = {}, parent) { const e = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); if (parent) parent.appendChild(e); return e; }
+const pills = [];
+function pill(parent, x, y, text, o = {}) {
+  const fs = o.fs || 17, g = el("g", { class: "pill", transform: `translate(${x} ${y})` }, parent);
+  const rect = el("rect", { fill: o.bg || "#fff", stroke: o.border || "#fff", "stroke-width": o.bw ?? 3, filter: "url(#shadow)" }, g);
+  const t = el("text", { "text-anchor": "middle", y: fs * .36, "font-size": fs, fill: o.fg || "#fff", "font-family": o.font || "Bagel Fat One, Black Han Sans, sans-serif" }, g);
+  t.textContent = text;
+  let sub;
+  if (o.sub) { sub = el("text", { "text-anchor": "middle", y: fs * .36 + fs * 1.05, "font-size": fs * .62, fill: o.subfg || "#fff", "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 600, "paint-order": "stroke", stroke: o.subStroke || "rgba(0,0,0,.45)", "stroke-width": 2.6 }, g); sub.textContent = o.sub; }
+  pills.push({ rect, t, fs, padX: o.padX ?? fs * .75 });
+  return g;
+}
+function sizePills() {
+  for (const p of pills) {
+    let w; try { w = p.t.getComputedTextLength(); } catch (e) { w = 0; }
+    if (!w) w = p.t.textContent.length * p.fs * .95;
+    const h = p.fs * 1.7, W = w + p.padX * 2;
+    p.rect.setAttribute("x", -W / 2); p.rect.setAttribute("y", -h / 2); p.rect.setAttribute("width", W); p.rect.setAttribute("height", h); p.rect.setAttribute("rx", h / 2);
+  }
+}
+function tentIcon(parent, x, y, s, color) {
+  el("path", { d: `M${x - s} ${y + s * .7} L${x} ${y - s * .8} L${x + s} ${y + s * .7} Z`, fill: "#fff", stroke: color, "stroke-width": 1.4, "stroke-linejoin": "round" }, parent);
+  el("path", { d: `M${x} ${y - s * .8} L${x - s * .25} ${y + s * .7} L${x + s * .25} ${y + s * .7} Z`, fill: color }, parent);
+}
+
+function buildOverlay() {
+  const svg = document.getElementById("ov");
+  const defs = el("defs", {}, svg);
+  const f = el("filter", { id: "shadow", x: "-20%", y: "-40%", width: "140%", height: "190%" }, defs);
+  el("feDropShadow", { dx: 0, dy: 2, stdDeviation: 2, "flood-color": "#0d1a0b", "flood-opacity": .45 }, f);
+
+  // walking route
+  const route = WALK.map((p, i) => (i ? "L" : "M") + p.join(" ")).join("");
+  el("path", { d: route, fill: "none", stroke: "#fff", "stroke-width": 3.2, "stroke-dasharray": "0.1 9", "stroke-linecap": "round", opacity: .95 }, svg);
+  pill(svg, 455, 250, "도보 12분 · 864m", { bg: "#fff", fg: "#24402a", fs: 13, bw: 2, border: "#24402a" });
+
+  // zones
+  const order = ["stage", "booth", "school", "parking", "temple"];
+  for (const id of order) {
+    const g = el("g", { class: "zone", "data-id": id, tabindex: "0", role: "button" }, svg);
+    if (id === "stage") {
+      el("path", { class: "area", d: roundedPath(ZONE_POLYS.stage, 10), fill: "#e8f05e", "fill-opacity": .66, stroke: "#9aa31d", "stroke-width": 3 }, g);
+      const sp = [254, 652]; el("rect", { x: sp[0] - 6, y: sp[1] - 18, width: 12, height: 40, rx: 6, fill: "#151515", transform: `rotate(-20 ${sp[0]} ${sp[1]})` }, g);
+      pill(g, 322, 640, "무대", { bg: "#151515", fs: 19 });
+      pill(g, 210, 735, "공연 광장", { bg: "#f6f9a6", fg: "#2c3000", fs: 15, border: "#fff" });
+      g.setAttribute("aria-label", "메인 무대 보기");
+    } else {
+      const z = ZONE_STYLE[id], poly = ZONE_POLYS[id];
+      el("path", { class: "area", d: roundedPath(poly, 9), fill: z.color, "fill-opacity": .62, stroke: z.dark, "stroke-width": 3, "stroke-dasharray": z.confirmed ? "" : "9 6" }, g);
+      // sample real tent positions from the PPTX layout into the zone shape
+      const zd = ZONES.find(q => q.id === id);
+      if (zd) {
+        const gr = zd.items.find(i => i.k === "ground"), tents = zd.items.filter(i => i.k === "tent");
+        const step = Math.max(1, Math.round(tents.length / ({ temple: 6, school: 12, parking: 12 }[id])));
+        const [a, b, , d] = poly; // a: top-left, b: top-right, d: bottom-left of the drawn rect
+        tents.filter((_, i) => i % step === Math.floor(step / 2)).forEach(t => {
+          const u = Math.min(.92, Math.max(.08, (t.x + t.w / 2 - gr.x) / gr.w)), v = Math.min(.85, Math.max(.15, (t.y + t.h / 2 - gr.y) / gr.h));
+          const x = a[0] + (b[0] - a[0]) * u + (d[0] - a[0]) * v, y = a[1] + (b[1] - a[1]) * u + (d[1] - a[1]) * v;
+          tentIcon(g, x, y, id === "temple" ? 5 : 6.5, z.dark);
+        });
+      } else {
+        tentIcon(g, z.c[0] - 6, z.c[1] - 4, 6, z.dark); tentIcon(g, z.c[0] + 8, z.c[1] + 10, 6, z.dark);
+      }
+      pill(g, z.pill[0], z.pill[1], z.name, { bg: z.color, fg: z.ink || "#fff", fs: 19, sub: z.sub, subfg: "#fff" });
+      if (!z.confirmed) pill(g, z.pill[0], z.pill[1] - 30, "위치 추정", { bg: "#fff3d6", fg: "#8a4a00", fs: 11, bw: 1.5, border: "#8a4a00" });
+      g.setAttribute("aria-label", z.name + " 보기");
+    }
+    g.addEventListener("click", () => { select(id); jump(); });
+    g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(id); jump(); } });
+  }
+
+  // landmarks
+  for (const m of LANDMARKS) {
+    const x = m.p[0] + m.d[0], y = m.p[1] + m.d[1];
+    el("line", { x1: m.p[0], y1: m.p[1], x2: x, y2: y, stroke: "#fff", "stroke-width": 1.6, opacity: .9 }, svg);
+    el("circle", { cx: m.p[0], cy: m.p[1], r: 3.6, fill: "#fff", stroke: "#24402a", "stroke-width": 1.6 }, svg);
+    pill(svg, x, y, m.t, { bg: m.strong ? "#3b2a1a" : "#fbf7ea", fg: m.strong ? "#fff" : "#2b3a26", fs: m.strong ? 18 : 12.5, bw: 2, border: m.strong ? "#fff" : "#2b3a26" });
+  }
+  // shuttle stop
+  const sx = SHUTTLE.p[0], sy = SHUTTLE.p[1];
+  const sg = el("g", {}, svg);
+  el("circle", { cx: sx, cy: sy, r: 13, fill: "#1f4fa8", stroke: "#fff", "stroke-width": 3, filter: "url(#shadow)" }, sg);
+  const pt = el("text", { x: sx, y: sy + 5.5, "text-anchor": "middle", "font-size": 16, fill: "#fff", "font-family": "Bagel Fat One, sans-serif" }, sg); pt.textContent = "P";
+  pill(svg, sx + 8, sy + 34, SHUTTLE.t, { bg: "#fbf7ea", fg: "#1f3a7a", fs: 12.5, bw: 2, border: "#1f3a7a" });
+  // river label
+  const rl = el("text", { x: 238, y: 175, "font-size": 15, fill: "#e9f6fb", "font-family": "Bagel Fat One, sans-serif", transform: "rotate(-70 238 175)", "letter-spacing": 3 }, svg); rl.textContent = "화개천";
+
+  // title lockup on the forested south-east slope
+  const tg = el("g", { transform: "translate(640 600) rotate(-6)" }, svg);
+  const tstyle = { fill: "#fff", "paint-order": "stroke", stroke: "#1d3a1a", "stroke-linejoin": "round" };
+  const yr = el("text", { x: 4, y: 0, "font-size": 18, "font-family": "Bagel Fat One, sans-serif", ...tstyle, "stroke-width": 5 }, tg); yr.textContent = "2026 · 쌍계사";
+  const t1 = el("text", { x: 0, y: 70, "font-size": 74, "font-family": "Noto Serif KR, serif", "font-weight": 900, ...tstyle, "stroke-width": 12 }, tg); t1.textContent = "山寺";
+  const t2 = el("text", { x: 158, y: 70, "font-size": 64, "font-family": "Bagel Fat One, sans-serif", ...tstyle, "stroke-width": 12 }, tg); t2.textContent = "캠프";
+  const t3 = el("text", { x: 4, y: 104, "font-size": 19, "font-family": "Bagel Fat One, sans-serif", ...tstyle, "stroke-width": 6, "letter-spacing": 1 }, tg); t3.textContent = "SSANGGYESA CAMPING FESTIVAL";
+  const t4 = el("text", { x: 4, y: 134, "font-size": 17, "font-family": "Bagel Fat One, sans-serif", fill: "#ffe55c", "paint-order": "stroke", stroke: "#1d3a1a", "stroke-width": 6, "stroke-linejoin": "round" }, tg); t4.textContent = "10.23 FRI — 25 SUN · 하동 쌍계사길 59";
+
+  // compass + scale
+  const cg = el("g", { transform: "translate(950 -70)" }, svg);
+  el("circle", { r: 22, fill: "#fbf7ea", stroke: "#2b3a26", "stroke-width": 2, filter: "url(#shadow)" }, cg);
+  el("path", { d: "M0 -16 L7 6 L0 2 L-7 6 Z", fill: "#c4402a" }, cg);
+  const nn = el("text", { y: 17, "text-anchor": "middle", "font-size": 10, fill: "#2b3a26", "font-family": "Bagel Fat One, sans-serif" }, cg); nn.textContent = "N";
+  const sb = el("g", { transform: "translate(830 760)" }, svg);
+  el("rect", { x: -10, y: -16, width: 150, height: 34, rx: 17, fill: "rgba(251,247,234,.92)" }, sb);
+  el("path", { d: "M0 4 H100 M0 -2 V4 M50 0 V4 M100 -2 V4", stroke: "#2b3a26", "stroke-width": 2, fill: "none" }, sb);
+  const st = el("text", { x: 108, y: 8, "font-size": 12, fill: "#2b3a26", "font-family": "IBM Plex Mono, monospace" }, sb); st.textContent = "100m";
+
+  sizePills();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizePills);
+}
+
+function jump() {
+  const sec = document.getElementById("detailSec");
+  const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  sec.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+}
+
+// ---------- zone detail (layouts drawn to scale from the PPTX) ----------
+const PAGES = ["temple", "school", "parking", "stage", "booth"];
+const NAMES = { temple: "A 쌍계사 경내", school: "B 쌍계초", parking: "C 주차장", stage: "무대", booth: "부스·먹거리" };
+const DOTS = { temple: "#2f6fe0", school: "#7a55e6", parking: "#d847c9", stage: "#151515", booth: "#f5b82e" };
+for (const z of ZONES) { // Chromium clamps very large SVG font sizes, so convert EMU geometry to 0.1 m units first
+  const f = 10 / z.emu_m;
+  for (const it of z.items) for (const k of ["x", "y", "w", "h"]) it[k] *= f;
+  z.bbox = z.bbox.map(v => v * f); z.entryPt = z.entryPt.map(v => v * f); z.emu_m = 10;
+}
+const zoneById = Object.fromEntries(ZONES.map(z => [z.id, z]));
+const total = ZONES.reduce((s, z) => s + z.tents, 0);
+const ZONE_SHAPES = Object.fromEntries(Object.entries(ZONE_STYLE).map(([k, v]) => [k, { confirmed: v.confirmed }]));
+
+// Number tents row by row (top to bottom, left to right) inside each zone.
+function numberTents(z) {
+  const tents = z.items.filter(i => i.k === "tent").map(t => ({ ...t, cy: t.y + t.h / 2 }));
+  const rowTol = Math.min(...tents.map(t => t.h)) * 0.5;
+  tents.sort((a, b) => Math.abs(a.cy - b.cy) < rowTol ? a.x - b.x : a.cy - b.cy);
+  return tents.map((t, i) => ({ ...t, no: PREFIX[z.id] + "-" + String(i + 1).padStart(3, "0") }));
+}
+
+function drawZone(z) {
+  const [bx, by, bw, bh] = z.bbox;
+  const pad = z.emu_m * 2.5;
+  const scaleH = z.emu_m * 4;
+  const svg = el("svg", { viewBox: `${bx - pad} ${by - pad} ${bw + pad * 2} ${bh + pad * 2 + scaleH}`, role: "img", "aria-label": `${z.name} 텐트 배치도` });
+  for (const it of z.items.filter(i => i.k === "ground")) el("rect", { x: it.x, y: it.y, width: it.w, height: it.h, fill: "var(--path)" }, svg);
+  const tents = numberTents(z);
+  const fs = Math.min(tents[0].w, tents[0].h) * 0.26;
+  for (const t of tents) {
+    const g = el("g", { class: "t-tent", "data-no": t.no }, svg);
+    el("rect", { x: t.x, y: t.y, width: t.w, height: t.h, fill: "var(--tent)", stroke: "var(--surface)", "stroke-width": z.emu_m * 0.12 }, g);
+    const tx = el("text", { x: t.x + t.w / 2, y: t.y + t.h / 2 + fs * 0.35, "text-anchor": "middle", "font-size": fs, "font-family": "IBM Plex Mono, monospace", fill: "var(--tent-ink)" }, g);
+    tx.textContent = t.no.slice(2);
+    el("title", {}, g).textContent = `${t.no} · 3m × 4m`;
+  }
+  for (const f of z.items.filter(i => i.k === "fac")) {
+    el("rect", { x: f.x, y: f.y, width: f.w, height: f.h, rx: z.emu_m * 0.3, fill: "var(--fac)" }, svg);
+    const lines = f.t.split("\n");
+    const vertical = f.h > f.w * 1.6 && lines.length === 1;
+    const ffs = Math.min(z.emu_m * 1.6, (vertical ? f.w : f.h) * 0.42);
+    if (vertical) {
+      const chars = [...f.t.replace(/\s/g, "")];
+      chars.forEach((c, i) => {
+        const t = el("text", { x: f.x + f.w / 2, y: f.y + f.h / 2 + (i - (chars.length - 1) / 2) * ffs * 1.15 + ffs * 0.35, "text-anchor": "middle", "font-size": ffs, fill: "var(--fac-ink)", "font-weight": 600 }, svg);
+        t.textContent = c;
+      });
+    } else {
+      lines.forEach((ln, i) => {
+        const t = el("text", { x: f.x + f.w / 2, y: f.y + f.h / 2 + (i - (lines.length - 1) / 2) * ffs * 1.2 + ffs * 0.35, "text-anchor": "middle", "font-size": ffs, fill: "var(--fac-ink)", "font-weight": 600 }, svg);
+        t.textContent = ln;
+      });
+    }
+  }
+  for (const l of z.items.filter(i => i.k === "label")) {
+    const t = el("text", { x: l.x, y: l.y + l.h * 0.8, "font-size": z.emu_m * 1.6, fill: "var(--ink)", "font-weight": 600 }, svg);
+    t.textContent = l.t;
+  }
+  // entrance arrow
+  const [ex, ey] = z.entryPt, L = z.emu_m * 4.5;
+  const g = el("g", { transform: `translate(${ex} ${ey}) rotate(${z.entry})` }, svg);
+  el("path", { d: `M ${-L / 2} ${-L * 0.14} L ${L * 0.05} ${-L * 0.14} L ${L * 0.05} ${-L * 0.32} L ${L / 2} 0 L ${L * 0.05} ${L * 0.32} L ${L * 0.05} ${L * 0.14} L ${-L / 2} ${L * 0.14} Z`, fill: "var(--tea)" }, g);
+  const et = el("text", { x: ex, y: ey + L * 0.62, "text-anchor": "middle", "font-size": z.emu_m * 1.3, fill: "var(--tea)", "font-weight": 600 }, svg);
+  et.textContent = "입구";
+  // scale bar: 10 m
+  const sy = by + bh + pad * 0.6 + scaleH * 0.3, sx = bx, ten = z.emu_m * 10, tick = z.emu_m * 0.8;
+  el("path", { d: `M${sx} ${sy - tick} V${sy} H${sx + ten} V${sy - tick} M${sx + ten / 2} ${sy} V${sy - tick * 0.6}`, fill: "none", stroke: "var(--ink)", "stroke-width": z.emu_m * 0.14 }, svg);
+  const s1 = el("text", { x: sx + ten + z.emu_m, y: sy, "font-size": z.emu_m * 1.3, fill: "var(--muted)", "font-family": "IBM Plex Mono, monospace" }, svg);
+  s1.textContent = "10 m";
+  return svg;
+}
+
+function facList(z) {
+  const c = {};
+  for (const f of z.items.filter(i => i.k === "fac")) { const k = f.t.replace(/\s+/g, " ").replace(/\s?\d+\s?동$/, ""); c[k] = (c[k] || 0) + 1; }
+  const shower = z.items.find(i => i.k === "fac" && /샤워/.test(i.t));
+  return Object.entries(c).map(([k, n]) => k.startsWith("샤워") && shower ? `샤워실 ${shower.t.match(/\d+/)[0]}동` : (n > 1 ? `${k} ${n}` : k)).join(" · ");
+}
+
+const ZONE_NOTES = {
+  temple: ["일주문–금강문 진입로로 추정한 자리입니다. 쌍계초에서 일주문까지 501m, 도보 7분.", "두 줄 배치, 가운데 통로 하나. 입구는 동쪽 끝입니다.", "캐노피는 위쪽 줄 동쪽 끝, 입구 바로 옆입니다."],
+  school: ["카카오맵 실측 운동장 약 58m × 28m로, PPTX의 30m × 60m와 맞습니다.", "다섯 줄 배치, 줄 사이마다 통로가 있습니다. 입구는 동쪽 통로입니다.", "캐노피 2동은 북동쪽 모서리, 화장실은 남동쪽 모서리입니다."],
+  parking: ["카카오맵 실측 약 50m × 51m(약 2,500㎡). PPTX 배치를 3m × 4m 텐트로 환산한 면적(약 30m × 84m)과 비슷하지만 모양은 다릅니다.", "본 구역 125동과 언덕 사이트 10동을 합한 수입니다.", "샤워실 4동은 북쪽, 화장실은 서쪽, 템플스테이는 동쪽 끝입니다.", "입구는 남서쪽, 캐노피 2동이 입구 옆에 있습니다."],
+};
+
+function renderZone(z) {
+  const d = document.getElementById("detail");
+  const t = numberTents(z);
+  const tw = Math.round(t[0].w / z.emu_m), th = Math.round(t[0].h / z.emu_m);
+  const stop = ZONE_SHAPES[z.id];
+  d.innerHTML = `
+    <div class="d-head">
+      ${stop.confirmed ? `<span class="chip ok">위치 확인됨</span>` : `<span class="chip warn">위치 추정 · 배치는 PPTX 기준</span>`}
+      <h2>${z.name}</h2>
+    </div>
+    <div class="facts">
+      <div><span class="k">텐트</span><span class="v">${z.tents}동</span></div>
+      <div><span class="k">구역 크기</span><span class="v">${z.size}</span></div>
+      <div><span class="k">텐트 1동</span><span class="v">${tw}m × ${th}m</span></div>
+      <div><span class="k">번호</span><span class="v">${t[0].no} ~ ${t[t.length - 1].no}</span></div>
+      <div><span class="k">시설</span><span class="v">${facList(z)}</span></div>
+    </div>
+    <div class="plan" id="plan"></div>
+    <div class="readout" id="readout">텐트에 마우스를 올리면 번호가 표시됩니다.</div>
+    <ul class="notes">${ZONE_NOTES[z.id].map(n => `<li>${n}</li>`).join("")}</ul>`;
+  const svg = drawZone(z);
+  document.getElementById("plan").appendChild(svg);
+  const ro = document.getElementById("readout");
+  svg.addEventListener("pointerover", e => { const g = e.target.closest(".t-tent"); if (g) ro.innerHTML = `<b>${g.dataset.no}</b> · ${z.name} · ${tw}m × ${th}m`; });
+}
+
+function renderImagePage(id) {
+  const d = document.getElementById("detail");
+  if (id === "stage") {
+    d.innerHTML = `
+      <div class="d-head"><span class="chip ok">위치 확인됨</span><h2>메인 무대</h2></div>
+      <div class="facts">
+        <div><span class="k">위치</span><span class="v">하동야생차문화센터 남쪽</span></div>
+        <div><span class="k">무대 방향</span><span class="v">동쪽 끝 · 서쪽을 향함</span></div>
+        <div><span class="k">관람 구역</span><span class="v">쌍계로와 문화센터 진입로 사이 광장</span></div>
+      </div>
+      <div class="plan"><img src="${IMG_STAGE}" alt="위성지도: 하동야생차박물관과 문화센터 남쪽 광장에 파란 관람 구역과 동쪽 끝 무대 표시"></div>
+      <p class="caption">보내 주신 캡처입니다. 파란 영역이 관람 구역, 주황색 표시가 무대입니다.</p>
+      <ul class="notes">
+        <li>관람 구역은 서쪽 쌍계로와 붙어 있어 도로 쪽 안전 펜스가 필요합니다.</li>
+        <li>남쪽 티카페하동 방향과 북쪽 문화센터 방향 두 곳에서 진입할 수 있습니다.</li>
+      </ul>`;
+  } else {
+    d.innerHTML = `
+      <div class="d-head"><span class="chip warn">용도 가안 · 위치 확인됨</span><h2>부스 · 먹거리</h2></div>
+      <div class="facts">
+        <div><span class="k">필지</span><span class="v">운수리 669-6</span></div>
+        <div><span class="k">위치</span><span class="v">야생차박물관 바로 북쪽</span></div>
+        <div><span class="k">부스 수</span><span class="v">미정</span></div>
+      </div>
+      <div class="plan"><img src="${IMG_PARCEL}" alt="스마트 국토정보 지적도: 회차로 남쪽 669-6 필지가 보라색으로 강조됨, 아래쪽에 야생차박물관"></div>
+      <p class="caption">스마트 국토정보 지적도 캡처입니다. 보라색 테두리가 669-6 필지, 왼쪽 흰 지붕은 669-2 필지입니다.</p>
+      <ul class="notes">
+        <li>무대 광장에서 북쪽으로 약 150m, 걸어서 2~3분 거리입니다.</li>
+        <li>부스 수와 규격(예: 3m × 3m)을 정하면 이 필지 안에 칸을 그려 넣겠습니다.</li>
+      </ul>`;
+  }
+}
+
+function select(id) {
+  if (!PAGES.includes(id)) return;
+  document.querySelectorAll(".tab").forEach(b => b.setAttribute("aria-selected", String(b.dataset.id === id)));
+  document.querySelectorAll(".zone").forEach(n => n.classList.toggle("on", n.dataset.id === id));
+  if (zoneById[id]) renderZone(zoneById[id]); else renderImagePage(id);
+  try { history.replaceState(null, "", "#" + id); } catch (e) {}
+  try { localStorage.setItem("fest-zone", id); } catch (e) {}
+}
+
+// strip + tabs
+document.getElementById("strip").innerHTML =
+  `<div><span class="big">${total}</span><span class="k">동 · 전체 텐트</span></div>` +
+  ZONES.map(z => `<div><span class="k">${NAMES[z.id]}</span><span class="v">${z.tents}</span></div>`).join("") +
+  `<div><span class="k">무대 → 일주문</span><span class="v">864m · 도보 12분</span></div>` +
+  `<div><span class="k">쌍계초 → 일주문</span><span class="v">501m · 도보 7분</span></div>`;
+const tabs = document.getElementById("tabs");
+tabs.innerHTML = PAGES.map(id => `<button class="tab" role="tab" data-id="${id}" aria-selected="false"><i style="background:${DOTS[id]}"></i>${NAMES[id]}</button>`).join("");
+tabs.addEventListener("click", e => { const b = e.target.closest(".tab"); if (b) select(b.dataset.id); });
+
+buildOverlay();
+paintTerrain();
+let lastW = 0, rt;
+new ResizeObserver(() => { const w = document.getElementById("mapBox").clientWidth; if (Math.abs(w - lastW) < 2) return; lastW = w; clearTimeout(rt); rt = setTimeout(paintTerrain, 120); }).observe(document.getElementById("mapBox"));
+// on narrow screens start the map centred on the valley
+const ms = document.getElementById("mapScroll"); ms.scrollLeft = (ms.scrollWidth - ms.clientWidth) * .3;
+
+let start = (location.hash || "").slice(1);
+if (!PAGES.includes(start)) { try { start = localStorage.getItem("fest-zone") || ""; } catch (e) { start = ""; } }
+select(PAGES.includes(start) ? start : "school");
+</script>
