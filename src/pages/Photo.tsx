@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import PageHeader from '../components/layout/PageHeader'
 import PhotoGrid from '../components/photo/PhotoGrid'
 import UploadSheet from '../components/photo/UploadSheet'
+import PhotoComments from '../components/photo/PhotoComments'
 import { BottomSheet, Chip, Toast } from '../components/ui'
 import Icon from '../components/ui/Icon'
 import { MoonGlyph } from '../components/illust'
@@ -51,6 +52,7 @@ export default function Photo() {
                 <Icon name="heart" fill={likedIds.has(current.id)} size={18} className={likedIds.has(current.id) ? 'text-deep' : ''} />{current.likes_count}
               </button>
             </div>
+            <PhotoComments photoId={current.id} toast={show} />
           </div>
         )}
       </BottomSheet>
