@@ -18,7 +18,7 @@ export default function PhotoViewer({ photoId, onClose, toast }: { photoId: stri
           <div className="mt-4 flex items-center justify-between">
             <span className="text-[13px] text-sub">{current.nickname} · {timeAgo(current.created_at)}</span>
             <button type="button" onClick={() => requireAuth(() => { void toggleLike(current.id) })} aria-pressed={likedIds.has(current.id)} className="btn-ghost gap-1.5">
-              <Icon name="heart" fill={likedIds.has(current.id)} size={18} className={likedIds.has(current.id) ? 'text-deep' : ''} />{current.likes_count}
+              <Icon name="heart" fill={likedIds.has(current.id)} size={18} className="text-pink" />{current.likes_count}
             </button>
           </div>
           <PhotoComments photoId={current.id} toast={toast} />

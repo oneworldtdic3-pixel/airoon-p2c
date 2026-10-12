@@ -137,7 +137,7 @@ export default function PhotoDeck() {
               ) : c.kind === 'photo' ? (
                 <div>
                   <p className="text-[12px] font-semibold tracking-wide opacity-85">BEST PHOTO · {c.spot} · {c.nickname}</p>
-                  <p className="tnum mt-0.5 flex items-center gap-1.5 text-[26px] font-extrabold leading-none"><Icon name="heart" size={20} fill />{c.likes}</p>
+                  <p className="tnum mt-0.5 flex items-center gap-1.5 text-[26px] font-extrabold leading-none"><Icon name="heart" size={20} fill className="text-pink" />{c.likes}</p>
                 </div>
               ) : (
                 <div className="min-w-0 pr-3">

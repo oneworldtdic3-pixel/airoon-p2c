@@ -47,7 +47,7 @@ export default function LivePhotos() {
                 <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-mint">
                   <img src={p.url} alt={`${p.spot_tag} · ${p.nickname}`} loading={i < 3 ? 'eager' : 'lazy'} className="h-full w-full object-cover" />
                   {fresh.has(p.id) && <span className="absolute left-2 top-2 rounded-md bg-ember px-1.5 py-0.5 text-[10px] font-extrabold text-white">NEW</span>}
-                  <span className="absolute bottom-2 right-2 inline-flex items-center gap-0.5 rounded-full bg-ink/55 px-1.5 py-0.5 text-[10.5px] font-bold text-white"><Icon name="heart" size={11} fill />{p.likes_count}</span>
+                  <span className="absolute bottom-2 right-2 inline-flex items-center gap-0.5 rounded-full bg-ink/55 px-1.5 py-0.5 text-[10.5px] font-bold text-white"><Icon name="heart" size={11} fill className="text-pink" />{p.likes_count}</span>
                 </div>
                 <p className="mt-1.5 truncate text-[12.5px] font-bold">{p.spot_tag}</p>
                 <p className="truncate text-[11px] text-sub">{p.nickname} · {timeAgo(p.created_at)}</p>

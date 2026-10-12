@@ -108,8 +108,8 @@ export default function QuoteSheet({ open, onClose, toast }: { open: boolean; on
                 {user?.is_admin && (
                   <button type="button" onClick={async () => { const e = await hide(qt.id, !qt.is_hidden); if (e) toast(e) }} className="shrink-0 text-[11px] font-bold text-sub underline">{qt.is_hidden ? '공개' : '숨김'}</button>
                 )}
-                <button type="button" onClick={() => requireAuth(async () => { const e = await toggle(qt.id); if (e) toast(e) })} aria-pressed={on} className={`flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1.5 text-[13px] font-bold ${on ? 'bg-mint text-deep' : 'bg-gray-100 text-sub'}`}>
-                  <Icon name="heart" size={14} fill={on} />{qt.likes_count}
+                <button type="button" onClick={() => requireAuth(async () => { const e = await toggle(qt.id); if (e) toast(e) })} aria-pressed={on} className={`flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1.5 text-[13px] font-bold ${on ? 'bg-pink/10 text-pink' : 'bg-gray-100 text-sub'}`}>
+                  <Icon name="heart" size={14} fill={on} className="text-pink" />{qt.likes_count}
                 </button>
               </li>
             )

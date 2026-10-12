@@ -14,6 +14,7 @@ export default {
         onbrand: '#0B3D38',
         sky: '#5BC8F5',
         ember: '#F0552A',
+        pink: '#FF2D8A',
       },
       fontFamily: {
         sans: ['Pretendard Variable', 'Pretendard', '-apple-system', 'system-ui', 'sans-serif'],
