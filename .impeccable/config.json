@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "wristband/wristband.html"
+        ],
+        "createdAt": "2026-10-12T23:11:59.427Z",
+        "reason": "assistant decision: #f2efe8 is a neutral mount behind print mockups (not part of the deliverable); C안 ivory #FFFBEF is an intentional hanji-paper ground for the temple concept"
+      }
+    ]
+  }
+}
