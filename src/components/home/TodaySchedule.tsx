@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp } from '../../data/AppProvider'
-import { EVENT_DAYS, MEALS, mealAt } from '../../data/constants'
+import { EVENT_DAYS, MEALS, mealAt, mealTag } from '../../data/constants'
 import { dayKey, fmtDay, fmtTime } from '../../lib/format'
 import { todayEventDay, daysUntilStart } from '../../lib/dday'
 import { SectionTitle, Segmented } from '../ui'
@@ -20,13 +20,13 @@ export default function TodaySchedule() {
     ...bookings.filter((b) => b.status === 'confirmed').map((b) => {
       const s = sessions.find((x) => x.id === b.session_id)
       const p = s && programs.find((x) => x.id === s.program_id)
-      return s && p ? { id: b.id, at: s.starts_at, title: p.title, sub: p.location, kind: 'program' as const } : null
+      return s && p ? { id: b.id, at: s.starts_at, title: p.title, sub: p.location, kind: 'program' as const, tag: '' } : null
     }),
     ...showerBookings.filter((b) => b.status === 'confirmed').map((b) => {
       const s = slots.find((x) => x.id === b.slot_id)
-      return s ? { id: b.id, at: s.starts_at, title: '샤워실', sub: s.building, kind: 'shower' as const } : null
+      return s ? { id: b.id, at: s.starts_at, title: '샤워실', sub: s.building, kind: 'shower' as const, tag: '' } : null
     }),
-    ...MEALS.map((m) => ({ id: m.id, at: mealAt(m), title: m.title, sub: m.location, kind: 'meal' as const })),
+    ...MEALS.map((m) => ({ id: m.id, at: mealAt(m), title: m.title, sub: `${m.location} · ${m.note}`, kind: 'meal' as const, tag: mealTag(m) })),
   ].filter((x): x is NonNullable<typeof x> => !!x).sort((a, b) => a.at.localeCompare(b.at))
   // 직접 고르기 전까지는 로그인 상태면 내 일정, 아니면 전체 프로그램 (데이터가 늦게 와도 맞게 따라간다)
   const myBookings = mine.filter((m) => m.kind !== 'meal')
@@ -72,8 +72,8 @@ export default function TodaySchedule() {
                       <div className="flex items-baseline gap-4 border-t hairline py-3.5 first:border-t-0">
                         <span className="tnum min-w-[3.4em] shrink-0 text-[17px] font-extrabold text-ink">{fmtTime(m.at)}</span>
                         <span className="min-w-0 flex-1">
-                          <span className="block truncate text-[15px] font-semibold">{m.title} <span className="ml-1 rounded-md bg-sun/50 px-1.5 py-0.5 text-[10.5px] font-extrabold text-ink">공양</span></span>
-                          <span className="block truncate text-[12px] text-sub">{m.sub} · 예약 없이 이용</span>
+                          <span className="block truncate text-[15px] font-semibold">{m.title} <span className={`ml-1 rounded-md px-1.5 py-0.5 text-[10.5px] font-extrabold ${m.tag === '공양' ? 'bg-sun/50 text-ink' : 'bg-mint text-deep'}`}>{m.tag}</span></span>
+                          <span className="block truncate text-[12px] text-sub">{m.sub}</span>
                         </span>
                       </div>
                     ) : (
@@ -98,8 +98,8 @@ export default function TodaySchedule() {
             if (row.kind === 'meal') return (
               <li key={row.m.id} className="flex items-baseline gap-4 border-t hairline py-3.5 first:border-t-0">
                 <span className="tnum min-w-[3.4em] shrink-0 text-[17px] font-extrabold text-ink">{row.m.time}</span>
-                <span className="min-w-0 flex-1 truncate text-[15px] font-semibold">{row.m.title} <span className="ml-1 rounded-md bg-sun/50 px-1.5 py-0.5 text-[10.5px] font-extrabold text-ink">공양</span></span>
-                <span className="shrink-0 text-[12px] font-bold text-sub">{row.m.location}</span>
+                <span className="min-w-0 flex-1 truncate text-[15px] font-semibold">{row.m.title} <span className={`ml-1 rounded-md px-1.5 py-0.5 text-[10.5px] font-extrabold ${row.m.kind === 'meal' ? 'bg-sun/50 text-ink' : 'bg-mint text-deep'}`}>{mealTag(row.m)}</span></span>
+                <span className="shrink-0 text-[12px] font-bold text-sub">{row.m.kind === 'meal' ? row.m.location : row.m.note}</span>
               </li>
             )
             const s = row.s

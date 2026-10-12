@@ -23,13 +23,18 @@ export const SOCIAL = [
   { id: 'youtube', name: '유튜브', handle: '@sansacamp', url: 'https://www.youtube.com/@sansacamp' },
 ] as const
 
-/** 공양(식사) 시간 — 예약 없는 안내 일정. 첫날은 14:00 입재라 저녁부터, 마지막 날은 11:00 회향이라 아침까지 */
-export interface MealSlot { id: string; day: (typeof EVENT_DAYS)[number]; time: string; title: string; location: string }
+/** 공양·예불 — 예약 없는 고정 안내 일정. 첫날 14:00 입재, 마지막 날 11:00 회향에 맞춤 */
+export interface MealSlot { id: string; day: (typeof EVENT_DAYS)[number]; time: string; title: string; location: string; kind: 'meal' | 'ritual'; note: string }
 export const MEALS: MealSlot[] = [
-  { id: 'meal-1-d', day: '2026-11-06', time: '17:00', title: '저녁공양', location: '공양간' },
-  { id: 'meal-2-b', day: '2026-11-07', time: '06:00', title: '아침공양', location: '공양간' },
-  { id: 'meal-2-l', day: '2026-11-07', time: '12:00', title: '점심공양', location: '공양간' },
-  { id: 'meal-2-d', day: '2026-11-07', time: '17:00', title: '저녁공양', location: '공양간' },
-  { id: 'meal-3-b', day: '2026-11-08', time: '06:00', title: '아침공양', location: '공양간' },
+  { id: 'rit-1-e', day: '2026-11-06', time: '17:55', title: '저녁예불 및 법고', location: '대웅전', kind: 'ritual', note: '자율참여' },
+  { id: 'meal-1-d', day: '2026-11-06', time: '17:00', title: '저녁공양', location: '공양간', kind: 'meal', note: '예약 없이 이용' },
+  { id: 'rit-2-m', day: '2026-11-07', time: '04:20', title: '새벽예불', location: '대웅전', kind: 'ritual', note: '자율참여' },
+  { id: 'meal-2-b', day: '2026-11-07', time: '06:00', title: '아침공양', location: '공양간', kind: 'meal', note: '예약 없이 이용' },
+  { id: 'meal-2-l', day: '2026-11-07', time: '12:00', title: '점심공양', location: '공양간', kind: 'meal', note: '예약 없이 이용' },
+  { id: 'meal-2-d', day: '2026-11-07', time: '17:00', title: '저녁공양', location: '공양간', kind: 'meal', note: '예약 없이 이용' },
+  { id: 'rit-2-e', day: '2026-11-07', time: '17:55', title: '저녁예불 및 법고', location: '대웅전', kind: 'ritual', note: '자율참여' },
+  { id: 'rit-3-m', day: '2026-11-08', time: '04:20', title: '새벽예불', location: '대웅전', kind: 'ritual', note: '자율참여' },
+  { id: 'meal-3-b', day: '2026-11-08', time: '06:00', title: '아침공양', location: '공양간', kind: 'meal', note: '예약 없이 이용' },
 ]
 export const mealAt = (m: MealSlot) => `${m.day}T${m.time}:00+09:00`
+export const mealTag = (m: MealSlot) => (m.kind === 'meal' ? '공양' : '예불')

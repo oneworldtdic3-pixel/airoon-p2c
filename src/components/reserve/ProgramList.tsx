@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useApp } from '../../data/AppProvider'
-import { EVENT_DAYS, MEALS } from '../../data/constants'
+import { EVENT_DAYS, MEALS, mealTag } from '../../data/constants'
 import { dayKey, fmtDay, fmtTime } from '../../lib/format'
 import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { BottomSheet, Chip, Tag } from '../ui'
@@ -103,13 +103,16 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
       </p>
 
       {MEALS.some((m) => m.day === day) && (
-        <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-tile bg-sun/30 px-4 py-3">
-          <span className="rounded-md bg-sun px-1.5 py-0.5 text-[10.5px] font-extrabold text-ink">공양</span>
-          {MEALS.filter((m) => m.day === day).map((m) => (
-            <span key={m.id} className="text-[13px] font-bold"><span className="tnum">{m.time}</span> {m.title}</span>
+        <ul className="mt-4 divide-y divide-white/70 rounded-tile bg-sun/30 px-4 py-1">
+          {MEALS.filter((m) => m.day === day).sort((a, b) => a.time.localeCompare(b.time)).map((m) => (
+            <li key={m.id} className="flex items-center gap-3 py-2.5">
+              <span className="tnum min-w-[3.2em] shrink-0 text-[14px] font-extrabold">{m.time}</span>
+              <span className="min-w-0 flex-1 truncate text-[13.5px] font-bold">{m.title}</span>
+              <span className="shrink-0 text-[11.5px] text-sub">{m.location} · {m.note}</span>
+              <span className={`shrink-0 rounded-md px-1.5 py-0.5 text-[10.5px] font-extrabold ${m.kind === 'meal' ? 'bg-sun text-ink' : 'bg-mint text-deep'}`}>{mealTag(m)}</span>
+            </li>
           ))}
-          <span className="basis-full text-[11.5px] text-sub">공양간 · 예약 없이 이용합니다</span>
-        </div>
+        </ul>
       )}
       <ol className="mt-2">
         {list.map(({ p, ss }, i) => {
