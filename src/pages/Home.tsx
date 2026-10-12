@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <Hero />
       <div className="pt-8"><InstallStrip /></div>
-      <div className="pt-8"><LiveBanner /></div>
+      <div className="pt-12"><LiveBanner /></div>
       <ArtistTeaser />
       <QuickLinks />
       <TodaySchedule />
