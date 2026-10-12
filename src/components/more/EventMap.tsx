@@ -1,43 +1,134 @@
-// 행사장 약도 — 실측 아님. 배치 확정 시 좌표만 교체.
-const legend = [
-  ['#A5E4DC', '캠핑존 4인'], ['#00D4AC', '캠핑존 6인'], ['#FFD64A', '체험부스존'], ['#00A68A', '메인무대'],
-  ['#BFE9F2', '샤워동'], ['#FFD0B5', '산사장터'], ['#D1D5DB', '주차장'], ['#fff', '일주문 · 쌍계사'],
-]
+import { useEffect, useRef, useState, type TouchEvent as RTouchEvent } from 'react'
+import { createPortal } from 'react-dom'
 
-const Block = ({ x, y, w, h, fill, label, sub, dark }: { x: number; y: number; w: number; h: number; fill: string; label: string; sub?: string; dark?: boolean }) => (
-  <g>
-    <rect x={x} y={y} width={w} height={h} rx="10" fill={fill} stroke={fill === '#fff' ? '#00A68A' : 'none'} strokeWidth="1.5" />
-    <text x={x + 10} y={y + 18} fontSize="11" fontWeight="700" fill={dark ? '#1F2937' : '#fff'}>{label}</text>
-    {sub && <text x={x + 10} y={y + 32} fontSize="10" fill={dark ? '#6B7280' : '#ffffffcc'}>{sub}</text>}
-  </g>
-)
+// 행사장 약도 — 운영팀 일러스트 약도(2026 산사캠프 배치안) 기준. 배치가 바뀌면 이미지와 ZONES 만 교체.
+const MAP = '/map/site-map.jpg'
+const MAP_HI = '/map/site-map@2x.jpg'
+
+const ZONES: { tag: string; color: string; name: string; info: string; note?: string }[] = [
+  { tag: 'A', color: '#2F6FE4', name: '쌍계사 경내', info: '텐트 30동 · 캐노피', note: '위치 추정' },
+  { tag: 'B', color: '#7C4DDB', name: '쌍계초', info: '텐트 85동 · 캐노피 2 · 화장실' },
+  { tag: 'C', color: '#C63DC0', name: '주차장 캠핑존', info: '텐트 135동 · 샤워실 4동 · 화장실' },
+  { tag: '부스', color: '#F2A818', name: '부스 · 먹거리', info: '운수리 669-6 (가안) · 하동야생차박물관 옆' },
+  { tag: '무대', color: '#1F2937', name: '공연 광장', info: '야생차문화센터 아래 · 티카페하동 옆' },
+  { tag: 'P', color: '#1D4ED8', name: '쌍계사 정류소 · 공영주차장', info: '셔틀·자가용 하차 지점' },
+]
+const STATS: [string, string][] = [['A 쌍계사 경내', '30'], ['B 쌍계초', '85'], ['C 주차장', '135']]
+const WALKS: [string, string][] = [['무대 → 일주문', '864m · 도보 12분'], ['쌍계초 → 일주문', '501m · 도보 7분']]
+
+/** 전체 화면 약도: 두 손가락으로 확대, 두 번 탭하면 2.5배 ↔ 맞춤 */
+function MapViewer({ onClose }: { onClose: () => void }) {
+  const box = useRef<HTMLDivElement>(null)
+  const [zoom, setZoom] = useState(1)
+  const pinch = useRef<{ d: number; z: number } | null>(null)
+  const lastTap = useRef(0)
+
+  useEffect(() => {
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', onKey)
+    return () => { document.body.style.overflow = prev; window.removeEventListener('keydown', onKey) }
+  }, [onClose])
+
+  // 확대 배율이 바뀌어도 보던 지점(화면 가운데)이 그대로 가운데에 오도록 스크롤 보정
+  const zoomTo = (next: number, cx?: number, cy?: number) => {
+    const el = box.current
+    const z = Math.min(4, Math.max(1, next))
+    if (!el) return setZoom(z)
+    const r = el.getBoundingClientRect()
+    const px = (cx ?? r.left + r.width / 2) - r.left
+    const py = (cy ?? r.top + r.height / 2) - r.top
+    const fx = (el.scrollLeft + px) / el.scrollWidth
+    const fy = (el.scrollTop + py) / el.scrollHeight
+    setZoom(z)
+    requestAnimationFrame(() => {
+      el.scrollLeft = fx * el.scrollWidth - px
+      el.scrollTop = fy * el.scrollHeight - py
+    })
+  }
+  const dist = (e: RTouchEvent) => Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY)
+  const onTouchStart = (e: RTouchEvent) => {
+    if (e.touches.length === 2) pinch.current = { d: dist(e), z: zoom }
+    else if (e.touches.length === 1) {
+      const now = Date.now()
+      if (now - lastTap.current < 280) { zoomTo(zoom > 1.2 ? 1 : 2.5, e.touches[0].clientX, e.touches[0].clientY); lastTap.current = 0 }
+      else lastTap.current = now
+    }
+  }
+  const onTouchMove = (e: RTouchEvent) => {
+    if (e.touches.length !== 2 || !pinch.current) return
+    const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2
+    const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2
+    zoomTo(pinch.current.z * (dist(e) / pinch.current.d), cx, cy)
+  }
+
+  return createPortal(
+    <div role="dialog" aria-modal="true" aria-label="행사장 약도 크게 보기" className="fixed inset-0 z-[60] flex flex-col bg-[#14201A] animate-[fade-in_.2s_ease-out]">
+      <div className="flex items-center justify-between px-4 pb-2 pt-[calc(env(safe-area-inset-top)+10px)] text-white">
+        <p className="text-[14px] font-bold">행사장 약도</p>
+        <button type="button" onClick={onClose} className="rounded-full bg-white/15 px-3.5 py-1.5 text-[13px] font-bold active:scale-95">닫기</button>
+      </div>
+      <div
+        ref={box}
+        className="no-scrollbar relative min-h-0 flex-1 overflow-auto overscroll-contain"
+        style={{ touchAction: zoom > 1 ? 'pan-x pan-y' : 'pan-y' }}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={() => { pinch.current = null }}
+        onDoubleClick={(e) => zoomTo(zoom > 1.2 ? 1 : 2.5, e.clientX, e.clientY)}
+      >
+        <div className="flex min-h-full items-center" style={{ width: `${zoom * 100}%` }}>
+          <img src={MAP_HI} alt="2026 산사캠프 행사장 약도" draggable={false} className="block h-auto w-full select-none" />
+        </div>
+      </div>
+      <div className="flex items-center justify-center gap-3 px-4 pb-[calc(env(safe-area-inset-bottom)+14px)] pt-3 text-white">
+        <button type="button" aria-label="축소" onClick={() => zoomTo(zoom - 0.75)} disabled={zoom <= 1} className="h-10 w-10 rounded-full bg-white/15 text-[20px] font-bold disabled:opacity-40 active:scale-95">−</button>
+        <span className="tnum w-14 text-center text-[13px] font-bold">{Math.round(zoom * 100)}%</span>
+        <button type="button" aria-label="확대" onClick={() => zoomTo(zoom + 0.75)} disabled={zoom >= 4} className="h-10 w-10 rounded-full bg-white/15 text-[20px] font-bold disabled:opacity-40 active:scale-95">+</button>
+      </div>
+    </div>,
+    document.body,
+  )
+}
 
 export default function EventMap() {
+  const [open, setOpen] = useState(false)
   return (
     <div>
-      <svg viewBox="0 0 360 380" role="img" aria-label="행사장 약도" className="w-full rounded-tile border border-line bg-white">
-        <path d="M0 300 Q90 270 180 290 T360 280 V380 H0Z" fill="#E6FBF6" />
-        <path d="M184 380V290q0-30-30-50T124 190V88" fill="none" stroke="#E0F3EE" strokeWidth="12" strokeLinecap="round" />
-        <path d="M184 300H296M124 190h130M124 130h170" fill="none" stroke="#E0F3EE" strokeWidth="8" strokeLinecap="round" />
-        <Block x={80} y={16} w={88} h={44} fill="#fff" label="쌍계사" sub="대웅전 · 경내" dark />
-        <Block x={96} y={74} w={56} h={26} fill="#fff" label="일주문" dark />
-        <Block x={190} y={22} w={120} h={48} fill="#00A68A" label="메인무대" sub="싱잉볼 · 스님과의 대화" />
-        <Block x={190} y={100} w={130} h={44} fill="#FFD64A" label="체험부스존" sub="단주 · 사경 · 싱잉볼" dark />
-        <Block x={28} y={140} w={84} h={40} fill="#FFD0B5" label="산사장터" dark />
-        <Block x={28} y={204} w={120} h={66} fill="#A5E4DC" label="캠핑존 4인" sub="A1–A40" dark />
-        <Block x={164} y={176} w={140} h={84} fill="#00D4AC" label="캠핑존 6인" sub="B1–B60" />
-        <Block x={312} y={176} w={38} h={84} fill="#BFE9F2" label="샤워" sub="A–D" dark />
-        <Block x={40} y={318} w={104} h={42} fill="#D1D5DB" label="제1주차장" sub="도보 10분" dark />
-        <Block x={224} y={322} w={104} h={42} fill="#D1D5DB" label="제2주차장" sub="셔틀" dark />
-        <text x="330" y="370" fontSize="9" fill="#9CA3AF" textAnchor="end">N ↑ · 약도</text>
-      </svg>
-      <ul className="mt-3 grid grid-cols-4 gap-x-2 gap-y-1.5">
-        {legend.map(([c, t]) => (
-          <li key={t} className="flex items-center gap-1.5 text-[11px] font-medium text-sub">
-            <span className="h-2.5 w-2.5 shrink-0 rounded-sm border border-black/5" style={{ background: c }} />{t}
+      <button type="button" onClick={() => setOpen(true)} className="group relative block w-full overflow-hidden rounded-tile border border-line bg-[#2E6B2A] active:scale-[0.99] transition">
+        <img src={MAP} srcSet={`${MAP} 1000w, ${MAP_HI} 2200w`} sizes="(max-width: 430px) 100vw, 430px" alt="2026 산사캠프 행사장 약도" width={1000} height={939} loading="lazy" decoding="async" className="block h-auto w-full" />
+      </button>
+      <p className="mt-2 text-center text-[12px] font-bold text-deep">약도를 누르면 크게 볼 수 있어요 · 두 손가락으로 확대</p>
+
+      {/* 텐트 수 요약 */}
+      <div className="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <p className="flex items-baseline gap-1.5"><span className="tnum text-[30px] font-black leading-none">250</span><span className="text-[12.5px] text-sub">동 · 전체 텐트</span></p>
+        {STATS.map(([k, v]) => (
+          <p key={k} className="text-[12.5px] text-sub">{k} <span className="tnum font-extrabold text-ink">{v}</span></p>
+        ))}
+      </div>
+      <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1">
+        {WALKS.map(([k, v]) => (
+          <p key={k} className="text-[12.5px] text-sub">{k} <span className="tnum font-bold text-ink">{v}</span></p>
+        ))}
+      </div>
+
+      {/* 구역 안내 */}
+      <ul className="mt-4 divide-y divide-line rounded-tile border border-line">
+        {ZONES.map((z) => (
+          <li key={z.name} className="flex items-center gap-3 px-4 py-3">
+            <span className="flex h-7 min-w-[2.2em] shrink-0 items-center justify-center rounded-full px-1.5 text-[11.5px] font-black text-white" style={{ background: z.color }}>{z.tag}</span>
+            <div className="min-w-0 flex-1">
+              <p className="text-[14px] font-bold">{z.name}{z.note && <span className="ml-1.5 rounded bg-sun/60 px-1.5 py-0.5 align-middle text-[10px] font-extrabold">{z.note}</span>}</p>
+              <p className="mt-0.5 text-[12px] text-sub">{z.info}</p>
+            </div>
           </li>
         ))}
       </ul>
+      <p className="mt-2 text-[11.5px] text-gray-400">배치는 확정 전 가안입니다. 현장 사정에 따라 바뀔 수 있습니다.</p>
+
+      {open && <MapViewer onClose={() => setOpen(false)} />}
     </div>
   )
 }
