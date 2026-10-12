@@ -16,6 +16,10 @@ interface Ctx {
   sendOtp: (phone: string) => Promise<Result>
   verifyOtp: (phone: string, otp: string, profile?: { nickname?: string; consent?: boolean }) => Promise<Result>
   logout: () => Promise<void>
+  /** 닉네임 변경(중복·길이 검사) */
+  updateNickname: (nickname: string) => Promise<Result>
+  /** 가입 전 닉네임 중복 확인 */
+  nicknameAvailable: (nickname: string) => Promise<boolean>
   /** 카카오·구글 OAuth. 리다이렉트 전에 동의 상태를 보관했다가 로그인 후 프로필에 반영 */
   signInWithProvider: (provider: 'kakao' | 'google', opts?: { consent?: boolean; returnTo?: string }) => Promise<Result>
   /** 네이버 — Edge Function 경유. link=true 면 로그인한 계정에 연결 */
@@ -232,6 +236,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const { error } = await supabase.auth.signInWithOAuth({ provider, options: { redirectTo: window.location.origin + (opts?.returnTo ?? '/') } })
     return error ? fail(error) : { ok: true }
   }
+  const nicknameAvailable: Ctx['nicknameAvailable'] = async (nickname) => {
+    const { data, error } = await supabase.rpc('nickname_available', { nick: nickname.trim() })
+    return !error && data === true
+  }
+  const updateNickname: Ctx['updateNickname'] = async (nickname) => {
+    const n = nickname.trim()
+    if (!uid) return { ok: false, error: toMessage('AUTH_REQUIRED') }
+    if (n.length < 2 || n.length > 12 || n === '산사러') return { ok: false, error: toMessage('NICKNAME_INVALID') }
+    const { error } = await supabase.from('profiles').update({ nickname: n }).eq('id', uid)
+    if (error) return fail(error.code === '23505' ? 'NICKNAME_TAKEN' : error)
+    await qc.invalidateQueries({ queryKey: ['profile'] })
+    void qc.invalidateQueries({ queryKey: ['photos'] }); void qc.invalidateQueries({ queryKey: ['quotes'] })
+    return { ok: true }
+  }
   const logout = async () => { await supabase.auth.signOut(); qc.removeQueries({ queryKey: ['mine'] }); qc.removeQueries({ queryKey: ['profile'] }) }
 
   // ---- 예약 -------------------------------------------------------------
@@ -294,7 +312,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<Ctx>(() => ({
     // ready: 세션 확인이 끝났고, 로그인 상태라면 프로필까지 한 번 받은 뒤 — 그 전에 화면이 '비로그인'으로 오판해 /login 으로 튕기지 않게
-    ready: ready && (!uid || profileQ.isFetched), user: uid ? profileQ.data ?? null : null, sendOtp, verifyOtp, logout, signInWithProvider, signInWithNaver, completeNaver, linkProvider, startPhoneLink, verifyPhoneLink, identities,
+    ready: ready && (!uid || profileQ.isFetched), user: uid ? profileQ.data ?? null : null, sendOtp, verifyOtp, logout, updateNickname, nicknameAvailable, signInWithProvider, signInWithNaver, completeNaver, linkProvider, startPhoneLink, verifyPhoneLink, identities,
     programs: programsQ.data ?? [], sessions: sessionsQ.data ?? [], bookings: mineQ.data?.bookings ?? [], bookSession, cancelBooking,
     slots: slotsQ.data ?? [], showerBookings: mineQ.data?.showerBookings ?? [], bookShower, cancelShower,
     parking: mineQ.data?.parking ?? null, saveParking,

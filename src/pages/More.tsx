@@ -14,6 +14,7 @@ import { useRequireAuth } from '../hooks/useRequireAuth'
 import { useToast } from '../hooks/useToast'
 import { fmtPhone } from '../lib/format'
 import { toMessage } from '../data/errors'
+import { DEFAULT_NICK, NicknameSheet } from '../components/NicknameSheet'
 
 const guides = [
   ['화기 전면 금지, 취사 없음', '라이터·버너·향초처럼 불을 쓰는 물품은 가져올 수 없습니다. 식사는 공양간과 산사장터에서.'],
@@ -30,6 +31,7 @@ export default function More() {
   const [lp, setLp] = useState({ phone: '', otp: '', sent: false, busy: false })
   const lpCooldown = useCooldown(60)
   const [installSheet, setInstallSheet] = useState(false)
+  const [nickOpen, setNickOpen] = useState(false)
   const { installed } = useInstall()
   const requireAuth = useRequireAuth()
   const { msg, show } = useToast()
@@ -79,7 +81,10 @@ export default function More() {
       <div className="px-5 pb-6">
         <section className="flex items-center justify-between border-y hairline py-4">
           <div className="min-w-0">
-            <p className="text-[16px] font-extrabold">{user ? user.nickname : '로그인 전'}</p>
+            <p className="flex items-center gap-2 text-[16px] font-extrabold">
+              <span className="truncate">{user ? user.nickname : '로그인 전'}</span>
+              {user && <button type="button" onClick={() => setNickOpen(true)} className="shrink-0 rounded-full border border-line px-2 py-0.5 text-[11.5px] font-bold text-deep active:scale-95">{user.nickname === DEFAULT_NICK ? '닉네임 정하기' : '바꾸기'}</button>}
+            </p>
             <p className="tnum truncate text-[12.5px] text-sub">{user ? (user.phone ? fmtPhone(user.phone) : '소셜 계정') : '예약할 때만 인증하면 됩니다'}</p>
           </div>
           {user ? (
@@ -211,6 +216,7 @@ export default function More() {
         </form>
       </BottomSheet>
       <InstallSheet open={installSheet} onClose={() => setInstallSheet(false)} />
+      <NicknameSheet open={nickOpen} onClose={() => setNickOpen(false)} onDone={() => show('닉네임을 바꿨습니다')} />
       <Toast msg={msg} />
     </>
   )

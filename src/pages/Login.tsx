@@ -24,7 +24,7 @@ function Check({ on, onChange, children, required }: { on: boolean; onChange: (v
 }
 
 export default function Login() {
-  const { ready, user, sendOtp, verifyOtp, signInWithProvider, signInWithNaver, completeNaver } = useApp()
+  const { ready, user, sendOtp, verifyOtp, nicknameAvailable, signInWithProvider, signInWithNaver, completeNaver } = useApp()
   const nav = useNavigate()
   const [sp] = useSearchParams()
   const from = (useLocation().state as { from?: string } | null)?.from ?? sp.get('rt') ?? '/'
@@ -63,12 +63,13 @@ export default function Login() {
   }, [ready, user])
 
   const validPhone = /^01\d{8,9}$/.test(phone.replace(/\D/g, ''))
-  const validNick = nickname.trim().length >= 2 && nickname.trim().length <= 12
+  const validNick = nickname.trim().length >= 2 && nickname.trim().length <= 12 && nickname.trim() !== '산사러'
   const canSend = mode === 'login' ? validPhone : validPhone && validNick && agree
 
   const submit = async () => {
     setErr('')
     setBusy(true)
+    if (!sent && mode === 'signup' && !(await nicknameAvailable(nickname))) { setBusy(false); return setErr('이미 다른 분이 쓰는 닉네임입니다. 다른 이름으로 정해 주세요.') }
     const r = sent
       ? await verifyOtp(phone, otp, mode === 'signup' ? { nickname, consent } : undefined)
       : await sendOtp(phone)

@@ -1,5 +1,6 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import Icon from '../ui/Icon'
+import { NicknamePrompt } from '../NicknameSheet'
 
 const tabs = [
   { to: '/', label: '홈', icon: 'home' },
@@ -17,6 +18,7 @@ export default function AppShell() {
       <main className={hideTabs ? '' : 'pb-[calc(76px+env(safe-area-inset-bottom))]'}>
         <Outlet />
       </main>
+      <NicknamePrompt />
       {!hideTabs && (
         <nav className="fixed inset-x-0 bottom-0 z-40 mx-auto max-w-[430px] border-t hairline bg-white/92 pb-[env(safe-area-inset-bottom)] backdrop-blur" aria-label="하단 탭">
           <ul className="flex">
