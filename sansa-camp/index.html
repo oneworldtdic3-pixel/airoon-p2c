@@ -192,27 +192,60 @@ footer .office b{display:block;font:400 21px 'Black Han Sans'}
 footer .office .mono{color:var(--ochre);text-align:right;font-size:14px;line-height:1.7}
 footer dl{display:grid;grid-template-columns:86px 1fr;gap:7px 0}
 footer dt{color:#a99f8e;font-size:12.5px}
+
+/* 픽토그램 */
+.ic{width:44px;height:44px;flex:none;display:block;overflow:visible}
+.ic.sm{width:24px;height:24px}
+.ic.lg{width:56px;height:56px}
+.facts dt{gap:8px}
+.facts dt .ic{width:24px;height:24px}
+.ri{grid-template-columns:44px 1fr auto}
+.ri .ic{grid-row:1/3;width:40px;height:40px}
+.ri p{grid-column:2/4}
+.pi{grid-template-columns:58px 1fr}
+.pi .ic{grid-row:1/3;width:52px;height:52px}
+.pi h3 .no{font:400 15px 'Alfa Slab One';margin-right:8px;color:var(--burgundy)}
+.t1 .pi h3 .no{color:var(--pine)}.t2 .pi h3 .no{color:#a4441a}
+.card>header h3{display:flex;align-items:center;gap:10px}
+.card>header h3 .ic{width:34px;height:34px}
+.row .lbl{display:flex;align-items:center;gap:8px}
+.nt .icbox{grid-row:1/3;width:52px;height:52px;border:2.5px solid var(--ink);border-radius:6px;display:grid;place-items:center;background:#fbf7ee}
+.nt.warn .icbox{background:#f3d2bd}
+.nt .icbox .ic{width:40px;height:40px}
+.nt h3 .no{font:400 14px 'Alfa Slab One';margin-right:8px;color:var(--mute)}
+#cta .btn{display:flex;align-items:center;justify-content:center;gap:12px}
+#cta .btn .ic{width:40px;height:40px}
+tr.quiet th .ic{width:16px;height:16px;display:inline-block;vertical-align:-3px;margin-right:3px}
+.deco{position:absolute;pointer-events:none}
+#hero .deco.c1{top:6px;left:18px;width:72px;height:72px}
+#hero .deco.c2{top:6px;right:18px;width:72px;height:72px}
+.leafs{display:flex;justify-content:center;gap:10px;margin:-4px 0 14px}
+.leafs .ic{width:32px;height:32px}
+.dark .leafs{}
 @media(max-width:480px){h2{font-size:31px}#hero h1{font-size:48px}.duo,.pics{grid-template-columns:1fr}.spec{grid-template-columns:1fr}table{font-size:11px}}
 </style>
 </head>
 <body>
 <div class="wrap">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><filter id="rough" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="1.8"/></filter><symbol id="i-cal" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M8 12h32v28H8z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M8 14a3 3 0 0 1 3-3h26a3 3 0 0 1 3 3v24a3 3 0 0 1-3 3H11a3 3 0 0 1-3-3z M8 19h32 M16 7v8 M32 7v8" /></g><circle cx="17" cy="27" r="1.8" style="fill:var(--sc,#1c1714)"/><circle cx="24" cy="27" r="1.8" style="fill:var(--sc,#1c1714)"/><circle cx="31" cy="27" r="1.8" style="fill:var(--sc,#1c1714)"/><circle cx="17" cy="34" r="1.8" style="fill:var(--sc,#1c1714)"/><circle cx="24" cy="34" r="1.8" style="fill:var(--sc,#1c1714)"/></symbol><symbol id="i-pin" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M4 41L17 20l8 10 6-8 13 19z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M3 41h42 M5 41l12-21 8 10 6-8 12 19 M30 5a6.5 6.5 0 0 1 6.5 6.5c0 5-6.5 11.5-6.5 11.5s-6.5-6.5-6.5-11.5A6.5 6.5 0 0 1 30 5z" /><circle cx="30" cy="11.5" r="2" /></g></symbol><symbol id="i-tent" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M7 40L24 10l17 30z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M4 40h40 M7 40L24 10l17 30 M24 10v30 M24 22l7 18 M21 7l3 3 3-3" /></g></symbol><symbol id="i-temple" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M4 22q10 0 16-8h8q6 8 16 8l-4 4H8z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M3 22q11 0 17-8h8q6 8 17 8 M7 26h34 M11 26v14 M37 26v14 M6 40h36 M20 40v-8h8v8 M22 14l2-5 2 5" /></g></symbol><symbol id="i-bowl" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M7 24h34a17 14 0 0 1-34 0z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M5 24h38 M7 24a17 14 0 0 0 34 0 M18 41h12 M18 18c-2-3 2-5 0-8 M24 18c-2-3 2-5 0-8 M30 18c-2-3 2-5 0-8" /></g></symbol><symbol id="i-lotus" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M24 11c6 8 6 18 0 25-6-7-6-17 0-25z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M24 11c6 8 6 18 0 25-6-7-6-17 0-25z M24 36c-8 0-15-6-16-14 7 0 13 5 16 14 M24 36c8 0 15-6 16-14-7 0-13 5-16 14 M7 42h34" /></g></symbol><symbol id="i-sbowl" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M8 22h32c0 10-6 16-16 16S8 32 8 22z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M5 22h38 M8 22c0 10 6 16 16 16s16-6 16-16 M33 7l9 9 M15 16q3-3 0-7 M22 16q3-3 0-7" /></g></symbol><symbol id="i-tea" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M9 20h26v8c0 7-5 11-13 11S9 35 9 28z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M9 20h26v8c0 7-5 11-13 11S9 35 9 28z M35 23c7 0 7 10 0 9 M5 43h36 M17 15c-2-3 2-5 0-8 M25 15c-2-3 2-5 0-8" /></g></symbol><symbol id="i-talk" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M6 9h22v16H14l-5 5v-5H6z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M6 9h22v16H14l-5 5v-5H6z" /><path d="M22 20h20v14h-3v5l-5-5H22z" style="fill:#fbf7ee;stroke:var(--sc,#1c1714)" stroke-width="2.6" stroke-linejoin="round" filter="url(#rough)"/><circle cx="27" cy="27" r="1.7" style="fill:var(--sc,#1c1714)"/><circle cx="32" cy="27" r="1.7" style="fill:var(--sc,#1c1714)"/><circle cx="37" cy="27" r="1.7" style="fill:var(--sc,#1c1714)"/></g></symbol><symbol id="i-fall" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M4 42L15 12l9 11 6-8 14 27z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M3 42h42 M5 42L15 12l9 11 6-8 13 27 M25 24v13 M29 22v15 M19 43q3-3 6 0t6 0" /></g></symbol><symbol id="i-pagoda" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M14 36h20v4H14z M18 24h12l3 6H15z M20 12h8l2 6H18z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M10 41h28 M13 36h22 M15 36l3-6h12l3 6 M16 30h16 M18 24l2-6h8l2 6 M17 24h14 M24 12V5 M19 12h10 M20 18l1-6 M28 18l-1-6" /></g></symbol><symbol id="i-market" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M6 11h36l2 8H4z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M6 11h36l2 8H4z M4 19q5 5 10 0t10 0 10 0 10 0 M8 22v19 M40 22v19 M3 41h42" /><circle cx="18" cy="34" r="3" /><circle cx="25" cy="34" r="3" /><circle cx="32" cy="34" r="3" /></g></symbol><symbol id="i-mic" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M18 7h12v15a6 6 0 0 1-12 0z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M18 13a6 6 0 0 1 12 0v9a6 6 0 0 1-12 0z M12 20v2a12 12 0 0 0 24 0v-2 M24 34v7 M17 41h14 M21 15h6 M21 19h6 M40 9q3 4 0 8 M8 9q-3 4 0 8" /></g></symbol><symbol id="i-gift" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M8 20h32v20H8z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M8 20h32v20H8z M6 14h36v6H6z M24 14v26 M24 14c-6-8-12-4-6 0 M24 14c6-8 12-4 6 0" /></g></symbol><symbol id="i-paw" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M14 33c0-8 20-8 20 0 0 6-20 6-20 0z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M14 33c0-8 20-8 20 0 0 6-20 6-20 0z" /><circle cx="11" cy="22" r="4" /><circle cx="19" cy="14" r="4" /><circle cx="29" cy="14" r="4" /><circle cx="37" cy="22" r="4" /></g><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><circle cx="11" cy="22" r="4"/><circle cx="19" cy="14" r="4"/><circle cx="29" cy="14" r="4"/><circle cx="37" cy="22" r="4"/></g></symbol><symbol id="i-hanok" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M2 20q10 0 14-8h16q4 8 14 8l-4 4H6z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M2 20q10 0 14-8h16q4 8 14 8 M6 24h36 M9 24v17 M39 24v17 M4 41h40 M9 30h30 M17 30v11 M24 30v11 M31 30v11" /></g></symbol><symbol id="i-bus" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M8 9h32v27H8z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M12 9h24a4 4 0 0 1 4 4v23H8V13a4 4 0 0 1 4-4z M8 22h32 M24 9v13 M8 30h4 M36 30h4" /><circle cx="15" cy="38" r="3.5" /><circle cx="33" cy="38" r="3.5" /></g></symbol><symbol id="i-nocar" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M14 27l3-7h14l3 7v5H14z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M14 27l3-7h14l3 7v5H14z M13 27h22" /><circle cx="24" cy="24" r="19" /><path d="M10 38L38 10" /></g></symbol><symbol id="i-nofire" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M24 8c6 8 10 12 10 20a10 10 0 0 1-20 0c0-6 4-8 6-14 2 4 4 4 4-6z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M24 8c6 8 10 12 10 20a10 10 0 0 1-20 0c0-6 4-8 6-14 2 4 4 4 4-6z" /><circle cx="24" cy="25" r="19" /><path d="M10 39L38 11" /></g></symbol><symbol id="i-moon" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M28 7a16 16 0 1 0 13 25A13 13 0 1 1 28 7z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M28 7a16 16 0 1 0 13 25A13 13 0 1 1 28 7z M39 8v6 M36 11h6 M35 21v3 M33.5 22.5h3" /></g></symbol><symbol id="i-qr" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M16 12h16v24H16z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M3 18h13 M32 18h13 M3 30h13 M32 30h13 M16 12h16v24H16z M20 16h4v4h-4z M20 28h4v4h-4z M28 24v8 M26 20h2" /></g></symbol><symbol id="i-people" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M9 39a8 8 0 0 1 16 0z M23 39a8 8 0 0 1 16 0z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><circle cx="17" cy="15" r="5" /><circle cx="31" cy="15" r="5" /><path d="M8 39a9 9 0 0 1 18 0 M22 39a9 9 0 0 1 18 0 M4 39h40" /></g></symbol><symbol id="i-leaf" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M24 6l3 9 8-4-3 9 9 1-8 6 3 6-9-2-3 9-3-9-9 2 3-6-8-6 9-1-3-9 8 4z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M24 6l3 9 8-4-3 9 9 1-8 6 3 6-9-2-3 9-3-9-9 2 3-6-8-6 9-1-3-9 8 4z M24 40v5 M24 18v18" /></g></symbol><symbol id="i-horn" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M8 19h8l18-10v30L16 29H8z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M8 19h8l18-10v30L16 29H8z M12 29l3 10h5l-2-10 M39 18q4 6 0 12" /></g></symbol><symbol id="i-ticket" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M6 13h36v7a4 4 0 0 0 0 8v7H6v-7a4 4 0 0 0 0-8z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M6 13h36v7a4 4 0 0 0 0 8v7H6v-7a4 4 0 0 0 0-8z"/><path d="M30 17v14" stroke-dasharray="2 5"/><path d="M13 21h10 M13 27h7"/></g></symbol><symbol id="i-chime" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M16 22q0-13 8-13t8 13z M18 38q6-5 12 0l4-3v8l-4-3q-6 5-12-2z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M24 2v7 M16 22q0-13 8-13t8 13 M13 22h22 M24 22v10 M18 38q6-5 12 0l4-3v8l-4-3q-6 5-12-2z" /></g></symbol><symbol id="i-pin2" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><path d="M4 41L17 20l8 10 6-8 13 19z" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><path d="M3 41h42" /></g></symbol><symbol id="i-sun" viewBox="0 0 48 48"><g transform="translate(2.2 2.2)" style="fill:var(--fc,#c8973b)" filter="url(#rough)"><circle cx="24" cy="24" r="8" /></g><g style="stroke:var(--sc,#1c1714)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" filter="url(#rough)"><circle cx="24" cy="24" r="8" /><path d="M24 6v5 M24 37v5 M6 24h5 M37 24h5 M11 11l3.5 3.5 M33.5 33.5L37 37 M11 37l3.5-3.5 M33.5 14.5L37 11" /></g></symbol></defs></svg>
 
 <img src="poster.jpg" alt="2026 산사캠프 with 쌍계사 공식 포스터 — 2026.11.06 FRI 14:00 – 11.08 SUN 11:00">
 
 <!-- SECTION 1 HERO -->
 <div class="band b"></div>
 <section id="hero" class="dark">
+  <svg class="deco c1" style="--fc:#c8973b;--sc:#d7c19b" aria-hidden="true"><use href="#i-chime"/></svg><svg class="deco c2" style="--fc:#d3602a;--sc:#d7c19b" aria-hidden="true"><use href="#i-chime"/></svg>
+  <div class="leafs"><svg class="ic sm" style="--fc:#d3602a;--sc:#d7c19b" aria-hidden="true"><use href="#i-leaf"/></svg><svg class="ic sm" style="--fc:#c8973b;--sc:#d7c19b" aria-hidden="true"><use href="#i-leaf"/></svg><svg class="ic sm" style="--fc:#a8414e;--sc:#d7c19b" aria-hidden="true"><use href="#i-leaf"/></svg></div>
   <p class="yr">2026</p>
   <h1>SANSA CAMP</h1>
   <p class="with"><span>WITH</span>쌍계사</p>
   <p class="copy">비우고, 채우고, 돌아가는<br>2박 3일의 힐링</p>
   <p class="slogan"><b>NO FOMO, JUST FOREST.</b>낮에는 채우고 밤에는 비웁니다.</p>
   <dl class="facts">
-    <div class="r"><dt>일시</dt><dd>2026.11.06 (금) 14:00 ~ 11.08 (일) 11:00<small>2박 3일</small></dd></div>
-    <div class="r"><dt>장소</dt><dd>경남 하동군 지리산 쌍계사 일원<small>캠핑존 &amp; 한옥 방사 스테이</small></dd></div>
-    <div class="r"><dt>규모</dt><dd>총 200동 (최대 700명 한정)<small>100% 사전예약제 · 현장 판매 없음</small></dd></div>
-    <div class="r"><dt>주최/주관</dt><dd>쌍계사 · 한국불교문화사업단 · 산사캠프</dd></div>
+    <div class="r"><dt><svg class="ic" style="--fc:#c8973b;--sc:#d7c19b" aria-hidden="true"><use href="#i-cal"/></svg>일시</dt><dd>2026.11.06 (금) 14:00 ~ 11.08 (일) 11:00<small>2박 3일</small></dd></div>
+    <div class="r"><dt><svg class="ic" style="--fc:#d3602a;--sc:#d7c19b" aria-hidden="true"><use href="#i-pin"/></svg>장소</dt><dd>경남 하동군 지리산 쌍계사 일원<small>캠핑존 &amp; 한옥 방사 스테이</small></dd></div>
+    <div class="r"><dt><svg class="ic" style="--fc:#5f8a6b;--sc:#d7c19b" aria-hidden="true"><use href="#i-tent"/></svg>규모</dt><dd>총 200동 (최대 700명 한정)<small>100% 사전예약제 · 현장 판매 없음</small></dd></div>
+    <div class="r"><dt><svg class="ic" style="--fc:#a8414e;--sc:#d7c19b" aria-hidden="true"><use href="#i-temple"/></svg>주최/주관</dt><dd>쌍계사 · 한국불교문화사업단 · 산사캠프</dd></div>
   </dl>
   <div class="tags"><span>#마인드디톡스</span><span>#지리산쌍계사</span><span>#템플캠프</span><span>#사찰음식</span><span>#클린캠핑</span></div>
 </section>
@@ -224,11 +257,11 @@ footer dt{color:#a99f8e;font-size:12.5px}
   <div class="receipt">
     <div class="hd"><b>산사캠프 영수증</b><span>SANSA CAMP · ALL-INCLUSIVE · 2N3D</span></div>
     <div class="meta"><span>2026.11.06 — 11.08</span><span>SSANGGYESA, HADONG</span></div>
-    <div class="ri"><b><i>01</i>공양(식사)</b><em>INCLUDED</em><p>건강한 사찰음식 총 5식 전식 포함</p></div>
-    <div class="ri"><b><i>02</i>9대 힐링 프로그램</b><em>INCLUDED</em><p>요가, 싱잉볼, 차명상, 트래킹, 스님과의 대화 등</p></div>
-    <div class="ri"><b><i>03</i>산사 라이브 &amp; 토크</b><em class="g">FREE</em><p>금/토 아티스트 숲속 공연 &amp; 토크 콘서트</p></div>
-    <div class="ri"><b><i>04</i>웰컴 기프트 키트</b><em class="g">GIFT</em><p>산사캠프 한정판 굿즈팩 증정</p></div>
-    <div class="ri"><b><i>05</i>힐링 마켓 &amp; 럭키드로우</b><em class="g">BONUS</em><p>하동 로컬 플리마켓 입장 및 경품 응모권</p></div>
+    <div class="ri"><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-bowl"/></svg><b><i>01</i>공양(식사)</b><em>INCLUDED</em><p>건강한 사찰음식 총 5식 전식 포함</p></div>
+    <div class="ri"><svg class="ic" style="--fc:#5f8a6b" aria-hidden="true"><use href="#i-lotus"/></svg><b><i>02</i>9대 힐링 프로그램</b><em>INCLUDED</em><p>요가, 싱잉볼, 차명상, 트래킹, 스님과의 대화 등</p></div>
+    <div class="ri"><svg class="ic" style="--fc:#d3602a" aria-hidden="true"><use href="#i-mic"/></svg><b><i>03</i>산사 라이브 &amp; 토크</b><em class="g">FREE</em><p>금/토 아티스트 숲속 공연 &amp; 토크 콘서트</p></div>
+    <div class="ri"><svg class="ic" style="--fc:#a8414e" aria-hidden="true"><use href="#i-gift"/></svg><b><i>04</i>웰컴 기프트 키트</b><em class="g">GIFT</em><p>산사캠프 한정판 굿즈팩 증정</p></div>
+    <div class="ri"><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-market"/></svg><b><i>05</i>힐링 마켓 &amp; 럭키드로우</b><em class="g">BONUS</em><p>하동 로컬 플리마켓 입장 및 경품 응모권</p></div>
     <div class="sum"><b>합계<small>추가 현장 프로그램 결제 비용</small></b><span>₩ 0</span></div>
     <div class="barcode"></div>
     <p class="thx">THANK YOU · SEE YOU IN THE FOREST</p>
@@ -245,25 +278,25 @@ footer dt{color:#a99f8e;font-size:12.5px}
   <article class="theme t1">
     <header><span class="sl">HEALING &amp; SOUND</span><span>몸과 마음의 이완</span></header>
     <div class="photo"><b>PHOTO</b>아침 숲속 요가 · 싱잉볼 컷</div>
-    <div class="pi"><span class="n">01</span><h3>아침을 여는 요가 &amp; 선명상 <small>매일 07:00</small></h3><p>지리산의 신선한 아침 공기와 함께 몸의 감각을 깨우는 스트레칭 및 숲속 선명상</p></div>
-    <div class="pi"><span class="n">02</span><h3>싱잉볼 사운드 배스</h3><p>화개동천 계곡물 소리와 싱잉볼의 맑은 진동에 온몸을 맡기는 공감각적 사운드 힐링</p></div>
-    <div class="pi"><span class="n">03</span><h3>스님과의 즉문즉답 차담</h3><p>일상의 복잡한 고민을 내려놓고 스님과 따뜻한 차 한 잔을 나누며 지혜를 얻는 시간</p></div>
+    <div class="pi"><svg class="ic" style="--fc:#5f8a6b" aria-hidden="true"><use href="#i-lotus"/></svg><h3><span class="no">01</span>아침을 여는 요가 &amp; 선명상 <small>매일 07:00</small></h3><p>지리산의 신선한 아침 공기와 함께 몸의 감각을 깨우는 스트레칭 및 숲속 선명상</p></div>
+    <div class="pi"><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-sbowl"/></svg><h3><span class="no">02</span>싱잉볼 사운드 배스</h3><p>화개동천 계곡물 소리와 싱잉볼의 맑은 진동에 온몸을 맡기는 공감각적 사운드 힐링</p></div>
+    <div class="pi"><svg class="ic" style="--fc:#5f8a6b" aria-hidden="true"><use href="#i-talk"/></svg><h3><span class="no">03</span>스님과의 즉문즉답 차담</h3><p>일상의 복잡한 고민을 내려놓고 스님과 따뜻한 차 한 잔을 나누며 지혜를 얻는 시간</p></div>
   </article>
 
   <article class="theme t2">
     <header><span class="sl">HERITAGE &amp; TASTE</span><span>지리산의 맛과 향</span></header>
     <div class="photo"><b>PHOTO</b>찻잔을 든 108선다 다도 · 불일폭포 물줄기 컷</div>
-    <div class="pi"><span class="n">04</span><h3>108선다(禪茶) 다도 명상 <small>100명 한정 사전예약</small></h3><p>한국 차(茶)의 시배지 하동 쌍계사 차밭에서 즐기는 정통 다도와 차 명상</p></div>
-    <div class="pi"><span class="n">05</span><h3>지리산 불일폭포 힐링 트래킹</h3><p>국립공원 전문 숲 해설사와 함께 지리산 10경 불일폭포 숲길을 걷는 활력 트래킹</p></div>
-    <div class="pi"><span class="n">06</span><h3>사찰음식 다이닝 &amp; 예불 체험</h3><p>천년의 지혜가 담긴 제철 식재료 사찰공양(발우공양 문화)과 장엄한 산사의 저녁 예불</p></div>
-    <div class="pi"><span class="n">07</span><h3>쌍계사 천년 역사 탐방 도슨트</h3><p>국보 진감선사대성탑비와 보물 대웅전을 품은 천년고찰의 숨은 역사 스토리텔링 투어</p></div>
+    <div class="pi"><svg class="ic" style="--fc:#d3602a" aria-hidden="true"><use href="#i-tea"/></svg><h3><span class="no">04</span>108선다(禪茶) 다도 명상 <small>100명 한정 사전예약</small></h3><p>한국 차(茶)의 시배지 하동 쌍계사 차밭에서 즐기는 정통 다도와 차 명상</p></div>
+    <div class="pi"><svg class="ic" style="--fc:#5f8a6b" aria-hidden="true"><use href="#i-fall"/></svg><h3><span class="no">05</span>지리산 불일폭포 힐링 트래킹</h3><p>국립공원 전문 숲 해설사와 함께 지리산 10경 불일폭포 숲길을 걷는 활력 트래킹</p></div>
+    <div class="pi"><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-bowl"/></svg><h3><span class="no">06</span>사찰음식 다이닝 &amp; 예불 체험</h3><p>천년의 지혜가 담긴 제철 식재료 사찰공양(발우공양 문화)과 장엄한 산사의 저녁 예불</p></div>
+    <div class="pi"><svg class="ic" style="--fc:#d3602a" aria-hidden="true"><use href="#i-pagoda"/></svg><h3><span class="no">07</span>쌍계사 천년 역사 탐방 도슨트</h3><p>국보 진감선사대성탑비와 보물 대웅전을 품은 천년고찰의 숨은 역사 스토리텔링 투어</p></div>
   </article>
 
   <article class="theme t3">
     <header><span class="sl">CULTURE &amp; NIGHT</span><span>문화와 쉼</span></header>
     <div class="photo"><b>PHOTO</b>은은한 산사 야간 공연 컷</div>
-    <div class="pi"><span class="n">08</span><h3>하동 로컬 산사장터</h3><p>지리산 야생차, 하동 특산물, 수제 로컬 푸드, 친환경 핸드메이드 마켓 운영</p></div>
-    <div class="pi"><span class="n">09</span><h3>포레스트 라이브 (산사토크 &amp; 공연) <small>라인업 추후 공개</small></h3><p>금·토 가을 저녁 산사의 정취를 밝히는 어쿠스틱 라이브 &amp; 아티스트 토크 (21:00 전 종료)</p></div>
+    <div class="pi"><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-market"/></svg><h3><span class="no">08</span>하동 로컬 산사장터</h3><p>지리산 야생차, 하동 특산물, 수제 로컬 푸드, 친환경 핸드메이드 마켓 운영</p></div>
+    <div class="pi"><svg class="ic" style="--fc:#a8414e" aria-hidden="true"><use href="#i-mic"/></svg><h3><span class="no">09</span>포레스트 라이브 (산사토크 &amp; 공연) <small>라인업 추후 공개</small></h3><p>금·토 가을 저녁 산사의 정취를 밝히는 어쿠스틱 라이브 &amp; 아티스트 토크 (21:00 전 종료)</p></div>
   </article>
 </section>
 
@@ -284,7 +317,7 @@ footer dt{color:#a99f8e;font-size:12.5px}
       <tr><th>16:00–18:00</th><td>경내 산책 &amp; 산사장터</td><td class="e">–</td><td class="e">–</td></tr>
       <tr><th>18:00–19:30</th><td class="meal">저녁 사찰공양<i>[1식]</i></td><td class="meal">저녁 사찰공양<i>[4식]</i></td><td class="e">–</td></tr>
       <tr><th>19:30–21:00</th><td>산사토크 &amp; 어쿠스틱 나이트</td><td>숲속 힐링 콘서트 &amp; 스페셜 토크</td><td class="e">–</td></tr>
-      <tr class="quiet"><th>21:00–06:00</th><td>고요의 시간 (매너타임)</td><td>고요의 시간 (매너타임)</td><td>–</td></tr>
+      <tr class="quiet"><th><svg class="ic" style="--fc:#c8973b;--sc:#d7c19b" aria-hidden="true"><use href="#i-moon"/></svg>21:00–06:00</th><td>고요의 시간 (매너타임)</td><td>고요의 시간 (매너타임)</td><td>–</td></tr>
     </tbody>
   </table>
   <div class="legend"><span class="m">사찰공양 (총 5식)</span><span class="q">고요의 시간</span></div>
@@ -298,7 +331,7 @@ footer dt{color:#a99f8e;font-size:12.5px}
   <p class="lead">모든 요금은 2박 기준 · 사찰공양 5식 포함</p>
 
   <div class="card camp">
-    <header><h3>캠핑 4인 일반 사이트</h3><small>Camping Zone</small></header>
+    <header><h3><svg class="ic" style="--fc:#c8973b;--sc:#d7c19b" aria-hidden="true"><use href="#i-tent"/></svg>캠핑 4인 일반 사이트</h3><small>Camping Zone</small></header>
     <div class="in">
       <div class="row"><span>1인</span><span class="p">350,000<small>원</small></span></div>
       <div class="row"><span>2인</span><span class="p">500,000<small>원</small></span></div>
@@ -325,12 +358,12 @@ footer dt{color:#a99f8e;font-size:12.5px}
   </div>
 
   <div class="duo">
-    <div class="card"><header style="background:var(--paper)"><h3>캠핑 6인 대형</h3></header><div class="in">가족 및 친구 그룹 전용 대형 쉘터 사이트<br><span class="tbd">가격 추후 공개</span></div></div>
-    <div class="card"><header style="background:var(--orange)"><h3>PET ZONE</h3></header><div class="in">반려견 동반 전용 구역 · 펫티켓 리드줄 필수<br><span class="ok">1~4인 기준 가격 동일</span><div class="photo"><b>PHOTO</b>펫존 무드 컷</div></div></div>
+    <div class="card"><header style="background:var(--paper)"><h3><svg class="ic" style="--fc:#5f8a6b" aria-hidden="true"><use href="#i-people"/></svg>캠핑 6인 대형</h3></header><div class="in">가족 및 친구 그룹 전용 대형 쉘터 사이트<br><span class="tbd">가격 추후 공개</span></div></div>
+    <div class="card"><header style="background:var(--orange)"><h3><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-paw"/></svg>PET ZONE</h3></header><div class="in">반려견 동반 전용 구역 · 펫티켓 리드줄 필수<br><span class="ok">1~4인 기준 가격 동일</span><div class="photo"><b>PHOTO</b>펫존 무드 컷</div></div></div>
   </div>
 
   <div class="card hanok">
-    <header><h3>한옥 방사 스테이</h3><small>Hanok Stay</small></header>
+    <header><h3><svg class="ic" style="--fc:#c8973b;--sc:#d7c19b" aria-hidden="true"><use href="#i-hanok"/></svg>한옥 방사 스테이</h3><small>Hanok Stay</small></header>
     <div class="in">
       <p class="fine" style="margin:10px 0 4px">전통 한옥의 고즈넉한 온돌방에서 머무는 템플스테이형 객실</p>
       <div class="row"><span>2인실</span><span>1인 이용 <span class="p">400,000<small>원</small></span> · 2인 이용 <span class="p">600,000<small>원</small></span></span></div>
@@ -343,11 +376,11 @@ footer dt{color:#a99f8e;font-size:12.5px}
   </div>
 
   <div class="card addon">
-    <header><h3>ADD-ON 추가 옵션</h3></header>
+    <header><h3><svg class="ic" style="--fc:#a8414e" aria-hidden="true"><use href="#i-gift"/></svg>ADD-ON 추가 옵션</h3></header>
     <div class="in">
-      <div class="row"><span>감성 텐트 렌탈 풀세트 (4인용)</span><span class="p">130,000<small>원 / 동</small></span></div>
+      <div class="row"><span class="lbl"><svg class="ic sm" style="--fc:#5f8a6b" aria-hidden="true"><use href="#i-tent"/></svg>감성 텐트 렌탈 풀세트 (4인용)</span><span class="p">130,000<small>원 / 동</small></span></div>
       <p class="fine">텐트, 매트, 감성 캠핑 테이블 및 체어 일체</p>
-      <div class="row" style="border-top:1px dashed var(--line);margin-top:8px"><span>수도권 왕복 셔틀버스</span><span style="font-weight:900">운영 예정</span></div>
+      <div class="row" style="border-top:1px dashed var(--line);margin-top:8px"><span class="lbl"><svg class="ic sm" style="--fc:#d3602a" aria-hidden="true"><use href="#i-bus"/></svg>수도권 왕복 셔틀버스</span><span style="font-weight:900">운영 예정</span></div>
       <p class="fine">서울/경기 주요 거점 ↔ 쌍계사 왕복 운행</p>
     </div>
   </div>
@@ -357,20 +390,20 @@ footer dt{color:#a99f8e;font-size:12.5px}
 <section id="note">
   <h2>유의사항 &amp;<br>클린 캠핑 수칙</h2>
   <p class="lead">모두의 숲을 지키기 위해 꼭 읽어 주세요.</p>
-  <div class="nt warn"><span class="n">01</span><h3>차량 진입 통제</h3><p>쌍계사 경내 차량 진입이 전면 불가합니다. 전용 주차장에 주차 후 도보 또는 카트로 이동해야 합니다.</p></div>
-  <div class="nt warn"><span class="n">02</span><h3>화기 엄금 (문화재 보호구역)</h3><p>국보 및 보물 보호를 위해 모닥불(불멍), 숯불, 펠릿, 화목난로 사용이 엄격히 금지됩니다.</p></div>
-  <div class="nt"><span class="n">03</span><h3>고요의 시간 (매너타임 준수)</h3><p>21:00 ~ 06:00에는 전체 소등 및 소음(앰프, 블루투스 스피커 등) 발생이 전면 금지됩니다.</p></div>
-  <div class="nt"><span class="n">04</span><h3>사전예약 및 입장 절차</h3><p>100% 사전예약제로 운영되며, 현장 QR 코드 확인 후 입장 팔찌를 착용해야만 제반 시설 및 식음 이용이 가능합니다.</p></div>
-  <div class="nt"><span class="n">05</span><h3>인원 제한</h3><p>캠핑존 사이트 인원 초과가 발생할 경우 다른 캠핑존으로 안내 및 변경될 수 있습니다.</p></div>
-  <div class="nt"><span class="n">06</span><h3>산사캠프 에티켓</h3><ul><li>정해진 사이트 구역을 침범하지 않으며 타인을 배려합니다.</li><li>반려동물 대소변 처리는 깔끔하게 수거합니다.</li><li>캠핑존 사이트 내 상업적 브랜드 홍보 행위를 금지합니다.</li><li>쓰레기는 지정된 봉투에 분리수거하여 LNT(Leave No Trace)를 실천합니다.</li></ul></div>
-  <div class="nt"><span class="n">07</span><h3>현장 운영 공지사항</h3><ul><li>11월 6일(금) 캠핑장 입장은 14:00부터 가능합니다 (단, 20:00 이전 입장 마감).</li><li>산 밑에 위치해 일교차가 크고 기온이 낮습니다. 화기 사용이 제한되므로 개인 방한 의류 및 침구를 철저히 준비해주세요.</li><li>행사장 내 무단 상업 행위 적발 시 즉시 퇴거 조치됩니다.</li><li>현장 스태프 및 안전 경호팀의 안내를 준수해 주시기 바랍니다.</li></ul></div>
+  <div class="nt warn"><span class="icbox"><svg class="ic" style="--fc:#d3602a" aria-hidden="true"><use href="#i-nocar"/></svg></span><h3><span class="no">01</span>차량 진입 통제</h3><p>쌍계사 경내 차량 진입이 전면 불가합니다. 전용 주차장에 주차 후 도보 또는 카트로 이동해야 합니다.</p></div>
+  <div class="nt warn"><span class="icbox"><svg class="ic" style="--fc:#d3602a" aria-hidden="true"><use href="#i-nofire"/></svg></span><h3><span class="no">02</span>화기 엄금 (문화재 보호구역)</h3><p>국보 및 보물 보호를 위해 모닥불(불멍), 숯불, 펠릿, 화목난로 사용이 엄격히 금지됩니다.</p></div>
+  <div class="nt"><span class="icbox"><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-moon"/></svg></span><h3><span class="no">03</span>고요의 시간 (매너타임 준수)</h3><p>21:00 ~ 06:00에는 전체 소등 및 소음(앰프, 블루투스 스피커 등) 발생이 전면 금지됩니다.</p></div>
+  <div class="nt"><span class="icbox"><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-qr"/></svg></span><h3><span class="no">04</span>사전예약 및 입장 절차</h3><p>100% 사전예약제로 운영되며, 현장 QR 코드 확인 후 입장 팔찌를 착용해야만 제반 시설 및 식음 이용이 가능합니다.</p></div>
+  <div class="nt"><span class="icbox"><svg class="ic" style="--fc:#5f8a6b" aria-hidden="true"><use href="#i-people"/></svg></span><h3><span class="no">05</span>인원 제한</h3><p>캠핑존 사이트 인원 초과가 발생할 경우 다른 캠핑존으로 안내 및 변경될 수 있습니다.</p></div>
+  <div class="nt"><span class="icbox"><svg class="ic" style="--fc:#5f8a6b" aria-hidden="true"><use href="#i-leaf"/></svg></span><h3><span class="no">06</span>산사캠프 에티켓</h3><ul><li>정해진 사이트 구역을 침범하지 않으며 타인을 배려합니다.</li><li>반려동물 대소변 처리는 깔끔하게 수거합니다.</li><li>캠핑존 사이트 내 상업적 브랜드 홍보 행위를 금지합니다.</li><li>쓰레기는 지정된 봉투에 분리수거하여 LNT(Leave No Trace)를 실천합니다.</li></ul></div>
+  <div class="nt"><span class="icbox"><svg class="ic" style="--fc:#a8414e" aria-hidden="true"><use href="#i-horn"/></svg></span><h3><span class="no">07</span>현장 운영 공지사항</h3><ul><li>11월 6일(금) 캠핑장 입장은 14:00부터 가능합니다 (단, 20:00 이전 입장 마감).</li><li>산 밑에 위치해 일교차가 크고 기온이 낮습니다. 화기 사용이 제한되므로 개인 방한 의류 및 침구를 철저히 준비해주세요.</li><li>행사장 내 무단 상업 행위 적발 시 즉시 퇴거 조치됩니다.</li><li>현장 스태프 및 안전 경호팀의 안내를 준수해 주시기 바랍니다.</li></ul></div>
 </section>
 
 <!-- SECTION 7 CTA -->
 <div class="band"></div>
 <section id="cta" class="dark">
   <h2>올가을, 지리산 단풍 아래서<br>비우고 채우러 가요</h2>
-  <a class="btn" href="#">2026 산사캠프 사전예약 신청하기</a>
+  <a class="btn" href="#"><svg class="ic" style="--fc:#f2ead9" aria-hidden="true"><use href="#i-ticket"/></svg>2026 산사캠프 사전예약 신청하기</a>
   <p class="seller">공식판매처 (주)아이룬 여행사 · 총 200동 · 100% 사전예약제</p>
 </section>
 
