@@ -338,7 +338,7 @@ const G = {
 const ISO_ZONES = {
   school:  { c: [540, 170], a: 80, b: 40, fill: "#ecd3a0", pin: 6, rows: 4, cols: 9 },
   parking: { c: [760, 230], a: 62, b: 56, fill: "#d3cec4", pin: 7, rows: 6, cols: 5 },
-  temple:  { c: [1005, 196], a: 14, b: 62, fill: "#eadcbf", pin: 5, rows: 15, cols: 2 },
+  temple:  { c: [1018, 138], a: 18, b: 42, fill: "#eadcbf", pin: 5, rows: 10, cols: 3 },
   stage:   { c: [420, 740], a: 100, b: 70, fill: "#fbe7c4", pin: 1 },
 };
 const TENT_COLORS = ["#f08a3c", "#f5b82e", "#4fa3d9", "#e4574b", "#7cc06a", "#f08a3c", "#9b7fe6"];
@@ -447,7 +447,7 @@ function isoBuild() {
       const [x, y] = iso(...z.c, -z.a + 8 + (j + .5) * sx, -z.b + 8 + (i + .5) * sy);
       
       const c = id !== "school" ? TENT_COLORS[(i * 3 + j * 5) % TENT_COLORS.length] : ["#8a63d2", "#e8579a", "#4f9a3a", "#f5b82e", "#4fa3d9"][(i * 2 + j) % 5];
-      add(y, () => tent(zoneG[id], x, y, id === "temple" ? 4.4 : 6.5, c));
+      add(y, () => tent(zoneG[id], x, y, id === "temple" ? 3.8 : 6.5, c));
     }
   }
   // buildings
@@ -461,7 +461,7 @@ function isoBuild() {
   add(258 + 19, () => box(svg, 1132, 258, 26, 12, 16, { roof: "#2e8e9a", gable: true, label: "예술관", fs: 9, windows: true }));
   add(112 + 20, () => box(svg, 704, 108, 24, 12, 15, { roof: "#8a5317", gable: true, label: "방사", fs: 9, windows: true }));
   add(312 + 22, () => box(svg, 1124, 318, 22, 12, 13, { roof: "#8a5317", gable: true, label: "방사", fs: 9, windows: true }));
-  for (const [x, y, a, b, h, lab] of [[1100, 92, 30, 16, 16, "대웅전"], [1040, 122, 18, 12, 12, ""], [1132, 136, 16, 10, 11, ""], [1062, 70, 16, 10, 11, ""], [1150, 82, 14, 10, 10, ""], [1015, 90, 12, 8, 10, ""]])
+  for (const [x, y, a, b, h, lab] of [[1100, 92, 30, 16, 16, "대웅전"], [1132, 136, 16, 10, 11, ""], [1062, 70, 16, 10, 11, ""], [1150, 82, 14, 10, 10, ""]])
     add(y + (a + b) * S30, () => box(svg, x, y, a, b, h, { roof: "#4b5560", wall: "#f3e7d3", gable: true, label: lab, fs: 9 }));
   for (const [x, y, c] of G.houses) add(y + 6, () => box(svg, x, y, 7, 5, 7, { roof: c, gable: true, rh: 5, noShadow: true }));
   // stage plaza: stage, audience, booths, food trucks
@@ -480,7 +480,7 @@ function isoBuild() {
   { const p = [iso(...S.c, -104, -52), iso(...S.c, -100, -52), iso(...S.c, -100, -24), iso(...S.c, -104, -24)]; add(p[0][1], () => el("polygon", { points: pts(p.map(([x, y]) => [x, y - 6])), fill: "#f5d34a", stroke: "#b8901a", "stroke-width": 1.2 }, svg)); }
   for (let k = 0; k < 3; k++) { const fx = 352 + k * 28, fy = 456 - k * 10; add(fy + 8, () => box(svg, fx, fy, 11, 5, 9, { roof: "#f08a3c", wall: "#fff" })); }
   // trees on free ground
-  const clears = [[704, 112, 64, 40], [1124, 306, 72, 56], [840, 262, 44, 34], [540, 170, 125, 75], [760, 230, 112, 72], [1005, 196, 76, 48], [1080, 110, 125, 75], [925, 266, 22, 16], [420, 740, 165, 100], [340, 530, 72, 46], [410, 600, 60, 40], [380, 445, 64, 40], [480, 366, 26, 16], [612, 512, 68, 40], [560, 590, 52, 34], [676, 452, 50, 30], [600, 420, 110, 46], [160, 335, 34, 26], [150, 260, 45, 30]];
+  const clears = [[704, 112, 64, 40], [1124, 306, 72, 56], [840, 262, 44, 34], [540, 170, 125, 75], [760, 230, 112, 72], [1018, 138, 70, 46], [1080, 110, 125, 75], [925, 266, 22, 16], [420, 740, 165, 100], [340, 530, 72, 46], [410, 600, 60, 40], [380, 445, 64, 40], [480, 366, 26, 16], [612, 512, 68, 40], [560, 590, 52, 34], [676, 452, 50, 30], [600, 420, 110, 46], [160, 335, 34, 26], [150, 260, 45, 30]];
   const blobPoly = G.blob;
   const nearLine = (p, line, d) => distLine(p, line) < d;
   for (let y = 0; y < 870; y += 17) for (let x = 0; x < 1200; x += 19) {
@@ -502,7 +502,7 @@ function isoBuild() {
   const rl = el("text", { transform: `matrix(${C30 * .45} ${-S30 * 1.6} ${C30} ${S30} 300 410)`, "font-size": 15, fill: "#fff", "font-family": "Bagel Fat One, sans-serif", "letter-spacing": 2 }, svg); rl.textContent = "화개천";
 
   // numbered pins
-  const pinAt = { 1: iso(stx, sty, 0, 0, 34), 2: iso(...S.c, -40, 60, 14), 3: [380, 436], 4: iso(540, 170, 0, 0), 5: iso(1005, 196, 0, -24), 6: iso(760, 230, 0, 0), 7: [846, 214], 8: [340, 486], 9: [612, 506], 10: [704, 104], 11: [1124, 304] };
+  const pinAt = { 1: iso(stx, sty, 0, 0, 34), 2: iso(...S.c, -40, 60, 14), 3: [380, 436], 4: iso(540, 170, 0, 0), 5: iso(1018, 138, 0, -14), 6: iso(760, 230, 0, 0), 7: [846, 214], 8: [340, 486], 9: [612, 506], 10: [704, 104], 11: [1124, 304] };
   for (const [n, color, label, id] of LEGEND_ITEMS) {
     const [x, y] = pinAt[n];
     const g = el("g", { class: id ? "zone-pin" : "", "data-id": id || "", filter: "url(#isoShadow)" }, svg);
@@ -513,7 +513,7 @@ function isoBuild() {
     if (id) { g.style.cursor = "pointer"; g.addEventListener("click", () => { select(id); jump(); }); }
   }
   // facility badges
-  const badgeAt = [["info", 432, 640], ["med", 462, 650], ["wc", 548, 806], ["wc", 640, 214], ["wc", 676, 250], ["shower", 724, 176], ["park", 160, 336], ["wc", 1010, 150], ["shower", 1046, 196]];
+  const badgeAt = [["info", 432, 640], ["med", 462, 650], ["wc", 548, 806], ["wc", 640, 214], ["wc", 676, 250], ["shower", 724, 176], ["park", 160, 336], ["wc", 948, 168], ["shower", 1092, 180]];
   for (const [k, x, y] of badgeAt) isoBadge(svg, x, y, k, 15);
   isoPill(svg, 160, 368, "쌍계사 정류소 · 공영주차장", { bg: "#fff", fg: "#1f4f9a", fs: 13, border: "#9cc0ea" });
   isoPill(svg, 1090, 34, "쌍계사", { bg: "#5a3a22", fg: "#fff", fs: 19, border: "#fff" });
