@@ -289,7 +289,7 @@ ZONE_POLYS.stage = scalePoly(STAGE_POLY, 1.35);
 // ---------- overlay (svg) ----------
 const NS = "http://www.w3.org/2000/svg";
 function el(tag, attrs = {}, parent) { const e = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); if (parent) parent.appendChild(e); return e; }
-const FAC_STYLE = { wc: { color: "#e2552d", label: "화장실" }, shower: { color: "#178f9a", label: "샤워실" } };
+const FAC_STYLE = { wc: { color: "#e2552d", label: "화장실" }, shower: { color: "#ff1493", label: "샤워실" } };
 function jump() {
   const sec = document.getElementById("detailSec");
   const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -348,7 +348,7 @@ const LEGEND_ITEMS = [
   [6, "#e0702a", "C 주차장·언덕 캠핑 · 135동", "parking"], [7, "#8a5a33", "템플스테이", "parking"], [8, "#2e8e9a", "하동야생차박물관", null], [9, "#3d7a2a", "하동야생차밭", null],
   [10, "#c27c2c", "방사(숙소) ① · C 주차장 옆", null], [11, "#c27c2c", "방사(숙소) ② · 전통불교문화예술관", null],
 ];
-const BADGES = { wc: ["#4a4f57", "화장실"], shower: ["#178f9a", "샤워실"], info: ["#d6337a", "종합안내소"], med: ["#e2552d", "의무실"], park: ["#1f6fd1", "주차장 · 정류소"] };
+const BADGES = { wc: ["#4a4f57", "화장실"], shower: ["#ff1493", "샤워실"], info: ["#d6337a", "종합안내소"], med: ["#e2552d", "의무실"], park: ["#1f6fd1", "주차장 · 정류소"] };
 
 function isoBuild() {
   const svg = document.getElementById("iso");
@@ -455,7 +455,7 @@ function isoBuild() {
   add(143 + 43, () => box(svg, 587, 143, 78, 9, 22, { roof: "#6fb06c", gable: true, label: "쌍계초등학교", windows: true, fs: 10.5 }));
   add(530 + 34, () => box(svg, 340, 530, 46, 22, 20, { roof: "#2e8e9a", gable: true, label: "야생차박물관", windows: true, fs: 11.5 }));
   add(600 + 29, () => box(svg, 410, 600, 38, 20, 16, { roof: "#3aa0a8", gable: true, label: "문화센터", windows: true, fs: 11 }));
-  add(188 + 12, () => box(svg, 756, 188, 14, 10, 13, { roof: "#178f9a", gable: true, label: "샤워실", fs: 7 }));
+  add(188 + 12, () => box(svg, 756, 188, 14, 10, 13, { roof: "#ff1493", gable: true, label: "샤워실", fs: 7 }));
   add(262 + 22, () => box(svg, 842, 262, 14, 30, 20, { roof: "#8a5a33", gable: true, label: "템플스테이", fs: 7.5, windows: true }));
   add(266 + 6, () => box(svg, 925, 266, 8, 4, 13, { roof: "#4b5560", gable: true, rh: 6 }));
   add(258 + 19, () => box(svg, 1132, 258, 26, 12, 16, { roof: "#2e8e9a", gable: true, label: "예술관", fs: 9, windows: true }));
