@@ -1,18 +1,25 @@
 import { useEffect, useRef, useState, type TouchEvent as RTouchEvent } from 'react'
 import { createPortal } from 'react-dom'
 
-// 행사장 약도 — 운영팀 일러스트 약도(2026 산사캠프 배치안) 기준. 배치가 바뀌면 이미지와 ZONES 만 교체.
+// 행사장 약도 — 운영팀 행사 안내도(2026 산사캠프) 기준. 배치가 바뀌면 이미지와 POINTS 만 교체.
 const MAP = '/map/site-map.jpg'
 const MAP_HI = '/map/site-map@2x.jpg'
 
-const ZONES: { tag: string; color: string; name: string; info: string; note?: string }[] = [
-  { tag: 'A', color: '#2F6FE4', name: '쌍계사 경내', info: '텐트 30동 · 캐노피 · 샤워 부스 1', note: '위치 추정' },
-  { tag: 'B', color: '#7C4DDB', name: '쌍계초', info: '텐트 85동 · 캐노피 2 · 화장실' },
-  { tag: 'C', color: '#C63DC0', name: '주차장 캠핑존', info: '텐트 135동 · 샤워 부스 4 · 화장실' },
-  { tag: '부스', color: '#F2A818', name: '부스 · 먹거리', info: '운수리 669-6 (가안) · 하동야생차박물관 옆' },
-  { tag: '무대', color: '#1F2937', name: '공연 광장', info: '야생차문화센터 아래 · 티카페하동 옆' },
-  { tag: 'P', color: '#1D4ED8', name: '쌍계사 정류소 · 공영주차장', info: '셔틀·자가용 하차 지점' },
+// 번호는 약도 위 숫자와 같다 (운영팀 행사 안내도 기준)
+const POINTS: { n: number; name: string; info: string }[] = [
+  { n: 1, name: '메인 무대 · 공연장', info: 'Main Stage' },
+  { n: 2, name: '체험·판매·홍보부스 8동 · 인포데스크 2동', info: 'Craft, Market & Promotion Booths' },
+  { n: 3, name: '푸드트럭 · 박물관 북쪽', info: 'Food Trucks' },
+  { n: 4, name: 'B 쌍계초 · Pet & Kids zone 85동', info: '반려견·아이 동반 캠핑' },
+  { n: 5, name: 'A 쌍계사 경내 캠핑 · 30동', info: 'Temple camping' },
+  { n: 6, name: 'C 주차장·언덕 캠핑 · 135동', info: 'Parking & Hill camping' },
+  { n: 7, name: '템플스테이', info: 'Temple Stay' },
+  { n: 8, name: '하동야생차박물관', info: 'Hadong Wild Tea Museum' },
+  { n: 9, name: '하동야생차밭', info: 'Hadong Wild Tea Field' },
+  { n: 10, name: '방사(숙소) ① · C 주차장 옆', info: 'Temple Lodging' },
+  { n: 11, name: '방사(숙소) ② · 전통불교문화예술관', info: 'Temple Lodging · Buddhist Art Hall' },
 ]
+const FACILITIES: [string, string][] = [['화장실', 'Toilet'], ['샤워실', 'Shower'], ['종합안내소', 'Information'], ['의무실', 'First Aid'], ['주차장 · 정류소', 'Parking · Bus'], ['도보 동선', 'Walking Route']]
 const STATS: [string, string][] = [['A 쌍계사 경내', '30'], ['B 쌍계초', '85'], ['C 주차장', '135']]
 const WALKS: [string, string][] = [['무대 → 일주문', '864m · 도보 12분'], ['쌍계초 → 일주문', '501m · 도보 7분']]
 
@@ -97,7 +104,7 @@ export default function EventMap() {
   return (
     <div>
       <button type="button" onClick={() => setOpen(true)} className="group relative block w-full overflow-hidden rounded-tile border border-line bg-[#2E6B2A] active:scale-[0.99] transition">
-        <img src={MAP} srcSet={`${MAP} 1000w, ${MAP_HI} 2200w`} sizes="(max-width: 430px) 100vw, 430px" alt="2026 산사캠프 행사장 약도" width={1000} height={939} loading="lazy" decoding="async" className="block h-auto w-full" />
+        <img src={MAP} srcSet={`${MAP} 1000w, ${MAP_HI} 2200w`} sizes="(max-width: 430px) 100vw, 430px" alt="2026 산사캠프 행사장 약도" width={1000} height={776} loading="lazy" decoding="async" className="block h-auto w-full" />
       </button>
       <p className="mt-2 text-center text-[12px] font-bold text-deep">약도를 누르면 크게 볼 수 있어요 · 두 손가락으로 확대</p>
 
@@ -114,19 +121,24 @@ export default function EventMap() {
         ))}
       </div>
 
-      {/* 구역 안내 */}
+      {/* 번호 안내 — 약도 위 숫자와 동일 */}
       <ul className="mt-4 divide-y divide-line rounded-tile border border-line">
-        {ZONES.map((z) => (
-          <li key={z.name} className="flex items-center gap-3 px-4 py-3">
-            <span className="flex h-7 min-w-[2.2em] shrink-0 items-center justify-center rounded-full px-1.5 text-[11.5px] font-black text-white" style={{ background: z.color }}>{z.tag}</span>
+        {POINTS.map((z) => (
+          <li key={z.n} className="flex items-center gap-3 px-4 py-2.5">
+            <span className="tnum flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#1F7A8C] text-[12px] font-black text-white">{z.n}</span>
             <div className="min-w-0 flex-1">
-              <p className="text-[14px] font-bold">{z.name}{z.note && <span className="ml-1.5 rounded bg-sun/60 px-1.5 py-0.5 align-middle text-[10px] font-extrabold">{z.note}</span>}</p>
-              <p className="mt-0.5 text-[12px] text-sub">{z.info}</p>
+              <p className="text-[14px] font-bold leading-snug">{z.name}</p>
+              <p className="mt-0.5 text-[11.5px] text-sub">{z.info}</p>
             </div>
           </li>
         ))}
       </ul>
-      <p className="mt-2 text-[11.5px] text-gray-400">배치는 확정 전 가안입니다. 현장 사정에 따라 바뀔 수 있습니다.</p>
+      <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5">
+        {FACILITIES.map(([k, v]) => (
+          <li key={k} className="text-[12.5px]"><span className="font-bold">{k}</span> <span className="text-sub">{v}</span></li>
+        ))}
+      </ul>
+      <p className="mt-3 text-[11.5px] text-gray-400">쌍계사 · 하동군 화개면 쌍계사길 59 · 캠핑 사이트 3곳 · 텐트 250동. 거리는 줄여서 그린 안내도이며 현장 사정에 따라 바뀔 수 있습니다.</p>
 
       {open && <MapViewer onClose={() => setOpen(false)} />}
     </div>
