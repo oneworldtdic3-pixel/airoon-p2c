@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
+import SponsorBuddhz from './pages/SponsorBuddhz'
 import AppShell from './components/layout/AppShell'
 import Home from './pages/Home'
 import Reserve from './pages/Reserve'
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="admin" element={<Admin />} />
         <Route path="privacy" element={<Privacy />} />
         <Route path="terms" element={<Terms />} />
+        <Route path="sponsor/buddhz" element={<SponsorBuddhz />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>
