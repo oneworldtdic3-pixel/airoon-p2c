@@ -3,265 +3,380 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>산사캠프 with 쌍계사</title>
+<title>2026 산사캠프 with 쌍계사</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Black+Han+Sans&family=IBM+Plex+Mono:wght@500;700&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
-/* MZ 타겟: 오트밀 바탕 + 먹 + 숲 초록, 포인트는 라임·포스터 태양 주황 두 개만 */
+/* 가을 산사 · 레트로 아웃도어 페스티벌
+   딥 버건디 / 숲의 딥 그린 / 단청 오렌지·황토 / 오프화이트·크라프트 */
 :root{
-  --oat:#f3efe6;
-  --sand:#e7decb;
-  --ink:#141414;
-  --forest:#1d3a2b;
-  --lime:#d8f15c;
-  --sun:#f2561d;
-  --mute:#6b675e;
-  --line:rgba(20,20,20,.14);
+  --ink:#1c1714;
+  --paper:#f2ead9;
+  --kraft:#d7c19b;
+  --burgundy:#6b1d28;
+  --pine:#1f3a2e;
+  --pine-d:#162b22;
+  --orange:#d3602a;
+  --ochre:#c8973b;
+  --mute:#5e5548;
+  --line:rgba(28,23,20,.18);
+  /* 실크스크린 그레인 */
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--ink);font-family:'Noto Sans KR',sans-serif;color:var(--ink);line-height:1.6;word-break:keep-all;-webkit-font-smoothing:antialiased}
-.wrap{max-width:645px;margin:0 auto;background:var(--oat);overflow:hidden}
+.wrap{max-width:645px;margin:0 auto;background:var(--paper);overflow:hidden}
 img{display:block;width:100%}
-.en{font-family:'IBM Plex Mono',sans-serif}
-section{padding:80px 28px}
-section>h2{margin-top:0}
-h2{font-weight:900;font-size:42px;line-height:1.18;letter-spacing:-.045em;margin-bottom:22px}
-.hl{background:linear-gradient(transparent 55%,var(--lime) 55%,var(--lime) 92%,transparent 92%);padding:0 2px}
-.dark .hl{background:none;color:var(--lime)}
-.tags{display:flex;flex-wrap:wrap;gap:6px}
-.tags span{font-size:12.5px;font-weight:700;border:1.5px solid var(--ink);border-radius:99px;padding:5px 13px;background:var(--oat)}
-.tags span.on{background:var(--lime)}
-.dark{background:var(--forest);color:var(--oat)}
+section{position:relative;padding:76px 28px;isolation:isolate}
+section::after{content:"";position:absolute;inset:0;background:var(--grain);opacity:.16;mix-blend-mode:multiply;pointer-events:none;z-index:-1}
+.dark::after{mix-blend-mode:screen;opacity:.07}
+h2{font:400 38px/1.22 'Black Han Sans';letter-spacing:-.01em;margin-bottom:18px}
+.sl{font:400 15px 'Alfa Slab One';letter-spacing:.02em}
+.mono{font-family:'IBM Plex Mono',monospace}
+.dark{color:var(--paper)}
 
-/* 마퀴 띠 */
-.marquee{background:var(--sun);color:var(--ink);white-space:nowrap;overflow:hidden;font:700 15px 'IBM Plex Mono';letter-spacing:.02em;padding:12px 0;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
-.marquee.l{background:var(--lime)}
-.marquee span{display:inline-block;padding-left:12px}
+/* 단청 띠 */
+.band{height:26px;border-top:3px solid var(--ink);border-bottom:3px solid var(--ink);
+  background:
+   radial-gradient(circle at 50% 50%,var(--paper) 0 3px,transparent 3.5px) 0 0/40px 100%,
+   repeating-linear-gradient(90deg,var(--pine) 0 12px,var(--ochre) 12px 15px,var(--orange) 15px 25px,var(--ochre) 25px 28px,var(--pine) 28px 40px)}
+.band.b{background:
+   radial-gradient(circle at 50% 50%,var(--ochre) 0 3px,transparent 3.5px) 0 0/40px 100%,
+   repeating-linear-gradient(90deg,var(--burgundy) 0 12px,var(--paper) 12px 14px,var(--orange) 14px 26px,var(--paper) 26px 28px,var(--burgundy) 28px 40px)}
 
-/* INTRO */
-.lead{font-size:16.5px;color:#36332c;margin-bottom:22px}
-.quote{font-weight:700;font-size:19px;letter-spacing:-.02em;line-height:1.5;border-left:5px solid var(--sun);padding:4px 0 4px 16px;margin:30px 0 36px}
+/* 처마 실루엣 */
+.eave{display:block;width:100%;height:46px}
 
-/* 티켓 스텁 */
-.stub{position:relative;background:var(--ink);color:var(--oat);border-radius:16px;display:grid;grid-template-columns:1fr 128px;overflow:hidden}
-.stub::before,.stub::after{content:"";position:absolute;left:calc(100% - 128px - 11px);width:22px;height:22px;border-radius:50%;background:var(--oat)}
-.stub::before{top:-11px}.stub::after{bottom:-11px}
-.stub .main{padding:22px 22px 20px;border-right:2px dashed rgba(243,239,230,.35)}
-.stub dl{display:grid;grid-template-columns:52px 1fr;row-gap:9px;font-size:14.5px}
-.stub dt{font:700 11px 'IBM Plex Mono';letter-spacing:.05em;color:var(--lime);padding-top:4px}
-.stub dd{font-weight:700}
-.stub .side{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:14px;background:var(--lime);color:var(--ink)}
-.stub .side b{font:700 44px/1 'IBM Plex Mono';letter-spacing:-.03em}
-.stub .side small{font-size:12px;font-weight:700;margin-top:6px}
-.stub .side i{font:700 11px 'IBM Plex Mono';letter-spacing:.05em;font-style:normal;margin-bottom:8px}
+/* 사진 자리 */
+.photo{border:2px dashed currentColor;border-radius:10px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:18px;opacity:.75;font-size:13px;font-weight:700;
+  background:repeating-linear-gradient(135deg,transparent 0 10px,rgba(28,23,20,.05) 10px 20px)}
+.photo b{font:700 12px 'IBM Plex Mono';letter-spacing:.05em;margin-bottom:4px}
 
-/* POINT 영수증 */
-.receipt{background:#fffdf7;color:var(--ink);padding:28px 24px 34px;font-size:14.5px;
-  -webkit-mask:radial-gradient(8px at 50% 100%,#0000 97%,#000) 50% 100%/16px 100% repeat-x;
-  mask:radial-gradient(8px at 50% 100%,#0000 97%,#000) 50% 100%/16px 100% repeat-x}
-.receipt .head{text-align:center;font:700 13px 'IBM Plex Mono';letter-spacing:.05em;padding-bottom:14px;border-bottom:1.5px dashed var(--ink)}
-.receipt .head b{display:block;font:900 22px 'Noto Sans KR';letter-spacing:-.02em;margin-bottom:2px}
-.item{display:grid;grid-template-columns:30px 1fr auto;gap:4px 8px;padding:15px 0;border-bottom:1px dashed var(--line)}
-.item .n{font:700 13px 'IBM Plex Mono';color:var(--mute);padding-top:2px}
-.item b{font-size:16px;letter-spacing:-.02em}
-.item em{font:700 13px 'IBM Plex Mono';font-style:normal;align-self:start;padding-top:3px}
-.item p{grid-column:2/4;font-size:13.5px;color:var(--mute)}
-.total{display:flex;justify-content:space-between;align-items:baseline;padding-top:18px;border-top:2px solid var(--ink);margin-top:2px}
-.total b{font-size:16px}
-.total span{font:700 30px 'IBM Plex Mono';letter-spacing:-.02em}
-.total span small{font:900 18px 'Noto Sans KR'}
-.receipt .bar{margin-top:22px;height:38px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 7px,transparent 7px 9px,var(--ink) 9px 10px,transparent 10px 13px)}
+/* SECTION 1 HERO */
+#hero{background:var(--burgundy);text-align:center;padding-top:62px}
+#hero .yr{font:400 17px 'Alfa Slab One';color:var(--ochre);letter-spacing:.04em}
+#hero h1{font:400 64px/1 'Alfa Slab One';color:var(--paper);letter-spacing:.01em;margin:8px 0 4px;text-shadow:4px 4px 0 var(--ink)}
+#hero .with{font:400 26px 'Black Han Sans';color:var(--paper)}
+#hero .with span{font:400 17px 'Alfa Slab One';color:var(--ochre);margin-right:8px}
+#hero .copy{font:400 28px/1.35 'Black Han Sans';color:var(--paper);margin:30px 0 14px}
+#hero .slogan{display:inline-block;background:var(--ochre);color:var(--ink);font-weight:700;font-size:14.5px;padding:8px 18px;border:2px solid var(--ink);border-radius:4px;transform:rotate(-1.5deg);box-shadow:3px 3px 0 var(--ink)}
+#hero .slogan b{font:400 14px 'Alfa Slab One';letter-spacing:.02em;margin-right:6px}
+.facts{margin-top:36px;background:var(--paper);color:var(--ink);border:3px solid var(--ink);border-radius:6px;text-align:left;box-shadow:6px 6px 0 var(--ink)}
+.facts .r{display:grid;grid-template-columns:96px 1fr;border-bottom:2px solid var(--ink)}
+.facts .r:last-child{border-bottom:0}
+.facts dt{background:var(--ink);color:var(--ochre);font:700 13px 'Noto Sans KR';padding:12px 14px;display:flex;align-items:center}
+.facts dd{padding:11px 16px;font-weight:700;font-size:14.5px}
+.facts dd small{display:block;font-weight:500;font-size:12.5px;color:var(--mute)}
+.tags{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-top:26px}
+.tags span{font-size:13px;font-weight:700;color:var(--paper);border:1.5px solid rgba(242,234,217,.6);border-radius:99px;padding:5px 13px}
 
-/* PROGRAM */
-.list{border-top:2px solid var(--ink)}
-.pg{display:grid;grid-template-columns:62px 1fr;gap:4px 14px;padding:20px 0;border-bottom:1.5px solid var(--ink)}
-.pg .no{font:700 34px/1 'IBM Plex Mono';letter-spacing:-.04em;grid-row:1/4}
-.pg h3{font-weight:900;font-size:21px;letter-spacing:-.035em;line-height:1.3}
-.pg p{font-size:14px;color:#4a463d}
-.pg .tags{margin-top:8px}
-.pg.star{background:var(--ink);color:var(--oat);margin:0 -28px;padding:24px 28px;border-bottom:0}
-.pg.star p{color:#cfcabd}
-.pg.star .no{color:var(--lime)}
-.pg.star .tags span{background:transparent;border-color:var(--oat);color:var(--oat)}
-.pg.star .tags span.on{background:var(--lime);color:var(--ink);border-color:var(--lime)}
-.note-pill{margin-top:28px;font-size:14px;font-weight:700;display:flex;gap:10px;align-items:center}
-.note-pill::before{content:"APP";font:700 11px 'IBM Plex Mono';letter-spacing:.05em;background:var(--ink);color:var(--lime);padding:5px 10px;border-radius:5px}
+/* SECTION 2 RECEIPT */
+#incl{background:var(--pine)}
+#incl h2{color:var(--paper);text-align:center}
+#incl .lead{text-align:center;color:var(--kraft);font-size:14.5px;margin-bottom:30px}
+.receipt{background:#fbf7ee;color:var(--ink);padding:30px 24px 30px;font-size:14px;
+  -webkit-mask:radial-gradient(8px at 50% 0,#0000 97%,#000) 50% 0/16px 51% repeat-x,radial-gradient(8px at 50% 100%,#0000 97%,#000) 50% 100%/16px 51% repeat-x;
+  mask:radial-gradient(8px at 50% 0,#0000 97%,#000) 50% 0/16px 51% repeat-x,radial-gradient(8px at 50% 100%,#0000 97%,#000) 50% 100%/16px 51% repeat-x}
+.receipt .hd{text-align:center;padding:6px 0 14px;border-bottom:2px dashed var(--ink)}
+.receipt .hd b{display:block;font:400 26px 'Black Han Sans'}
+.receipt .hd span{font:700 12px 'IBM Plex Mono';letter-spacing:.05em;color:var(--mute)}
+.receipt .meta{display:flex;justify-content:space-between;font:500 12px 'IBM Plex Mono';color:var(--mute);padding:10px 0;border-bottom:1px dashed var(--line)}
+.ri{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:14px 0;border-bottom:1px dashed var(--line)}
+.ri b{font-size:15.5px}
+.ri b i{font:700 12.5px 'IBM Plex Mono';font-style:normal;color:var(--mute);margin-right:6px}
+.ri em{font:700 12px 'IBM Plex Mono';font-style:normal;align-self:start;padding:3px 8px;border:1.5px solid var(--ink);border-radius:3px;margin-top:1px}
+.ri em.g{background:var(--ochre)}
+.ri p{color:var(--mute);font-size:13.5px}
+.sum{display:flex;justify-content:space-between;align-items:center;border-top:3px double var(--ink);margin-top:4px;padding-top:16px}
+.sum b{font-size:15px}
+.sum b small{display:block;font-weight:500;font-size:12px;color:var(--mute)}
+.sum span{font:700 34px 'IBM Plex Mono';color:var(--burgundy)}
+.barcode{margin-top:20px;height:44px;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 4px,var(--ink) 4px 7px,transparent 7px 8px,var(--ink) 8px 9px,transparent 9px 12px,var(--ink) 12px 15px,transparent 15px 17px)}
+.receipt .thx{text-align:center;font:700 12px 'IBM Plex Mono';letter-spacing:.05em;margin-top:8px}
 
-/* SCHEDULE */
-.day{display:grid;grid-template-columns:92px 1fr;gap:18px;padding:24px 0;border-top:1px solid rgba(243,239,230,.2)}
-.day .d b{display:block;font:700 15px 'IBM Plex Mono';letter-spacing:.05em;color:var(--lime)}
-.day .d span{font:700 38px/1.05 'IBM Plex Mono';letter-spacing:-.04em}
-.day .d small{display:block;font:700 12px 'IBM Plex Mono';letter-spacing:.05em;opacity:.7}
-.day ul{list-style:none;font-size:15px}
-.day li{padding:5px 0;display:flex;gap:10px}
-.day li i{flex:none;font:700 13px 'IBM Plex Mono';font-style:normal;color:var(--lime);width:46px;padding-top:2px}
-.day li.night{color:var(--lime);font-weight:700}
-.moon{display:flex;justify-content:space-between;align-items:center;background:var(--lime);color:var(--ink);border-radius:14px;padding:18px 20px;margin-top:10px}
-.moon b{font-weight:900;font-size:19px;letter-spacing:-.03em}
-.moon span{font:700 22px 'IBM Plex Mono'}
-.sm{font-size:13px;opacity:.7;margin-top:16px}
+/* SECTION 3 PROGRAM */
+#prog{background:var(--paper)}
+#prog h2{text-align:center}
+.zero{display:flex;justify-content:center;margin-bottom:34px}
+.zero span{background:var(--burgundy);color:var(--paper);font-weight:700;font-size:14px;padding:8px 18px;border-radius:99px}
+.zero span b{font-family:'IBM Plex Mono';color:var(--ochre);margin-left:4px}
+.theme{border:3px solid var(--ink);border-radius:6px;background:#fbf7ee;margin-bottom:26px;box-shadow:6px 6px 0 var(--ink);overflow:hidden}
+.theme>header{display:flex;justify-content:space-between;align-items:baseline;padding:16px 20px;border-bottom:3px solid var(--ink);color:var(--paper)}
+.theme>header .sl{font-size:19px}
+.theme>header span{font-weight:700;font-size:14px}
+.t1>header{background:var(--pine)}
+.t2>header{background:var(--orange);color:var(--ink)}
+.t3>header{background:var(--burgundy)}
+.theme .photo{margin:16px 20px 4px;height:120px;color:var(--ink)}
+.pi{display:grid;grid-template-columns:44px 1fr;gap:2px 12px;padding:16px 20px;border-bottom:1.5px dashed var(--line)}
+.pi:last-child{border-bottom:0}
+.pi .n{font:400 26px/1 'Alfa Slab One';color:var(--burgundy);grid-row:1/3;padding-top:2px}
+.t1 .pi .n{color:var(--pine)}.t2 .pi .n{color:#a4441a}
+.pi h3{font-weight:900;font-size:17.5px;letter-spacing:-.02em;line-height:1.35}
+.pi h3 small{font:700 12px 'Noto Sans KR';background:var(--ochre);color:var(--ink);padding:3px 9px;border-radius:3px;margin-left:6px;vertical-align:2px;white-space:nowrap}
+.pi p{font-size:13.5px;color:var(--mute)}
 
-/* TICKET */
-.sub{font-size:14.5px;color:var(--mute);margin:-8px 0 30px}
-.tk{background:#fffdf7;border:2px solid var(--ink);border-radius:18px;margin-bottom:18px;overflow:hidden}
-.tk .top{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:2px dashed var(--ink)}
-.tk .top h3{font-weight:900;font-size:22px;letter-spacing:-.035em}
-.tk .top small{font-size:12px;font-weight:700;border:1.5px solid var(--ink);border-radius:99px;padding:5px 13px;background:var(--oat);color:var(--ink)}
-.tk .in{padding:8px 22px 18px}
-.row{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line);font-size:15px}
+/* SECTION 4 TIMETABLE */
+#tt{background:var(--pine-d)}
+#tt h2{color:var(--paper);text-align:center}
+#tt .lead{text-align:center;color:var(--kraft);font-size:14.5px;margin-bottom:28px}
+table{width:100%;border-collapse:collapse;background:#fbf7ee;color:var(--ink);font-size:12.5px;border:3px solid var(--ink)}
+th,td{border:1.5px solid var(--ink);padding:8px 7px;vertical-align:middle;text-align:center;line-height:1.4}
+thead th{background:var(--ochre);font-weight:900;font-size:13px}
+thead th small{display:block;font:700 12px 'IBM Plex Mono'}
+tbody th{font:700 12px 'IBM Plex Mono';background:var(--kraft);width:84px;white-space:nowrap}
+td.e{color:#8f8576}
+td.meal{background:#f0dcae;font-weight:900}
+td.meal i{font:700 12px 'IBM Plex Mono';font-style:normal;color:var(--burgundy);display:block}
+td.key{font-weight:900}
+tr.quiet td,tr.quiet th{background:var(--burgundy);color:var(--paper)}
+tr.quiet td{font-weight:900}
+.legend{display:flex;gap:16px;justify-content:center;margin-top:14px;font-size:12.5px;color:var(--kraft)}
+.legend span::before{content:"";display:inline-block;width:11px;height:11px;margin-right:6px;vertical-align:-1px;border:1px solid var(--paper)}
+.legend .m::before{background:#f0dcae}.legend .q::before{background:var(--burgundy)}
+
+/* SECTION 5 STAY */
+#stay{background:var(--kraft)}
+#stay h2{text-align:center}
+#stay .lead{text-align:center;font-size:14.5px;font-weight:700;margin-bottom:30px}
+.card{background:#fbf7ee;border:3px solid var(--ink);border-radius:6px;box-shadow:6px 6px 0 var(--ink);margin-bottom:24px;overflow:hidden}
+.card>header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 20px;border-bottom:3px solid var(--ink)}
+.card>header h3{font:400 23px 'Black Han Sans'}
+.card>header small{font-size:12px;font-weight:700;border:1.5px solid currentColor;border-radius:99px;padding:4px 12px;white-space:nowrap}
+.card .in{padding:6px 20px 18px}
+.row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px dashed var(--line);font-size:15px}
 .row:last-of-type{border-bottom:0}
-.p{font:700 19px 'IBM Plex Mono';letter-spacing:-.02em}
-.p small{font:900 14px 'Noto Sans KR'}
-.p.hot{color:#c23e0c}
-.badge{font:700 10.5px 'IBM Plex Mono';letter-spacing:.05em;background:var(--sun);color:#fff;border-radius:4px;padding:2px 6px;margin-left:6px;vertical-align:2px}
+.p{font:700 18px 'IBM Plex Mono'}
+.p small{font:900 13.5px 'Noto Sans KR'}
+.camp>header{background:var(--pine);color:var(--paper)}
+.hanok>header{background:var(--burgundy);color:var(--paper)}
+.addon>header{background:var(--ochre)}
+.spec{display:grid;grid-template-columns:150px 1fr;gap:16px;align-items:center;margin-top:14px;padding-top:16px;border-top:2px solid var(--ink)}
+.spec ul{list-style:none;font-size:13px}
+.spec li{padding:3px 0 3px 14px;position:relative}
+.spec li::before{content:"";position:absolute;left:0;top:11px;width:6px;height:6px;background:var(--orange)}
+.pics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.pics .photo{height:110px;color:var(--ink)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.duo .card{margin-bottom:0}
+.duo .card>header{padding:14px 16px}
+.duo .card>header h3{font-size:20px}
+.duo .in{padding:12px 16px 16px;font-size:13.5px}
+.duo .tbd{display:inline-block;margin-top:10px;font-weight:700;font-size:12.5px;background:var(--ink);color:var(--ochre);padding:4px 10px;border-radius:3px}
+.duo .ok{display:inline-block;margin-top:10px;font-weight:700;font-size:12.5px;background:var(--ochre);padding:4px 10px;border-radius:3px}
+.duo .photo{height:90px;margin-top:12px;color:var(--ink)}
 .fine{font-size:12.5px;color:var(--mute);margin-top:6px}
-.tk.hanok .top{background:var(--forest);color:var(--oat)}
-.tk.hanok .top small{background:var(--lime);border-color:var(--lime)}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
-.mini{border:2px solid var(--ink);border-radius:18px;padding:18px;background:var(--sand)}
-.mini h3{font-weight:900;font-size:19px;letter-spacing:-.03em}
-.mini p{font-size:13.5px;color:#4a463d;margin:4px 0 12px}
-.soon{display:inline-block;font:700 12px 'Noto Sans KR';background:var(--ink);color:var(--lime);padding:6px 12px;border-radius:5px}
-.tk.opt{background:var(--lime)}
-.tk.opt .row{border-color:rgba(20,20,20,.2)}
 
-/* CHECK */
-.chk{list-style:none;border-top:2px solid var(--ink)}
-.chk li{display:grid;grid-template-columns:30px 1fr;gap:2px 14px;padding:18px 0;border-bottom:1.5px solid var(--ink)}
-.box{width:24px;height:24px;border:2px solid var(--ink);border-radius:6px;display:grid;place-items:center;font-weight:900;font-size:13px;font-style:normal;margin-top:2px;grid-row:1/3}
-.box.no{background:var(--sun);color:var(--ink)}
-.box.ok{background:var(--lime)}
-.chk b{font-size:17px;letter-spacing:-.025em}
-.chk span{font-size:13.5px;color:var(--mute)}
-.cta{display:flex;justify-content:space-between;align-items:center;margin-top:40px;background:var(--ink);color:var(--oat);text-decoration:none;border-radius:99px;padding:8px 8px 8px 30px;font-weight:900;font-size:21px;letter-spacing:-.03em}
-.cta i{font-style:normal;width:58px;height:58px;border-radius:50%;background:var(--lime);color:var(--ink);display:grid;place-items:center;font:700 26px 'IBM Plex Mono'}
-.cta-sub{text-align:center;font-size:12.5px;color:var(--mute);margin-top:12px}
+/* SECTION 6 NOTICE */
+#note{background:var(--paper)}
+#note h2{text-align:center}
+#note .lead{text-align:center;color:var(--mute);font-size:14.5px;margin-bottom:30px}
+.nt{display:grid;grid-template-columns:52px 1fr;gap:4px 14px;padding:18px 0;border-top:2px solid var(--ink)}
+.nt:last-child{border-bottom:2px solid var(--ink)}
+.nt .n{font:400 22px/1 'Alfa Slab One';background:var(--ink);color:var(--paper);border-radius:4px;display:grid;place-items:center;height:44px;grid-row:1/3}
+.nt.warn .n{background:var(--orange);color:var(--ink)}
+.nt h3{font-weight:900;font-size:17px;letter-spacing:-.02em}
+.nt p,.nt li{font-size:13.5px;color:#3e372e}
+.nt ul{list-style:none}
+.nt li{padding:2px 0 2px 14px;position:relative}
+.nt li::before{content:"·";position:absolute;left:3px;font-weight:900}
 
-/* FOOTER */
-footer{background:var(--ink);color:var(--oat);padding:46px 28px 52px;font-size:13.5px}
-footer dl{display:grid;grid-template-columns:76px 1fr;gap:7px 0;margin-bottom:30px}
-footer dt{font:700 11px 'IBM Plex Mono';letter-spacing:.05em;opacity:.55;padding-top:3px}
-footer .ct{border-top:1px solid rgba(243,239,230,.2);padding-top:24px;display:flex;justify-content:space-between;align-items:end}
-footer .ct b{font-weight:900;font-size:18px;display:block}
-footer .ct .en{color:var(--lime);font-size:13px;text-align:right}
-@media(max-width:480px){h2{font-size:34px}.two{grid-template-columns:1fr}.stub{grid-template-columns:1fr 100px}.stub::before,.stub::after{left:calc(100% - 100px - 11px)}}
+/* SECTION 7 CTA */
+#cta{background:var(--burgundy);text-align:center}
+#cta h2{color:var(--paper);font-size:34px}
+#cta .btn{display:block;margin:26px 0 12px;background:var(--ochre);color:var(--ink);text-decoration:none;border:3px solid var(--ink);border-radius:6px;box-shadow:6px 6px 0 var(--ink);padding:20px;font:400 24px 'Black Han Sans'}
+#cta .seller{color:var(--kraft);font-size:13.5px}
+footer{background:var(--ink);color:var(--paper);padding:44px 28px 50px;font-size:13.5px}
+footer .office{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;padding-bottom:22px;margin-bottom:22px;border-bottom:1px solid rgba(242,234,217,.2)}
+footer .office b{display:block;font:400 21px 'Black Han Sans'}
+footer .office .mono{color:var(--ochre);text-align:right;font-size:14px;line-height:1.7}
+footer dl{display:grid;grid-template-columns:86px 1fr;gap:7px 0}
+footer dt{color:#a99f8e;font-size:12.5px}
+@media(max-width:480px){h2{font-size:31px}#hero h1{font-size:48px}.duo,.pics{grid-template-columns:1fr}.spec{grid-template-columns:1fr}table{font-size:11px}}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<img src="poster.jpg" alt="산사캠프 with 쌍계사 공식 포스터 — 2026.11.06 FRI 14:00 – 11.08 SUN 11:00">
+<img src="poster.jpg" alt="2026 산사캠프 with 쌍계사 공식 포스터 — 2026.11.06 FRI 14:00 – 11.08 SUN 11:00">
 
-<div class="marquee"><span>MIND DETOX ✦ TEMPLE CAMP ✦ SSANGGYESA ✦ 2026.11.06—11.08 ✦ MIND DETOX ✦ TEMPLE CAMP ✦</span></div>
-
-<!-- INTRO -->
-<section>
-  <h2><span class="hl">비우고,</span> 채우고,<br>돌아가는 2박 3일</h2>
-  <p class="lead">지리산 자락, 천년 고찰 하동 쌍계사 숲속에서<br>낮에는 걷고 마시고 배우고,<br>밤에는 핸드폰 대신 별과 계곡 소리를 듣습니다.</p>
-  <div class="tags"><span class="on">#마인드디톡스</span><span>#템플캠핑</span><span>#지리산</span><span>#별멍</span><span>#물멍</span></div>
-  <p class="quote">집으로 가져가는 건 기념품이 아니라,<br>오래 남을 좋은 습관 하나.</p>
-  <div class="stub">
-    <div class="main"><dl>
-      <dt>DATE</dt><dd>2026. 11. 6 (금) 14:00 –<br>11. 8 (일) 11:00</dd>
-      <dt>PLACE</dt><dd>하동 쌍계사 일원</dd>
-      <dt>STAY</dt><dd>캠핑존 / 한옥 방사 스테이</dd>
-      <dt>BOOK</dt><dd>100% 사전예약제 · 현장 판매 없음</dd>
-    </dl></div>
-    <div class="side"><i>ONLY</i><b>700</b><small>명 한정</small></div>
-  </div>
+<!-- SECTION 1 HERO -->
+<div class="band b"></div>
+<section id="hero" class="dark">
+  <p class="yr">2026</p>
+  <h1>SANSA CAMP</h1>
+  <p class="with"><span>WITH</span>쌍계사</p>
+  <p class="copy">비우고, 채우고, 돌아가는<br>2박 3일의 힐링</p>
+  <p class="slogan"><b>NO FOMO, JUST FOREST.</b>낮에는 채우고 밤에는 비웁니다.</p>
+  <dl class="facts">
+    <div class="r"><dt>일시</dt><dd>2026.11.06 (금) 14:00 ~ 11.08 (일) 11:00<small>2박 3일</small></dd></div>
+    <div class="r"><dt>장소</dt><dd>경남 하동군 지리산 쌍계사 일원<small>캠핑존 &amp; 한옥 방사 스테이</small></dd></div>
+    <div class="r"><dt>규모</dt><dd>총 200동 (최대 700명 한정)<small>100% 사전예약제 · 현장 판매 없음</small></dd></div>
+    <div class="r"><dt>주최/주관</dt><dd>쌍계사 · 한국불교문화사업단 · 산사캠프</dd></div>
+  </dl>
+  <div class="tags"><span>#마인드디톡스</span><span>#지리산쌍계사</span><span>#템플캠프</span><span>#사찰음식</span><span>#클린캠핑</span></div>
 </section>
 
-<!-- POINT -->
-<section class="dark">
-  <h2>티켓 한 장에<br><span class="hl">전부</span> 들어 있어요</h2>
+<!-- SECTION 2 RECEIPT -->
+<section id="incl" class="dark">
+  <h2>티켓 한 장으로 끝내는<br>올인클루시브 웰니스</h2>
+  <p class="lead">밥, 프로그램, 공연, 굿즈까지. 현장에서 지갑 열 일 없어요.</p>
   <div class="receipt">
-    <div class="head"><b>산사캠프 영수증</b>SANSA CAMP · 2N3D</div>
-    <div class="item"><span class="n">01</span><b>사찰음식 5식 포함</b><em>INCL.</em><p>2박 3일 동안의 모든 끼니를 쌍계사 사찰음식으로.</p></div>
-    <div class="item"><span class="n">02</span><b>전 프로그램 포함</b><em>INCL.</em><p>트래킹·차명상·요가·선명상·공연까지 추가 결제 없이.</p></div>
-    <div class="item"><span class="n">03</span><b>웰컴키트 증정</b><em>FREE</em><p>입장과 함께 산사캠프 웰컴키트를 드려요. (PET ZONE은 반려견용 별도 구성)</p></div>
-    <div class="item"><span class="n">04</span><b>산사장터 &amp; 럭키드로우</b><em>BONUS</em><p>로컬마켓·불교굿즈·체험 부스, 그리고 행운의 추첨까지.</p></div>
-    <div class="item"><span class="n">05</span><b>고요의 시간 21:00 – 06:00</b><em>☾</em><p>밤과 새벽은 지켜지는 침묵. 진짜 마인드 디톡스는 여기서 시작돼요.</p></div>
-    <div class="total"><b>프로그램 추가 결제</b><span>0<small>원</small></span></div>
-    <div class="bar"></div>
+    <div class="hd"><b>산사캠프 영수증</b><span>SANSA CAMP · ALL-INCLUSIVE · 2N3D</span></div>
+    <div class="meta"><span>2026.11.06 — 11.08</span><span>SSANGGYESA, HADONG</span></div>
+    <div class="ri"><b><i>01</i>공양(식사)</b><em>INCLUDED</em><p>건강한 사찰음식 총 5식 전식 포함</p></div>
+    <div class="ri"><b><i>02</i>9대 힐링 프로그램</b><em>INCLUDED</em><p>요가, 싱잉볼, 차명상, 트래킹, 스님과의 대화 등</p></div>
+    <div class="ri"><b><i>03</i>산사 라이브 &amp; 토크</b><em class="g">FREE</em><p>금/토 아티스트 숲속 공연 &amp; 토크 콘서트</p></div>
+    <div class="ri"><b><i>04</i>웰컴 기프트 키트</b><em class="g">GIFT</em><p>산사캠프 한정판 굿즈팩 증정</p></div>
+    <div class="ri"><b><i>05</i>힐링 마켓 &amp; 럭키드로우</b><em class="g">BONUS</em><p>하동 로컬 플리마켓 입장 및 경품 응모권</p></div>
+    <div class="sum"><b>합계<small>추가 현장 프로그램 결제 비용</small></b><span>₩ 0</span></div>
+    <div class="barcode"></div>
+    <p class="thx">THANK YOU · SEE YOU IN THE FOREST</p>
   </div>
 </section>
 
-<div class="marquee l"><span>NO FOMO ✦ JUST FOREST ✦ 걷고 · 마시고 · 배우고 ✦ NO FOMO ✦ JUST FOREST ✦ 걷고 · 마시고 · 배우고 ✦</span></div>
+<div class="band"></div>
 
-<!-- PROGRAM -->
-<section>
-  <h2>산사에서 즐기는<br><span class="hl">9가지</span> 마인드 디톡스</h2>
-  <div class="list">
-    <div class="pg"><span class="no">01</span><h3>불일폭포 트래킹</h3><p>쌍계사 숲길을 따라 불일폭포까지 걷는 산사 트래킹.</p><div class="tags"><span class="on">#펫동반</span><span>#해설투어</span></div></div>
-    <div class="pg"><span class="no">02</span><h3>쌍계사 역사 탐방</h3><p>육조 혜능대사의 이야기가 깃든 천년 고찰을 해설과 함께 걸어요.</p><div class="tags"><span>#해설투어</span></div></div>
-    <div class="pg"><span class="no">03</span><h3>108선다 차명상</h3><p>차 시배지 쌍계사에서 차 한 잔으로 마음을 비우는 쌍계사 특별 프로그램.</p><div class="tags"><span class="on">#100명한정</span><span>#쌍계사특별</span></div></div>
-    <div class="pg"><span class="no">04</span><h3>스님과의 대화</h3><p>일상의 고민을 스님과 편하게 나누는 담화 시간.</p><div class="tags"><span>#토크</span></div></div>
-    <div class="pg"><span class="no">05</span><h3>싱잉볼 체험</h3><p>울림과 진동에 몸을 맡기는 사운드 힐링.</p><div class="tags"><span>#힐링</span></div></div>
-    <div class="pg"><span class="no">06</span><h3>요가 · 선명상</h3><p>매일 아침 7시, 산사의 공기 속에서 몸과 마음을 깨워요.</p><div class="tags"><span class="on">#매일07:00</span><span>#펫동반</span></div></div>
-    <div class="pg"><span class="no">07</span><h3>사찰음식 · 예불 체험</h3><p>사찰의 식사 예절과 저녁 예불을 직접 경험해요.</p><div class="tags"><span>#전통체험</span></div></div>
-    <div class="pg"><span class="no">08</span><h3>산사장터</h3><p>지역 농산물·불교굿즈·체험 클래스가 모인 로컬마켓.</p><div class="tags"><span>#로컬마켓</span></div></div>
-    <div class="pg star"><span class="no">09</span><h3>아티스트와 산사토크 &amp; 공연</h3><p>금·토 저녁, 산사의 밤을 여는 토크와 공연. 공연은 21시 전에 끝나고 고요의 시간이 시작됩니다.</p><div class="tags"><span class="on">11.6 FRI · 11.7 SAT</span><span>라인업 [추후 공개]</span></div></div>
+<!-- SECTION 3 PROGRAM -->
+<section id="prog">
+  <h2>9대 마인드 디톡스<br>프로그램</h2>
+  <div class="zero"><span>현장 프로그램 추가 결제 비용 <b>0원</b> · ALL-INCLUSIVE</span></div>
+
+  <article class="theme t1">
+    <header><span class="sl">HEALING &amp; SOUND</span><span>몸과 마음의 이완</span></header>
+    <div class="photo"><b>PHOTO</b>아침 숲속 요가 · 싱잉볼 컷</div>
+    <div class="pi"><span class="n">01</span><h3>아침을 여는 요가 &amp; 선명상 <small>매일 07:00</small></h3><p>지리산의 신선한 아침 공기와 함께 몸의 감각을 깨우는 스트레칭 및 숲속 선명상</p></div>
+    <div class="pi"><span class="n">02</span><h3>싱잉볼 사운드 배스</h3><p>화개동천 계곡물 소리와 싱잉볼의 맑은 진동에 온몸을 맡기는 공감각적 사운드 힐링</p></div>
+    <div class="pi"><span class="n">03</span><h3>스님과의 즉문즉답 차담</h3><p>일상의 복잡한 고민을 내려놓고 스님과 따뜻한 차 한 잔을 나누며 지혜를 얻는 시간</p></div>
+  </article>
+
+  <article class="theme t2">
+    <header><span class="sl">HERITAGE &amp; TASTE</span><span>지리산의 맛과 향</span></header>
+    <div class="photo"><b>PHOTO</b>찻잔을 든 108선다 다도 · 불일폭포 물줄기 컷</div>
+    <div class="pi"><span class="n">04</span><h3>108선다(禪茶) 다도 명상 <small>100명 한정 사전예약</small></h3><p>한국 차(茶)의 시배지 하동 쌍계사 차밭에서 즐기는 정통 다도와 차 명상</p></div>
+    <div class="pi"><span class="n">05</span><h3>지리산 불일폭포 힐링 트래킹</h3><p>국립공원 전문 숲 해설사와 함께 지리산 10경 불일폭포 숲길을 걷는 활력 트래킹</p></div>
+    <div class="pi"><span class="n">06</span><h3>사찰음식 다이닝 &amp; 예불 체험</h3><p>천년의 지혜가 담긴 제철 식재료 사찰공양(발우공양 문화)과 장엄한 산사의 저녁 예불</p></div>
+    <div class="pi"><span class="n">07</span><h3>쌍계사 천년 역사 탐방 도슨트</h3><p>국보 진감선사대성탑비와 보물 대웅전을 품은 천년고찰의 숨은 역사 스토리텔링 투어</p></div>
+  </article>
+
+  <article class="theme t3">
+    <header><span class="sl">CULTURE &amp; NIGHT</span><span>문화와 쉼</span></header>
+    <div class="photo"><b>PHOTO</b>은은한 산사 야간 공연 컷</div>
+    <div class="pi"><span class="n">08</span><h3>하동 로컬 산사장터</h3><p>지리산 야생차, 하동 특산물, 수제 로컬 푸드, 친환경 핸드메이드 마켓 운영</p></div>
+    <div class="pi"><span class="n">09</span><h3>포레스트 라이브 (산사토크 &amp; 공연) <small>라인업 추후 공개</small></h3><p>금·토 가을 저녁 산사의 정취를 밝히는 어쿠스틱 라이브 &amp; 아티스트 토크 (21:00 전 종료)</p></div>
+  </article>
+</section>
+
+<!-- SECTION 4 TIMETABLE -->
+<svg class="eave" viewBox="0 0 645 46" preserveAspectRatio="none" aria-hidden="true" style="background:var(--paper)"><path d="M0 46 L0 30 Q120 30 230 14 L322 2 L415 14 Q525 30 645 30 L645 46 Z" fill="#162b22"/><path d="M0 30 Q120 30 230 14 L322 2 L415 14 Q525 30 645 30" fill="none" stroke="#c8973b" stroke-width="3"/></svg>
+<section id="tt" class="dark" style="padding-top:44px">
+  <h2>2박 3일<br>페스티벌 타임테이블</h2>
+  <p class="lead">낮에는 채우고, 밤에는 비웁니다.</p>
+  <table>
+    <thead><tr><th>시간대</th><th>DAY 1<small>11.06 금</small></th><th>DAY 2<small>11.07 토</small></th><th>DAY 3<small>11.08 일</small></th></tr></thead>
+    <tbody>
+      <tr><th>06:30–08:30</th><td class="e">–</td><td>모닝 요가 &amp; 싱잉볼 (07:00~)</td><td>새벽 숲길 걷기 명상 (06:30~)</td></tr>
+      <tr><th>07:30–09:30</th><td class="e">–</td><td class="meal">아침 사찰공양<i>[2식]</i></td><td class="meal">아침 사찰공양<i>[5식]</i></td></tr>
+      <tr><th>09:00–12:30</th><td class="e">–</td><td>불일폭포 트래킹 / 역사 도슨트</td><td>사이트 정리 &amp; LNT 인증</td></tr>
+      <tr><th>11:00</th><td class="e">–</td><td class="e">–</td><td class="key">체크아웃 (11:00)</td></tr>
+      <tr><th>12:30–14:00</th><td class="e">–</td><td class="meal">점심 사찰공양<i>[3식]</i></td><td class="e">–</td></tr>
+      <tr><th>14:00–17:30</th><td class="key">체크인 &amp; 키트 수령 (~16:00)</td><td>108선다 차명상 / 스님 차담</td><td class="e">–</td></tr>
+      <tr><th>16:00–18:00</th><td>경내 산책 &amp; 산사장터</td><td class="e">–</td><td class="e">–</td></tr>
+      <tr><th>18:00–19:30</th><td class="meal">저녁 사찰공양<i>[1식]</i></td><td class="meal">저녁 사찰공양<i>[4식]</i></td><td class="e">–</td></tr>
+      <tr><th>19:30–21:00</th><td>산사토크 &amp; 어쿠스틱 나이트</td><td>숲속 힐링 콘서트 &amp; 스페셜 토크</td><td class="e">–</td></tr>
+      <tr class="quiet"><th>21:00–06:00</th><td>고요의 시간 (매너타임)</td><td>고요의 시간 (매너타임)</td><td>–</td></tr>
+    </tbody>
+  </table>
+  <div class="legend"><span class="m">사찰공양 (총 5식)</span><span class="q">고요의 시간</span></div>
+</section>
+
+<div class="band b"></div>
+
+<!-- SECTION 5 STAY -->
+<section id="stay">
+  <h2>숙박 타입 &amp;<br>티켓 예매 가이드</h2>
+  <p class="lead">모든 요금은 2박 기준 · 사찰공양 5식 포함</p>
+
+  <div class="card camp">
+    <header><h3>캠핑 4인 일반 사이트</h3><small>Camping Zone</small></header>
+    <div class="in">
+      <div class="row"><span>1인</span><span class="p">350,000<small>원</small></span></div>
+      <div class="row"><span>2인</span><span class="p">500,000<small>원</small></span></div>
+      <div class="row"><span>3인</span><span class="p">650,000<small>원</small></span></div>
+      <div class="row"><span>4인</span><span class="p">800,000<small>원</small></span></div>
+      <div class="spec">
+        <svg viewBox="0 0 150 120" role="img" aria-label="사이트 규격 3m × 6m">
+          <rect x="18" y="14" width="114" height="78" fill="#e9dcc0" stroke="#1c1714" stroke-width="2.5" stroke-dasharray="6 4"/>
+          <path d="M40 76 L64 34 L88 76 Z" fill="#1f3a2e" stroke="#1c1714" stroke-width="2"/>
+          <path d="M64 34 L64 76" stroke="#c8973b" stroke-width="2"/>
+          <rect x="98" y="58" width="22" height="16" rx="2" fill="#d3602a" stroke="#1c1714" stroke-width="2"/>
+          <text x="75" y="110" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="12">6 m</text>
+          <text x="8" y="57" text-anchor="middle" font-family="IBM Plex Mono" font-weight="700" font-size="12" transform="rotate(-90 8 57)">3 m</text>
+        </svg>
+        <ul>
+          <li>사이트당 최대 4인 기준 (3m × 6m)</li>
+          <li>전기 공급 없음</li>
+          <li>차량은 전용 주차장 별도 주차</li>
+          <li>사전 지정 구역 내 피칭</li>
+        </ul>
+      </div>
+      <div class="pics"><div class="photo"><b>PHOTO</b>텐트 피칭 예시</div><div class="photo"><b>PHOTO</b>캠핑존 전경</div></div>
+    </div>
   </div>
-  <p class="note-pill">모든 프로그램은 산사캠프 앱에서 사전예약으로 운영돼요</p>
-</section>
 
-<!-- SCHEDULE -->
-<section class="dark">
-  <h2>낮엔 채우고<br><span class="hl">밤엔 비우고</span></h2>
-  <div class="day"><div class="d"><b>DAY</b><span>01</span><small>11.6 FRI</small></div><ul><li><i>14:00</i>입장 · 체크인 · 웰컴키트 수령</li><li><i>PM</i>오후 프로그램 · 산사장터</li><li><i>EVE</i>저녁 공양 · 산사토크 &amp; 공연</li><li class="night"><i>21:00</i>고요의 시간</li></ul></div>
-  <div class="day"><div class="d"><b>DAY</b><span>02</span><small>11.7 SAT</small></div><ul><li><i>07:00</i>요가 · 선명상</li><li><i>DAY</i>트래킹 · 역사 탐방 · 차명상 · 체험 클래스</li><li><i>EVE</i>저녁 공양 · 산사토크 &amp; 공연</li><li class="night"><i>21:00</i>고요의 시간</li></ul></div>
-  <div class="day"><div class="d"><b>DAY</b><span>03</span><small>11.8 SUN</small></div><ul><li><i>DAWN</i>새벽 선명상</li><li><i>AM</i>아침 공양 · 정리</li><li><i>11:00</i>퇴장</li></ul></div>
-  <div class="moon"><b>☾ 고요의 시간</b><span>21:00 — 06:00</span></div>
-  <p class="sm">※ 세부 시간표는 산사캠프 앱에서 공개됩니다.</p>
-</section>
-
-<!-- TICKET -->
-<section>
-  <h2>어디서 잘까?<br><span class="hl">숙박 &amp; 티켓</span> 안내</h2>
-  <p class="sub">2박 3일 · 식사 5식 · 전 프로그램 · 웰컴키트 포함가</p>
-
-  <div class="tk"><div class="top"><h3>캠핑존 · 4인존</h3><small>사이트 단위 결제</small></div><div class="in">
-    <div class="row"><span>1인</span><span class="p">350,000<small>원</small></span></div>
-    <div class="row"><span>2인</span><span class="p">500,000<small>원</small></span></div>
-    <div class="row"><span>3인</span><span class="p">650,000<small>원</small></span></div>
-    <div class="row"><span>4인 (만석)</span><span class="p hot">800,000<small>원</small></span></div>
-    <p class="fine">기본 1인 + 추가 1인당 150,000원 · 개인 텐트 지참 가능</p></div></div>
-
-  <div class="two">
-    <div class="mini"><h3>캠핑존 · 6인존</h3><p>가족·친구 단위 넉넉한 사이트</p><span class="soon">가격 확정 예정</span></div>
-    <div class="mini"><h3>PET ZONE</h3><p>반려견과 함께하는 전용 캠핑존 · 펫 웰컴키트</p><span class="soon">가격 확정 예정</span></div>
+  <div class="duo">
+    <div class="card"><header style="background:var(--paper)"><h3>캠핑 6인 대형</h3></header><div class="in">가족 및 친구 그룹 전용 대형 쉘터 사이트<br><span class="tbd">가격 추후 공개</span></div></div>
+    <div class="card"><header style="background:var(--orange)"><h3>PET ZONE</h3></header><div class="in">반려견 동반 전용 구역 · 펫티켓 리드줄 필수<br><span class="ok">1~4인 기준 가격 동일</span><div class="photo"><b>PHOTO</b>펫존 무드 컷</div></div></div>
   </div>
 
-  <div class="tk hanok"><div class="top"><h3>한옥 방사 스테이</h3><small>객실 단위 결제 · 73명 한정</small></div><div class="in">
-    <div class="row"><span>2인실</span><span>1인 이용 <span class="p">400,000<small>원</small></span> · 2인 <span class="p">600,000<small>원</small></span></span></div>
-    <div class="row"><span>3인실</span><span class="p">690,000<small>원</small></span></div>
-    <div class="row"><span>4인 가족실</span><span class="p">920,000<small>원</small></span></div>
-    <div class="row"><span>5인 가족실</span><span class="p">1,150,000<small>원</small></span></div>
-    <div class="row"><span>8인 단체실</span><span class="p">1,600,000<small>원</small></span></div>
-    <p class="fine">3인실 이상은 만실 기준 가격 (1인 230,000원 / 8인실 1인 200,000원)</p></div></div>
+  <div class="card hanok">
+    <header><h3>한옥 방사 스테이</h3><small>Hanok Stay</small></header>
+    <div class="in">
+      <p class="fine" style="margin:10px 0 4px">전통 한옥의 고즈넉한 온돌방에서 머무는 템플스테이형 객실</p>
+      <div class="row"><span>2인실</span><span>1인 이용 <span class="p">400,000<small>원</small></span> · 2인 이용 <span class="p">600,000<small>원</small></span></span></div>
+      <div class="row"><span>3인실</span><span class="p">690,000<small>원</small></span></div>
+      <div class="row"><span>4인 가족실</span><span class="p">920,000<small>원</small></span></div>
+      <div class="row"><span>5인 가족실</span><span class="p">1,150,000<small>원</small></span></div>
+      <div class="row"><span>8인 단체실</span><span class="p">1,600,000<small>원</small></span></div>
+      <div class="pics"><div class="photo"><b>PHOTO</b>온돌방 실내</div><div class="photo"><b>PHOTO</b>툇마루</div></div>
+    </div>
+  </div>
 
-  <div class="tk opt"><div class="top"><h3>추가 옵션</h3><small>ADD-ON</small></div><div class="in">
-    <div class="row"><span>텐트 렌탈 (4인용)</span><span class="p">130,000<small>원 / 동</small></span></div>
-    <div class="row"><span>셔틀버스 왕복</span><span><span class="p">18,000<small>원</small></span> <small>(D-14 판매 마감)</small></span></div></div></div>
+  <div class="card addon">
+    <header><h3>ADD-ON 추가 옵션</h3></header>
+    <div class="in">
+      <div class="row"><span>감성 텐트 렌탈 풀세트 (4인용)</span><span class="p">130,000<small>원 / 동</small></span></div>
+      <p class="fine">텐트, 매트, 감성 캠핑 테이블 및 체어 일체</p>
+      <div class="row" style="border-top:1px dashed var(--line);margin-top:8px"><span>수도권 왕복 셔틀버스</span><span style="font-weight:900">운영 예정</span></div>
+      <p class="fine">서울/경기 주요 거점 ↔ 쌍계사 왕복 운행</p>
+    </div>
+  </div>
 </section>
 
-<!-- CHECK -->
-<section style="background:var(--sand)">
-  <h2>오기 전에<br><span class="hl">꼭</span> 알아두세요</h2>
-  <ul class="chk">
-    <li><i class="box no">✕</i><b>경내 차량 진입 불가</b><span>외부 주차장 이용 후 도보 또는 셔틀버스로 입장해요.</span></li>
-    <li><i class="box no">✕</i><b>전 구역 화기 사용 금지</b><span>버너·화로대·모닥불 불가, 취사 없음. 식사는 사찰음식으로 제공돼요.</span></li>
-    <li><i class="box ok">✓</i><b>QR 입장 팔찌 상시 착용</b><span>2박 3일 내내 착용해 주세요. 미착용 시 퇴장 조치됩니다.</span></li>
-    <li><i class="box ok">✓</i><b>고요의 시간 21:00 – 06:00</b><span>밤과 새벽에는 모두의 침묵을 지켜 주세요.</span></li>
-    <li><i class="box ok">✓</i><b>100% 사전예약제</b><span>현장 판매는 없어요. 프로그램 예약은 산사캠프 앱에서.</span></li>
-  </ul>
-  <a class="cta" href="#">지금 사전예약하기<i>→</i></a>
-  <p class="cta-sub">700명 한정 · 현장 판매 없음</p>
+<!-- SECTION 6 NOTICE -->
+<section id="note">
+  <h2>유의사항 &amp;<br>클린 캠핑 수칙</h2>
+  <p class="lead">모두의 숲을 지키기 위해 꼭 읽어 주세요.</p>
+  <div class="nt warn"><span class="n">01</span><h3>차량 진입 통제</h3><p>쌍계사 경내 차량 진입이 전면 불가합니다. 전용 주차장에 주차 후 도보 또는 카트로 이동해야 합니다.</p></div>
+  <div class="nt warn"><span class="n">02</span><h3>화기 엄금 (문화재 보호구역)</h3><p>국보 및 보물 보호를 위해 모닥불(불멍), 숯불, 펠릿, 화목난로 사용이 엄격히 금지됩니다.</p></div>
+  <div class="nt"><span class="n">03</span><h3>고요의 시간 (매너타임 준수)</h3><p>21:00 ~ 06:00에는 전체 소등 및 소음(앰프, 블루투스 스피커 등) 발생이 전면 금지됩니다.</p></div>
+  <div class="nt"><span class="n">04</span><h3>사전예약 및 입장 절차</h3><p>100% 사전예약제로 운영되며, 현장 QR 코드 확인 후 입장 팔찌를 착용해야만 제반 시설 및 식음 이용이 가능합니다.</p></div>
+  <div class="nt"><span class="n">05</span><h3>인원 제한</h3><p>캠핑존 사이트 인원 초과가 발생할 경우 다른 캠핑존으로 안내 및 변경될 수 있습니다.</p></div>
+  <div class="nt"><span class="n">06</span><h3>산사캠프 에티켓</h3><ul><li>정해진 사이트 구역을 침범하지 않으며 타인을 배려합니다.</li><li>반려동물 대소변 처리는 깔끔하게 수거합니다.</li><li>캠핑존 사이트 내 상업적 브랜드 홍보 행위를 금지합니다.</li><li>쓰레기는 지정된 봉투에 분리수거하여 LNT(Leave No Trace)를 실천합니다.</li></ul></div>
+  <div class="nt"><span class="n">07</span><h3>현장 운영 공지사항</h3><ul><li>11월 6일(금) 캠핑장 입장은 14:00부터 가능합니다 (단, 20:00 이전 입장 마감).</li><li>산 밑에 위치해 일교차가 크고 기온이 낮습니다. 화기 사용이 제한되므로 개인 방한 의류 및 침구를 철저히 준비해주세요.</li><li>행사장 내 무단 상업 행위 적발 시 즉시 퇴거 조치됩니다.</li><li>현장 스태프 및 안전 경호팀의 안내를 준수해 주시기 바랍니다.</li></ul></div>
+</section>
+
+<!-- SECTION 7 CTA -->
+<div class="band"></div>
+<section id="cta" class="dark">
+  <h2>올가을, 지리산 단풍 아래서<br>비우고 채우러 가요</h2>
+  <a class="btn" href="#">2026 산사캠프 사전예약 신청하기</a>
+  <p class="seller">공식판매처 (주)아이룬 여행사 · 총 200동 · 100% 사전예약제</p>
 </section>
 
 <footer>
-  <dl><dt>HOST</dt><dd>쌍계사 · 한국불교문화사업단</dd><dt>ORG</dt><dd>산사캠프</dd><dt>SPONSOR</dt><dd>NH농협 · NH투자증권 · (주)도반HC</dd><dt>PRESS</dt><dd>불교닷컴</dd></dl>
-  <div class="ct"><div><span style="opacity:.6;font-size:12px">문의</span><b>산사캠프 사무국</b></div><div class="en">info@airoon.kr<br>010.2743.4249</div></div>
+  <div class="office"><div><span style="font-size:12px;color:#a99f8e">문의</span><b>산사캠프 운영사무국</b></div><div class="mono">02-2269-5002<br>info@airoon.kr</div></div>
+  <dl><dt>주최 / 주관</dt><dd>쌍계사, 한국불교문화사업단, 산사캠프</dd><dt>운영</dt><dd>산사캠프</dd><dt>후원</dt><dd>NH농협, NH투자증권, (주)도반HC</dd><dt>언론</dt><dd>불교닷컴</dd></dl>
 </footer>
 
 </div>
