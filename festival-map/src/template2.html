@@ -209,7 +209,7 @@ svg text { user-select: none; }
     <ol>
       <li><b>맨 위 안내도는 한눈에 보도록 거리를 줄여 그렸습니다.</b> 남북·동서 위치 관계는 실측을 따르지만, 정확한 크기와 거리는 행사장 배치도와 구역별 배치도를 보세요.</li>
       <li><b>쌍계사 경내 텐트존의 정확한 자리.</b> 일주문에서 금강문 사이 진입로로 추정했습니다.</li>
-      <li><b>부스·푸드트럭 수와 무대 크기.</b> 공연장 배치도의 수치는 가안입니다.</li>
+      <li><b>푸드트럭 대수와 무대 크기.</b> 홍보부스·인포데스크·콘솔은 캡처대로 넣었고, 푸드트럭 대수와 무대 크기는 가안입니다.</li>
       <li><b>주차장 화장실·샤워실 핀의 방향.</b> 쌍계초 핀은 PPTX 배치를 실제 운동장 방향(입구가 남동쪽)에 맞춰 찍었습니다. 주차장은 PPTX 배치를 실제 주차장에 어느 방향으로 놓을지 아직 정해지지 않아, 핀이 PPTX 기준 위치입니다.</li>
       <li><b>방사(숙소) 두 곳의 객실 수와 시설.</b> C 주차장 옆 건물과 전통불교문화예술관에 표시했습니다. 객실 수, 정원, 화장실·샤워 여부를 알려 주시면 표에 넣겠습니다.</li>
       <li><b>주차장 배치 방향.</b> 실측 주차장은 약 50m × 51m입니다. PPTX 배치는 면적은 맞지만 가로로 긴 모양입니다.</li>
@@ -367,7 +367,7 @@ const ISO_ZONES = {
 };
 const TENT_COLORS = ["#ffffff", "#eee937", "#ffffff", "#ea5117", "#ffffff", "#52c2e8", "#ffffff"];
 const LEGEND_ITEMS = [
-  [1, "#3b5bdb", "메인 무대 · 공연장", "stage"], [2, "#e0a21a", "체험·판매 부스 14동", "stage"], [3, "#e0a21a", "푸드트럭 6대 · 식음", "stage"],
+  [1, "#3b5bdb", "메인 무대 · 공연장", "stage"], [2, "#e0a21a", "홍보부스 8동 · 인포데스크 2동", "stage"], [3, "#e0a21a", "푸드트럭 · 박물관 북쪽", "stage"],
   [4, "#8a63d2", "B 쌍계초 · Pet & Kids zone 85동", "school"], [5, "#e0702a", "A 쌍계사 경내 캠핑 · 30동", "temple"],
   [6, "#e0702a", "C 주차장·언덕 캠핑 · 135동", "parking"], [7, "#8a5a33", "템플스테이", "parking"], [8, "#2e8e9a", "하동야생차박물관", null], [9, "#3d7a2a", "하동야생차밭", null],
   [10, "#c27c2c", "방사(숙소) ① · C 주차장 옆", null], [11, "#c27c2c", "방사(숙소) ② · 전통불교문화예술관", null],
@@ -498,8 +498,13 @@ function isoBuild() {
     el("line", { x1: lx, y1: ly - 6, x2: lx, y2: ly + 14, stroke: "#ffe55c", "stroke-width": 2 }, g);
   });
   for (let i = 0; i < 70; i++) { const x = -60 + R() * 110, y = -55 + R() * 70; const [px, py] = iso(...S.c, x, y); add(py, () => { el("circle", { cx: px, cy: py - 3, r: 2.2, fill: ["#e4574b", "#4fa3d9", "#f5b82e", "#7cc06a", "#9b7fe6"][i % 5] }, svg); el("rect", { x: px - 1.6, y: py - 1.2, width: 3.2, height: 3.4, rx: 1, fill: "#6b5a48" }, svg); }); }
-  for (let k = 0; k < 7; k++) { const [bx, by] = iso(...S.c, -88, -54 + k * 18); add(by + 6, () => box(svg, bx, by, 6, 6, 9, { roof: k % 2 ? "#ea5117" : "#eee937", wall: "#fff", noShadow: true })); }
-  for (let k = 0; k < 4; k++) { const [fx, fy] = iso(...S.c, -56 + k * 30, 56); add(fy + 8, () => box(svg, fx, fy, 11, 5, 9, { roof: "#ea5117", wall: "#fff" })); }
+  // promotion booths: 5 on the south edge, 3 on the south-west road; console + waiting rooms on the north edge; info desks + photo zone outside the north-west corner
+  for (let k = 0; k < 5; k++) { const [bx, by] = iso(...S.c, -64 + k * 13, 58); add(by + 6, () => box(svg, bx, by, 5, 5, 9, { roof: k % 2 ? "#ea5117" : "#eee937", wall: "#fff", noShadow: true })); }
+  for (let k = 0; k < 3; k++) { const [bx, by] = iso(...S.c, -90, 26 + k * 14); add(by + 6, () => box(svg, bx, by, 5, 5, 9, { roof: k % 2 ? "#ea5117" : "#eee937", wall: "#fff", noShadow: true })); }
+  for (let k = 0; k < 4; k++) { const [bx, by] = iso(...S.c, -50 + k * 15, -60); add(by + 6, () => box(svg, bx, by, 6, 5, 10, { roof: "#3d4a5c", wall: "#fff", noShadow: true })); }
+  for (let k = 0; k < 2; k++) { const [bx, by] = iso(...S.c, -116, -70 + k * 12); add(by + 6, () => box(svg, bx, by, 5, 5, 9, { roof: "#2f6fe0", wall: "#fff", noShadow: true })); }
+  { const p = [iso(...S.c, -104, -52), iso(...S.c, -100, -52), iso(...S.c, -100, -24), iso(...S.c, -104, -24)]; add(p[0][1], () => el("polygon", { points: pts(p.map(([x, y]) => [x, y - 6])), fill: "#eee937", stroke: "#111", "stroke-width": 1.6 }, svg)); }
+  for (let k = 0; k < 3; k++) { const fx = 352 + k * 28, fy = 456 - k * 10; add(fy + 8, () => box(svg, fx, fy, 11, 5, 9, { roof: "#ea5117", wall: "#fff" })); }
   // trees on free ground
   const clears = [[704, 112, 64, 40], [1124, 306, 72, 56], [840, 262, 44, 34], [540, 170, 125, 75], [760, 230, 112, 72], [1010, 226, 86, 54], [1080, 110, 125, 75], [925, 266, 22, 16], [420, 740, 165, 100], [340, 530, 72, 46], [410, 600, 60, 40], [380, 445, 64, 40], [480, 366, 26, 16], [612, 512, 68, 40], [560, 590, 52, 34], [676, 452, 50, 30], [600, 420, 110, 46], [160, 335, 34, 26], [150, 260, 45, 30]];
   const blobPoly = G.blob;
@@ -523,7 +528,7 @@ function isoBuild() {
   const rl = el("text", { transform: `matrix(${C30 * .45} ${-S30 * 1.6} ${C30} ${S30} 300 410)`, "font-size": 15, fill: "#fff", "font-family": "Black Han Sans, sans-serif", "letter-spacing": 2 }, svg); rl.textContent = "화개천";
 
   // numbered pins
-  const pinAt = { 1: iso(stx, sty, 0, 0, 34), 2: iso(...S.c, -92, -10, 14), 3: iso(...S.c, -10, 58, 14), 4: iso(540, 170, 0, 0), 5: iso(1010, 226, 0, -30), 6: iso(760, 230, 0, 0), 7: [846, 214], 8: [340, 486], 9: [612, 506], 10: [704, 104], 11: [1124, 304] };
+  const pinAt = { 1: iso(stx, sty, 0, 0, 34), 2: iso(...S.c, -40, 60, 14), 3: [380, 436], 4: iso(540, 170, 0, 0), 5: iso(1010, 226, 0, -30), 6: iso(760, 230, 0, 0), 7: [846, 214], 8: [340, 486], 9: [612, 506], 10: [704, 104], 11: [1124, 304] };
   for (const [n, color, label, id] of LEGEND_ITEMS) {
     const [x, y] = pinAt[n];
     const g = el("g", { class: id ? "zone-pin" : "", "data-id": id || "", filter: "url(#isoShadow)" }, svg);
@@ -548,7 +553,7 @@ function isoBuild() {
   const I = (y, s, o = {}) => { const t = el("text", { x: 866, y, "font-size": 12.5, fill: "#111", "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 500, ...o }, ib); t.textContent = s; };
   I(668, "쌍계사 · 하동군 화개면 쌍계사길 59", { "font-weight": 700, "font-size": 13.5 });
   I(692, "캠핑 사이트 3곳 · 텐트 250동");
-  I(712, "Pet & Kids zone(쌍계초) · 방사(숙소) 2곳 · 부스 24");
+  I(712, "Pet & Kids zone · 방사 2곳 · 홍보부스 8 · 푸드트럭");
   I(740, "Tip. 공연장에서 쌍계사 일주문까지", { fill: "#ea5117", "font-weight": 700 });
   I(760, "쌍계사길을 따라 걸어서 약 12분", { fill: "#ea5117", "font-weight": 700 });
   I(782, "※ 거리는 줄여서 그린 안내도입니다", { "font-size": 11, fill: "#555" });
@@ -620,7 +625,7 @@ const FL = {
   walk: [[330, 612], [276, 560], [292, 512], [340, 452], [392, 420], [540, 405], [700, 385], [830, 330], [905, 262]],
 };
 const FLAT_ITEMS = [
-  [1, "메인 무대", "Main Stage", "stage"], [2, "체험·판매 부스", "Craft & Market Booths", "stage"], [3, "푸드트럭", "Food Trucks", "stage"],
+  [1, "메인 무대", "Main Stage", "stage"], [2, "홍보부스 · 인포데스크", "Promotion Booths · Info Desk", "stage"], [3, "푸드트럭 · 박물관 북쪽", "Food Trucks", "stage"],
   [4, "Pet & Kids zone · 쌍계초", "Pet & Kids camping (85)", "school"], [5, "A 쌍계사 경내", "Temple camping (30)", "temple"],
   [6, "C 주차장·언덕", "Parking & Hill camping (135)", "parking"], [7, "템플스테이", "Temple Stay", "parking"], [8, "하동야생차박물관", "Hadong Wild Tea Museum", null],
   [9, "하동야생차밭", "Hadong Wild Tea Field", null],
@@ -719,9 +724,12 @@ function flatBuild() {
   const stage = (p, x, y) => { el("rect", { x: x - 34, y: y - 4, width: 68, height: 18, fill: "#2b2f3a", rx: 3 }, p); el("path", { d: `M${x - 34} ${y - 4} V${y - 40} Q${x} ${y - 58} ${x + 34} ${y - 40} V${y - 4}`, fill: "none", stroke: "#ea5117", "stroke-width": 6 }, p); for (const dx of [-18, 0, 18]) { el("circle", { cx: x + dx, cy: y - 42 + Math.abs(dx) * .3, r: 3.6, fill: "#ffe55c" }, p); poly(p, [[x + dx - 3, y - 40], [x + dx + 3, y - 40], [x + dx + 10, y - 6], [x + dx - 10, y - 6]], { fill: "rgba(255,229,92,.35)" }); } el("rect", { x: x - 44, y: y - 26, width: 8, height: 26, fill: "#3a3f4a", rx: 2 }, p); el("rect", { x: x + 36, y: y - 26, width: 8, height: 26, fill: "#3a3f4a", rx: 2 }, p); };
   stage(stz, 404, 690);
   const booth = (p, x, y, c) => { el("rect", { x: x - 12, y: y - 2, width: 24, height: 14, fill: "#fff" }, p); for (let i = 0; i < 4; i++) el("path", { d: `M${x - 14 + i * 7} ${y - 10} h7 v8 q-3.5 4 -7 0Z`, fill: i % 2 ? "#fff" : c }, p); el("rect", { x: x - 14, y: y - 12, width: 28, height: 3, fill: c }, p); };
-  [[238, 640], [238, 672], [238, 704], [238, 736]].forEach(([x, y], i) => booth(stz, x, y, i % 2 ? "#ea5117" : "#eee937"));
+  [[236, 700], [236, 724], [236, 748], [272, 748], [298, 748], [324, 748], [350, 748], [376, 748]].forEach(([x, y], i) => booth(stz, x, y, i % 2 ? "#ea5117" : "#eee937"));
+  [[300, 630], [324, 630], [348, 630], [372, 630]].forEach(([x, y], i) => { el("rect", { x: x - 10, y: y - 7, width: 20, height: 14, rx: 2, fill: "#3d4a5c", stroke: "#111", "stroke-width": 2 }, stz); });
+  [[226, 598], [250, 598]].forEach(([x, y]) => { el("rect", { x: x - 10, y: y - 8, width: 20, height: 16, rx: 2, fill: "#2f6fe0", stroke: "#111", "stroke-width": 2 }, svg); });
+  el("rect", { x: 262, y: 586, width: 46, height: 9, rx: 2, fill: "#eee937", stroke: "#111", "stroke-width": 2, transform: "rotate(35 285 590)" }, svg);
   const truck = (p, x, y) => { el("rect", { x: x - 18, y: y - 12, width: 26, height: 18, rx: 3, fill: "#f08a3c" }, p); el("rect", { x: x + 8, y: y - 6, width: 12, height: 12, rx: 2, fill: "#fff" }, p); el("rect", { x: x + 11, y: y - 4, width: 6, height: 5, fill: "#9fd3e6" }, p); el("rect", { x: x - 14, y: y - 8, width: 16, height: 6, fill: "#fff", rx: 1 }, p); for (const dx of [-10, 12]) el("circle", { cx: x + dx, cy: y + 7, r: 4, fill: "#3a3f4a" }, p); };
-  [[282, 752], [322, 752], [362, 752]].forEach(([x, y]) => truck(stz, x, y));
+  [[380, 488], [414, 478], [448, 468]].forEach(([x, y]) => truck(svg, x, y));
   const R = rng(5); for (let i = 0; i < 26; i++) el("circle", { cx: 280 + R() * 80, cy: 640 + R() * 80, r: 3.2, fill: ["#ea5117", "#52c2e8", "#eee937", "#2fb475", "#111"][i % 5] }, stz);
 
   // walking route: footprints
@@ -741,14 +749,14 @@ function flatBuild() {
   banner(742, 398, "C 주차장·언덕 · 135동", "Parking Camp", 150);
   banner(926, 300, "A 경내 · 30동", "Temple Camp", 112);
   banner(790, 28, "쌍계사 · 대웅전", "Ssanggyesa", 120);
-  banner(498, 712, "공연장 · 부스 · 푸드트럭", "Main Stage", 140);
+  banner(498, 712, "공연장 · 홍보부스 · 인포데스크", "Main Stage", 150);
   banner(40, 380, "쌍계사 정류소 · 공영주차장", "Bus · Parking", 150);
 
   // facility icons
-  for (const [k, x, y] of [["wc", 450, 760], ["wc", 420, 250], ["wc", 648, 272], ["wc", 1010, 168], ["shower", 680, 214], ["info", 262, 612], ["med", 292, 612], ["park", 106, 330]]) isoBadge(svg, x, y, k, 16, "flatShadow");
+  for (const [k, x, y] of [["wc", 450, 760], ["wc", 420, 250], ["wc", 648, 272], ["wc", 1010, 168], ["shower", 680, 214], ["info", 238, 574], ["med", 318, 612], ["park", 106, 330]]) isoBadge(svg, x, y, k, 16, "flatShadow");
 
   // numbered circles
-  const numAt = { 1: [430, 650], 2: [212, 690], 3: [322, 780], 4: [452, 186], 5: [970, 240], 6: [770, 300], 7: [846, 190], 8: [296, 506], 9: [600, 532], 10: [744, 66], 11: [928, 440] };
+  const numAt = { 1: [430, 650], 2: [206, 724], 3: [416, 452], 4: [452, 186], 5: [970, 240], 6: [770, 300], 7: [846, 190], 8: [296, 506], 9: [600, 532], 10: [744, 66], 11: [928, 440] };
   for (const [n, ko, en, id] of FLAT_ITEMS) {
     const [x, y] = numAt[n], ng = g(svg, { class: id ? "zone-pin" : "" });
     el("circle", { cx: x, cy: y, r: 21, fill: FL.num, stroke: "#111", "stroke-width": 3.2 }, ng);
@@ -893,7 +901,7 @@ const VENUE_POLY = [[0, 2.3], [57, 0], [82.8, 30.8], [68.5, 64.4], [1.8, 75.9]];
 const southEdgeY = x => 75.9 - (x - 1.8) * 0.1724;
 function drawVenue() {
   const U = 10, s = v => v * U, P = a => a.map(p => p.map(s).join(",")).join(" ");
-  const svg = el("svg", { viewBox: `${s(-8)} ${s(-13)} ${s(98)} ${s(102)}`, role: "img", "aria-label": "행사장 배치도" });
+  const svg = el("svg", { viewBox: `${s(-10)} ${s(-40)} ${s(100)} ${s(134)}`, role: "img", "aria-label": "공연장 배치도" });
   const txt = (x, y, t, o = {}) => { const e = el("text", { x: s(x), y: s(y), "text-anchor": o.anchor || "middle", "font-size": s(o.fs || 1.7), fill: o.fill || "var(--ink)", "font-weight": o.w || 600, ...(o.rot != null ? { transform: `rotate(${o.rot} ${s(x)} ${s(y)})` } : {}) }, svg); e.textContent = t; return e; };
   const box = (x, y, w, h, fill, label, o = {}) => {
     const g = el("g", o.rot ? { transform: `rotate(${o.rot} ${s(x + w / 2)} ${s(y + h / 2)})` } : {}, svg);
@@ -910,32 +918,27 @@ function drawVenue() {
   el("rect", { x: s(20), y: s(14), width: s(40), height: s(40), rx: s(1), fill: "#7a9b4f", "fill-opacity": .22, stroke: "#5f7f3a", "stroke-width": 4, "stroke-dasharray": "14 10" }, svg);
   txt(40, 18.2, "관람 구역 · 약 1,400㎡", { fs: 1.9, fill: "var(--tea)" });
   txt(40, 51.5, "돗자리 기준 약 700명", { fs: 1.4, fill: "var(--muted)", w: 500 });
-  box(33.5, 31.5, 6, 4.5, "#3d4a5c", "FOH", { fs: 1.4 });
-  txt(36.5, 38.6, "음향·조명", { fs: 1.2, fill: "var(--muted)", w: 500 });
+
 
   // stage and backstage
   box(62, 27, 8, 12, "#151515", "무대", { fs: 2.2, r: .6 });
   txt(66, 42, "12m × 8m", { fs: 1.3, fill: "var(--muted)", w: 500 });
-  box(71, 21.5, 4.5, 4.5, "#6b4a2b", "대기", { fs: 1.2 });
   box(71.2, 42, 3.4, 6, "#5c6b5f", "발전", { fs: 1.1 });
 
-  // west booths, backs to the fence
-  for (let i = 0; i < 14; i++) box(2.6, 12 + i * 3, 3, 3, "#f5b82e", String(i + 1), { fg: "#3a2600", fs: 1.3, r: .2 });
-  txt(7.4, 33, "체험·판매 부스 14동", { rot: 90, fs: 1.6 });
-
-  // north service row and entrance
-  box(7.5, 4.6, 7, 3.2, "#2f6fe0", "종합안내·접수", { fs: 1.05 });
-  box(15.5, 4.4, 3.2, 3.2, "#e2552d", "의무", { fs: 1.05 });
-  box(19.6, 4.2, 3.2, 3.2, "#7a55e6", "분실", { fs: 1.05 });
-  box(38, 3.3, 7, 3.2, "#3b2a1a", "운영본부", { fs: 1.1 });
+  // north edge: console and performers' waiting rooms (4)
+  for (let k = 0; k < 4; k++) box(16 + k * 6, 3.6, 5, 4, "#3d4a5c", k ? `대기실` : "콘솔", { fs: 1.05 });
+  txt(27.5, 10.6, "콘솔 · 출연진대기실 4동", { fs: 1.3 });
+  // north-west: info desks along the road and the photo zone / map board (18 m)
+  box(0.4, -31, 3, 3, "#2f6fe0", "인포", { fs: .95 }); box(0.4, -27.4, 3, 3, "#2f6fe0", "인포", { fs: .95 });
+  txt(5, -29, "인포데스크 2동", { anchor: "start", fs: 1.4 });
+  box(-3.5, -13.5, 18, 2, "#eee937", "포토존 · 배치도 18m", { rot: 45, fg: "#111", fs: .95, r: .3 });
   el("path", { d: `M${s(30)} ${s(-6.5)} V${s(1.5)} M${s(28)} ${s(-.5)} L${s(30)} ${s(1.8)} L${s(32)} ${s(-.5)}`, fill: "none", stroke: "var(--tea)", "stroke-width": 7, "stroke-linecap": "round", "stroke-linejoin": "round" }, svg);
   txt(30, -8.6, "북쪽 입구 · 문화센터 방면", { fs: 1.6, fill: "var(--tea)" });
-
-  // south: food trucks along the edge, tables, entrance gap
-  [6, 13, 20, 27, 48, 55].forEach((x, i) => { const cx = x + 3, cy = southEdgeY(cx) - 3.3; box(cx - 3, cy - 1.5, 6, 3, "#df7a37", `푸드트럭 ${i + 1}`, { fs: .95, rot: -9.8, r: .6 }); });
-  el("rect", { x: s(8), y: s(56.5), width: s(23), height: s(5.5), rx: s(.8), fill: "var(--surface)", stroke: "var(--muted)", "stroke-width": 3 }, svg);
-  for (let x = 10; x < 31; x += 3.2) for (const y of [58, 60.5]) el("circle", { cx: s(x), cy: s(y), r: s(.75), fill: "var(--muted)" }, svg);
-  txt(19.5, 55.4, "식음 테이블", { fs: 1.3 });
+  txt(62, -30, "↑ 푸드트럭: 하동야생차박물관 북쪽", { fs: 1.5, fill: "var(--orange)" });
+  // promotion booths: 5 along the south edge, 3 along the road to the south-west
+  for (let k = 0; k < 5; k++) { const cx = 8.5 + k * 3.2, cy = southEdgeY(cx) - 2.4; box(cx - 1.5, cy - 1.5, 3, 3, "#f5b82e", String(k + 1), { fg: "#3a2600", fs: 1.2, rot: -9.8, r: .2 }); }
+  for (let k = 0; k < 3; k++) box(1.2, 77.5 + k * 3.2, 3, 3, "#f5b82e", String(k + 6), { fg: "#3a2600", fs: 1.2, r: .2 });
+  txt(16, 66, "홍보부스 5동", { fs: 1.35 }); txt(6, 89.5, "홍보부스 3동", { anchor: "start", fs: 1.35 });
   el("path", { d: `M${s(40)} ${s(77)} V${s(70)} M${s(38)} ${s(72.2)} L${s(40)} ${s(69.8)} L${s(42)} ${s(72.2)}`, fill: "none", stroke: "var(--tea)", "stroke-width": 7, "stroke-linecap": "round", "stroke-linejoin": "round" }, svg);
   txt(40, 80, "남쪽 입구 · 티카페하동 방면", { fs: 1.6, fill: "var(--tea)" });
 
@@ -949,15 +952,15 @@ function drawVenue() {
   }
 
   // north arrow + 10 m scale
-  el("path", { d: `M${s(84)} ${s(-11)} L${s(85.4)} ${s(-7)} L${s(84)} ${s(-7.8)} L${s(82.6)} ${s(-7)} Z`, fill: "var(--ink)" }, svg);
-  txt(84, -4.6, "N", { fs: 1.4 });
-  el("path", { d: `M${s(70)} ${s(84)} V${s(85)} H${s(80)} V${s(84)}`, fill: "none", stroke: "var(--ink)", "stroke-width": 3 }, svg);
-  txt(82, 85.4, "10m", { anchor: "start", fs: 1.3, fill: "var(--muted)", w: 500 });
+  el("path", { d: `M${s(84)} ${s(-38)} L${s(85.4)} ${s(-34)} L${s(84)} ${s(-34.8)} L${s(82.6)} ${s(-34)} Z`, fill: "var(--ink)" }, svg);
+  txt(84, -31.6, "N", { fs: 1.4 });
+  el("path", { d: `M${s(70)} ${s(90)} V${s(91)} H${s(80)} V${s(90)}`, fill: "none", stroke: "var(--ink)", "stroke-width": 3 }, svg);
+  txt(82, 91.4, "10m", { anchor: "start", fs: 1.3, fill: "var(--muted)", w: 500 });
   return svg;
 }
 const VENUE_LEGEND = [
-  ["#151515", "무대 12m × 8m · 서쪽을 향함"], ["#f5b82e", "체험·판매 부스 3m × 3m"], ["#df7a37", "푸드트럭 6m × 3m"],
-  ["#2f6fe0", "종합안내·접수"], ["#e2552d", "의무실 · 화장실"], ["#3d4a5c", "FOH 음향·조명 부스"], ["#c4402a", "안전 펜스 · 비상 동선 · 소화기"],
+  ["#151515", "무대 12m × 8m · 서쪽을 향함"], ["#f5b82e", "홍보부스 8동 (남쪽 5 · 남서쪽 길가 3)"], ["#3d4a5c", "콘솔 · 출연진대기실 4동"],
+  ["#2f6fe0", "인포데스크 2동"], ["#eee937", "포토존 · 배치도 (18m)"], ["#e2552d", "화장실"], ["#c4402a", "안전 펜스 · 비상 동선 · 소화기"],
 ];
 
 // ---------- 행사장 배치도: true-scale site plan, four categories ----------
@@ -1063,17 +1066,21 @@ function drawSiteSouth() {
   el("polygon", { points: pts(VENUE_POLY.map(L)), fill: "var(--path)", stroke: "var(--muted)", "stroke-width": .8 }, svg);
   el("polygon", { points: pts(R(20, 14, 40, 40)), fill: CAT.stage.color, "fill-opacity": .32, stroke: CAT.stage.dark, "stroke-width": .8, "stroke-dasharray": "3 2" }, svg);
   el("polygon", { points: pts(R(62, 27, 8, 12)), fill: CAT.stage.dark }, svg);
-  for (let i = 0; i < 14; i++) el("polygon", { points: pts(R(2.6, 12 + i * 3, 3, 3)), fill: CAT.booth.color, stroke: "var(--surface)", "stroke-width": .4 }, svg);
-  for (const [x, w] of [[7.5, 7], [15.5, 3.2], [19.6, 3.2], [38, 7]]) el("polygon", { points: pts(R(x, 4, w, 3.2)), fill: CAT.booth.dark }, svg);
-  [6, 13, 20, 27, 48, 55].forEach(x => { const cx = x + 3, cy = southEdgeY(cx) - 3.3; el("polygon", { points: pts(rectPoly(L([cx, cy]), 6, 3, -9.8)), fill: CAT.booth.color, stroke: CAT.booth.dark, "stroke-width": .5 }, svg); });
+  for (let k = 0; k < 5; k++) { const cx = 8.5 + k * 3.2; el("polygon", { points: pts(rectPoly(L([cx, southEdgeY(cx) - 2.4]), 3, 3, -9.8)), fill: CAT.booth.color, stroke: CAT.booth.dark, "stroke-width": .4 }, svg); }
+  for (let k = 0; k < 3; k++) el("polygon", { points: pts(R(1.2, 77.5 + k * 3.2, 3, 3)), fill: CAT.booth.color, stroke: CAT.booth.dark, "stroke-width": .4 }, svg);
+  for (let k = 0; k < 4; k++) el("polygon", { points: pts(R(16 + k * 6, 3.6, 5, 4)), fill: CAT.booth.dark }, svg);
+  for (const y of [-31, -27.4]) el("polygon", { points: pts(R(.4, y, 3, 3)), fill: "#2f6fe0" }, svg);
+  el("polygon", { points: pts(rectPoly(L([5.5, -12.5]), 18, 2, 45)), fill: "#eee937", stroke: "#111", "stroke-width": .4 }, svg);
+  for (let k = 0; k < 3; k++) el("polygon", { points: pts(rectPoly([226, 474 + k * 5], 6, 3, 0)), fill: CAT.booth.color, stroke: CAT.booth.dark, "stroke-width": .5 }, svg);
   el("polyline", { points: pts([[-.9, 2.3], [.9, 75.9]].map(L)), fill: "none", stroke: "#c4402a", "stroke-width": 1.2, "stroke-dasharray": "3 2" }, svg);
   miniPin(svg, ...L([63.8, 51.1]), "wc", 3.2);
   sText(svg, ...L([40, 36]), "공연장", { anchor: "middle", fs: 8, w: 700, fill: CAT.stage.dark });
   sText(svg, ...L([40, 44]), "관람 약 1,400㎡", { anchor: "middle", fs: 5.5, w: 500, fill: "var(--muted)" });
   sText(svg, ...L([66, 46]), "무대", { anchor: "middle", fs: 5.5, w: 700 });
-  callout(svg, L([4, 30]), [150, 650], "부스", "체험·판매 14", { fs: 8, anchor: "start" });
-  callout(svg, L([30, 66]), [150, 720], "푸드트럭 6", "", { fs: 7, anchor: "start" });
-  callout(svg, L([26, 6]), [150, 612], "운영 4", "안내·의무·분실·본부", { fs: 7, anchor: "start" });
+  callout(svg, L([12, 70]), [150, 718], "홍보부스 8", "남쪽 5 · 남서쪽 3", { fs: 7, anchor: "start" });
+  callout(svg, L([28, 5]), [150, 648], "콘솔·대기실 4", "", { fs: 7, anchor: "start" });
+  callout(svg, L([2, -28]), [150, 612], "인포데스크 2", "포토존 · 배치도 18m", { fs: 7, anchor: "start" });
+  callout(svg, [229, 479], [244, 470], "푸드트럭", "박물관 북쪽", { fs: 7.5 });
   // walking links
   el("polyline", { points: pts([L([30, 1]), [212, 486]]), fill: "none", stroke: "var(--tea)", "stroke-width": 1.2, "stroke-dasharray": ".1 3", "stroke-linecap": "round" }, svg);
   sText(svg, 218, 560, "도보 약 2분", { fs: 6, w: 600, fill: "var(--tea)" });
@@ -1086,16 +1093,17 @@ const SITE_ROWS = [
   ["camp", "A 쌍계사 경내", "일주문–금강문 (추정)", "텐트 30동 · 9m × 50m", "캐노피"],
   ["pk", "B 쌍계초 · Pet & Kids zone", "쌍계초등학교 운동장", "텐트 85동 · 30m × 60m", "캐노피 2 · 화장실 · 배변봉투함 · 급수대"],
   ["camp", "C 주차장·언덕", "쌍계사 주차장", "텐트 135동 · 약 50m × 51m", "샤워실 4동 · 화장실 · 캐노피 2 · 템플스테이"],
-  ["stage", "메인 무대 · 관람", "야생차문화센터 남쪽 광장", "무대 12m × 8m · 관람 약 1,400㎡", "FOH · 대기 텐트 · 발전차"],
+  ["stage", "메인 무대 · 관람", "야생차문화센터 남쪽 광장", "무대 12m × 8m · 관람 약 1,400㎡", "콘솔 · 출연진대기실 · 발전차"],
   ["dog", "방사(숙소) ①", "C 주차장 옆 건물", "객실 수 확인 필요", "침구 · 화장실 · 샤워 여부 확인"],
   ["dog", "방사(숙소) ②", "쌍계사 전통불교문화예술관", "객실 수 확인 필요", "침구 · 화장실 · 샤워 여부 확인"],
-  ["booth", "체험·판매 부스", "광장 서쪽 (펜스 앞)", "14동 · 3m × 3m", ""],
-  ["booth", "푸드트럭 · 식음", "광장 남쪽", "6대 · 테이블 구역", "분리수거장 · 화장실"],
-  ["booth", "운영 부스", "광장 북쪽 입구", "4동", "종합안내·접수 · 의무 · 분실물 · 운영본부"],
+  ["booth", "홍보부스", "광장 남쪽 5 · 남서쪽 길가 3", "8동", ""],
+  ["booth", "인포데스크", "문화센터 서쪽 길가", "2동", "포토존 · 배치도 (18m)"],
+  ["booth", "콘솔 · 출연진대기실", "광장 북쪽 가장자리", "4동", ""],
+  ["booth", "푸드트럭", "하동야생차박물관 북쪽 (흰 지붕 건물 옆)", "대수 확인 필요", "분리수거장"],
 ];
 function buildSite() {
   document.getElementById("catLegend").innerHTML = [
-    ["camp", "3곳 · 텐트 250동"], ["pk", "쌍계초 85동"], ["dog", "2곳 · C 옆 · 예술관"], ["stage", "1곳 · 무대 + 관람"], ["booth", "24 · 체험 14 · 푸드트럭 6 · 운영 4"],
+    ["camp", "3곳 · 텐트 250동"], ["pk", "쌍계초 85동"], ["dog", "2곳 · C 옆 · 예술관"], ["stage", "1곳 · 무대 + 관람"], ["booth", "홍보 8 · 인포 2 · 콘솔·대기실 4 · 푸드트럭"],
   ].map(([k, t]) => `<li><i style="background:${CAT[k].color}"></i><b>${CAT[k].name}</b> ${t}</li>`).join("") +
     `<li><i class="pin" style="background:${FAC_STYLE.wc.color}">WC</i>화장실</li><li><i class="pin" style="background:${FAC_STYLE.shower.color}">S</i>샤워실</li>`;
   document.getElementById("siteNorth").appendChild(drawSiteNorth());
@@ -1113,17 +1121,18 @@ function renderImagePage(id) {
         <div><span class="k">광장 크기</span><span class="v">약 80m × 75m</span></div>
         <div><span class="k">무대</span><span class="v">12m × 8m · 동쪽 끝</span></div>
         <div><span class="k">관람 구역</span><span class="v">약 1,400㎡ · 약 700명</span></div>
-        <div><span class="k">부스</span><span class="v">체험·판매 14 · 푸드트럭 6</span></div>
+        <div><span class="k">부스</span><span class="v">홍보 8 · 인포 2 · 콘솔·대기실 4</span></div>
+        <div><span class="k">푸드트럭</span><span class="v">박물관 북쪽</span></div>
         <div><span class="k">출입구</span><span class="v">북쪽 · 남쪽 2곳</span></div>
       </div>
       <div class="plan" id="plan"></div>
       <ul class="legend-list">${VENUE_LEGEND.map(([c, t]) => `<li><i style="background:${c}"></i>${t}</li>`).join("")}</ul>
       <ul class="notes">
         <li>광장 크기는 보내 주신 위성 캡처를 박물관–티카페 거리로 환산한 추정치입니다.</li>
-        <li>부스는 등을 쌍계로 펜스 쪽에 두어 도로와 관람객 사이를 한 번 더 막습니다.</li>
+        <li>보내 주신 캡처대로 배치했습니다. 인포데스크와 포토존(배치도 18m)은 문화센터 서쪽 길가, 콘솔·출연진대기실은 광장 북쪽 가장자리, 홍보부스는 남쪽 5동과 남서쪽 길가 3동입니다.</li>
         <li>남쪽 입구에서 무대 뒤까지 4m 폭 비상 동선을 비워 두었습니다. 구급차·발전차 진입로로 씁니다.</li>
-        <li>FOH(음향·조명)는 무대 앞에서 약 26m 떨어진 관람 구역 가운데에 두었습니다.</li>
-        <li>부스·푸드트럭 수, 무대 크기는 가안입니다. 확정되면 그 수에 맞춰 다시 배치하겠습니다.</li>
+        <li>푸드트럭은 광장이 아니라 하동야생차박물관 북쪽, 흰 지붕 건물 옆 길가로 옮겼습니다.</li>
+        <li>푸드트럭 대수와 무대 크기는 아직 가안입니다.</li>
       </ul>
       <div class="plan"><img src="${IMG_STAGE}" alt="위성지도: 하동야생차박물관과 문화센터 남쪽 광장에 파란 관람 구역과 동쪽 끝 무대 표시"></div>
       <p class="caption">원본 캡처입니다. 파란 영역이 광장, 주황색 표시가 무대 자리입니다.</p>`;
