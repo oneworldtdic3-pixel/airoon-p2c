@@ -4,6 +4,7 @@
 
 원본 위치: `design/brand/source/*.ai` (PDF 호환 Illustrator 파일)
 미리보기: `design/brand/preview/*.png`
+PDF 가이드: `design/brand/BUDDHZ-brand-guide.pdf` (원본 HTML: `guide-src/guide.html`)
 
 ---
 

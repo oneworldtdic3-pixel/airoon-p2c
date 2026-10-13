@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>BUDDHZ 브랜드 가이드</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=block" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  :root { --green:#1C9771; --ink:#231916; --paper:#FFFFFF; --mute:#8A817D; --line:#E7E3E1; --soft:#F6F4F3; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; color: var(--ink); background: var(--paper); font-weight: 400; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { width: 210mm; height: 297mm; padding: 22mm 20mm 18mm; position: relative; page-break-after: always; overflow: hidden; display: flex; flex-direction: column; }
+  .page:last-child { page-break-after: auto; }
+  .folio { position: absolute; left: 20mm; right: 20mm; bottom: 12mm; display: flex; justify-content: space-between; font-size: 7.5pt; letter-spacing: .12em; color: var(--mute); text-transform: uppercase; }
+  .eyebrow { font-size: 8pt; letter-spacing: .2em; color: var(--green); font-weight: 500; text-transform: uppercase; margin-bottom: 5mm; }
+  h1 { font-family: 'Noto Serif KR', serif; font-weight: 600; font-size: 26pt; letter-spacing: -.01em; line-height: 1.25; }
+  h2 { font-family: 'Noto Serif KR', serif; font-weight: 600; font-size: 12pt; margin-bottom: 3mm; }
+  p, li { font-size: 9.5pt; line-height: 1.75; font-weight: 300; }
+  .lead { font-size: 10.5pt; color: #4A403D; max-width: 140mm; margin-top: 5mm; }
+  .rule { height: 1px; background: var(--line); margin: 9mm 0; }
+  ul { list-style: none; }
+  li { padding-left: 4mm; position: relative; }
+  li::before { content: ''; position: absolute; left: 0; top: .78em; width: 1.6mm; height: 1px; background: var(--green); }
+  code, .mono { font-family: 'SFMono-Regular', Menlo, Consolas, monospace; font-size: 8.5pt; }
+
+  .cover { justify-content: space-between; padding: 26mm 22mm 20mm; }
+  .cover .logo { width: 112mm; margin: 0 auto; display: block; }
+  .cover-top { display: flex; justify-content: space-between; font-size: 8pt; letter-spacing: .2em; color: var(--mute); text-transform: uppercase; }
+  .cover-bottom { border-top: 1px solid var(--ink); padding-top: 6mm; display: flex; justify-content: space-between; align-items: flex-end; }
+  .cover-bottom h1 { font-size: 22pt; }
+  .cover-bottom .meta { font-size: 8.5pt; color: var(--mute); text-align: right; line-height: 1.7; }
+
+  .stage { background: var(--paper); border: 1px solid var(--line); border-radius: 3mm; display: flex; align-items: center; justify-content: center; }
+  .stage.logo { height: 118mm; }
+  .stage.logo img { width: 78mm; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; }
+  .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; }
+
+  .swatch { border-radius: 3mm; overflow: hidden; border: 1px solid var(--line); }
+  .swatch .chip { height: 46mm; display: flex; align-items: flex-end; padding: 4mm; font-size: 8pt; letter-spacing: .1em; text-transform: uppercase; }
+  .swatch .info { padding: 4mm; font-size: 8.5pt; line-height: 1.8; }
+  .swatch .info b { font-weight: 500; display: block; font-size: 9.5pt; margin-bottom: 1mm; }
+  .typo { display: grid; grid-template-columns: 70mm 1fr; gap: 8mm; align-items: center; padding: 6mm 0; border-top: 1px solid var(--line); }
+  .typo:last-child { border-bottom: 1px solid var(--line); }
+  .typo img { width: 100%; display: block; }
+  .typo .en { font-family: 'Noto Sans KR', sans-serif; font-weight: 400; font-size: 34pt; letter-spacing: .02em; color: var(--green); }
+
+  .anatomy { position: relative; border: 1px solid var(--line); border-radius: 2mm; }
+  .anatomy img { width: 100%; display: block; }
+  .tag { position: absolute; display: flex; align-items: center; gap: 2mm; font-size: 7.5pt; color: var(--green); font-weight: 500; white-space: nowrap; transform: translateY(-50%); }
+  .tag .n { width: 4.6mm; height: 4.6mm; border-radius: 50%; background: var(--green); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 6.5pt; }
+  .tag::before { content: ''; width: 10mm; height: 1px; background: var(--green); order: -1; }
+  .spec { width: 100%; border-collapse: collapse; font-size: 8.8pt; margin-top: 8mm; }
+  .spec th, .spec td { text-align: left; padding: 2.2mm 2mm; border-bottom: 1px solid var(--line); font-weight: 300; vertical-align: top; }
+  .spec th { font-weight: 500; width: 34mm; color: var(--mute); font-size: 8pt; letter-spacing: .04em; }
+
+  .item { display: grid; grid-template-columns: 96mm 1fr; gap: 10mm; align-items: center; padding: 4.5mm 0; border-top: 1px solid var(--line); }
+  .item:last-child { border-bottom: 1px solid var(--line); }
+  .item .art { border: 1px solid var(--line); border-radius: 2mm; overflow: hidden; }
+  .item .art img { width: 100%; display: block; }
+  .item .no { font-size: 7.5pt; letter-spacing: .2em; color: var(--green); font-weight: 500; }
+  .item .t { font-family: 'Noto Serif KR', serif; font-size: 14pt; font-weight: 600; margin: 1.5mm 0 1mm; }
+  .item .q { font-size: 9pt; color: #4A403D; font-weight: 300; }
+  .item .f { font-size: 7.5pt; color: var(--mute); margin-top: 2.5mm; font-family: Menlo, Consolas, monospace; }
+
+  .stage.badge { height: 90mm; }
+  .stage.badge img { width: 96mm; }
+  .do { color: var(--green); font-weight: 500; }
+  .dont { color: #B4442F; font-weight: 500; }
+</style>
+</head>
+<body>
+
+<section class="page cover">
+  <div class="cover-top"><span>Brand Guidelines</span><span>Vol. 01</span></div>
+  <img class="logo" src="logo.png" alt="붓쯔 BUDDHZ 로고">
+  <div class="cover-bottom">
+    <div>
+      <div class="eyebrow" style="margin-bottom:3mm">BUDDHZ · OutSidda</div>
+      <h1>붓쯔 브랜드 가이드</h1>
+    </div>
+    <div class="meta">로고 · 컬러 · 서체<br>티셔츠 “○○붓다” 시리즈<br>2026. 10</div>
+  </div>
+</section>
+
+<section class="page">
+  <div class="eyebrow">01 — Primary Logo</div>
+  <h1>붓쯔 / BUDDHZ</h1>
+  <p class="lead">한글 워드마크 ‘붓쯔’와 영문 ‘BUDDHZ’를 같은 폭으로 쌓은 2단 락업입니다. 단색 붓쯔 그린으로만 씁니다.</p>
+  <div class="rule"></div>
+  <div class="stage logo"><img src="logo.png" alt="붓쯔 로고"></div>
+  <div class="two" style="margin-top:10mm">
+    <div>
+      <h2>구성</h2>
+      <ul>
+        <li>상단: 직선 획으로 만든 커스텀 레터링 ‘붓쯔’</li>
+        <li>하단: 기하학적 산세리프 ‘BUDDHZ’, 상단과 같은 폭</li>
+        <li>원본: <code>source/buddhz-logo-green.ai</code> (1080 × 1080pt)</li>
+      </ul>
+    </div>
+    <div>
+      <h2>사용 원칙</h2>
+      <ul>
+        <li><span class="do">사용</span> 원본 벡터 그대로, 흰 바탕 위에 넉넉한 여백과 함께</li>
+        <li><span class="dont">금지</span> 기본 폰트로 ‘붓쯔’ 재조판</li>
+        <li><span class="dont">금지</span> 비율 변경, 회전, 그라디언트, 다른 색 적용</li>
+      </ul>
+    </div>
+  </div>
+  <div class="folio"><span>BUDDHZ Brand Guidelines</span><span>02</span></div>
+</section>
+
+<section class="page">
+  <div class="eyebrow">02 — Color &amp; Typography</div>
+  <h1>컬러와 서체</h1>
+  <p class="lead">브랜드는 두 가지 잉크만 씁니다. 로고는 그린, 티셔츠 시리즈와 OutSidda 배지는 리치블랙입니다.</p>
+  <div class="rule"></div>
+  <div class="three">
+    <div class="swatch"><div class="chip" style="background:#1C9771;color:#fff">Buddhz Green</div>
+      <div class="info"><b>붓쯔 그린</b><span class="mono">HEX #1C9771<br>RGB 28 · 151 · 113</span><br>메인 로고</div></div>
+    <div class="swatch"><div class="chip" style="background:#231916;color:#fff">Ink</div>
+      <div class="info"><b>리치블랙</b><span class="mono">HEX #231916<br>RGB 35 · 25 · 22</span><br>티셔츠 시리즈 · 배지</div></div>
+    <div class="swatch"><div class="chip" style="background:#fff;color:#8A817D">Paper</div>
+      <div class="info"><b>페이퍼</b><span class="mono">HEX #FFFFFF<br>RGB 255 · 255 · 255</span><br>모든 바탕</div></div>
+  </div>
+
+  <div style="margin-top:12mm">
+    <h2>서체</h2>
+    <div class="typo">
+      <img src="bubble_crop.png" alt="SD명조 견본: 버블붓다">
+      <div><p><b style="font-weight:500">SD명조 (SDMyeongjo-aLt, 산돌)</b><br>티셔츠 시리즈의 인용구와 타이틀에 씁니다. 붓의 흔적이 남은 명조체라 ‘붓다’의 결과 잘 맞습니다.</p></div>
+    </div>
+    <div class="typo">
+      <div class="en">BUDDHZ</div>
+      <div><p><b style="font-weight:500">기하학적 산세리프</b><br>로고의 영문 표기입니다. 둥근 형태와 일정한 획 두께가 특징입니다. 로고에서는 원본 벡터를 쓰세요. (왼쪽 견본은 유사 서체)</p></div>
+    </div>
+  </div>
+  <div class="folio"><span>BUDDHZ Brand Guidelines</span><span>03</span></div>
+</section>
+
+<section class="page">
+  <div class="eyebrow">03 — T-shirt Back Template</div>
+  <h1>“○○붓다” 시리즈 템플릿</h1>
+  <p class="lead">모든 티셔츠 뒷면은 같은 틀을 씁니다. 인용구, 타이틀, 배지 세 요소를 가로 중앙에 쌓고, 문구만 바꿉니다.</p>
+  <div class="rule"></div>
+  <div class="anatomy">
+    <img src="bubble_full.png" alt="버블붓다 아트보드 전체">
+    <div class="tag" style="left:62%;top:30.5%"><span class="n">1</span>인용구 · 30pt</div>
+    <div class="tag" style="left:66%;top:41.5%"><span class="n">2</span>타이틀 · 69pt</div>
+    <div class="tag" style="left:56%;top:55%"><span class="n">3</span>OutSidda 배지</div>
+  </div>
+  <table class="spec">
+    <tr><th>아트보드</th><td>858.9 × 612.3pt, 가로형</td></tr>
+    <tr><th>정렬</th><td>모든 요소 가로 중앙. 콘텐츠 묶음은 위에서 약 28–58% 사이에 배치</td></tr>
+    <tr><th>① 인용구</th><td>큰따옴표(“ ”)로 감싼 말장난 문구, SD명조 약 30pt</td></tr>
+    <tr><th>② 타이틀</th><td>“○○붓다”, SD명조 약 69pt (인용구의 약 2.3배)</td></tr>
+    <tr><th>③ 배지</th><td>OutSidda 타원 배지, 폭 약 80pt</td></tr>
+    <tr><th>컬러</th><td>리치블랙 #231916 단색, 흰 바탕</td></tr>
+    <tr><th>톤</th><td>불교 키워드 + 밈·유행어·운동 같은 현대 말장난</td></tr>
+  </table>
+  <div class="folio"><span>BUDDHZ Brand Guidelines</span><span>04</span></div>
+</section>
+
+<section class="page">
+  <div class="eyebrow">04 — Series</div>
+  <h1>시리즈 라인업</h1>
+  <p class="lead">현재 세 가지 디자인이 있습니다. 새 디자인은 같은 템플릿에 문구만 바꿔 추가합니다.</p>
+  <div style="height:9mm"></div>
+  <div class="item">
+    <div class="art"><img src="bubble_crop.png" alt="버블붓다"></div>
+    <div><div class="no">No. 01</div><div class="t">버블붓다</div><div class="q">“성불은 껌easy”</div><div class="f">tshirt-back-bubble-buddha.ai</div></div>
+  </div>
+  <div class="item">
+    <div class="art"><img src="drop-the_crop.png" alt="드랍더붓다"></div>
+    <div><div class="no">No. 02</div><div class="t">드랍더붓다</div><div class="q">“Track 108”</div><div class="f">tshirt-back-drop-the-buddha.ai</div></div>
+  </div>
+  <div class="item">
+    <div class="art"><img src="hache_crop.png" alt="하체붓다"></div>
+    <div><div class="no">No. 03</div><div class="t">하체붓다</div><div class="q">“하체가 먼저다”</div><div class="f">tshirt-back-hache-buddha.ai</div></div>
+  </div>
+  <div class="folio"><span>BUDDHZ Brand Guidelines</span><span>05</span></div>
+</section>
+
+<section class="page">
+  <div class="eyebrow">05 — Signature Badge</div>
+  <h1>OutSidda 배지</h1>
+  <p class="lead">가로로 긴 타원 안에 흰색 캘리그래피 ‘OutSidda’를 넣은 서명 마크입니다. 티셔츠 시리즈 하단에 들어갑니다.</p>
+  <div class="rule"></div>
+  <div class="stage badge"><img src="badge.png" alt="OutSidda 배지"></div>
+  <div class="two" style="margin-top:10mm">
+    <div>
+      <h2>형태</h2>
+      <ul>
+        <li>가로형 타원, 바탕 리치블랙 #231916</li>
+        <li>흰색 스크립트 ‘OutSidda’, O와 S 대문자에 스워시</li>
+        <li>시리즈 타이틀 아래 가운데, 폭 약 80pt</li>
+      </ul>
+    </div>
+    <div>
+      <h2>사용 원칙</h2>
+      <ul>
+        <li><span class="do">사용</span> 시리즈 원본 .ai에서 벡터를 복사해서</li>
+        <li><span class="dont">금지</span> 글자만 따로 떼거나 타원 비율 변경</li>
+        <li><span class="dont">금지</span> 리치블랙 외 색상 적용</li>
+      </ul>
+    </div>
+  </div>
+  <div class="folio"><span>BUDDHZ Brand Guidelines</span><span>06</span></div>
+</section>
+
+</body>
+</html>
