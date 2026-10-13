@@ -1,24 +1,24 @@
-<title>山寺캠프 행사 안내도</title>
+<title>山寺캠프 페스티벌 맵</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@900&text=%E5%B1%B1%E5%AF%BA&display=swap">
 <style>
 /* Layout: illustrated guide map as the hero (pans sideways on phones), zone layouts drawn to scale below. */
 :root {
-  --bg: #f5f9f2; --surface: #ffffff; --ink: #111111; --muted: #4f5a50; --line: #d5ddd2;
-  --tea: #1f9a62; --tea-soft: #d8f0e2; --orange: #ea5117; --sky: #52c2e8; --yellow: #eee937;
+  --bg: #eef1e8; --surface: #fbfcf8; --ink: #1d2a1c; --muted: #5d6b5a; --line: #d2dacb;
+  --tea: #2f6a34; --tea-soft: #dce9d3;
   --tent: #df7a37; --tent-ink: #3a1d08;
   --path: #c4d3e4; --fac: #5d9549; --fac-ink: #ffffff;
   --warn: #a85a17; --warn-soft: #f6e6d4;
   --river: #a9cbe0; --road: #ddd5c4; --bldg: #bdb6a8;
-  --f-display: "Black Han Sans", "Apple SD Gothic Neo", sans-serif;
+  --f-display: "Bagel Fat One", "Black Han Sans", "Apple SD Gothic Neo", sans-serif;
   --f-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
   --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #10150f; --surface: #172016; --ink: #e2eadc; --muted: #97a693; --line: #2a3628;
-  --tea: #5fd096; --tea-soft: #1d3326; --orange: #ff7a45; --sky: #52c2e8; --yellow: #eee937;
+  --tea: #93c283; --tea-soft: #22301f;
   --tent: #e5874a; --tent-ink: #2a1405;
   --path: #2c3f55; --fac: #4c8a3b; --fac-ink: #f3f8f0;
   --warn: #e3a467; --warn-soft: #33261a;
@@ -26,7 +26,7 @@
   color-scheme: dark } }
 :root[data-theme="dark"] {
   --bg: #10150f; --surface: #172016; --ink: #e2eadc; --muted: #97a693; --line: #2a3628;
-  --tea: #5fd096; --tea-soft: #1d3326; --orange: #ff7a45; --sky: #52c2e8; --yellow: #eee937;
+  --tea: #93c283; --tea-soft: #22301f;
   --tent: #e5874a; --tent-ink: #2a1405;
   --path: #2c3f55; --fac: #4c8a3b; --fac-ink: #f3f8f0;
   --warn: #e3a467; --warn-soft: #33261a;
@@ -40,33 +40,21 @@ h2 { font-family: var(--f-display); font-weight: 400; font-size: 26px; line-heig
 p { margin: 0; }
 
 /* the illustrated map is a printed object: one fixed look in both themes */
-.map { position: relative; border-radius: 18px; overflow: hidden; background: #2fb475; color: #111; border: 4px solid #111; box-shadow: 0 1px 0 rgba(0,0,0,.05), 0 12px 32px -18px rgba(20,40,10,.5); }
+.map { position: relative; border-radius: 14px; overflow: hidden; background: #fdf1d8; color: #3a2a18; box-shadow: 0 1px 0 rgba(0,0,0,.05), 0 12px 32px -18px rgba(20,40,10,.5); }
 .map-scroll { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; }
 .map-box { position: relative; width: max(100%, 760px); aspect-ratio: 1200 / 860; }
 .map-box canvas, .map-box svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .map-hint { position: absolute; left: 12px; top: 12px; font-size: 12px; color: #fff; background: rgba(20,32,18,.7); padding: 4px 10px; border-radius: 999px; pointer-events: none; }
 @media (min-width: 812px) { .map-hint { display: none; } }
 
-.hero { position: relative; overflow: hidden; border: 4px solid #111; border-radius: 22px; background: #52c2e8; margin-bottom: 16px; color: #111; }
-.hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 46%; background: radial-gradient(rgba(0,0,0,.25) 1.3px, transparent 1.6px) 0 0 / 7px 7px, #2fb475; border-top: 4px solid #111; }
-.hero-sun { position: absolute; right: 7%; top: 14px; width: 74px; height: 74px; border-radius: 50%; background: #ea5117; border: 4px solid #111; }
-.hero-in { position: relative; z-index: 1; display: grid; justify-items: center; gap: 4px; padding: 26px 16px 22px; text-align: center; }
-.hero-cloud { background: #fff; border: 4px solid #111; border-radius: 120px; padding: 18px 36px 16px; display: grid; justify-items: center; gap: 2px; max-width: 100%; }
-.hero-cloud img { width: min(420px, 70vw); height: auto; display: block; }
-.hero-sub { font-weight: 700; font-size: 15px; }
-.hero-with { font-family: var(--f-display); font-size: 22px; }
-.hero-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 10px; margin-top: 12px; }
-.hero-meta span { background: #fff; border: 3px solid #111; border-radius: 999px; padding: 4px 14px; font-weight: 700; font-size: 14px; }
-.hero-meta .hot { background: #ea5117; color: #fff; }
-.hero-date { font-family: var(--f-display); font-size: clamp(22px, 4vw, 34px); color: #fff; -webkit-text-stroke: 1.5px #111; paint-order: stroke fill; text-shadow: 0 3px 0 #111; margin-top: 10px; }
 .map-switch { display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); margin-bottom: 10px; }
 .map-switch button { font: inherit; font-size: 13.5px; font-weight: 600; border: 0; border-radius: 999px; padding: 6px 14px; background: transparent; color: var(--muted); cursor: pointer; }
-.map-switch button[aria-selected="true"] { background: #ea5117; color: #fff; }
+.map-switch button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
 .map-switch button:focus-visible { outline: 2px solid var(--tea); outline-offset: 2px; }
-.pane-flat { background: #2fb475; color: #111; }
-.pane-iso { background: #52c2e8; color: #111; }
+.pane-flat { background: #a9d7de; color: #1f4e5a; }
+.pane-iso { background: #fdf1d8; }
 .flat-box { aspect-ratio: 1080 / 820 !important; }
-.flat-legend { background: #fff; border: 3px solid #111; border-radius: 18px; margin: 0 16px 16px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 12px 26px; padding: 18px 24px 24px; }
+.flat-legend { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 12px 26px; padding: 18px 24px 24px; }
 @media (max-width: 720px) { .flat-legend { grid-template-columns: minmax(0, 1fr); padding-inline: 14px; } }
 .fl-icons, .fl-nums { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px 18px; }
 .fl-nums { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
@@ -75,8 +63,8 @@ p { margin: 0; }
 .fl-icons small, .fl-nums small { display: block; font-family: var(--f-mono); font-size: 12.5px; line-height: 1.3; opacity: .85; }
 .fl-nums li[data-id] { cursor: pointer; }
 .fl-nums li[data-id]:hover b { text-decoration: underline; }
-.fl-n { flex: none; width: 36px; height: 36px; border-radius: 50%; background: #ea5117; color: #fff; border: 2.5px solid #111; font-family: var(--f-display); font-size: 17px; display: grid; place-items: center; }
-.iso-legend { background: #fff; border: 3px solid #111 !important; border-radius: 18px; margin-bottom: 16px !important; display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 10px 28px; padding: 6px 22px 20px; border-top: 2px dotted #e8c99a; margin: 0 18px; padding-top: 16px; }
+.fl-n { flex: none; width: 36px; height: 36px; border-radius: 50%; background: #2aa3ad; color: #fff; border: 2.5px solid #fff; font-family: var(--f-display); font-size: 17px; display: grid; place-items: center; }
+.iso-legend { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 10px 28px; padding: 6px 22px 20px; border-top: 2px dotted #e8c99a; margin: 0 18px; padding-top: 16px; }
 @media (max-width: 720px) { .iso-legend { grid-template-columns: minmax(0, 1fr); margin: 0 10px; padding-inline: 6px; } }
 .num-list, .icon-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px 18px; font-size: 15.5px; font-weight: 600; }
 .num-list { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
@@ -84,7 +72,7 @@ p { margin: 0; }
 .num-list li, .icon-list li { display: flex; align-items: center; gap: 8px; min-width: 0; }
 .num-list li[data-id] { cursor: pointer; }
 .num-list li[data-id]:hover { text-decoration: underline; }
-.num { flex: none; width: 30px; height: 30px; border-radius: 50%; background: #ea5117; border: 2px solid #111; color: #fff; font-family: var(--f-display); font-size: 16px; display: grid; place-items: center; }
+.num { flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--c); color: #fff; font-family: var(--f-display); font-size: 16px; display: grid; place-items: center; }
 .zone-pin { cursor: pointer; }
 .zone { cursor: pointer; }
 .zone .area { transition: fill-opacity .15s; }
@@ -156,18 +144,6 @@ svg text { user-select: none; }
 </style>
 
 <div class="wrap">
-  <header class="hero">
-    <div class="hero-sun" aria-hidden="true"></div>
-    <div class="hero-in">
-      <div class="hero-cloud">
-        <p class="hero-sub">2026 산사에서 즐기는 마인드 디톡스</p>
-        <img src="__BRUSH__" alt="山寺캠프" width="420" height="116">
-        <p class="hero-with">with 쌍계사</p>
-      </div>
-      <p class="hero-date">11.06 FRI 14:00 – 11.08 SUN 11:00</p>
-      <div class="hero-meta"><span class="hot">하동 쌍계사 일원</span><span>예매 사전예약제 700명 한정</span><span>숙박 캠핑존 / 한옥 방사 스테이</span></div>
-    </div>
-  </header>
   <div class="map-switch" role="tablist" aria-label="지도 스타일">
     <button type="button" role="tab" data-style="flat" aria-selected="true">일러스트 지도</button>
     <button type="button" role="tab" data-style="iso" aria-selected="false">입체 안내도</button>
@@ -221,7 +197,6 @@ svg text { user-select: none; }
 const ZONES = __ZONES__;
 const IMG_STAGE = "__STAGE__";
 const IMG_PARCEL = "__PARCEL__";
-const BRUSH = "__BRUSH__";
 const PREFIX = { temple: "A", school: "B", parking: "C" };
 // 쌍계초 is one combined Pet & Kids zone (85 tents)
 const PK = { name: "Pet & Kids zone", color: "#8a63d2", dark: "#5b3aa3", tint: "#ddd0f6" };
@@ -360,12 +335,12 @@ const G = {
   houses: [[540, 420, "#5d8fb8"], [575, 440, "#c4663a"], [612, 418, "#4f9a8a"], [650, 432, "#d9a441"], [520, 455, "#7d8a96"], [690, 405, "#c4663a"], [555, 395, "#6fa86b"], [632, 392, "#5d8fb8"], [180, 280, "#c4663a"], [140, 250, "#5d8fb8"], [120, 420, "#d9a441"]],
 };
 const ISO_ZONES = {
-  school:  { c: [540, 170], a: 80, b: 40, fill: "#ddb389", pin: 6, rows: 4, cols: 9 },
-  parking: { c: [760, 230], a: 62, b: 56, fill: "#e6e2d8", pin: 7, rows: 6, cols: 5 },
-  temple:  { c: [1010, 226], a: 14, b: 76, fill: "#fff4dc", pin: 5, rows: 15, cols: 2 },
-  stage:   { c: [420, 740], a: 100, b: 70, fill: "#ffffff", pin: 1 },
+  school:  { c: [540, 170], a: 80, b: 40, fill: "#ecd3a0", pin: 6, rows: 4, cols: 9 },
+  parking: { c: [760, 230], a: 62, b: 56, fill: "#d3cec4", pin: 7, rows: 6, cols: 5 },
+  temple:  { c: [1010, 226], a: 14, b: 76, fill: "#eadcbf", pin: 5, rows: 15, cols: 2 },
+  stage:   { c: [420, 740], a: 100, b: 70, fill: "#fbe7c4", pin: 1 },
 };
-const TENT_COLORS = ["#ffffff", "#eee937", "#ffffff", "#ea5117", "#ffffff", "#52c2e8", "#ffffff"];
+const TENT_COLORS = ["#f08a3c", "#f5b82e", "#4fa3d9", "#e4574b", "#7cc06a", "#f08a3c", "#9b7fe6"];
 const LEGEND_ITEMS = [
   [1, "#3b5bdb", "메인 무대 · 공연장", "stage"], [2, "#e0a21a", "홍보부스 8동 · 인포데스크 2동", "stage"], [3, "#e0a21a", "푸드트럭 · 박물관 북쪽", "stage"],
   [4, "#8a63d2", "B 쌍계초 · Pet & Kids zone 85동", "school"], [5, "#e0702a", "A 쌍계사 경내 캠핑 · 30동", "temple"],
@@ -381,39 +356,37 @@ function isoBuild() {
   el("feDropShadow", { dx: 0, dy: 2, stdDeviation: 1.6, "flood-color": "#5a3a12", "flood-opacity": .35 }, f);
   const R = rng(7);
 
-  el("rect", { x: 0, y: 0, width: 1200, height: 860, fill: "#52c2e8" }, svg);
-  const dots = el("pattern", { id: "isoDots", width: 7, height: 7, patternUnits: "userSpaceOnUse" }, defs); el("circle", { cx: 3.5, cy: 3.5, r: 1.25, fill: "rgba(0,0,0,.28)" }, dots);
-  el("path", { d: smoothClosed(G.blob.map(([x, y]) => [x, y + 10])), fill: "#111" }, svg);
-  el("path", { d: smoothClosed(G.blob), fill: "#2fb475", stroke: "#111", "stroke-width": 4 }, svg);
-  el("path", { d: smoothClosed(G.blob), fill: "url(#isoDots)" }, svg);
+  el("rect", { x: 0, y: 0, width: 1200, height: 860, fill: "#fdf1d8" }, svg);
+  el("path", { d: smoothClosed(G.blob.map(([x, y]) => [x, y + 10])), fill: "#efc68e" }, svg);
+  el("path", { d: smoothClosed(G.blob), fill: "#f9d9a6" }, svg);
   const ground = el("g", {}, svg);
 
   // tea fields
   for (const t of G.tea) {
-    el("polygon", { points: P3(t.c[0], t.c[1], [[-t.a, -t.b], [t.a, -t.b], [t.a, t.b], [-t.a, t.b]]), fill: "#eee937", stroke: "#111", "stroke-width": 2.5 }, ground);
-    for (let y = -t.b + 5; y < t.b; y += 7) { const [x1, y1] = iso(t.c[0], t.c[1], -t.a + 3, y), [x2, y2] = iso(t.c[0], t.c[1], t.a - 3, y); el("line", { x1, y1, x2, y2, stroke: "#1f9a62", "stroke-width": 3.2, "stroke-linecap": "round" }, ground); }
+    el("polygon", { points: P3(t.c[0], t.c[1], [[-t.a, -t.b], [t.a, -t.b], [t.a, t.b], [-t.a, t.b]]), fill: "#b9d77e", stroke: "#8db45a", "stroke-width": 1.5 }, ground);
+    for (let y = -t.b + 5; y < t.b; y += 7) { const [x1, y1] = iso(t.c[0], t.c[1], -t.a + 3, y), [x2, y2] = iso(t.c[0], t.c[1], t.a - 3, y); el("line", { x1, y1, x2, y2, stroke: "#5f9a3a", "stroke-width": 3.2, "stroke-linecap": "round" }, ground); }
   }
   // river and roads
-  el("path", { d: smoothOpen(G.river), fill: "none", stroke: "#111", "stroke-width": 44, "stroke-linecap": "round" }, ground);
-  el("path", { d: smoothOpen(G.river), fill: "none", stroke: "#52c2e8", "stroke-width": 37, "stroke-linecap": "round" }, ground);
-  el("path", { d: smoothOpen(G.river), fill: "none", stroke: "#c6eefb", "stroke-width": 10, "stroke-linecap": "round", "stroke-dasharray": "26 34" }, ground);
-  el("path", { d: smoothOpen(G.hwagaero), fill: "none", stroke: "#ddb389", "stroke-width": 18, "stroke-linecap": "round" }, ground);
-  el("path", { d: smoothOpen(G.hwagaero), fill: "none", stroke: "#fff", "stroke-width": 1.8, "stroke-dasharray": "8 8" }, ground);
-  for (const r of G.roads) el("path", { d: smoothOpen(r), fill: "none", stroke: "#111", "stroke-width": 24, "stroke-linecap": "round", "stroke-linejoin": "round" }, ground);
-  for (const r of G.roads) el("path", { d: smoothOpen(r), fill: "none", stroke: "#ddb389", "stroke-width": 18, "stroke-linecap": "round", "stroke-linejoin": "round" }, ground);
-  el("ellipse", { cx: 480, cy: 366, rx: 20, ry: 11, fill: "#2fb475", stroke: "#111", "stroke-width": 2.5 }, ground);
+  el("path", { d: smoothOpen(G.river), fill: "none", stroke: "#e9c79a", "stroke-width": 50, "stroke-linecap": "round" }, ground);
+  el("path", { d: smoothOpen(G.river), fill: "none", stroke: "#7cc4e4", "stroke-width": 36, "stroke-linecap": "round" }, ground);
+  el("path", { d: smoothOpen(G.river), fill: "none", stroke: "#a9dcf0", "stroke-width": 14, "stroke-linecap": "round", "stroke-dasharray": "26 34" }, ground);
+  el("path", { d: smoothOpen(G.hwagaero), fill: "none", stroke: "#f6e3b8", "stroke-width": 18, "stroke-linecap": "round" }, ground);
+  el("path", { d: smoothOpen(G.hwagaero), fill: "none", stroke: "#e5b866", "stroke-width": 1.6, "stroke-dasharray": "8 8" }, ground);
+  for (const r of G.roads) el("path", { d: smoothOpen(r), fill: "none", stroke: "#eab676", "stroke-width": 24, "stroke-linecap": "round", "stroke-linejoin": "round" }, ground);
+  for (const r of G.roads) el("path", { d: smoothOpen(r), fill: "none", stroke: "#fcebc8", "stroke-width": 17, "stroke-linecap": "round", "stroke-linejoin": "round" }, ground);
+  el("ellipse", { cx: 480, cy: 366, rx: 20, ry: 11, fill: "#b9d77e", stroke: "#eab676", "stroke-width": 3 }, ground);
 
   // flat zone plates
   const plate = (parent, cx, cy, a, b, fill, o = {}) => {
     const t = o.t ?? 6;
     const e = [iso(cx, cy, -a, b), iso(cx, cy, a, b), iso(cx, cy, a, -b)];
-    el("polygon", { points: [...e, ...e.slice().reverse().map(([x, y]) => [x, y + t])].map(p => p.join(",")).join(" "), fill: shade(fill, .78), stroke: "#111", "stroke-width": 2.2, "stroke-linejoin": "round" }, parent);
-    el("path", { d: roundedPath([iso(cx, cy, -a, -b), iso(cx, cy, a, -b), iso(cx, cy, a, b), iso(cx, cy, -a, b)], o.r ?? 5), fill, stroke: o.stroke || "#111", "stroke-width": 2.6, "stroke-dasharray": o.dash || "" }, parent);
+    el("polygon", { points: [...e, ...e.slice().reverse().map(([x, y]) => [x, y + t])].map(p => p.join(",")).join(" "), fill: shade(fill, .78) }, parent);
+    el("path", { d: roundedPath([iso(cx, cy, -a, -b), iso(cx, cy, a, -b), iso(cx, cy, a, b), iso(cx, cy, -a, b)], o.r ?? 5), fill, stroke: o.stroke || shade(fill, .85), "stroke-width": 1.5, "stroke-dasharray": o.dash || "" }, parent);
   };
   const zoneG = {};
   for (const [id, z] of Object.entries(ISO_ZONES)) {
     const g = el("g", { class: "zone", "data-id": id, tabindex: "0", role: "button", "aria-label": (NAMES[id] || id) + " 배치도 보기" }, ground);
-    plate(g, z.c[0], z.c[1], z.a, z.b, z.fill, id === "temple" ? { dash: "6 4", stroke: "#111" } : {});
+    plate(g, z.c[0], z.c[1], z.a, z.b, z.fill, id === "temple" ? { dash: "6 4", stroke: "#b08a4a" } : {});
     zoneG[id] = g;
     g.addEventListener("click", () => { select(id); jump(); });
     g.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(id); jump(); } });
@@ -422,10 +395,10 @@ function isoBuild() {
   { const z = ISO_ZONES.parking; for (let x = -z.a + 12; x < z.a; x += 21) { const [x1, y1] = iso(...z.c, x, -z.b + 4), [x2, y2] = iso(...z.c, x, z.b - 4); el("line", { x1, y1, x2, y2, stroke: "#fff", "stroke-width": 1.4, opacity: .8 }, zoneG.parking); } }
   { const z = ISO_ZONES.school;
     el("path", { d: roundedPath([iso(...z.c, -z.a + 4, -z.b + 4), iso(...z.c, z.a - 4, -z.b + 4), iso(...z.c, z.a - 4, z.b - 4), iso(...z.c, -z.a + 4, z.b - 4)], 4), fill: PK.tint }, zoneG.school); }
-  plate(ground, 1080, 110, 72, 48, "#ddb389");
+  plate(ground, 1080, 110, 72, 48, "#ead8b2");
   // 방사 (temple lodging rooms): the building beside camp C, and the Buddhist culture & art hall
   for (const [cx, cy, a, b] of [[704, 112, 34, 26], [1124, 312, 38, 30]]) {
-    plate(ground, cx, cy, a, b, "#ffffff", { stroke: "#111" });
+    plate(ground, cx, cy, a, b, "#f6dcae", { stroke: "#c27c2c" });
     el("path", { d: roundedPath([iso(cx, cy, -a + 3, -b + 3), iso(cx, cy, a - 3, -b + 3), iso(cx, cy, a - 3, b - 3), iso(cx, cy, -a + 3, b - 3)], 3), fill: "none", stroke: "#fff", "stroke-width": 2.2, "stroke-dasharray": "2 5", "stroke-linecap": "round" }, ground);
   }
 
@@ -434,37 +407,37 @@ function isoBuild() {
   const add = (y, fn) => items.push({ y, fn });
   const box = (parent, cx, cy, a, b, h, o = {}) => {
     const wall = o.wall || "#fbf6ec", roof = o.roof || "#2e8e9a", g = el("g", { filter: o.noShadow ? "" : "url(#isoShadow)" }, parent);
-    el("polygon", { points: P3(cx, cy, [[-a, b, 0], [a, b, 0], [a, b, h], [-a, b, h]]), fill: wall, stroke: "#111", "stroke-width": 1.4, "stroke-linejoin": "round" }, g);
-    el("polygon", { points: P3(cx, cy, [[a, b, 0], [a, -b, 0], [a, -b, h], [a, b, h]]), fill: shade(o.wall2base || "#e8dcc6", 1), stroke: "#111", "stroke-width": 1.4, "stroke-linejoin": "round" }, g);
+    el("polygon", { points: P3(cx, cy, [[-a, b, 0], [a, b, 0], [a, b, h], [-a, b, h]]), fill: wall }, g);
+    el("polygon", { points: P3(cx, cy, [[a, b, 0], [a, -b, 0], [a, -b, h], [a, b, h]]), fill: shade(o.wall2base || "#e8dcc6", 1) }, g);
     if (o.windows) for (let x = -a + 6; x < a - 4; x += 9) el("polygon", { points: P3(cx, cy, [[x, b, h * .35], [x + 4, b, h * .35], [x + 4, b, h * .7], [x, b, h * .7]]), fill: "#8fc7e0" }, g);
     if (o.gable) {
       const rh = o.rh ?? Math.min(b * .9, 14), e = 3;
-      el("polygon", { points: P3(cx, cy, [[-a - e, -b - e, h], [a + e, -b - e, h], [a + e, 0, h + rh], [-a - e, 0, h + rh]]), fill: shade(roof, .82), stroke: "#111", "stroke-width": 1.4, "stroke-linejoin": "round" }, g);
-      el("polygon", { points: P3(cx, cy, [[a, -b, h], [a, b, h], [a, 0, h + rh]]), fill: "#e8dcc6", stroke: "#111", "stroke-width": 1.4, "stroke-linejoin": "round" }, g);
-      el("polygon", { points: P3(cx, cy, [[-a - e, 0, h + rh], [a + e, 0, h + rh], [a + e, b + e, h], [-a - e, b + e, h]]), fill: roof, stroke: "#111", "stroke-width": 1.4, "stroke-linejoin": "round" }, g);
+      el("polygon", { points: P3(cx, cy, [[-a - e, -b - e, h], [a + e, -b - e, h], [a + e, 0, h + rh], [-a - e, 0, h + rh]]), fill: shade(roof, .82) }, g);
+      el("polygon", { points: P3(cx, cy, [[a, -b, h], [a, b, h], [a, 0, h + rh]]), fill: "#e8dcc6" }, g);
+      el("polygon", { points: P3(cx, cy, [[-a - e, 0, h + rh], [a + e, 0, h + rh], [a + e, b + e, h], [-a - e, b + e, h]]), fill: roof }, g);
       if (o.label) {
         const [tx, ty] = iso(cx, cy, 0, b / 2, h + rh / 2), vy = (S30 * b + rh) / b;
-        const t = el("text", { transform: `matrix(${C30} ${S30} ${-C30 * .55} ${vy * .55} ${tx} ${ty})`, "text-anchor": "middle", "dominant-baseline": "central", "font-size": o.fs || 11, fill: "#fff", "font-family": "Black Han Sans, sans-serif" }, g);
+        const t = el("text", { transform: `matrix(${C30} ${S30} ${-C30 * .55} ${vy * .55} ${tx} ${ty})`, "text-anchor": "middle", "dominant-baseline": "central", "font-size": o.fs || 11, fill: "#fff", "font-family": "Bagel Fat One, sans-serif" }, g);
         t.textContent = o.label;
       }
     } else {
-      el("polygon", { points: P3(cx, cy, [[-a, -b, h], [a, -b, h], [a, b, h], [-a, b, h]]), fill: roof, stroke: "#111", "stroke-width": 1.4, "stroke-linejoin": "round" }, g);
-      if (o.label) { const [tx, ty] = iso(cx, cy, 0, 0, h); const t = el("text", { transform: `matrix(${C30} ${S30} ${-C30} ${S30} ${tx} ${ty})`, "text-anchor": "middle", "dominant-baseline": "central", "font-size": o.fs || 11, fill: "#fff", "font-family": "Black Han Sans, sans-serif" }, g); t.textContent = o.label; }
+      el("polygon", { points: P3(cx, cy, [[-a, -b, h], [a, -b, h], [a, b, h], [-a, b, h]]), fill: roof }, g);
+      if (o.label) { const [tx, ty] = iso(cx, cy, 0, 0, h); const t = el("text", { transform: `matrix(${C30} ${S30} ${-C30} ${S30} ${tx} ${ty})`, "text-anchor": "middle", "dominant-baseline": "central", "font-size": o.fs || 11, fill: "#fff", "font-family": "Bagel Fat One, sans-serif" }, g); t.textContent = o.label; }
     }
     return g;
   };
   const baseY = (cy, a, b) => cy + (a + b) * S30;
   const tent = (parent, x, y, s, c) => {
-    el("ellipse", { cx: x + s * .2, cy: y + s * .32, rx: s * 1.15, ry: s * .38, fill: "rgba(0,0,0,.25)" }, parent);
-    el("polygon", { points: `${x - s},${y + s * .3} ${x},${y - s} ${x + s},${y + s * .3}`, fill: c, stroke: "#111", "stroke-width": 1.1, "stroke-linejoin": "round" }, parent);
+    el("ellipse", { cx: x + s * .2, cy: y + s * .32, rx: s * 1.15, ry: s * .38, fill: "rgba(90,58,18,.25)" }, parent);
+    el("polygon", { points: `${x - s},${y + s * .3} ${x},${y - s} ${x + s},${y + s * .3}`, fill: c }, parent);
     el("polygon", { points: `${x},${y - s} ${x + s},${y + s * .3} ${x},${y + s * .3}`, fill: "rgba(0,0,0,.16)" }, parent);
     el("polygon", { points: `${x - s * .28},${y + s * .3} ${x},${y - s * .25} ${x + s * .28},${y + s * .3}`, fill: "rgba(40,25,10,.45)" }, parent);
   };
   const tree = (parent, x, y, r, k) => {
     el("ellipse", { cx: x + r * .3, cy: y + r * .15, rx: r * .95, ry: r * .38, fill: "rgba(90,58,18,.22)" }, parent);
-    el("rect", { x: x - r * .14, y: y - r * .6, width: r * .28, height: r * .7, fill: "#875c4c", stroke: "#111", "stroke-width": 1 }, parent);
-    el("circle", { cx: x, cy: y - r * 1.15, r, fill: ["#23a96e", "#2fb475", "#1f9a62"][k], stroke: "#111", "stroke-width": 1.6 }, parent);
-    el("circle", { cx: x - r * .3, cy: y - r * 1.4, r: r * .42, fill: "rgba(255,255,255,.22)" }, parent);
+    el("rect", { x: x - r * .14, y: y - r * .6, width: r * .28, height: r * .7, fill: "#8a5a33" }, parent);
+    el("circle", { cx: x, cy: y - r * 1.15, r, fill: ["#4f9a3a", "#5aa844", "#3f8a35"][k] }, parent);
+    el("circle", { cx: x - r * .3, cy: y - r * 1.4, r: r * .5, fill: ["#78bf5a", "#86c968", "#69b04f"][k] }, parent);
   };
   // tents in camping zones
   for (const id of ["school", "parking", "temple"]) {
@@ -472,39 +445,39 @@ function isoBuild() {
     for (let i = 0; i < z.rows; i++) for (let j = 0; j < z.cols; j++) {
       const [x, y] = iso(...z.c, -z.a + 8 + (j + .5) * sx, -z.b + 8 + (i + .5) * sy);
       
-      const c = id !== "school" ? TENT_COLORS[(i * 3 + j * 5) % TENT_COLORS.length] : ["#ffffff", "#eee937", "#ffffff", "#ea5117", "#52c2e8"][(i * 2 + j) % 5];
+      const c = id !== "school" ? TENT_COLORS[(i * 3 + j * 5) % TENT_COLORS.length] : ["#8a63d2", "#e8579a", "#4f9a3a", "#f5b82e", "#4fa3d9"][(i * 2 + j) % 5];
       add(y, () => tent(zoneG[id], x, y, id === "temple" ? 4.4 : 6.5, c));
     }
   }
   // buildings
   add(baseY(587, 78, 9) + 143 - 587 + 0, () => {});
-  add(143 + 43, () => box(svg, 587, 143, 78, 9, 22, { roof: "#1f9a62", gable: true, label: "쌍계초등학교", windows: true, fs: 10.5 }));
-  add(530 + 34, () => box(svg, 340, 530, 46, 22, 20, { roof: "#ea5117", gable: true, label: "야생차박물관", windows: true, fs: 11.5 }));
-  add(600 + 29, () => box(svg, 410, 600, 38, 20, 16, { roof: "#ea5117", gable: true, label: "문화센터", windows: true, fs: 11 }));
-  add(188 + 12, () => box(svg, 756, 188, 14, 10, 13, { roof: "#52c2e8", gable: true, label: "샤워실", fs: 7 }));
-  add(262 + 22, () => box(svg, 842, 262, 14, 30, 20, { roof: "#875c4c", gable: true, label: "템플스테이", fs: 7.5, windows: true }));
-  add(266 + 6, () => box(svg, 925, 266, 8, 4, 13, { roof: "#ea5117", gable: true, rh: 6 }));
-  add(258 + 19, () => box(svg, 1132, 258, 26, 12, 16, { roof: "#ea5117", gable: true, label: "예술관", fs: 9, windows: true }));
-  add(112 + 20, () => box(svg, 704, 108, 24, 12, 15, { roof: "#875c4c", gable: true, label: "방사", fs: 9, windows: true }));
-  add(312 + 22, () => box(svg, 1124, 318, 22, 12, 13, { roof: "#875c4c", gable: true, label: "방사", fs: 9, windows: true }));
+  add(143 + 43, () => box(svg, 587, 143, 78, 9, 22, { roof: "#6fb06c", gable: true, label: "쌍계초등학교", windows: true, fs: 10.5 }));
+  add(530 + 34, () => box(svg, 340, 530, 46, 22, 20, { roof: "#2e8e9a", gable: true, label: "야생차박물관", windows: true, fs: 11.5 }));
+  add(600 + 29, () => box(svg, 410, 600, 38, 20, 16, { roof: "#3aa0a8", gable: true, label: "문화센터", windows: true, fs: 11 }));
+  add(188 + 12, () => box(svg, 756, 188, 14, 10, 13, { roof: "#178f9a", gable: true, label: "샤워실", fs: 7 }));
+  add(262 + 22, () => box(svg, 842, 262, 14, 30, 20, { roof: "#8a5a33", gable: true, label: "템플스테이", fs: 7.5, windows: true }));
+  add(266 + 6, () => box(svg, 925, 266, 8, 4, 13, { roof: "#4b5560", gable: true, rh: 6 }));
+  add(258 + 19, () => box(svg, 1132, 258, 26, 12, 16, { roof: "#2e8e9a", gable: true, label: "예술관", fs: 9, windows: true }));
+  add(112 + 20, () => box(svg, 704, 108, 24, 12, 15, { roof: "#8a5317", gable: true, label: "방사", fs: 9, windows: true }));
+  add(312 + 22, () => box(svg, 1124, 318, 22, 12, 13, { roof: "#8a5317", gable: true, label: "방사", fs: 9, windows: true }));
   for (const [x, y, a, b, h, lab] of [[1100, 92, 30, 16, 16, "대웅전"], [1040, 122, 18, 12, 12, ""], [1132, 136, 16, 10, 11, ""], [1062, 70, 16, 10, 11, ""], [1150, 82, 14, 10, 10, ""], [1015, 90, 12, 8, 10, ""]])
-    add(y + (a + b) * S30, () => box(svg, x, y, a, b, h, { roof: "#ea5117", wall: "#ffffff", gable: true, label: lab, fs: 9 }));
+    add(y + (a + b) * S30, () => box(svg, x, y, a, b, h, { roof: "#4b5560", wall: "#f3e7d3", gable: true, label: lab, fs: 9 }));
   for (const [x, y, c] of G.houses) add(y + 6, () => box(svg, x, y, 7, 5, 7, { roof: c, gable: true, rh: 5, noShadow: true }));
   // stage plaza: stage, audience, booths, food trucks
   const S = ISO_ZONES.stage, [stx, sty] = iso(...S.c, 70, -45);
   add(sty + 20, () => {
-    const g = box(svg, stx, sty, 10, 30, 22, { wall: "#2b2f3a", roof: "#111", label: "무대", fs: 11 });
+    const g = box(svg, stx, sty, 10, 30, 22, { wall: "#2b2f3a", roof: "#3b5bdb", label: "무대", fs: 10 });
     const [lx, ly] = iso(stx, sty, -10, 0, 30);
     el("line", { x1: lx, y1: ly - 6, x2: lx, y2: ly + 14, stroke: "#ffe55c", "stroke-width": 2 }, g);
   });
   for (let i = 0; i < 70; i++) { const x = -60 + R() * 110, y = -55 + R() * 70; const [px, py] = iso(...S.c, x, y); add(py, () => { el("circle", { cx: px, cy: py - 3, r: 2.2, fill: ["#e4574b", "#4fa3d9", "#f5b82e", "#7cc06a", "#9b7fe6"][i % 5] }, svg); el("rect", { x: px - 1.6, y: py - 1.2, width: 3.2, height: 3.4, rx: 1, fill: "#6b5a48" }, svg); }); }
   // promotion booths: 5 on the south edge, 3 on the south-west road; console + waiting rooms on the north edge; info desks + photo zone outside the north-west corner
-  for (let k = 0; k < 5; k++) { const [bx, by] = iso(...S.c, -64 + k * 13, 58); add(by + 6, () => box(svg, bx, by, 5, 5, 9, { roof: k % 2 ? "#ea5117" : "#eee937", wall: "#fff", noShadow: true })); }
-  for (let k = 0; k < 3; k++) { const [bx, by] = iso(...S.c, -90, 26 + k * 14); add(by + 6, () => box(svg, bx, by, 5, 5, 9, { roof: k % 2 ? "#ea5117" : "#eee937", wall: "#fff", noShadow: true })); }
+  for (let k = 0; k < 5; k++) { const [bx, by] = iso(...S.c, -64 + k * 13, 58); add(by + 6, () => box(svg, bx, by, 5, 5, 9, { roof: k % 2 ? "#ef6b4a" : "#f5b82e", wall: "#fff", noShadow: true })); }
+  for (let k = 0; k < 3; k++) { const [bx, by] = iso(...S.c, -90, 26 + k * 14); add(by + 6, () => box(svg, bx, by, 5, 5, 9, { roof: k % 2 ? "#ef6b4a" : "#f5b82e", wall: "#fff", noShadow: true })); }
   for (let k = 0; k < 4; k++) { const [bx, by] = iso(...S.c, -50 + k * 15, -60); add(by + 6, () => box(svg, bx, by, 6, 5, 10, { roof: "#3d4a5c", wall: "#fff", noShadow: true })); }
   for (let k = 0; k < 2; k++) { const [bx, by] = iso(...S.c, -116, -70 + k * 12); add(by + 6, () => box(svg, bx, by, 5, 5, 9, { roof: "#2f6fe0", wall: "#fff", noShadow: true })); }
-  { const p = [iso(...S.c, -104, -52), iso(...S.c, -100, -52), iso(...S.c, -100, -24), iso(...S.c, -104, -24)]; add(p[0][1], () => el("polygon", { points: pts(p.map(([x, y]) => [x, y - 6])), fill: "#eee937", stroke: "#111", "stroke-width": 1.6 }, svg)); }
-  for (let k = 0; k < 3; k++) { const fx = 352 + k * 28, fy = 456 - k * 10; add(fy + 8, () => box(svg, fx, fy, 11, 5, 9, { roof: "#ea5117", wall: "#fff" })); }
+  { const p = [iso(...S.c, -104, -52), iso(...S.c, -100, -52), iso(...S.c, -100, -24), iso(...S.c, -104, -24)]; add(p[0][1], () => el("polygon", { points: pts(p.map(([x, y]) => [x, y - 6])), fill: "#f5d34a", stroke: "#b8901a", "stroke-width": 1.2 }, svg)); }
+  for (let k = 0; k < 3; k++) { const fx = 352 + k * 28, fy = 456 - k * 10; add(fy + 8, () => box(svg, fx, fy, 11, 5, 9, { roof: "#f08a3c", wall: "#fff" })); }
   // trees on free ground
   const clears = [[704, 112, 64, 40], [1124, 306, 72, 56], [840, 262, 44, 34], [540, 170, 125, 75], [760, 230, 112, 72], [1010, 226, 86, 54], [1080, 110, 125, 75], [925, 266, 22, 16], [420, 740, 165, 100], [340, 530, 72, 46], [410, 600, 60, 40], [380, 445, 64, 40], [480, 366, 26, 16], [612, 512, 68, 40], [560, 590, 52, 34], [676, 452, 50, 30], [600, 420, 110, 46], [160, 335, 34, 26], [150, 260, 45, 30]];
   const blobPoly = G.blob;
@@ -525,7 +498,7 @@ function isoBuild() {
   el("path", { d: smoothOpen(G.walk), fill: "none", stroke: "#fff", "stroke-width": 4, "stroke-dasharray": ".1 10", "stroke-linecap": "round" }, svg);
   isoPill(svg, 690, 362, "도보 12분 · 864m", { bg: "#fff", fg: "#7a4a12", fs: 14.5, border: "#e0a46a" });
   // river label
-  const rl = el("text", { transform: `matrix(${C30 * .45} ${-S30 * 1.6} ${C30} ${S30} 300 410)`, "font-size": 15, fill: "#fff", "font-family": "Black Han Sans, sans-serif", "letter-spacing": 2 }, svg); rl.textContent = "화개천";
+  const rl = el("text", { transform: `matrix(${C30 * .45} ${-S30 * 1.6} ${C30} ${S30} 300 410)`, "font-size": 15, fill: "#fff", "font-family": "Bagel Fat One, sans-serif", "letter-spacing": 2 }, svg); rl.textContent = "화개천";
 
   // numbered pins
   const pinAt = { 1: iso(stx, sty, 0, 0, 34), 2: iso(...S.c, -40, 60, 14), 3: [380, 436], 4: iso(540, 170, 0, 0), 5: iso(1010, 226, 0, -30), 6: iso(760, 230, 0, 0), 7: [846, 214], 8: [340, 486], 9: [612, 506], 10: [704, 104], 11: [1124, 304] };
@@ -533,9 +506,9 @@ function isoBuild() {
     const [x, y] = pinAt[n];
     const g = el("g", { class: id ? "zone-pin" : "", "data-id": id || "", filter: "url(#isoShadow)" }, svg);
     const r = 17, cy = y - 30;
-    el("path", { d: `M${x} ${y} C${x - 3} ${y - 6} ${x - r} ${cy + 7} ${x - r} ${cy} A${r} ${r} 0 1 1 ${x + r} ${cy} C${x + r} ${cy + 7} ${x + 3} ${y - 6} ${x} ${y}Z`, fill: "#ea5117", stroke: "#111", "stroke-width": 2.6 }, g);
-    el("circle", { cx: x, cy, r: 12.6, fill: "#fff", stroke: "#111", "stroke-width": 1.6 }, g);
-    const t = el("text", { x, y: cy + 6, "text-anchor": "middle", "font-size": n > 9 ? 13.5 : 17, fill: "#111", "font-family": "Black Han Sans, sans-serif" }, g); t.textContent = n;
+    el("path", { d: `M${x} ${y} C${x - 3} ${y - 6} ${x - r} ${cy + 7} ${x - r} ${cy} A${r} ${r} 0 1 1 ${x + r} ${cy} C${x + r} ${cy + 7} ${x + 3} ${y - 6} ${x} ${y}Z`, fill: color, stroke: "#fff", "stroke-width": 2 }, g);
+    el("circle", { cx: x, cy, r: 12.6, fill: "#fff" }, g);
+    const t = el("text", { x, y: cy + 6, "text-anchor": "middle", "font-size": n > 9 ? 13.5 : 17, fill: color, "font-family": "Bagel Fat One, sans-serif" }, g); t.textContent = n;
     if (id) { g.style.cursor = "pointer"; g.addEventListener("click", () => { select(id); jump(); }); }
   }
   // facility badges
@@ -547,42 +520,41 @@ function isoBuild() {
   isoPill(svg, ...iso(540, 190, -6, 54), "Pet & Kids zone", { bg: PK.color, fg: "#fff", fs: 14, border: "#fff" });
 
   // title + info box
-  posterTitle(svg, 22, 18, 300, "2026 · 11.06 FRI – 11.08 SUN");
+  const tg = el("g", {}, svg);
+  el("rect", { x: 26, y: 26, width: 288, height: 176, rx: 18, fill: "#fff8ea", stroke: "#c8402c", "stroke-width": 3 }, tg);
+  const T = (x, y, s, o) => { const t = el("text", { x, y, ...o }, tg); t.textContent = s; };
+  T(46, 64, "2026 · 쌍계사", { "font-size": 15, fill: "#c8402c", "font-family": "Bagel Fat One, sans-serif" });
+  T(44, 128, "山寺", { "font-size": 60, fill: "#c8402c", "font-family": "Noto Serif KR, serif", "font-weight": 900 });
+  T(170, 128, "캠프", { "font-size": 54, fill: "#c8402c", "font-family": "Bagel Fat One, sans-serif" });
+  T(46, 160, "쌍계사 캠핑 페스티벌 · 행사 안내도", { "font-size": 14, fill: "#5a3a22", "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700 });
+  el("rect", { x: 46, y: 170, width: 170, height: 22, rx: 11, fill: "#c8402c" }, tg);
+  T(131, 186, "11.6 금 – 11.8 일", { "font-size": 12.5, fill: "#fff", "text-anchor": "middle", "font-family": "Bagel Fat One, sans-serif" });
   const ib = el("g", {}, svg);
-  el("rect", { x: 846, y: 640, width: 330, height: 150, rx: 16, fill: "#fff", stroke: "#111", "stroke-width": 3 }, ib);
-  const I = (y, s, o = {}) => { const t = el("text", { x: 866, y, "font-size": 12.5, fill: "#111", "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 500, ...o }, ib); t.textContent = s; };
+  el("rect", { x: 846, y: 640, width: 330, height: 150, rx: 16, fill: "#d9efdc", stroke: "#a9d3b0", "stroke-width": 2 }, ib);
+  const I = (y, s, o = {}) => { const t = el("text", { x: 866, y, "font-size": 12.5, fill: "#2b4a30", "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 500, ...o }, ib); t.textContent = s; };
   I(668, "쌍계사 · 하동군 화개면 쌍계사길 59", { "font-weight": 700, "font-size": 13.5 });
   I(692, "캠핑 사이트 3곳 · 텐트 250동");
   I(712, "Pet & Kids zone · 방사 2곳 · 홍보부스 8 · 푸드트럭");
-  I(740, "Tip. 공연장에서 쌍계사 일주문까지", { fill: "#ea5117", "font-weight": 700 });
-  I(760, "쌍계사길을 따라 걸어서 약 12분", { fill: "#ea5117", "font-weight": 700 });
-  I(782, "※ 거리는 줄여서 그린 안내도입니다", { "font-size": 11, fill: "#555" });
+  I(740, "Tip. 공연장에서 쌍계사 일주문까지", { fill: "#c8402c", "font-weight": 700 });
+  I(760, "쌍계사길을 따라 걸어서 약 12분", { fill: "#c8402c", "font-weight": 700 });
+  I(782, "※ 거리는 줄여서 그린 안내도입니다", { "font-size": 11, fill: "#5b7a60" });
   sizeIsoPills();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeIsoPills);
 }
 const isoPills = [];
 function isoPill(parent, x, y, text, o = {}) {
   const fs = o.fs || 12, g = el("g", { transform: `translate(${x} ${y})`, filter: "url(#isoShadow)" }, parent);
-  const rect = el("rect", { fill: o.bg, stroke: "#111", "stroke-width": 2.2 }, g);
-  const t = el("text", { "text-anchor": "middle", y: fs * .36, "font-size": fs, fill: o.fg, "font-family": "Black Han Sans, sans-serif" }, g); t.textContent = text;
+  const rect = el("rect", { fill: o.bg, stroke: o.border || "#fff", "stroke-width": 1.6 }, g);
+  const t = el("text", { "text-anchor": "middle", y: fs * .36, "font-size": fs, fill: o.fg, "font-family": "Bagel Fat One, sans-serif" }, g); t.textContent = text;
   isoPills.push({ rect, t, fs });
 }
 function sizeIsoPills() {
   for (const p of isoPills) { let w = 0; try { w = p.t.getComputedTextLength(); } catch (e) {} if (!w) w = p.t.textContent.length * p.fs * .95; const h = p.fs * 1.75, W = w + p.fs * 1.4; Object.entries({ x: -W / 2, y: -h / 2, width: W, height: h, rx: h / 2 }).forEach(([k, v]) => p.rect.setAttribute(k, v)); }
 }
-// poster-style title: white cloud with the brush lettering from the poster, plus the orange sun
-function posterTitle(svg, x, y, w, sub) {
-  const g = el("g", { transform: `translate(${x} ${y})` }, svg), h = w * 0.5;
-  el("circle", { cx: w * .9, cy: h * .16, r: w * .1, fill: "#ea5117", stroke: "#111", "stroke-width": 3 }, g);
-  const blobs = [[.18, .55, .2], [.38, .38, .24], [.62, .36, .23], [.82, .55, .19], [.5, .68, .3], [.22, .74, .15], [.78, .74, .15]];
-  for (const pass of [0, 1]) for (const [cx, cy, r] of blobs) el("circle", { cx: w * cx, cy: h * cy, r: w * r * .62, fill: "#fff", stroke: pass ? "none" : "#111", "stroke-width": pass ? 0 : 6 }, g);
-  const bw = w * .74; el("image", { href: BRUSH, x: (w - bw) / 2, y: h * .24, width: bw, height: bw * 204 / 740 }, g);
-  const t2 = el("text", { x: w / 2, y: h * .9, "text-anchor": "middle", "font-size": w * .055, fill: "#111", "font-family": "Black Han Sans, sans-serif" }, g); t2.textContent = "with 쌍계사";
-}
 function isoBadge(parent, x, y, kind, s, shadow = "isoShadow") {
   const [c] = BADGES[kind], g = el("g", shadow ? { filter: `url(#${shadow})` } : {}, parent);
-  if (kind === "info") el("circle", { cx: x, cy: y, r: s, fill: c, stroke: "#111", "stroke-width": 2 }, g);
-  else el("rect", { x: x - s, y: y - s, width: s * 2, height: s * 2, rx: s * .35, fill: kind === "med" ? "#fff" : c, stroke: "#111", "stroke-width": 2 }, g);
+  if (kind === "info") el("circle", { cx: x, cy: y, r: s, fill: c, stroke: "#fff", "stroke-width": 1.6 }, g);
+  else el("rect", { x: x - s, y: y - s, width: s * 2, height: s * 2, rx: s * .35, fill: kind === "med" ? "#fff" : c, stroke: kind === "med" ? c : "#fff", "stroke-width": 1.6 }, g);
   const w = "#fff";
   if (kind === "wc") {
     for (const dx of [-.45, .45]) { el("circle", { cx: x + dx * s, cy: y - s * .48, r: s * .17, fill: w }, g); }
@@ -597,7 +569,7 @@ function isoBadge(parent, x, y, kind, s, shadow = "isoShadow") {
   } else if (kind === "med") {
     el("path", { d: `M${x - .18 * s} ${y - .65 * s} h${.36 * s} v${.47 * s} h${.47 * s} v${.36 * s} h${-.47 * s} v${.47 * s} h${-.36 * s} v${-.47 * s} h${-.47 * s} v${-.36 * s} h${.47 * s}Z`, fill: c }, g);
   } else {
-    const t = el("text", { x, y: y + s * .42, "text-anchor": "middle", "font-size": s * 1.25, fill: w, "font-family": kind === "info" ? "Georgia, serif" : "Black Han Sans, sans-serif", "font-style": kind === "info" ? "italic" : "normal", "font-weight": 700 }, g);
+    const t = el("text", { x, y: y + s * .42, "text-anchor": "middle", "font-size": s * 1.25, fill: w, "font-family": kind === "info" ? "Georgia, serif" : "Bagel Fat One, sans-serif", "font-style": kind === "info" ? "italic" : "normal", "font-weight": 700 }, g);
     t.textContent = kind === "info" ? "i" : "P";
   }
   return g;
@@ -612,7 +584,7 @@ function isoLegend() {
 
 // ---------- 일러스트 지도: flat pastel street map (schematic) ----------
 const FL = {
-  bg: "#2fb475", road: "#ffffff", ink: "#111", banner: "#111", num: "#ea5117",
+  bg: "#a9d7de", road: "#ffffff", ink: "#24505a", banner: "#1f4e5a", num: "#2aa3ad",
   river: [[150, 840], [190, 600], [250, 420], [300, 250], [342, -20]],
   roads: [
     { pts: [[58, 840], [110, 600], [170, 400], [230, 200], [272, -20]], w: 28, name: "HWAGAE-RO", ko: "화개로", at: [128, 520], rot: -70 },
@@ -637,114 +609,110 @@ function flatBuild() {
   const poly = (p, pts, a) => el("polygon", { points: pts.map(q => q.join(",")).join(" "), ...a }, p);
   const T = (p, x, y, s, a) => { const t = el("text", { x, y, ...a }, p); t.textContent = s; return t; };
   const fdefs = el("defs", {}, svg), ff = el("filter", { id: "flatShadow", x: "-30%", y: "-30%", width: "160%", height: "180%" }, fdefs);
-  el("feDropShadow", { dx: 0, dy: 1.5, stdDeviation: 1.2, "flood-color": "#000", "flood-opacity": .3 }, ff);
-  const fd = el("pattern", { id: "flatDots", width: 7, height: 7, patternUnits: "userSpaceOnUse" }, fdefs); el("circle", { cx: 3.5, cy: 3.5, r: 1.25, fill: "rgba(0,0,0,.26)" }, fd);
+  el("feDropShadow", { dx: 0, dy: 1.5, stdDeviation: 1.2, "flood-color": "#1f4e5a", "flood-opacity": .3 }, ff);
   el("rect", { x: 0, y: 0, width: 1080, height: 820, fill: FL.bg }, svg);
-  el("rect", { x: 0, y: 0, width: 1080, height: 820, fill: "url(#flatDots)" }, svg);
 
   // mountains + tea terraces in the empty south-east (지리산 자락)
   const mt = g();
-  for (const [x, y, w, h, c] of [[760, 650, 260, 170, "#ddb389"], [900, 610, 240, 200, "#1f9a62"], [650, 700, 200, 120, "#23a96e"], [1000, 690, 180, 130, "#ddb389"]]) {
-    el("path", { d: `M${x - w / 2} ${y + h / 2} Q${x - w / 6} ${y - h / 2} ${x} ${y - h / 2} Q${x + w / 6} ${y - h / 2} ${x + w / 2} ${y + h / 2}Z`, fill: c, stroke: "#111", "stroke-width": 3, "stroke-linejoin": "round" }, mt);
+  for (const [x, y, w, h, c] of [[760, 640, 260, 170, "#93c8c4"], [900, 610, 240, 200, "#86bfbb"], [650, 700, 200, 120, "#9ccfca"], [1000, 690, 180, 130, "#93c8c4"]]) {
+    el("path", { d: `M${x - w / 2} ${y + h / 2} Q${x - w / 6} ${y - h / 2} ${x} ${y - h / 2} Q${x + w / 6} ${y - h / 2} ${x + w / 2} ${y + h / 2}Z`, fill: c }, mt);
   }
-  T(mt, 905, 560, "지리산 Jirisan", { "text-anchor": "middle", "font-size": 15, fill: "#fff", "font-family": "IBM Plex Mono, monospace", "font-weight": 700, "letter-spacing": 2, "paint-order": "stroke", stroke: "#111", "stroke-width": 4 });
+  T(mt, 905, 560, "지리산 Jirisan", { "text-anchor": "middle", "font-size": 14, fill: "#3f7f7a", "font-family": "IBM Plex Mono, monospace", "font-weight": 600, "letter-spacing": 2 });
 
   // river
-  el("path", { d: smoothOpen(FL.river), fill: "none", stroke: "#111", "stroke-width": 52, "stroke-linecap": "round" }, svg);
-  el("path", { d: smoothOpen(FL.river), fill: "none", stroke: "#52c2e8", "stroke-width": 45, "stroke-linecap": "round" }, svg);
-  el("path", { d: smoothOpen(FL.river), fill: "none", stroke: "#ffffff", "stroke-width": 3, "stroke-dasharray": "14 22", "stroke-linecap": "round" }, svg);
-  T(svg, 0, 0, "화개천", { transform: "translate(318 140) rotate(-74)", "font-size": 16, fill: "#ffffff", "font-family": "Black Han Sans, sans-serif", "letter-spacing": 3, "paint-order": "stroke", stroke: "#111", "stroke-width": 4 });
+  el("path", { d: smoothOpen(FL.river), fill: "none", stroke: "#86c3cf", "stroke-width": 46, "stroke-linecap": "round" }, svg);
+  el("path", { d: smoothOpen(FL.river), fill: "none", stroke: "#c4e9ef", "stroke-width": 3, "stroke-dasharray": "14 22", "stroke-linecap": "round" }, svg);
+  T(svg, 0, 0, "화개천", { transform: "translate(318 140) rotate(-74)", "font-size": 15, fill: "#ffffff", "font-family": "Bagel Fat One, sans-serif", "letter-spacing": 3 });
 
   // tea field block + zone blocks
   const block = (cx, cy, w, h, rot, fill, a = {}) => {
     const r = el("rect", { x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx: 10, fill, transform: `rotate(${rot} ${cx} ${cy})`, ...a }, svg);
     return r;
   };
-  block(540, 575, 170, 92, -6, "#eee937", { stroke: "#111", "stroke-width": 3 });
-  for (let i = 0; i < 6; i++) el("line", { x1: 466, y1: 545 + i * 13, x2: 612, y2: 532 + i * 13, stroke: "#1f9a62", "stroke-width": 5, "stroke-linecap": "round", transform: "rotate(0)" }, svg);
+  block(540, 575, 170, 92, -6, "#b9dca0");
+  for (let i = 0; i < 6; i++) el("line", { x1: 466, y1: 545 + i * 13, x2: 612, y2: 532 + i * 13, stroke: "#8cc36f", "stroke-width": 5, "stroke-linecap": "round", transform: "rotate(0)" }, svg);
 
   // roads
-  for (const r of FL.roads) el("path", { d: smoothOpen(r.pts), fill: "none", stroke: "#111", "stroke-width": r.w + 7, "stroke-linecap": "round", "stroke-linejoin": "round" }, svg);
   for (const r of FL.roads) el("path", { d: smoothOpen(r.pts), fill: "none", stroke: FL.road, "stroke-width": r.w, "stroke-linecap": "round", "stroke-linejoin": "round" }, svg);
-  el("circle", { cx: 390, cy: 420, r: 27, fill: "#111" }, svg); el("circle", { cx: 390, cy: 420, r: 23.5, fill: FL.road }, svg);
-  el("circle", { cx: 390, cy: 420, r: 10, fill: "#2fb475", stroke: "#111", "stroke-width": 2.5 }, svg);
+  el("circle", { cx: 390, cy: 420, r: 24, fill: FL.road }, svg);
+  el("circle", { cx: 390, cy: 420, r: 10, fill: "#b9dca0" }, svg);
   for (const r of FL.roads) if (r.name) {
     const tg = g(svg, { transform: `translate(${r.at[0]} ${r.at[1]}) rotate(${r.rot})` });
-    T(tg, 0, 0, r.name, { "font-size": 15, fill: "#fff", "font-family": "IBM Plex Mono, monospace", "font-weight": 700, "letter-spacing": 3, "paint-order": "stroke", stroke: "#111", "stroke-width": 4 });
-    T(tg, 0, 20, r.ko, { "font-size": 15, fill: "#fff", "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700, "paint-order": "stroke", stroke: "#111", "stroke-width": 4 });
+    T(tg, 0, 0, r.name, { "font-size": 15, fill: FL.ink, "font-family": "IBM Plex Mono, monospace", "font-weight": 600, "letter-spacing": 3 });
+    T(tg, 0, 20, r.ko, { "font-size": 15, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700 });
   }
 
   // zones
   const zones = {};
-  const zone = (id, cx, cy, w, h, rot, fill) => { const zg = g(svg, { class: "zone", "data-id": id, tabindex: "0", role: "button", "aria-label": (NAMES[id] || id) + " 배치도 보기" }); el("rect", { x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx: 12, fill, stroke: "#111", "stroke-width": 3.2, transform: `rotate(${rot} ${cx} ${cy})` }, zg); zones[id] = zg; zg.addEventListener("click", () => { select(id); jump(); }); zg.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(id); jump(); } }); return zg; };
+  const zone = (id, cx, cy, w, h, rot, fill) => { const zg = g(svg, { class: "zone", "data-id": id, tabindex: "0", role: "button", "aria-label": (NAMES[id] || id) + " 배치도 보기" }); el("rect", { x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx: 12, fill, stroke: "#fff", "stroke-width": 3, transform: `rotate(${rot} ${cx} ${cy})` }, zg); zones[id] = zg; zg.addEventListener("click", () => { select(id); jump(); }); zg.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(id); jump(); } }); return zg; };
   // B school split: Pet (west) / Kids (east)
   const sz = zone("school", 535, 230, 200, 92, -8, "#fff");
-  el("rect", { x: 435, y: 184, width: 198, height: 92, rx: 10, fill: "#eee937", stroke: "#111", "stroke-width": 3.2, transform: "rotate(-8 535 230)" }, sz);
-  const pz = zone("parking", 718, 262, 128, 96, -10, "#ddb389");
-  const tz = zone("temple", 942, 210, 156, 34, -50, "#fff4dc");
-  const stz = zone("stage", 330, 690, 236, 150, 0, "#ffffff");
-  const dogRun = (cx, cy, w, h, rot) => { const dg = g(svg); el("rect", { x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx: 10, fill: "#ffffff", stroke: "#111", "stroke-width": 3.2, transform: `rotate(${rot} ${cx} ${cy})` }, dg); el("rect", { x: cx - w / 2 + 5, y: cy - h / 2 + 5, width: w - 10, height: h - 10, rx: 7, fill: "none", stroke: "#ea5117", "stroke-width": 2, "stroke-dasharray": "3 4", transform: `rotate(${rot} ${cx} ${cy})` }, dg); return dg; };
+  el("rect", { x: 435, y: 184, width: 198, height: 92, rx: 10, fill: "#ddd0f6", transform: "rotate(-8 535 230)" }, sz);
+  const pz = zone("parking", 718, 262, 128, 96, -10, "#f3e3c3");
+  const tz = zone("temple", 942, 210, 156, 34, -50, "#f6e4c4");
+  const stz = zone("stage", 330, 690, 236, 150, 0, "#fbe9c8");
+  const dogRun = (cx, cy, w, h, rot) => { const dg = g(svg); el("rect", { x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx: 10, fill: "#f6dcae", stroke: "#fff", "stroke-width": 3, transform: `rotate(${rot} ${cx} ${cy})` }, dg); el("rect", { x: cx - w / 2 + 5, y: cy - h / 2 + 5, width: w - 10, height: h - 10, rx: 7, fill: "none", stroke: "#c27c2c", "stroke-width": 2, "stroke-dasharray": "3 4", transform: `rotate(${rot} ${cx} ${cy})` }, dg); return dg; };
   const dr1 = dogRun(674, 90, 112, 58, -10), dr2 = dogRun(1005, 434, 142, 76, 0);
 
   // icons
-  const tent = (p, x, y, s, c) => { poly(p, [[x - s, y + s * .6], [x, y - s * .9], [x + s, y + s * .6]], { fill: c, stroke: "#111", "stroke-width": Math.max(1.2, s * .14), "stroke-linejoin": "round" }); poly(p, [[x, y - s * .9], [x + s, y + s * .6], [x, y + s * .6]], { fill: "rgba(0,0,0,.12)" }); poly(p, [[x - s * .26, y + s * .6], [x, y - s * .1], [x + s * .26, y + s * .6]], { fill: "#5a3a22" }); el("line", { x1: x - s * 1.2, y1: y + s * .62, x2: x + s * 1.2, y2: y + s * .62, stroke: "#8a6a4a", "stroke-width": 1.6, "stroke-linecap": "round" }, p); };
-  [[478, 214, "#fff"], [510, 244, "#ea5117"], [480, 254, "#fff"], [510, 210, "#52c2e8"]].forEach(([x, y, c]) => tent(sz, x, y, 11, c));
-  [[560, 204, "#fff"], [596, 196, "#ea5117"], [570, 244, "#fff"], [606, 236, "#52c2e8"]].forEach(([x, y, c]) => tent(sz, x, y, 11, c));
+  const tent = (p, x, y, s, c) => { poly(p, [[x - s, y + s * .6], [x, y - s * .9], [x + s, y + s * .6]], { fill: c }); poly(p, [[x, y - s * .9], [x + s, y + s * .6], [x, y + s * .6]], { fill: "rgba(0,0,0,.12)" }); poly(p, [[x - s * .26, y + s * .6], [x, y - s * .1], [x + s * .26, y + s * .6]], { fill: "#5a3a22" }); el("line", { x1: x - s * 1.2, y1: y + s * .62, x2: x + s * 1.2, y2: y + s * .62, stroke: "#8a6a4a", "stroke-width": 1.6, "stroke-linecap": "round" }, p); };
+  [[478, 214, "#8a63d2"], [510, 244, "#4f9a3a"], [480, 254, "#f5b82e"], [510, 210, "#e8579a"]].forEach(([x, y, c]) => tent(sz, x, y, 11, c));
+  [[560, 204, "#e8579a"], [596, 196, "#f5b82e"], [570, 244, "#4fa3d9"], [606, 236, "#e8579a"]].forEach(([x, y, c]) => tent(sz, x, y, 11, c));
   // paw + balloons on the halves
   const paw = (p, x, y, s, c) => { el("ellipse", { cx: x, cy: y + s * .3, rx: s * .55, ry: s * .45, fill: c }, p); for (const [dx, dy] of [[-.62, -.3], [-.22, -.68], [.22, -.68], [.62, -.3]]) el("ellipse", { cx: x + dx * s, cy: y + dy * s, rx: s * .2, ry: s * .25, fill: c }, p); };
-  paw(sz, 452, 236, 12, "#111");
+  paw(sz, 452, 236, 12, "#5b3aa3");
   const balloons = (p, x, y) => { [["#e4574b", -8, 0], ["#f5b82e", 4, -6], ["#4fa3d9", 12, 4]].forEach(([c, dx, dy]) => { el("path", { d: `M${x + dx} ${y + dy + 10} q-3 10 2 20`, fill: "none", stroke: "#7a6a5a", "stroke-width": 1 }, p); el("ellipse", { cx: x + dx, cy: y + dy, rx: 7, ry: 9, fill: c }, p); }); };
   balloons(sz, 618, 262);
   // school building
-  const bld = (p, x, y, w, h, roof, wall = "#ffffff") => { el("rect", { x: x - w / 2, y: y - h / 2, width: w, height: h, fill: wall, rx: 2, stroke: "#111", "stroke-width": 2.6 }, p); poly(p, [[x - w / 2 - 5, y - h / 2], [x - w / 2 + 6, y - h / 2 - 12], [x + w / 2 - 6, y - h / 2 - 12], [x + w / 2 + 5, y - h / 2]], { fill: roof, stroke: "#111", "stroke-width": 2.6, "stroke-linejoin": "round" }); for (let i = x - w / 2 + 8; i < x + w / 2 - 6; i += 12) el("rect", { x: i, y: y - h / 2 + 6, width: 7, height: 7, fill: "#9fd3e6", rx: 1 }, p); el("rect", { x: x - 5, y: y + h / 2 - 12, width: 10, height: 12, fill: "#8a5a33" }, p); };
-  bld(svg, 548, 142, 150, 30, "#1f9a62");
+  const bld = (p, x, y, w, h, roof, wall = "#fffaf0") => { el("rect", { x: x - w / 2, y: y - h / 2, width: w, height: h, fill: wall, rx: 2 }, p); poly(p, [[x - w / 2 - 5, y - h / 2], [x - w / 2 + 6, y - h / 2 - 12], [x + w / 2 - 6, y - h / 2 - 12], [x + w / 2 + 5, y - h / 2]], { fill: roof }); for (let i = x - w / 2 + 8; i < x + w / 2 - 6; i += 12) el("rect", { x: i, y: y - h / 2 + 6, width: 7, height: 7, fill: "#9fd3e6", rx: 1 }, p); el("rect", { x: x - 5, y: y + h / 2 - 12, width: 10, height: 12, fill: "#8a5a33" }, p); };
+  bld(svg, 548, 142, 150, 30, "#6fb06c");
   
-  bld(svg, 1005, 384, 84, 24, "#ea5117"); 
-  T(svg, 1005, 492, "전통불교문화예술관", { "text-anchor": "middle", "font-size": 13.5, fill: "#fff", "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700, "paint-order": "stroke", stroke: "#111", "stroke-width": 4 });
-  T(svg, 548, 108, "쌍계초등학교", { "text-anchor": "middle", "font-size": 12, fill: "#fff", "paint-order": "stroke", stroke: "#111", "stroke-width": 4, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700 });
+  bld(svg, 1005, 384, 84, 24, "#2e8e9a"); 
+  T(svg, 1005, 492, "전통불교문화예술관", { "text-anchor": "middle", "font-size": 13.5, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700, "paint-order": "stroke", stroke: FL.bg, "stroke-width": 4 });
+  T(svg, 548, 108, "쌍계초등학교", { "text-anchor": "middle", "font-size": 12, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700 });
   // parking: stripes, tents, shower, temple stay
   for (let i = 0; i < 5; i++) el("line", { x1: 668 + i * 24, y1: 228, x2: 668 + i * 24, y2: 292, stroke: "#fff", "stroke-width": 2, transform: "rotate(-10 718 262)" }, pz);
-  [[676, 268, "#fff"], [702, 248, "#eee937"], [728, 284, "#fff"], [748, 256, "#ea5117"], [700, 296, "#fff"], [756, 290, "#52c2e8"]].forEach(([x, y, c]) => tent(pz, x, y, 10, c));
-  const hanok = (p, x, y, s, wall = "#ffffff") => { el("rect", { x: x - s, y: y - s * .1, width: s * 2, height: s * .8, fill: wall, stroke: "#111", "stroke-width": Math.max(1.2, s * .08) }, p); for (const dx of [-.75, -.25, .25, .75]) el("rect", { x: x + dx * s - s * .06, y: y - s * .1, width: s * .12, height: s * .8, fill: "#875c4c" }, p); el("path", { d: `M${x - s * 1.35} ${y - s * .05} Q${x - s * .7} ${y - s * .2} ${x - s * .85} ${y - s * .6} H${x + s * .85} Q${x + s * .7} ${y - s * .2} ${x + s * 1.35} ${y - s * .05}Z`, fill: "#ea5117", stroke: "#111", "stroke-width": Math.max(1.2, s * .08), "stroke-linejoin": "round" }, p); el("rect", { x: x - s * 1.1, y: y + s * .7, width: s * 2.2, height: s * .16, fill: "#c9b48a" }, p); };
+  [[676, 268, "#f08a3c"], [702, 248, "#4fa3d9"], [728, 284, "#f5b82e"], [748, 256, "#e4574b"], [700, 296, "#7cc06a"], [756, 290, "#9b7fe6"]].forEach(([x, y, c]) => tent(pz, x, y, 10, c));
+  const hanok = (p, x, y, s, wall = "#fff3e0") => { el("rect", { x: x - s, y: y - s * .1, width: s * 2, height: s * .8, fill: wall }, p); for (const dx of [-.75, -.25, .25, .75]) el("rect", { x: x + dx * s - s * .06, y: y - s * .1, width: s * .12, height: s * .8, fill: "#b8473a" }, p); el("path", { d: `M${x - s * 1.35} ${y - s * .05} Q${x - s * .7} ${y - s * .2} ${x - s * .85} ${y - s * .6} H${x + s * .85} Q${x + s * .7} ${y - s * .2} ${x + s * 1.35} ${y - s * .05}Z`, fill: "#4b5560" }, p); el("rect", { x: x - s * 1.1, y: y + s * .7, width: s * 2.2, height: s * .16, fill: "#c9b48a" }, p); };
   hanok(svg, 812, 232, 32, "#fff3e0");
   hanok(dr1, 672, 92, 26, "#fff3e0"); hanok(dr2, 980, 446, 22, "#fff3e0"); hanok(dr2, 1034, 440, 20, "#fff3e0");
   // temple A strip tents + 일주문 + 쌍계사
   { const r = -50 * Math.PI / 180, cs = Math.cos(r), sn = Math.sin(r), pts = [];
     for (let row = 0; row < 2; row++) for (let i = 0; i < 15; i++) { const lx = -70 + i * 10, ly = row ? 8 : -6; pts.push([942 + lx * cs - ly * sn, 210 + lx * sn + ly * cs, (i + row * 2) % 5]); }
-    pts.sort((p, q) => p[1] - q[1]).forEach(([x, y, k]) => tent(tz, x, y, 4.3, ["#fff", "#eee937", "#fff", "#ea5117", "#52c2e8"][k])); }
+    pts.sort((p, q) => p[1] - q[1]).forEach(([x, y, k]) => tent(tz, x, y, 4.3, ["#f08a3c", "#4fa3d9", "#f5b82e", "#e4574b", "#7cc06a"][k])); }
   hanok(svg, 892, 292, 12);
-  T(svg, 892, 318, "일주문", { "text-anchor": "middle", "font-size": 11.5, fill: "#fff", "paint-order": "stroke", stroke: "#111", "stroke-width": 4, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700 });
+  T(svg, 892, 318, "일주문", { "text-anchor": "middle", "font-size": 11.5, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700 });
   hanok(svg, 990, 82, 44); hanok(svg, 1040, 132, 22); hanok(svg, 930, 110, 20);
   // museum, culture centre, tea cup
-  bld(svg, 336, 524, 76, 30, "#ea5117"); bld(svg, 352, 590, 58, 24, "#ea5117");
-  T(svg, 336, 558, "야생차박물관", { "text-anchor": "middle", "font-size": 11.5, fill: "#fff", "paint-order": "stroke", stroke: "#111", "stroke-width": 4, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700 });
+  bld(svg, 336, 524, 76, 30, "#2e8e9a"); bld(svg, 352, 590, 58, 24, "#3aa0a8");
+  T(svg, 336, 558, "야생차박물관", { "text-anchor": "middle", "font-size": 11.5, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700 });
   const cup = (p, x, y, s) => { el("ellipse", { cx: x, cy: y + s * .62, rx: s * 1.05, ry: s * .2, fill: "#fff" }, p); el("path", { d: `M${x - s * .8} ${y - s * .3} H${x + s * .8} Q${x + s * .75} ${y + s * .6} ${x} ${y + s * .6} Q${x - s * .75} ${y + s * .6} ${x - s * .8} ${y - s * .3}Z`, fill: "#fffaf0", stroke: "#5f9a3a", "stroke-width": 2 }, p); el("ellipse", { cx: x, cy: y - s * .3, rx: s * .8, ry: s * .16, fill: "#8cc36f" }, p); el("path", { d: `M${x + s * .78} ${y - s * .1} q${s * .45} 0 ${s * .3} ${s * .4} q-${s * .1} ${s * .2} -${s * .4} ${s * .2}`, fill: "none", stroke: "#5f9a3a", "stroke-width": 2 }, p); for (const dx of [-.3, 0, .3]) el("path", { d: `M${x + dx * s} ${y - s * .55} q-${s * .15} -${s * .25} 0 -${s * .5} q${s * .15} -${s * .25} 0 -${s * .5}`, fill: "none", stroke: "#fff", "stroke-width": 2.4, "stroke-linecap": "round" }, p); };
   cup(svg, 560, 560, 26);
   // stage plaza: stage, booths, trucks, crowd
-  const stage = (p, x, y) => { el("rect", { x: x - 34, y: y - 4, width: 68, height: 18, fill: "#2b2f3a", rx: 3 }, p); el("path", { d: `M${x - 34} ${y - 4} V${y - 40} Q${x} ${y - 58} ${x + 34} ${y - 40} V${y - 4}`, fill: "none", stroke: "#ea5117", "stroke-width": 6 }, p); for (const dx of [-18, 0, 18]) { el("circle", { cx: x + dx, cy: y - 42 + Math.abs(dx) * .3, r: 3.6, fill: "#ffe55c" }, p); poly(p, [[x + dx - 3, y - 40], [x + dx + 3, y - 40], [x + dx + 10, y - 6], [x + dx - 10, y - 6]], { fill: "rgba(255,229,92,.35)" }); } el("rect", { x: x - 44, y: y - 26, width: 8, height: 26, fill: "#3a3f4a", rx: 2 }, p); el("rect", { x: x + 36, y: y - 26, width: 8, height: 26, fill: "#3a3f4a", rx: 2 }, p); };
+  const stage = (p, x, y) => { el("rect", { x: x - 34, y: y - 4, width: 68, height: 18, fill: "#2b2f3a", rx: 3 }, p); el("path", { d: `M${x - 34} ${y - 4} V${y - 40} Q${x} ${y - 58} ${x + 34} ${y - 40} V${y - 4}`, fill: "none", stroke: "#3b5bdb", "stroke-width": 6 }, p); for (const dx of [-18, 0, 18]) { el("circle", { cx: x + dx, cy: y - 42 + Math.abs(dx) * .3, r: 3.6, fill: "#ffe55c" }, p); poly(p, [[x + dx - 3, y - 40], [x + dx + 3, y - 40], [x + dx + 10, y - 6], [x + dx - 10, y - 6]], { fill: "rgba(255,229,92,.35)" }); } el("rect", { x: x - 44, y: y - 26, width: 8, height: 26, fill: "#3a3f4a", rx: 2 }, p); el("rect", { x: x + 36, y: y - 26, width: 8, height: 26, fill: "#3a3f4a", rx: 2 }, p); };
   stage(stz, 404, 690);
   const booth = (p, x, y, c) => { el("rect", { x: x - 12, y: y - 2, width: 24, height: 14, fill: "#fff" }, p); for (let i = 0; i < 4; i++) el("path", { d: `M${x - 14 + i * 7} ${y - 10} h7 v8 q-3.5 4 -7 0Z`, fill: i % 2 ? "#fff" : c }, p); el("rect", { x: x - 14, y: y - 12, width: 28, height: 3, fill: c }, p); };
-  [[236, 700], [236, 724], [236, 748], [272, 748], [298, 748], [324, 748], [350, 748], [376, 748]].forEach(([x, y], i) => booth(stz, x, y, i % 2 ? "#ea5117" : "#eee937"));
-  [[300, 630], [324, 630], [348, 630], [372, 630]].forEach(([x, y], i) => { el("rect", { x: x - 10, y: y - 7, width: 20, height: 14, rx: 2, fill: "#3d4a5c", stroke: "#111", "stroke-width": 2 }, stz); });
-  [[226, 598], [250, 598]].forEach(([x, y]) => { el("rect", { x: x - 10, y: y - 8, width: 20, height: 16, rx: 2, fill: "#2f6fe0", stroke: "#111", "stroke-width": 2 }, svg); });
-  el("rect", { x: 262, y: 586, width: 46, height: 9, rx: 2, fill: "#eee937", stroke: "#111", "stroke-width": 2, transform: "rotate(35 285 590)" }, svg);
+  [[236, 700], [236, 724], [236, 748], [272, 748], [298, 748], [324, 748], [350, 748], [376, 748]].forEach(([x, y], i) => booth(stz, x, y, i % 2 ? "#ef6b4a" : "#f5b82e"));
+  [[300, 630], [324, 630], [348, 630], [372, 630]].forEach(([x, y]) => { el("rect", { x: x - 10, y: y - 7, width: 20, height: 14, rx: 2, fill: "#3d4a5c" }, stz); });
+  [[226, 598], [250, 598]].forEach(([x, y]) => { el("rect", { x: x - 10, y: y - 8, width: 20, height: 16, rx: 2, fill: "#2f6fe0", stroke: "#fff", "stroke-width": 2 }, svg); });
+  el("rect", { x: 262, y: 586, width: 46, height: 9, rx: 2, fill: "#f5d34a", stroke: "#fff", "stroke-width": 2, transform: "rotate(35 285 590)" }, svg);
   const truck = (p, x, y) => { el("rect", { x: x - 18, y: y - 12, width: 26, height: 18, rx: 3, fill: "#f08a3c" }, p); el("rect", { x: x + 8, y: y - 6, width: 12, height: 12, rx: 2, fill: "#fff" }, p); el("rect", { x: x + 11, y: y - 4, width: 6, height: 5, fill: "#9fd3e6" }, p); el("rect", { x: x - 14, y: y - 8, width: 16, height: 6, fill: "#fff", rx: 1 }, p); for (const dx of [-10, 12]) el("circle", { cx: x + dx, cy: y + 7, r: 4, fill: "#3a3f4a" }, p); };
   [[380, 488], [414, 478], [448, 468]].forEach(([x, y]) => truck(svg, x, y));
-  const R = rng(5); for (let i = 0; i < 26; i++) el("circle", { cx: 280 + R() * 80, cy: 640 + R() * 80, r: 3.2, fill: ["#ea5117", "#52c2e8", "#eee937", "#2fb475", "#111"][i % 5] }, stz);
+  const R = rng(5); for (let i = 0; i < 26; i++) el("circle", { cx: 280 + R() * 80, cy: 640 + R() * 80, r: 3.2, fill: ["#e4574b", "#4fa3d9", "#f5b82e", "#7cc06a", "#9b7fe6"][i % 5] }, stz);
 
   // walking route: footprints
   const walkPath = el("path", { d: smoothOpen(FL.walk), fill: "none", stroke: "none" }, svg), L = walkPath.getTotalLength();
   for (let d = 30, k = 0; d < L - 10; d += 46, k++) {
     const p = walkPath.getPointAtLength(d), q = walkPath.getPointAtLength(d + 1), a = Math.atan2(q.y - p.y, q.x - p.x) * 180 / Math.PI + 90;
     const off = k % 2 ? 4 : -4, fg = g(svg, { transform: `translate(${p.x} ${p.y}) rotate(${a}) translate(${off} 0)` });
-    el("ellipse", { cx: 0, cy: 0, rx: 3.4, ry: 5.4, fill: "#fff", stroke: "#111", "stroke-width": 1.4 }, fg); el("circle", { cx: 0, cy: -7.6, r: 1.7, fill: "#fff", stroke: "#111", "stroke-width": 1.2 }, fg);
+    el("ellipse", { cx: 0, cy: 0, rx: 3.4, ry: 5.4, fill: "#c4513b" }, fg); el("circle", { cx: 0, cy: -7.6, r: 1.6, fill: "#c4513b" }, fg);
   }
   const wp = g(svg, { transform: "translate(640 486)" });
-  el("rect", { x: -78, y: -15, width: 156, height: 30, rx: 15, fill: "#fff", stroke: "#111", "stroke-width": 2.6 }, wp);
-  T(wp, 0, 5, "도보 12분 · 864m", { "text-anchor": "middle", "font-size": 15, fill: "#111", "font-family": "Black Han Sans, sans-serif" });
+  el("rect", { x: -74, y: -13, width: 148, height: 26, rx: 13, fill: "#fff" }, wp);
+  T(wp, 0, 5, "도보 12분 · 864m", { "text-anchor": "middle", "font-size": 13, fill: "#c4513b", "font-family": "Bagel Fat One, sans-serif" });
 
   // banners (KKday-style street-name bars)
-  const banner = (x, y, ko, en, w) => { const bg = g(svg); w *= 1.2; el("rect", { x, y, width: w, height: 29, fill: FL.banner }, bg); T(bg, x + 10, y + 20.5, en, { "font-size": 15.5, fill: "#fff", "font-family": "IBM Plex Mono, monospace", "font-weight": 600, "letter-spacing": 1 }); T(bg, x + 2, y + 52, ko, { "font-size": 17.5, fill: "#fff", "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700, "paint-order": "stroke", stroke: "#111", "stroke-width": 5, "stroke-linejoin": "round" }); };
+  const banner = (x, y, ko, en, w) => { const bg = g(svg); w *= 1.2; el("rect", { x, y, width: w, height: 29, fill: FL.banner }, bg); T(bg, x + 10, y + 20.5, en, { "font-size": 15.5, fill: "#fff", "font-family": "IBM Plex Mono, monospace", "font-weight": 600, "letter-spacing": 1 }); T(bg, x + 2, y + 52, ko, { "font-size": 17.5, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700, "paint-order": "stroke", stroke: FL.bg, "stroke-width": 4, "stroke-linejoin": "round" }); };
   banner(440, 290, "Pet & Kids zone · 85동", "Pet & Kids Camping", 158);
   banner(742, 398, "C 주차장·언덕 · 135동", "Parking Camp", 150);
   banner(926, 300, "A 경내 · 30동", "Temple Camp", 112);
@@ -759,11 +727,16 @@ function flatBuild() {
   const numAt = { 1: [430, 650], 2: [206, 724], 3: [416, 452], 4: [452, 186], 5: [970, 240], 6: [770, 300], 7: [846, 190], 8: [296, 506], 9: [600, 532], 10: [744, 66], 11: [928, 440] };
   for (const [n, ko, en, id] of FLAT_ITEMS) {
     const [x, y] = numAt[n], ng = g(svg, { class: id ? "zone-pin" : "" });
-    el("circle", { cx: x, cy: y, r: 21, fill: FL.num, stroke: "#111", "stroke-width": 3.2 }, ng);
-    T(ng, x, y + 7, String(n), { "text-anchor": "middle", "font-size": n > 9 ? 17 : 22, fill: "#fff", "font-family": "Black Han Sans, sans-serif" });
+    el("circle", { cx: x, cy: y, r: 21, fill: FL.num, stroke: "#fff", "stroke-width": 3.5, filter: "url(#flatShadow)" }, ng);
+    T(ng, x, y + 7, String(n), { "text-anchor": "middle", "font-size": n > 9 ? 16 : 21, fill: "#fff", "font-family": "Bagel Fat One, sans-serif" });
     if (id) ng.addEventListener("click", () => { select(id); jump(); });
   }
-  posterTitle(svg, 18, 14, 290, "2026 · 11.06 FRI – 11.08 SUN");
+  // title (kkday-logo position)
+  const tg = g(svg, { transform: "translate(34 52)" });
+  T(tg, 0, 0, "山寺", { "font-size": 44, fill: "#fff", "font-family": "Noto Serif KR, serif", "font-weight": 900 });
+  T(tg, 98, 0, "캠프", { "font-size": 40, fill: "#fff", "font-family": "Bagel Fat One, sans-serif" });
+  T(tg, 2, 28, "쌍계사 캠핑 페스티벌", { "font-size": 14, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700 });
+  T(tg, 2, 48, "2026. 11. 6 FRI – 8 SUN", { "font-size": 12.5, fill: FL.ink, "font-family": "IBM Plex Mono, monospace", "font-weight": 600, "letter-spacing": 1 });
 }
 function flatLegend() {
   const icon = k => { const s = document.createElementNS(NS, "svg"); s.setAttribute("viewBox", "0 0 30 30"); s.setAttribute("width", 34); s.setAttribute("height", 34); isoBadge(s, 15, 15, k, 13, null); return s.outerHTML; };
