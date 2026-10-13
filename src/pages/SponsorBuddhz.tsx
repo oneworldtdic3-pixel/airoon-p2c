@@ -13,7 +13,7 @@ export default function SponsorBuddhz() {
         <button type="button" onClick={() => (window.history.length > 1 ? nav(-1) : nav('/'))} aria-label="뒤로" className="p-2"><Icon name="back" /></button>
         <p className="flex items-center gap-2 text-[15px] font-extrabold">
           <img src="/sponsors/buddhz.png" alt="" className="h-5 w-auto" />붓쯔 BUDDHZ
-          <span className="rounded-md bg-gray-100 px-1.5 py-0.5 text-[10px] font-extrabold tracking-wider text-sub">AD</span>
+          <span className="rounded-md bg-gray-100 px-1.5 py-0.5 text-[10px] font-extrabold text-sub">부스참여업체</span>
         </p>
         <span className="w-10" />
       </header>
