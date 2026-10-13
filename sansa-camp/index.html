@@ -228,7 +228,10 @@ tr.quiet th .ic{width:16px;height:16px;display:inline-block;vertical-align:-3px;
 .photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1}
 .photo:has(img){opacity:1;border-style:solid;border-color:var(--ink)}
 .theme .photo{height:auto;aspect-ratio:16/7}
-.theme .photo.tall{aspect-ratio:4/3}
+.theme .photo.wide{aspect-ratio:16/9}
+.pi:has(+.photo.inline){border-bottom:0}
+.theme .photo.inline{aspect-ratio:4/3;margin:0 20px 16px 90px}
+.photo.inline+.pi{border-top:1.5px dashed var(--line)}
 .pics .photo{height:auto;aspect-ratio:4/3}
 .duo .photo{height:auto;aspect-ratio:4/3}
 
@@ -484,9 +487,10 @@ ul.star li::before{content:"☆";position:absolute;left:0;color:#b24a1c;font-wei
 
   <article class="theme t2">
     <header><span class="sl">HERITAGE &amp; TASTE</span><span>지리산의 맛과 향</span></header>
-    <figure class="photo tall"><b>PHOTO · trekking.jpg</b>호리병속 별천지 트래킹<img src="photos/trekking.jpg" alt="호리병속 별천지 트래킹 — 불일폭포 앞 참가자" style="object-position:50% 46%" onerror="this.remove()"></figure>
+    <figure class="photo wide"><b>PHOTO · tea.jpg</b>108선다 다도 명상<img src="photos/tea.jpg" alt="쌍계사 시민선방 108선다 다도 명상" onerror="this.remove()"></figure>
     <div class="pi"><svg class="ic" style="--fc:#d3602a" aria-hidden="true"><use href="#i-tea"/></svg><h3><span class="no">04</span>108선다(禪茶) 다도 명상 <small>100명 한정 사전예약</small></h3><p>한국 차(茶)의 시배지 하동 쌍계사 차밭에서 즐기는 정통 다도와 차 명상</p></div>
     <div class="pi"><svg class="ic" style="--fc:#5f8a6b" aria-hidden="true"><use href="#i-fall"/></svg><h3><span class="no">05</span>호리병속 별천지 트래킹</h3><p>국립공원 전문 숲 해설사와 함께 지리산 10경 불일폭포 숲길을 걷는 활력 트래킹</p></div>
+    <figure class="photo inline"><b>PHOTO · trekking.jpg</b>호리병속 별천지 트래킹<img src="photos/trekking.jpg" alt="호리병속 별천지 트래킹 — 불일폭포 앞 참가자" style="object-position:50% 46%" onerror="this.remove()"></figure>
     <div class="pi"><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-bowl"/></svg><h3><span class="no">06</span>사찰음식 다이닝 &amp; 예불 체험</h3><p>천년의 지혜가 담긴 제철 식재료 사찰공양(발우공양 문화)과 장엄한 산사의 저녁 예불</p></div>
     <div class="pi"><svg class="ic" style="--fc:#d3602a" aria-hidden="true"><use href="#i-pagoda"/></svg><h3><span class="no">07</span>쌍계사 천년 역사 탐방 도슨트</h3><p>국보 진감선사대성탑비와 보물 대웅전을 품은 천년고찰의 숨은 역사 스토리텔링 투어</p></div>
   </article>
