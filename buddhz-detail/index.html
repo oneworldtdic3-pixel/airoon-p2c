@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>붓쯔 브랜드 스토리</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green:#117A3D; --ink:#121212; --paper:#F7F4EC; --white:#fff;
+    --pink:#E0368A; --mint:#36C2AE; --yellow:#FFD23F; --navy:#24357A; --red:#E8433A;
+    --w:860px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#e9e6de;word-break:keep-all;font-family:'Noto Sans KR',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+  .page{width:var(--w);margin:0 auto;background:var(--paper);overflow:hidden}
+  .en{font-family:'Archivo Black','Noto Sans KR',sans-serif;letter-spacing:-.01em}
+  img{display:block;width:100%;height:100%;object-fit:cover}
+  section{position:relative}
+
+  /* 염주(bead) 모티프: 로고의 ●—○—● */
+  .beads{display:flex;align-items:center}
+  .beads i{display:block;border-radius:50%;flex:none}
+  .beads b{display:block;height:2px;flex:none}
+  .kicker{display:flex;align-items:center;gap:12px;font:13px/1 'Archivo Black';letter-spacing:.12em;text-transform:uppercase}
+  .kicker .beads i{width:10px;height:10px}
+  .kicker .beads b{width:34px}
+
+  /* 단청 띠 */
+  .dancheong{height:22px;background:repeating-linear-gradient(90deg,
+    var(--pink) 0 28px,var(--yellow) 28px 40px,var(--mint) 40px 68px,var(--navy) 68px 80px,var(--red) 80px 108px,var(--white) 108px 114px)}
+  .dancheong.thin{height:10px}
+
+  /* HERO */
+  .hero{background:var(--green);color:#fff;padding:44px 52px 110px;text-align:center}
+  .topbar{display:flex;justify-content:space-between;font:12px/1 'Archivo Black';letter-spacing:.06em}
+  .hero .logo-beads{justify-content:center;margin:70px 0 34px}
+  .hero .logo-beads i{width:86px;height:86px}
+  .hero .logo-beads b{width:58px;background:#fff}
+  .wordmark{font-weight:900;font-size:150px;line-height:.9;letter-spacing:-.04em}
+  .wordmark-en{font:300 60px/1 'Noto Sans KR';letter-spacing:.04em;margin-top:18px}
+  .hero h1{font-weight:900;font-size:50px;letter-spacing:-.04em;margin-top:46px}
+  .hero h1 .pop{color:var(--yellow)}
+  .hero .lead{font-size:15px;line-height:1.7;opacity:.9;margin-top:16px}
+  .hero-photo{position:relative;width:600px;height:600px;margin:64px auto 0}
+  .hero-photo .disc{position:absolute;inset:0;border-radius:50%;overflow:hidden;border:10px solid var(--paper)}
+  .hero-photo .disc img{transform:scale(1.06)}
+  .hero-photo .orbit{position:absolute;width:190px;height:190px;border:2px solid #fff;border-radius:50%;right:-60px;top:250px}
+  .hero-photo .orbit.o2{width:110px;height:110px;left:-40px;top:70px;background:var(--ink);border:0}
+  .sticker{position:absolute;display:grid;place-items:center;align-content:center;text-align:center;border-radius:50%;font:14px/1.15 'Archivo Black';letter-spacing:.02em}
+  .hero-photo .sticker{width:150px;height:150px;background:var(--pink);color:#fff;left:-34px;bottom:70px;transform:rotate(-14deg);box-shadow:0 0 0 6px var(--paper)}
+  .hero-photo .sticker span{display:block;font:900 22px/1.1 'Noto Sans KR';margin-top:4px}
+
+  /* TICKER */
+  .ticker{background:var(--ink);color:#fff;padding:22px 0;white-space:nowrap;overflow:hidden;font:22px/1 'Archivo Black';letter-spacing:.02em;position:relative;z-index:2}
+  .ticker .row{display:inline-flex;gap:26px;align-items:center;transform:translateX(-40px)}
+  .ticker .ko{font:900 22px/1 'Noto Sans KR'}
+  .ticker .dot{width:14px;height:14px;border-radius:50%;background:var(--green)}
+  .ticker .dot.o{background:transparent;border:2px solid #fff}
+  .hero + .dancheong{position:relative;z-index:2}
+
+  /* STORY */
+  .story{padding:110px 60px 110px}
+  .story .kicker{color:var(--green)}
+  .story .kicker .beads i,.story .kicker .beads b{background:var(--green)}
+  .story h2{font-weight:900;font-size:56px;line-height:1.22;letter-spacing:-.045em;margin-top:30px}
+  .mark{background:linear-gradient(transparent 58%,var(--yellow) 58% 92%,transparent 92%)}
+  .story h2 .g{color:var(--green)}
+  .story p{font-size:18px;line-height:1.85;color:#3a3a3a;margin-top:34px;letter-spacing:-.01em}
+  .story p strong{color:var(--ink)}
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:70px}
+  .pillar{background:#fff;border:2px solid var(--ink);border-radius:999px 999px 28px 28px;padding:44px 20px 30px;text-align:center}
+  .pillar .ic{width:76px;height:76px;border-radius:50%;margin:0 auto 22px;display:grid;place-items:center}
+  .pillar:nth-child(1) .ic{background:var(--green)}
+  .pillar:nth-child(2) .ic{background:#fff;border:2px solid var(--ink)}
+  .pillar:nth-child(3) .ic{background:var(--ink)}
+  .pillar .en{font-size:20px}
+  .pillar .ko{font-weight:700;font-size:15px;color:#555;margin-top:6px}
+
+  /* CHAPTER */
+  .chapter{background:var(--green);height:520px;overflow:hidden}
+  .chapter .rule{position:absolute;left:0;right:0;top:300px;height:2px;background:var(--ink)}
+  .chapter .disc{position:absolute;width:470px;height:470px;border-radius:50%;background:var(--paper);left:70px;top:70px;display:flex;flex-direction:column;justify-content:center;padding-left:80px}
+  .chapter .disc .en{font-size:52px;line-height:.98;color:var(--green)}
+  .chapter .disc .ko{font-weight:700;font-size:17px;margin-top:16px}
+  .chapter .ring{position:absolute;width:150px;height:150px;border:2px solid var(--ink);border-radius:50%;left:420px;top:225px}
+  .chapter .num{position:absolute;right:56px;top:190px;font:150px/1 'Archivo Black';color:var(--ink);letter-spacing:-.04em}
+  .chapter .brand{position:absolute;right:56px;top:44px;color:#fff;font:14px/1 'Archivo Black';letter-spacing:.06em}
+
+  /* JOURNEY */
+  .journey{padding:110px 60px 120px}
+  .h-en{font:58px/1 'Archivo Black';color:var(--green);letter-spacing:-.03em}
+  .h-sub{font-weight:700;font-size:18px;margin-top:14px}
+  .timeline{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:70px}
+  .timeline::before{content:"";position:absolute;left:60px;right:0;top:60px;height:2px;background:var(--ink)}
+  .tl .yr{position:relative;width:120px;height:120px;border-radius:50%;background:var(--ink);color:var(--green);display:grid;place-items:center;font:30px/1 'Archivo Black'}
+  .tl:nth-child(2) .yr{background:var(--green);color:#fff;box-shadow:0 0 0 8px var(--paper),0 0 0 10px var(--green)}
+  .tl h3{font:24px/1.2 'Archivo Black';margin-top:30px}
+  .tl p{font-size:16px;line-height:1.8;color:#444;margin-top:12px}
+  .tl .tag{display:inline-block;margin-top:16px;padding:7px 14px;border-radius:99px;font-weight:700;font-size:13px;border:2px solid var(--ink)}
+  .tl:nth-child(2) .tag{background:var(--pink);border-color:var(--pink);color:#fff}
+  .render{margin-top:70px;border-radius:28px;overflow:hidden;height:440px;border:2px solid var(--ink);position:relative}
+  .render .cap{position:absolute;left:20px;top:20px;background:var(--paper);border:2px solid var(--ink);border-radius:99px;padding:8px 16px;font:12px/1 'Archivo Black';letter-spacing:.08em}
+
+  /* STORE */
+  .store-photo{height:560px}
+  .store-photo img{object-position:center 30%}
+  .store-card{background:var(--green);color:#fff;padding:90px 60px 90px}
+  .store-card .kicker{color:#fff}
+  .store-card .kicker .beads i,.store-card .kicker .beads b{background:#fff}
+  .store-card h2{font-weight:900;font-size:48px;line-height:1.25;letter-spacing:-.045em;margin-top:28px}
+  .store-card h2 span{color:var(--yellow)}
+  .store-card p{font-size:18px;line-height:1.8;margin-top:24px;opacity:.95}
+  .addr{display:inline-flex;align-items:center;gap:14px;margin-top:40px;background:var(--paper);color:var(--ink);padding:14px 28px 14px 14px;border-radius:99px;font-weight:700;font-size:16px}
+  .addr .pin{width:40px;height:40px;border-radius:50%;background:var(--ink);display:grid;place-items:center;flex:none}
+  .addr small{display:block;font:500 12px/1.3 'Noto Sans KR';color:#666;margin-top:2px}
+  .store-card .sticker{width:160px;height:160px;background:var(--yellow);color:var(--ink);right:56px;top:-80px;transform:rotate(10deg);box-shadow:0 0 0 6px var(--green)}
+  .store-card .sticker span{display:block;font:900 26px/1 'Noto Sans KR';margin-top:6px}
+
+  /* WHY NOW */
+  .why{padding:110px 60px 60px}
+  .cards{margin-top:60px;display:grid;gap:30px}
+  .card{display:grid;grid-template-columns:250px 1fr;gap:34px;align-items:center;background:#fff;border:2px solid var(--ink);border-radius:28px;padding:30px;position:relative}
+  .card .thumb{height:200px;border-radius:18px;overflow:hidden;background:#fff;display:grid;place-items:center}
+  .card .thumb img{object-fit:contain}
+  .card .thumb.poster{background:#f1eee4}
+  .card .no{font:15px/1 'Archivo Black';color:var(--green);letter-spacing:.06em}
+  .card h3{font:26px/1.15 'Archivo Black';margin-top:10px}
+  .card p{font-size:16px;line-height:1.8;color:#444;margin-top:14px}
+  .card .chip{position:absolute;top:-16px;right:28px;background:var(--pink);color:#fff;font:12px/1 'Archivo Black';letter-spacing:.08em;padding:9px 14px;border-radius:99px}
+  .card:nth-child(2) .chip{background:var(--navy)}
+  .quote{padding:80px 60px 120px;text-align:center}
+  .quote .beads{justify-content:center;margin-bottom:34px}
+  .quote .beads i{width:18px;height:18px}
+  .quote .beads b{width:40px;background:var(--ink)}
+  .quote blockquote{font:46px/1.15 'Archivo Black';letter-spacing:-.03em}
+  .quote blockquote em{font-style:normal;color:var(--green)}
+  .quote blockquote u{text-decoration:none;background:var(--pink);color:#fff;padding:0 12px;border-radius:12px}
+  .quote p{font-weight:700;font-size:18px;margin-top:28px;color:#444}
+
+  /* EXPERIENCE */
+  .exp{background:var(--green);color:#fff;padding:100px 60px 110px}
+  .exp .kicker{color:#fff}
+  .exp .kicker .beads i,.exp .kicker .beads b{background:#fff}
+  .exp h2{font-weight:900;font-size:48px;letter-spacing:-.045em;margin-top:26px}
+  .exp h2 span{color:var(--yellow)}
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:54px}
+  .gallery figure{border-radius:22px;overflow:hidden;position:relative;height:260px;border:2px solid var(--ink)}
+  .gallery .big{grid-column:1/-1;height:430px}
+  .gallery figcaption{position:absolute;left:14px;bottom:14px;background:var(--paper);color:var(--ink);border-radius:99px;padding:7px 13px;font-weight:700;font-size:13px}
+  .exp .foot{display:flex;justify-content:space-between;align-items:center;margin-top:30px;font:13px/1 'Archivo Black';letter-spacing:.04em}
+  .exp .foot .beads i{width:12px;height:12px}
+  .exp .foot .beads b{width:22px;background:#fff}
+
+  /* OUTRO */
+  .outro{background:var(--ink);color:#fff;text-align:center;padding:110px 60px 90px;overflow:hidden}
+  .outro .logo-beads{justify-content:center}
+  .outro .logo-beads i{width:44px;height:44px}
+  .outro .logo-beads b{width:30px;background:#fff}
+  .outro .wm{font-weight:900;font-size:84px;letter-spacing:-.04em;margin-top:30px;line-height:1}
+  .outro .wm-en{font:300 30px/1 'Noto Sans KR';letter-spacing:.06em;margin-top:10px}
+  .outro p{margin-top:34px;font-size:16px;line-height:1.8;opacity:.8}
+  .outro .lotus{position:absolute;width:220px}
+  .outro .lotus.l{left:-80px;top:-80px}
+  .outro .lotus.r{right:-80px;bottom:-80px}
+</style>
+</head>
+<body>
+<!-- 공용 SVG: 단청 연화 원 (매장 외벽 패턴에서 착안) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="lotus">
+      <circle cx="100" cy="100" r="100" fill="#24357A"/>
+      <circle cx="100" cy="100" r="84" fill="#36C2AE"/>
+      <circle cx="100" cy="100" r="68" fill="#fff"/>
+      <circle cx="100" cy="100" r="60" fill="#E8433A"/>
+      <circle cx="100" cy="100" r="44" fill="#FF4F9E"/>
+      <circle cx="100" cy="100" r="28" fill="#FFD23F"/>
+      <circle cx="100" cy="100" r="12" fill="#121212"/>
+    </g>
+  </defs>
+</svg>
+
+<main class="page">
+
+  <!-- 1. HERO -->
+  <section class="hero">
+    <div class="topbar"><span>Buddhism Meets Goods</span><span>BUDDHZ</span></div>
+    <div class="beads logo-beads">
+      <i style="background:#fff"></i><b></b><i style="border:2px solid #fff"></i><b></b><i style="background:var(--ink)"></i>
+    </div>
+    <div class="wordmark">붓쯔</div>
+    <div class="wordmark-en">BUDDHZ</div>
+    <h1>불교, <span class="pop">굿즈</span>를 만나다</h1>
+    <p class="lead">BUDDHZ is a lifestyle brand that reimagines Buddhism through contemporary goods,<br>rituals, and cultural contents inspired by Seoul culture.</p>
+    <div class="hero-photo">
+      <div class="orbit o2"></div>
+      <div class="disc"><img src="img/hero.jpg" alt="붓쯔 팝업 매장 전경"></div>
+      <div class="orbit"></div>
+      <div class="sticker">K-BUDDHISM<br>LIFESTYLE<span>서울에서</span></div>
+    </div>
+  </section>
+
+  <!-- 2. TICKER -->
+  <div class="dancheong"></div>
+  <div class="ticker"><div class="row">
+    <span>BUDDHISM MEETS GOODS</span><i class="dot"></i><span class="ko">불교, 굿즈를 만나다</span><i class="dot o"></i>
+    <span>GOODS · RITUALS · CONTENTS</span><i class="dot"></i><span class="ko">오늘의 일상 속 작은 물건</span><i class="dot o"></i><span>SEOUL</span>
+  </div></div>
+
+  <!-- 3. BRAND STORY -->
+  <section class="story">
+    <div class="kicker"><span class="beads"><i></i><b></b></span>Brand Story</div>
+    <h2>절에서만 만나던 <span class="g">불교</span>를,<br><span class="mark">매일 곁에 두는</span> 물건으로.</h2>
+    <p><strong>붓쯔(BUDDHZ)</strong>는 불교를 현대적인 굿즈와 리추얼, 문화 콘텐츠로 다시 해석하는 라이프스타일 브랜드입니다.<br>서울의 감성을 담아, 오래된 지혜를 오늘의 일상 속 작은 물건으로 옮겨 옵니다.</p>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="ic"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg></div>
+        <div class="en">GOODS</div><div class="ko">현대적인 굿즈</div>
+      </div>
+      <div class="pillar">
+        <div class="ic"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#121212" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="4" r="1.6" fill="#121212"/><circle cx="20" cy="12" r="1.6" fill="#121212"/><circle cx="12" cy="20" r="1.6" fill="#121212"/><circle cx="4" cy="12" r="1.6" fill="#121212"/></svg></div>
+        <div class="en">RITUALS</div><div class="ko">일상의 리추얼</div>
+      </div>
+      <div class="pillar">
+        <div class="ic"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#36C2AE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c2 3 2 6 0 9-2-3-2-6 0-9z"/><path d="M12 12c-3-1-6-1-8 1 3 2 6 2 8-1z"/><path d="M12 12c3-1 6-1 8 1-3 2-6 2-8-1z"/><path d="M12 12v9"/></svg></div>
+        <div class="en">CONTENTS</div><div class="ko">서울의 문화 콘텐츠</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. CHAPTER 01 -->
+  <section class="chapter">
+    <div class="brand">BUDDHZ</div>
+    <div class="rule"></div>
+    <div class="disc"><div class="en">ABOUT<br>BUDDHZ</div><div class="ko">붓쯔의 시작</div></div>
+    <div class="ring"></div>
+    <div class="num">01</div>
+  </section>
+
+  <!-- 5. JOURNEY -->
+  <section class="journey">
+    <div class="h-en">THE JOURNEY<br>OF BUDDHZ</div>
+    <div class="h-sub">승소매장에서 K-Buddhism 라이프스타일 브랜드로</div>
+    <div class="timeline">
+      <div class="tl">
+        <div class="yr">2025</div>
+        <h3>Reimagining Seungso</h3>
+        <p>기존 승소매장의 운영 경험을 기반으로, 현대적인 굿즈와 콘텐츠 중심의 라이프스타일 브랜드 방향을 기획</p>
+        <span class="tag">브랜드 기획</span>
+      </div>
+      <div class="tl">
+        <div class="yr">2026</div>
+        <h3>Expanding BUDDHZ</h3>
+        <p>서울국제불교박람회 및 다양한 팝업 프로젝트를 통해, 오프라인 기반의 K-Buddhism 라이프스타일 경험 확장</p>
+        <span class="tag">박람회 · 팝업</span>
+      </div>
+    </div>
+    <div class="render"><img src="img/render.jpg" alt="붓쯔 상설 매장 외관 렌더링"><span class="cap">STORE RENDERING</span></div>
+  </section>
+
+  <!-- 6. STORE -->
+  <div class="dancheong thin"></div>
+  <section class="store-photo"><img src="img/store.jpg" alt="붓쯔 매장 간판과 단청 패턴 외벽"></section>
+  <section class="store-card">
+    <div class="sticker">NOW<br>OPEN<span>상설</span></div>
+    <div class="kicker"><span class="beads"><i></i><b></b></span>A New BUDDHZ Experience</div>
+    <h2>불교 굿즈 상설 전문 매장,<br><span>붓쯔</span></h2>
+    <p>조계종 전법회관 1층, 불교 굿즈를 전면에 내세운 상설 매장에서<br>붓쯔의 모든 컬렉션을 직접 만나보세요.</p>
+    <div class="addr">
+      <span class="pin"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+      <span>서울 종로구 견지동 13<small>13 Gyeonji-dong, Jongno-gu, Seoul</small></span>
+    </div>
+  </section>
+
+  <div class="dancheong thin"></div>
+  <!-- 7. CHAPTER 02 -->
+  <section class="chapter">
+    <div class="brand">BUDDHZ</div>
+    <div class="rule"></div>
+    <div class="disc"><div class="en">WHY<br>BUDDHISM<br>NOW?</div><div class="ko">지금 불교를 다시 바라보다</div></div>
+    <div class="ring"></div>
+    <div class="num">02</div>
+  </section>
+
+  <!-- 8. WHY NOW -->
+  <section class="why">
+    <div class="h-en">FROM TRADITION<br>TO LIFESTYLE</div>
+    <div class="h-sub">전통에서 라이프스타일로, 불교가 다시 젊어지고 있습니다</div>
+    <div class="cards">
+      <div class="card">
+        <span class="chip">UNESCO</span>
+        <div class="thumb"><img src="img/ydh.jpg" alt="연등회 로고"></div>
+        <div><div class="no">01</div><h3>UNESCO &amp; CULTURE</h3><p>유네스코 인류무형문화유산으로 등재된 연등회는 전통을 넘어 현대적인 문화 경험으로 재해석되고 있습니다.</p></div>
+      </div>
+      <div class="card">
+        <span class="chip">SEOUL · DAEGU · BUSAN</span>
+        <div class="thumb poster"><img src="img/expo.jpg" alt="2026 서울국제불교박람회 포스터"></div>
+        <div><div class="no">02</div><h3>BUDDHISM EXPO</h3><p>서울, 대구, 부산 국제불교박람회는 전통불교문화를 보다 현대적이고 친숙한 콘텐츠로 확장시키며 젊은 세대의 새로운 문화 경험으로 자리잡고 있습니다.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="quote">
+    <div class="beads"><i style="background:var(--green)"></i><b></b><i style="border:2px solid var(--ink)"></i><b></b><i style="background:var(--ink)"></i></div>
+    <blockquote><em>Buddhism</em> is becoming<br>a <u>contemporary</u><br>lifestyle culture.</blockquote>
+    <p>불교는 지금, 가장 새로운 라이프스타일이 되고 있습니다.</p>
+  </section>
+
+  <!-- 9. EXPERIENCE -->
+  <div class="dancheong thin"></div>
+  <section class="exp">
+    <div class="kicker"><span class="beads"><i></i><b></b></span>The BUDDHZ Experience</div>
+    <h2><span>연등회</span> &amp; 국제불교박람회 현장</h2>
+    <div class="gallery">
+      <figure class="big"><img src="img/fest.jpg" alt="연등회 현장의 관객들"><figcaption>Lotus Lantern Festival</figcaption></figure>
+      <figure><img src="img/s1.jpg" alt="박람회 붓쯔 부스 포토존"><figcaption>포토존</figcaption></figure>
+      <figure><img src="img/s2.jpg" alt="박람회를 찾은 관람객"><figcaption>관람객</figcaption></figure>
+      <figure><img src="img/s3.jpg" alt="박람회 붓쯔 부스 전경"><figcaption>붓쯔 부스</figcaption></figure>
+    </div>
+    <div class="foot"><span>Lotus Lantern Festival &amp; International Buddhism Fair</span>
+      <span class="beads"><i style="background:#fff"></i><b></b><i style="border:2px solid #fff"></i><b></b><i style="background:var(--ink)"></i></span></div>
+  </section>
+
+  <!-- 10. OUTRO -->
+  <div class="dancheong"></div>
+  <section class="outro">
+    <svg class="lotus l" viewBox="0 0 200 200" aria-hidden="true"><use href="#lotus"/></svg>
+    <svg class="lotus r" viewBox="0 0 200 200" aria-hidden="true"><use href="#lotus"/></svg>
+    <div class="beads logo-beads"><i style="background:#fff"></i><b></b><i style="border:2px solid #fff"></i><b></b><i style="background:var(--green)"></i></div>
+    <div class="wm">붓쯔</div>
+    <div class="wm-en">BUDDHZ</div>
+    <p>불교, 굿즈를 만나다<br>서울 종로구 견지동 13 · 조계종 전법회관 1층</p>
+  </section>
+
+</main>
+</body>
+</html>
