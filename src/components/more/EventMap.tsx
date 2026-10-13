@@ -104,7 +104,7 @@ export default function EventMap() {
   return (
     <div>
       <button type="button" onClick={() => setOpen(true)} className="group relative block w-full overflow-hidden rounded-tile border border-line bg-[#2E6B2A] active:scale-[0.99] transition">
-        <img src={MAP} srcSet={`${MAP} 1000w, ${MAP_HI} 2200w`} sizes="(max-width: 430px) 100vw, 430px" alt="2026 산사캠프 행사장 약도" width={1000} height={776} loading="lazy" decoding="async" className="block h-auto w-full" />
+        <img src={MAP} srcSet={`${MAP} 947w, ${MAP_HI} 1894w`} sizes="(max-width: 430px) 100vw, 430px" alt="2026 산사캠프 행사장 약도" width={947} height={734} loading="lazy" decoding="async" className="block h-auto w-full" />
       </button>
       <p className="mt-2 text-center text-[12px] font-bold text-deep">약도를 누르면 크게 볼 수 있어요 · 두 손가락으로 확대</p>
 
