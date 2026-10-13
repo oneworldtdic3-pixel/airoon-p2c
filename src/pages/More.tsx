@@ -174,14 +174,14 @@ export default function More() {
 
         <section className="pt-10">
           <SectionTitle eyebrow="Sponsors">함께하는 곳</SectionTitle>
-          <dl>
+          <dl className="space-y-4 border-t hairline pt-5">
             {SPONSOR_TIERS.map(({ tier, items }) => (
-              <div key={tier} className="grid grid-cols-[64px_1fr] items-center gap-3 border-t hairline py-4">
-                <dt className="eyebrow">{tier}</dt>
-                <dd className="flex flex-wrap items-center gap-x-6 gap-y-3">
+              <div key={tier} className="flex items-center gap-4">
+                <dt className="eyebrow w-10 shrink-0">{tier}</dt>
+                <dd className="flex flex-wrap items-center gap-x-5 gap-y-2">
                   {items.map((it) =>
-                    it.src ? <img key={it.name} src={it.src} alt={it.name} style={{ height: (it.h ?? 22) * 1.3 }} className="w-auto" loading="lazy" />
-                           : <span key={it.name} className="text-[16px] font-extrabold">{it.name}</span>,
+                    it.src ? <img key={it.name} src={it.src} alt={it.name} style={{ height: it.h ?? 22 }} className="w-auto" loading="lazy" />
+                           : <span key={it.name} className="text-[13px] font-bold text-ink">{it.name}</span>,
                   )}
                 </dd>
               </div>
