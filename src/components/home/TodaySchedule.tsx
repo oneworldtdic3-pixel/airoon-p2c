@@ -24,7 +24,7 @@ export default function TodaySchedule() {
     }),
     ...showerBookings.filter((b) => b.status === 'confirmed').map((b) => {
       const s = slots.find((x) => x.id === b.slot_id)
-      return s ? { id: b.id, at: s.starts_at, title: '샤워실', sub: s.building, kind: 'shower' as const, tag: '' } : null
+      return s ? { id: b.id, at: s.starts_at, title: '샤워실', sub: `${s.building} 부스 · ${s.gender === 'F' ? '여성' : '남성'}`, kind: 'shower' as const, tag: '' } : null
     }),
     ...MEALS.map((m) => ({ id: m.id, at: mealAt(m), title: m.title, sub: `${m.location} · ${m.note}`, kind: 'meal' as const, tag: mealTag(m) })),
   ].filter((x): x is NonNullable<typeof x> => !!x).sort((a, b) => a.at.localeCompare(b.at))

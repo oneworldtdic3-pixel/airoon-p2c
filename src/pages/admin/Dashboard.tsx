@@ -45,7 +45,7 @@ export default function Dashboard() {
         <ul className="divide-y hairline">{s.programs.map((p) => <Rate key={p.id} label={p.title} booked={p.booked} capacity={p.capacity} />)}</ul>
       </section>
       <section>
-        <h2 className="eyebrow mb-1">샤워실 · 동별</h2>
+        <h2 className="eyebrow mb-1">샤워 부스 · 남녀 합산</h2>
         <ul className="divide-y hairline">{s.shower.map((p) => <Rate key={p.building} label={p.building} booked={p.booked} capacity={p.capacity} />)}</ul>
       </section>
       <section>

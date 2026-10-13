@@ -2,12 +2,12 @@ import type { SpotTag } from './types'
 
 export const EVENT_DAYS = ['2026-11-06', '2026-11-07', '2026-11-08'] as const
 export const SPOTS: SpotTag[] = ['일주문', '대웅전 계단', '차밭 능선', '불일폭포']
-export const SHOWER_BUILDINGS = [
-  { building: '샤워동 A', gender: 'F' as const },
-  { building: '샤워동 B', gender: 'M' as const },
-  { building: '샤워동 C', gender: 'F' as const },
-  { building: '샤워동 D', gender: 'M' as const },
-]
+/** 샤워 부스 — 주차장(C 캠핑존) 4개 + 쌍계사 경내 1개. 부스 1개(3×6m) = 남 6 · 여 6 (30분 슬롯마다). DB shower_slots.building 과 같은 이름 */
+export const SHOWER_BOOTHS = [
+  { building: '주차장 1', zone: '주차장' }, { building: '주차장 2', zone: '주차장' }, { building: '주차장 3', zone: '주차장' }, { building: '주차장 4', zone: '주차장' },
+  { building: '쌍계사', zone: '쌍계사' },
+] as const
+export const SHOWER_BOOTH_CAPACITY = 6
 export interface SponsorLogo { name: string; src?: string; h?: number }
 /** 주최·주관·후원·언론사. 로고는 public/sponsors (투명 PNG, 높이 160px) */
 export const SPONSOR_TIERS: { tier: string; items: SponsorLogo[] }[] = [

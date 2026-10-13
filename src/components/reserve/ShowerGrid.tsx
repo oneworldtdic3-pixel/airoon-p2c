@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useApp } from '../../data/AppProvider'
-import { EVENT_DAYS, SHOWER_BUILDINGS } from '../../data/constants'
+import { EVENT_DAYS, SHOWER_BOOTHS, SHOWER_BOOTH_CAPACITY } from '../../data/constants'
 import { dayKey, fmtTime } from '../../lib/format'
 import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { Chip } from '../ui'
@@ -11,29 +11,32 @@ export default function ShowerGrid({ toast }: { toast: (m: string) => void }) {
   const { user, slots, showerBookings, bookShower, cancelShower } = useApp()
   const requireAuth = useRequireAuth()
   const [day, setDay] = useState<string>(EVENT_DAYS[0])
-  const [bld, setBld] = useState(SHOWER_BUILDINGS[0].building)
-  const list = useMemo(() => slots.filter((s) => s.building === bld && dayKey(s.starts_at) === day), [slots, bld, day])
+  const [bld, setBld] = useState<string>(SHOWER_BOOTHS[0].building)
+  const [gender, setGender] = useState<'F' | 'M'>('F')
+  const list = useMemo(() => slots.filter((s) => s.building === bld && s.gender === gender && dayKey(s.starts_at) === day), [slots, bld, gender, day])
   const mineBy = (sid: string) => showerBookings.find((b) => b.slot_id === sid && b.status === 'confirmed')
   // 오늘(선택한 일차) 내 예약 수 — 동과 상관없이 하루 기준
   const slotById = useMemo(() => new Map(slots.map((s) => [s.id, s])), [slots])
   const myToday = showerBookings.filter((b) => b.status === 'confirmed' && dayKey(slotById.get(b.slot_id)?.starts_at ?? '') === day)
   const atLimit = !!user && myToday.length >= DAILY_MAX
-  const gender = SHOWER_BUILDINGS.find((b) => b.building === bld)!.gender
 
   return (
     <div>
       <dl className="mb-6 grid grid-cols-3 gap-3 border-y hairline py-4 text-center">
-        {[['30분', '슬롯 단위'], [`${DAILY_MAX}회`, '1인당 하루'], ['2회', '노쇼 시 당일 제한']].map(([v, k]) => (
+        {[['5개', '샤워 부스'], [`남${SHOWER_BOOTH_CAPACITY}·여${SHOWER_BOOTH_CAPACITY}`, '부스당 30분'], [`${DAILY_MAX}회`, '1인당 하루']].map(([v, k]) => (
           <div key={k}><dt className="text-[11px] text-sub">{k}</dt><dd className="tnum text-[20px] font-extrabold">{v}</dd></div>
         ))}
       </dl>
       <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5">
         {EVENT_DAYS.map((d, i) => <Chip key={d} active={day === d} onClick={() => setDay(d)}>{i + 1}일차</Chip>)}
+      </div>
+      <div className="no-scrollbar -mx-5 mt-2 flex gap-2 overflow-x-auto px-5">
+        {(['F', 'M'] as const).map((g) => <Chip key={g} active={gender === g} onClick={() => setGender(g)}>{g === 'F' ? '여성' : '남성'}</Chip>)}
         <span className="w-px shrink-0 bg-line" />
-        {SHOWER_BUILDINGS.map((b) => <Chip key={b.building} active={bld === b.building} onClick={() => setBld(b.building)}>{b.building.slice(-1)}동 {b.gender === 'F' ? '여' : '남'}</Chip>)}
+        {SHOWER_BOOTHS.map((b) => <Chip key={b.building} active={bld === b.building} onClick={() => setBld(b.building)}>{b.building}</Chip>)}
       </div>
       <div className="mt-5 flex items-end justify-between">
-        <p className="text-[13px] text-sub">{bld} · {gender === 'F' ? '여성' : '남성'} · 30분당 {list[0]?.capacity ?? 50}명</p>
+        <p className="text-[13px] text-sub">{bld} 부스 · {gender === 'F' ? '여성' : '남성'} · 30분당 {list[0]?.capacity ?? SHOWER_BOOTH_CAPACITY}명</p>
         {user && (
           <p className={`tnum text-[12.5px] font-bold ${atLimit ? 'text-ember' : 'text-deep'}`}>
             오늘 내 예약 {myToday.length}/{DAILY_MAX}{atLimit ? ' · 더 예약하려면 하나를 취소하세요' : ''}

@@ -6,9 +6,9 @@ const MAP = '/map/site-map.jpg'
 const MAP_HI = '/map/site-map@2x.jpg'
 
 const ZONES: { tag: string; color: string; name: string; info: string; note?: string }[] = [
-  { tag: 'A', color: '#2F6FE4', name: '쌍계사 경내', info: '텐트 30동 · 캐노피', note: '위치 추정' },
+  { tag: 'A', color: '#2F6FE4', name: '쌍계사 경내', info: '텐트 30동 · 캐노피 · 샤워 부스 1', note: '위치 추정' },
   { tag: 'B', color: '#7C4DDB', name: '쌍계초', info: '텐트 85동 · 캐노피 2 · 화장실' },
-  { tag: 'C', color: '#C63DC0', name: '주차장 캠핑존', info: '텐트 135동 · 샤워실 4동 · 화장실' },
+  { tag: 'C', color: '#C63DC0', name: '주차장 캠핑존', info: '텐트 135동 · 샤워 부스 4 · 화장실' },
   { tag: '부스', color: '#F2A818', name: '부스 · 먹거리', info: '운수리 669-6 (가안) · 하동야생차박물관 옆' },
   { tag: '무대', color: '#1F2937', name: '공연 광장', info: '야생차문화센터 아래 · 티카페하동 옆' },
   { tag: 'P', color: '#1D4ED8', name: '쌍계사 정류소 · 공영주차장', info: '셔틀·자가용 하차 지점' },
