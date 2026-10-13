@@ -1,0 +1,44 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "kicker-above-heading",
+        "value": "*",
+        "files": [
+          "buddhz-detail/index.html"
+        ],
+        "createdAt": "2026-10-13T14:04:06.911Z",
+        "reason": "Claude: kicker labels (BRAND STORY / A NEW BUDDHZ EXPERIENCE / THE BUDDHZ EXPERIENCE) are verbatim from the client's source PDF"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "buddhz-detail/index.html"
+        ],
+        "createdAt": "2026-10-13T14:04:06.926Z",
+        "reason": "Claude: ticker text intentionally bleeds off-edge as marquee; chapter dividers' disc/numeral intentionally bleed, mirroring the source PDF layout"
+      },
+      {
+        "rule": "tight-leading",
+        "value": "*",
+        "files": [
+          "buddhz-detail/index.html"
+        ],
+        "createdAt": "2026-10-13T14:04:06.938Z",
+        "reason": "Claude: 1.0 leading only on large display headings/numerals (52-200px), not body text"
+      },
+      {
+        "rule": "repeating-stripes-gradient",
+        "value": "*",
+        "files": [
+          "buddhz-detail/index.html"
+        ],
+        "createdAt": "2026-10-13T14:04:06.949Z",
+        "reason": "Claude: dancheong band is a brand motif taken from the store facade pattern"
+      }
+    ]
+  }
+}
