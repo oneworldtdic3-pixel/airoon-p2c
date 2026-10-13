@@ -1,0 +1,14 @@
+<!doctype html><html lang="ko"><meta charset="utf-8">
+<title>山寺캠프 깃털배너</title>
+<style>
+  body { margin:0; background:linear-gradient(#5BB8E6 0%, #A9DCF2 70%, #CBE9F5 78%); }
+  .stage { position:relative; width:1400px; height:1500px; display:flex; justify-content:center;
+           gap:90px; padding-top:70px; box-sizing:border-box; }
+  .stage::after { content:""; position:absolute; left:0; right:0; bottom:0; height:190px;
+           background:repeating-radial-gradient(circle at 3px 3px, #23804A 0 3px, #2E9B57 3.5px 9px); }
+  .pole { position:relative; width:300px; height:1300px; z-index:1; }
+  .pole object { width:300px; height:1300px; display:block; filter:drop-shadow(6px 8px 10px rgba(0,0,0,.25)); }
+  .pole::before { content:""; position:absolute; left:8px; top:10px; width:10px; height:1380px;
+           background:linear-gradient(90deg,#999,#eee,#888); border-radius:5px; z-index:-1; }
+</style>
+<div class="stage"><div class="pole"><object data="flag-green.svg" type="image/svg+xml"></object></div><div class="pole"><object data="flag-sky.svg" type="image/svg+xml"></object></div><div class="pole"><object data="flag-orange.svg" type="image/svg+xml"></object></div></div></html>
