@@ -59,20 +59,20 @@ p { margin: 0; }
 .fl-icons, .fl-nums { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px 18px; }
 .fl-nums { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
 .fl-icons li, .fl-nums li { display: flex; align-items: center; gap: 9px; min-width: 0; }
-.fl-icons b, .fl-nums b { display: block; font-size: 14px; font-weight: 700; line-height: 1.25; }
-.fl-icons small, .fl-nums small { display: block; font-family: var(--f-mono); font-size: 11.5px; line-height: 1.3; opacity: .85; }
+.fl-icons b, .fl-nums b { display: block; font-size: 16px; font-weight: 700; line-height: 1.25; }
+.fl-icons small, .fl-nums small { display: block; font-family: var(--f-mono); font-size: 12.5px; line-height: 1.3; opacity: .85; }
 .fl-nums li[data-id] { cursor: pointer; }
 .fl-nums li[data-id]:hover b { text-decoration: underline; }
-.fl-n { flex: none; width: 28px; height: 28px; border-radius: 50%; background: #2aa3ad; color: #fff; border: 2px solid #fff; font-family: var(--f-display); font-size: 13px; display: grid; place-items: center; }
+.fl-n { flex: none; width: 36px; height: 36px; border-radius: 50%; background: #2aa3ad; color: #fff; border: 2.5px solid #fff; font-family: var(--f-display); font-size: 17px; display: grid; place-items: center; }
 .iso-legend { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 10px 28px; padding: 6px 22px 20px; border-top: 2px dotted #e8c99a; margin: 0 18px; padding-top: 16px; }
 @media (max-width: 720px) { .iso-legend { grid-template-columns: minmax(0, 1fr); margin: 0 10px; padding-inline: 6px; } }
-.num-list, .icon-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px 18px; font-size: 13.5px; font-weight: 600; }
+.num-list, .icon-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px 18px; font-size: 15.5px; font-weight: 600; }
 .num-list { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
 .icon-list { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
 .num-list li, .icon-list li { display: flex; align-items: center; gap: 8px; min-width: 0; }
 .num-list li[data-id] { cursor: pointer; }
 .num-list li[data-id]:hover { text-decoration: underline; }
-.num { flex: none; width: 22px; height: 22px; border-radius: 50%; background: var(--c); color: #fff; font-family: var(--f-display); font-size: 12px; display: grid; place-items: center; }
+.num { flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--c); color: #fff; font-family: var(--f-display); font-size: 16px; display: grid; place-items: center; }
 .zone-pin { cursor: pointer; }
 .zone { cursor: pointer; }
 .zone .area { transition: fill-opacity .15s; }
@@ -489,7 +489,7 @@ function isoBuild() {
 
   // walking route
   el("path", { d: smoothOpen(G.walk), fill: "none", stroke: "#fff", "stroke-width": 4, "stroke-dasharray": ".1 10", "stroke-linecap": "round" }, svg);
-  isoPill(svg, 690, 362, "도보 12분 · 864m", { bg: "#fff", fg: "#7a4a12", fs: 12, border: "#e0a46a" });
+  isoPill(svg, 690, 362, "도보 12분 · 864m", { bg: "#fff", fg: "#7a4a12", fs: 14.5, border: "#e0a46a" });
   // river label
   const rl = el("text", { transform: `matrix(${C30 * .45} ${-S30 * 1.6} ${C30} ${S30} 300 410)`, "font-size": 15, fill: "#fff", "font-family": "Bagel Fat One, sans-serif", "letter-spacing": 2 }, svg); rl.textContent = "화개천";
 
@@ -498,20 +498,20 @@ function isoBuild() {
   for (const [n, color, label, id] of LEGEND_ITEMS) {
     const [x, y] = pinAt[n];
     const g = el("g", { class: id ? "zone-pin" : "", "data-id": id || "", filter: "url(#isoShadow)" }, svg);
-    const r = 12, cy = y - 22;
+    const r = 17, cy = y - 30;
     el("path", { d: `M${x} ${y} C${x - 3} ${y - 6} ${x - r} ${cy + 7} ${x - r} ${cy} A${r} ${r} 0 1 1 ${x + r} ${cy} C${x + r} ${cy + 7} ${x + 3} ${y - 6} ${x} ${y}Z`, fill: color, stroke: "#fff", "stroke-width": 2 }, g);
-    el("circle", { cx: x, cy, r: 8.6, fill: "#fff" }, g);
-    const t = el("text", { x, y: cy + 4.2, "text-anchor": "middle", "font-size": n > 9 ? 9.5 : 12, fill: color, "font-family": "Bagel Fat One, sans-serif" }, g); t.textContent = n;
+    el("circle", { cx: x, cy, r: 12.6, fill: "#fff" }, g);
+    const t = el("text", { x, y: cy + 6, "text-anchor": "middle", "font-size": n > 9 ? 13.5 : 17, fill: color, "font-family": "Bagel Fat One, sans-serif" }, g); t.textContent = n;
     if (id) { g.style.cursor = "pointer"; g.addEventListener("click", () => { select(id); jump(); }); }
   }
   // facility badges
   const badgeAt = [["info", 432, 640], ["med", 462, 650], ["wc", 548, 806], ["wc", 640, 214], ["wc", 676, 250], ["shower", 724, 176], ["park", 160, 336], ["wc", 1010, 150]];
-  for (const [k, x, y] of badgeAt) isoBadge(svg, x, y, k, 11);
-  isoPill(svg, 160, 368, "쌍계사 정류소 · 공영주차장", { bg: "#fff", fg: "#1f4f9a", fs: 10.5, border: "#9cc0ea" });
-  isoPill(svg, 1090, 34, "쌍계사", { bg: "#5a3a22", fg: "#fff", fs: 15, border: "#fff" });
-  isoPill(svg, 925, 300, "일주문", { bg: "#fff", fg: "#5a3a22", fs: 10.5, border: "#d7b88c" });
-  isoPill(svg, ...iso(540, 186, -44, 52), "Pet zone", { bg: "#4f9a3a", fg: "#fff", fs: 11.5, border: "#fff" });
-  isoPill(svg, ...iso(540, 186, 36, 52), "Kids zone", { bg: "#e8579a", fg: "#fff", fs: 11.5, border: "#fff" });
+  for (const [k, x, y] of badgeAt) isoBadge(svg, x, y, k, 15);
+  isoPill(svg, 160, 368, "쌍계사 정류소 · 공영주차장", { bg: "#fff", fg: "#1f4f9a", fs: 13, border: "#9cc0ea" });
+  isoPill(svg, 1090, 34, "쌍계사", { bg: "#5a3a22", fg: "#fff", fs: 19, border: "#fff" });
+  isoPill(svg, 925, 300, "일주문", { bg: "#fff", fg: "#5a3a22", fs: 13, border: "#d7b88c" });
+  isoPill(svg, ...iso(540, 186, -44, 52), "Pet zone", { bg: "#4f9a3a", fg: "#fff", fs: 14, border: "#fff" });
+  isoPill(svg, ...iso(540, 186, 36, 52), "Kids zone", { bg: "#e8579a", fg: "#fff", fs: 14, border: "#fff" });
 
   // title + info box
   const tg = el("g", {}, svg);
@@ -569,7 +569,7 @@ function isoBadge(parent, x, y, kind, s, shadow = "isoShadow") {
   return g;
 }
 function isoLegend() {
-  const icon = k => { const s = document.createElementNS(NS, "svg"); s.setAttribute("viewBox", "0 0 28 28"); s.setAttribute("width", 26); s.setAttribute("height", 26); isoBadge(s, 14, 14, k, 11, null); return s.outerHTML; };
+  const icon = k => { const s = document.createElementNS(NS, "svg"); s.setAttribute("viewBox", "0 0 28 28"); s.setAttribute("width", 32); s.setAttribute("height", 32); isoBadge(s, 14, 14, k, 12, null); return s.outerHTML; };
   document.getElementById("isoLegend").innerHTML =
     `<ol class="num-list">${LEGEND_ITEMS.map(([n, c, t, id]) => `<li${id ? ` data-id="${id}"` : ""}><span class="num" style="--c:${c}">${n}</span>${t}</li>`).join("")}</ol>` +
     `<ul class="icon-list">${Object.entries(BADGES).map(([k, [, t]]) => `<li>${icon(k)}${t}</li>`).join("")}<li><svg viewBox="0 0 28 28" width="26" height="26"><line x1="2" y1="14" x2="26" y2="14" stroke="#c98a3e" stroke-width="4" stroke-dasharray=".1 7" stroke-linecap="round"/></svg>도보 동선</li></ul>`;
@@ -631,8 +631,8 @@ function flatBuild() {
   el("circle", { cx: 390, cy: 420, r: 10, fill: "#b9dca0" }, svg);
   for (const r of FL.roads) if (r.name) {
     const tg = g(svg, { transform: `translate(${r.at[0]} ${r.at[1]}) rotate(${r.rot})` });
-    T(tg, 0, 0, r.name, { "font-size": 13, fill: FL.ink, "font-family": "IBM Plex Mono, monospace", "font-weight": 600, "letter-spacing": 3 });
-    T(tg, 0, 18, r.ko, { "font-size": 12.5, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700 });
+    T(tg, 0, 0, r.name, { "font-size": 15, fill: FL.ink, "font-family": "IBM Plex Mono, monospace", "font-weight": 600, "letter-spacing": 3 });
+    T(tg, 0, 20, r.ko, { "font-size": 15, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700 });
   }
 
   // zones
@@ -697,24 +697,24 @@ function flatBuild() {
   T(wp, 0, 5, "도보 12분 · 864m", { "text-anchor": "middle", "font-size": 13, fill: "#c4513b", "font-family": "Bagel Fat One, sans-serif" });
 
   // banners (KKday-style street-name bars)
-  const banner = (x, y, ko, en, w) => { const bg = g(svg); el("rect", { x, y, width: w, height: 24, fill: FL.banner }, bg); T(bg, x + 10, y + 17, en, { "font-size": 13, fill: "#fff", "font-family": "IBM Plex Mono, monospace", "font-weight": 600, "letter-spacing": 1 }); T(bg, x + 2, y + 44, ko, { "font-size": 15, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700 }); };
+  const banner = (x, y, ko, en, w) => { const bg = g(svg); w *= 1.2; el("rect", { x, y, width: w, height: 29, fill: FL.banner }, bg); T(bg, x + 10, y + 20.5, en, { "font-size": 15.5, fill: "#fff", "font-family": "IBM Plex Mono, monospace", "font-weight": 600, "letter-spacing": 1 }); T(bg, x + 2, y + 52, ko, { "font-size": 17.5, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700, "paint-order": "stroke", stroke: FL.bg, "stroke-width": 4, "stroke-linejoin": "round" }); };
   banner(410, 286, "Pet zone · 45동", "Pet Camping", 140);
   banner(570, 300, "Kids zone · 40동", "Kids Camping", 140);
-  banner(660, 146, "C 주차장·언덕 · 135동", "Parking Camp", 150);
-  banner(958, 282, "A 경내 · 30동", "Temple Camp", 112);
+  banner(660, 118, "C 주차장·언덕 · 135동", "Parking Camp", 150);
+  banner(926, 300, "A 경내 · 30동", "Temple Camp", 112);
   banner(790, 28, "쌍계사 · 대웅전", "Ssanggyesa", 120);
   banner(498, 712, "공연장 · 부스 · 푸드트럭", "Main Stage", 140);
   banner(40, 380, "쌍계사 정류소 · 공영주차장", "Bus · Parking", 150);
 
   // facility icons
-  for (const [k, x, y] of [["wc", 450, 760], ["wc", 420, 250], ["wc", 648, 272], ["wc", 1010, 168], ["shower", 680, 214], ["info", 262, 612], ["med", 292, 612], ["park", 106, 330]]) isoBadge(svg, x, y, k, 12, "flatShadow");
+  for (const [k, x, y] of [["wc", 450, 760], ["wc", 420, 250], ["wc", 648, 272], ["wc", 1010, 168], ["shower", 680, 214], ["info", 262, 612], ["med", 292, 612], ["park", 106, 330]]) isoBadge(svg, x, y, k, 16, "flatShadow");
 
   // numbered circles
   const numAt = { 1: [430, 650], 2: [212, 690], 3: [322, 780], 4: [452, 186], 5: [628, 214], 6: [970, 240], 7: [770, 300], 8: [832, 214], 9: [296, 506], 10: [600, 532] };
   for (const [n, ko, en, id] of FLAT_ITEMS) {
     const [x, y] = numAt[n], ng = g(svg, { class: id ? "zone-pin" : "" });
-    el("circle", { cx: x, cy: y, r: 15, fill: FL.num, stroke: "#fff", "stroke-width": 3 }, ng);
-    T(ng, x, y + 5, String(n), { "text-anchor": "middle", "font-size": n > 9 ? 12 : 15, fill: "#fff", "font-family": "Bagel Fat One, sans-serif" });
+    el("circle", { cx: x, cy: y, r: 21, fill: FL.num, stroke: "#fff", "stroke-width": 3.5, filter: "url(#flatShadow)" }, ng);
+    T(ng, x, y + 7, String(n), { "text-anchor": "middle", "font-size": n > 9 ? 16 : 21, fill: "#fff", "font-family": "Bagel Fat One, sans-serif" });
     if (id) ng.addEventListener("click", () => { select(id); jump(); });
   }
   // title (kkday-logo position)
@@ -725,7 +725,7 @@ function flatBuild() {
   T(tg, 2, 48, "2026. 11. 6 FRI – 8 SUN", { "font-size": 12.5, fill: FL.ink, "font-family": "IBM Plex Mono, monospace", "font-weight": 600, "letter-spacing": 1 });
 }
 function flatLegend() {
-  const icon = k => { const s = document.createElementNS(NS, "svg"); s.setAttribute("viewBox", "0 0 30 30"); s.setAttribute("width", 28); s.setAttribute("height", 28); isoBadge(s, 15, 15, k, 12, null); return s.outerHTML; };
+  const icon = k => { const s = document.createElementNS(NS, "svg"); s.setAttribute("viewBox", "0 0 30 30"); s.setAttribute("width", 34); s.setAttribute("height", 34); isoBadge(s, 15, 15, k, 13, null); return s.outerHTML; };
   const foot = `<svg viewBox="0 0 30 30" width="28" height="28"><g transform="translate(10 18) rotate(-10)"><ellipse rx="3.4" ry="5.4" fill="#c4513b"/><circle cy="-7.6" r="1.6" fill="#c4513b"/></g><g transform="translate(20 12) rotate(10)"><ellipse rx="3.4" ry="5.4" fill="#c4513b"/><circle cy="-7.6" r="1.6" fill="#c4513b"/></g></svg>`;
   const icons = [["wc", "화장실", "Toilet"], ["shower", "샤워실", "Shower"], ["info", "종합안내소", "Information"], ["med", "의무실", "First Aid"], ["park", "주차장 · 정류소", "Parking · Bus"]];
   document.getElementById("flatLegend").innerHTML =
