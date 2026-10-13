@@ -115,7 +115,11 @@ export default function PhotoDeck() {
           : { transform: 'translateX(-50%) translateY(16px) scale(.85)', opacity: 0, zIndex: 0 }
         const bigWord = c.kind === 'photo' ? c.spot : c.kind === 'ad' ? c.sponsor : '산사캠프'
         const full = c.kind !== 'photo' && c.full
-        const go = () => nav(c.kind === 'photo' ? '/photo' : c.kind === 'ad' ? c.link : '/reserve')
+        // 광고 링크가 외부 주소(https://…)면 새 창(쇼핑몰 등), 앱 내부 경로면 화면 이동
+        const go = () => {
+          if (c.kind === 'ad' && /^https?:\/\//i.test(c.link)) { window.open(c.link, '_blank', 'noopener,noreferrer'); return }
+          nav(c.kind === 'photo' ? '/photo' : c.kind === 'ad' ? c.link : '/reserve')
+        }
         return (
           <article
             key={c.id}
