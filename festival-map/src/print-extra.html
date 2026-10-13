@@ -11,6 +11,15 @@ html, body { background: #fff !important; }
 .plan svg { min-width: 0 !important; }
 .plan img { max-height: 150mm; width: auto !important; max-width: 100%; margin: 0 auto; }
 .todo { break-before: page; }
+.site { break-before: page; }
+.site-grid { display: flex !important; flex-direction: column; }
+.site-grid .table-box { order: -1; }
+.site-grid .panel { break-before: page; }
+.table-box, .panel { break-inside: avoid; }
+.area-table { min-width: 0 !important; }
+#siteNorth svg { min-width: 0 !important; }
+#siteSouth svg { width: auto !important; height: 160mm !important; max-width: 100%; margin: 0 auto; }
+.table-box { break-before: auto; }
 .strip { break-inside: avoid; }
 </style>
 <script>
