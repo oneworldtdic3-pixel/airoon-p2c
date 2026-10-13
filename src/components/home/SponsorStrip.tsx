@@ -7,7 +7,7 @@ export default function SponsorStrip() {
       <dl className="space-y-4">
         {SPONSOR_TIERS.map(({ tier, items }) => (
           <div key={tier} className="flex items-center gap-4">
-            <dt className="eyebrow w-10 shrink-0">{tier}</dt>
+            <dt className="eyebrow w-14 shrink-0 whitespace-pre-line leading-[1.35]">{tier}</dt>
             <dd className="flex flex-wrap items-center gap-x-5 gap-y-2">
               {items.map((it) =>
                 it.src ? <img key={it.name} src={it.src} alt={it.name} style={{ height: it.h ?? 22 }} className="w-auto" loading="lazy" />
@@ -18,7 +18,7 @@ export default function SponsorStrip() {
         ))}
       </dl>
       <div className="mt-7 flex items-center gap-4">
-        <span className="eyebrow w-10 shrink-0">SNS</span>
+        <span className="eyebrow w-14 shrink-0">SNS</span>
         <SocialLinks compact />
       </div>
       <p className="mt-6 text-[11px] text-gray-400">2026.11.6 (금) 14:00 – 11.8 (일) 11:00 · 하동 쌍계사 일원 · 캠핑존 / 한옥 방사 스테이</p>

@@ -177,7 +177,7 @@ export default function More() {
           <dl className="space-y-4 border-t hairline pt-5">
             {SPONSOR_TIERS.map(({ tier, items }) => (
               <div key={tier} className="flex items-center gap-4">
-                <dt className="eyebrow w-10 shrink-0">{tier}</dt>
+                <dt className="eyebrow w-14 shrink-0 whitespace-pre-line leading-[1.35]">{tier}</dt>
                 <dd className="flex flex-wrap items-center gap-x-5 gap-y-2">
                   {items.map((it) =>
                     it.src ? <img key={it.name} src={it.src} alt={it.name} style={{ height: it.h ?? 22 }} className="w-auto" loading="lazy" />
