@@ -166,9 +166,9 @@ svg text { user-select: none; }
 
   <section class="site" id="siteSec" aria-labelledby="siteTitle">
     <h2 id="siteTitle">행사장 배치도</h2>
-    <p class="lede">캠핑 사이트, Pet zone·Kids zone, 공연장, 부스를 실제 비율로 그렸습니다. 캠핑 사이트가 모인 북쪽과 공연장이 있는 남쪽은 약 450m 떨어져 있어 두 장으로 나눴습니다.</p>
+    <p class="lede">캠핑 사이트, Pet zone·Kids zone, 방사 구역, 공연장, 부스를 실제 비율로 그렸습니다. 캠핑 사이트가 모인 북쪽과 공연장이 있는 남쪽은 약 450m 떨어져 있어 두 장으로 나눴습니다.</p>
     <ul class="cat-legend" id="catLegend"></ul>
-    <figure class="panel"><figcaption>북쪽 · 캠핑 사이트 A · B(Pet · Kids) · C</figcaption><div class="svgbox" id="siteNorth"></div></figure>
+    <figure class="panel"><figcaption>북쪽 · 캠핑 사이트 A · B(Pet · Kids) · C · 방사 구역 ①②</figcaption><div class="svgbox" id="siteNorth"></div></figure>
     <div class="site-grid">
       <figure class="panel"><figcaption>남쪽 · 공연장 · 부스</figcaption><div class="svgbox" id="siteSouth"></div></figure>
       <div class="table-box"><table class="area-table" id="siteTable"></table></div>
@@ -189,6 +189,7 @@ svg text { user-select: none; }
       <li><b>운수리 669-6 필지.</b> 방사 구역 가안을 빼면서 지도에서도 지웠습니다. 쓸 용도가 있으면 알려 주세요.</li>
       <li><b>부스·푸드트럭 수와 무대 크기.</b> 공연장 배치도의 수치는 가안입니다.</li>
       <li><b>주차장 화장실·샤워실 핀의 방향.</b> 쌍계초 핀은 PPTX 배치를 실제 운동장 방향(입구가 남동쪽)에 맞춰 찍었습니다. 주차장은 PPTX 배치를 실제 주차장에 어느 방향으로 놓을지 아직 정해지지 않아, 핀이 PPTX 기준 위치입니다.</li>
+      <li><b>방사 구역 두 곳의 경계와 면적.</b> C 주차장 옆 건물 마당과 전통불교문화예술관에 표시했지만, 크기는 캡처에서 가늠한 가안입니다.</li>
       <li><b>주차장 배치 방향.</b> 실측 주차장은 약 50m × 51m입니다. PPTX 배치는 면적은 맞지만 가로로 긴 모양입니다.</li>
     </ol>
   </section>
@@ -348,7 +349,8 @@ const TENT_COLORS = ["#f08a3c", "#f5b82e", "#4fa3d9", "#e4574b", "#7cc06a", "#f0
 const LEGEND_ITEMS = [
   [1, "#3b5bdb", "메인 무대 · 공연장", "stage"], [2, "#e0a21a", "체험·판매 부스 14동", "stage"], [3, "#e0a21a", "푸드트럭 6대 · 식음", "stage"],
   [4, "#4f9a3a", "B 쌍계초 · Pet zone 45동", "school"], [5, "#e8579a", "B 쌍계초 · Kids zone 40동", "school"], [6, "#e0702a", "A 쌍계사 경내 캠핑 · 30동", "temple"],
-  [7, "#e0702a", "C 주차장·언덕 캠핑 · 135동", "parking"], [8, "#8a5a33", "템플스테이", "parking"], [9, "#2e8e9a", "하동야생차박물관", null], [10, "#3d7a2a", "쌍계사 차나무 시배지", null],
+  [7, "#e0702a", "C 주차장·언덕 캠핑 · 135동", "parking"], [8, "#8a5a33", "템플스테이", "parking"], [9, "#2e8e9a", "하동야생차박물관", null], [10, "#3d7a2a", "하동야생차밭", null],
+  [11, "#2e9e7a", "방사 구역 ① · C 주차장 옆", null], [12, "#2e9e7a", "방사 구역 ② · 전통불교문화예술관", null],
 ];
 const BADGES = { wc: ["#4a4f57", "화장실"], shower: ["#178f9a", "샤워실"], info: ["#d6337a", "종합안내소"], med: ["#e2552d", "의무실"], park: ["#1f6fd1", "주차장 · 정류소"] };
 
@@ -402,6 +404,12 @@ function isoBuild() {
     const [x1, y1] = iso(...z.c, sp, -z.b + 2), [x2, y2] = iso(...z.c, sp, z.b - 2);
     el("line", { x1, y1, x2, y2, stroke: "#fff", "stroke-width": 2.4, "stroke-dasharray": "2 5", "stroke-linecap": "round" }, zoneG.school); }
   plate(ground, 1080, 110, 72, 48, "#ead8b2");
+  // dog runs (방사 구역): beside camp C, and at the Buddhist culture & art hall
+  for (const [cx, cy, a, b] of [[700, 118, 26, 20], [1122, 306, 30, 24]]) {
+    plate(ground, cx, cy, a, b, "#a6dcc0", { stroke: "#2e9e7a" });
+    el("path", { d: roundedPath([iso(cx, cy, -a + 3, -b + 3), iso(cx, cy, a - 3, -b + 3), iso(cx, cy, a - 3, b - 3), iso(cx, cy, -a + 3, b - 3)], 3), fill: "none", stroke: "#fff", "stroke-width": 2.2, "stroke-dasharray": "2 5", "stroke-linecap": "round" }, ground);
+    for (const [dx, dy] of [[-9, -2], [9, 4]]) { const x = cx + dx, y = cy + dy; el("ellipse", { cx: x, cy: y + 2, rx: 3.6, ry: 2.8, fill: "#1f7a5c" }, ground); for (const [px, py] of [[-3.6, -2.4], [-1.2, -4.2], [1.2, -4.2], [3.6, -2.4]]) el("circle", { cx: x + px, cy: y + py, r: 1.2, fill: "#1f7a5c" }, ground); }
+  }
 
   // ---- standing objects, painter-sorted by base y ----
   const items = [];
@@ -458,6 +466,7 @@ function isoBuild() {
   add(188 + 12, () => box(svg, 756, 188, 14, 10, 13, { roof: "#178f9a", gable: true, label: "샤워실", fs: 7 }));
   add(262 + 17, () => box(svg, 838, 262, 10, 24, 16, { roof: "#8a5a33", gable: true, label: "템플", fs: 7 }));
   add(266 + 6, () => box(svg, 925, 266, 8, 4, 13, { roof: "#4b5560", gable: true, rh: 6 }));
+  add(258 + 19, () => box(svg, 1132, 258, 26, 12, 16, { roof: "#2e8e9a", gable: true, label: "예술관", fs: 9, windows: true }));
   for (const [x, y, a, b, h, lab] of [[1100, 92, 30, 16, 16, "대웅전"], [1040, 122, 18, 12, 12, ""], [1132, 136, 16, 10, 11, ""], [1062, 70, 16, 10, 11, ""], [1150, 82, 14, 10, 10, ""], [1015, 90, 12, 8, 10, ""]])
     add(y + (a + b) * S30, () => box(svg, x, y, a, b, h, { roof: "#4b5560", wall: "#f3e7d3", gable: true, label: lab, fs: 9 }));
   for (const [x, y, c] of G.houses) add(y + 6, () => box(svg, x, y, 7, 5, 7, { roof: c, gable: true, rh: 5, noShadow: true }));
@@ -472,7 +481,7 @@ function isoBuild() {
   for (let k = 0; k < 7; k++) { const [bx, by] = iso(...S.c, -88, -54 + k * 18); add(by + 6, () => box(svg, bx, by, 6, 6, 9, { roof: k % 2 ? "#ef6b4a" : "#f5b82e", wall: "#fff", noShadow: true })); }
   for (let k = 0; k < 4; k++) { const [fx, fy] = iso(...S.c, -56 + k * 30, 56); add(fy + 8, () => box(svg, fx, fy, 11, 5, 9, { roof: "#f08a3c", wall: "#fff" })); }
   // trees on free ground
-  const clears = [[540, 170, 125, 75], [760, 230, 112, 72], [1010, 226, 86, 54], [1080, 110, 125, 75], [925, 266, 22, 16], [420, 740, 165, 100], [340, 530, 72, 46], [410, 600, 60, 40], [380, 445, 64, 40], [480, 366, 26, 16], [612, 512, 68, 40], [560, 590, 52, 34], [676, 452, 50, 30], [600, 420, 110, 46], [160, 335, 34, 26], [150, 260, 45, 30]];
+  const clears = [[700, 118, 52, 34], [1122, 300, 60, 50], [540, 170, 125, 75], [760, 230, 112, 72], [1010, 226, 86, 54], [1080, 110, 125, 75], [925, 266, 22, 16], [420, 740, 165, 100], [340, 530, 72, 46], [410, 600, 60, 40], [380, 445, 64, 40], [480, 366, 26, 16], [612, 512, 68, 40], [560, 590, 52, 34], [676, 452, 50, 30], [600, 420, 110, 46], [160, 335, 34, 26], [150, 260, 45, 30]];
   const blobPoly = G.blob;
   const nearLine = (p, line, d) => distLine(p, line) < d;
   for (let y = 0; y < 870; y += 17) for (let x = 0; x < 1200; x += 19) {
@@ -494,7 +503,7 @@ function isoBuild() {
   const rl = el("text", { transform: `matrix(${C30 * .45} ${-S30 * 1.6} ${C30} ${S30} 300 410)`, "font-size": 15, fill: "#fff", "font-family": "Bagel Fat One, sans-serif", "letter-spacing": 2 }, svg); rl.textContent = "화개천";
 
   // numbered pins
-  const pinAt = { 1: iso(stx, sty, 0, 0, 34), 2: iso(...S.c, -92, -10, 14), 3: iso(...S.c, -10, 58, 14), 4: iso(540, 170, -44, 0), 5: iso(540, 170, 38, 0), 6: iso(1010, 226, 0, -30), 7: iso(760, 230, 0, 0), 8: [838, 228], 9: [340, 486], 10: [612, 506] };
+  const pinAt = { 1: iso(stx, sty, 0, 0, 34), 2: iso(...S.c, -92, -10, 14), 3: iso(...S.c, -10, 58, 14), 4: iso(540, 170, -44, 0), 5: iso(540, 170, 38, 0), 6: iso(1010, 226, 0, -30), 7: iso(760, 230, 0, 0), 8: [838, 228], 9: [340, 486], 10: [612, 506], 11: [700, 112], 12: [1122, 300] };
   for (const [n, color, label, id] of LEGEND_ITEMS) {
     const [x, y] = pinAt[n];
     const g = el("g", { class: id ? "zone-pin" : "", "data-id": id || "", filter: "url(#isoShadow)" }, svg);
@@ -528,7 +537,7 @@ function isoBuild() {
   const I = (y, s, o = {}) => { const t = el("text", { x: 866, y, "font-size": 12.5, fill: "#2b4a30", "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 500, ...o }, ib); t.textContent = s; };
   I(668, "쌍계사 · 하동군 화개면 쌍계사길 59", { "font-weight": 700, "font-size": 13.5 });
   I(692, "캠핑 사이트 3곳 · 텐트 250동");
-  I(712, "Pet · Kids zone은 쌍계초 · 공연장 · 부스 24");
+  I(712, "Pet·Kids zone(쌍계초) · 방사 구역 2곳 · 부스 24");
   I(740, "Tip. 공연장에서 쌍계사 일주문까지", { fill: "#c8402c", "font-weight": 700 });
   I(760, "쌍계사길을 따라 걸어서 약 12분", { fill: "#c8402c", "font-weight": 700 });
   I(782, "※ 거리는 줄여서 그린 안내도입니다", { "font-size": 11, fill: "#5b7a60" });
@@ -594,7 +603,8 @@ const FLAT_ITEMS = [
   [1, "메인 무대", "Main Stage", "stage"], [2, "체험·판매 부스", "Craft & Market Booths", "stage"], [3, "푸드트럭", "Food Trucks", "stage"],
   [4, "Pet zone · 쌍계초", "Pet camping (45)", "school"], [5, "Kids zone · 쌍계초", "Kids camping (40)", "school"], [6, "A 쌍계사 경내", "Temple camping (30)", "temple"],
   [7, "C 주차장·언덕", "Parking & Hill camping (135)", "parking"], [8, "템플스테이", "Temple Stay", "parking"], [9, "하동야생차박물관", "Hadong Wild Tea Museum", null],
-  [10, "쌍계사 차나무 시배지", "First Tea Tree Site", null],
+  [10, "하동야생차밭", "Hadong Wild Tea Field", null],
+  [11, "방사 구역 ① · C 주차장 옆", "Dog Run · by Camp C", null], [12, "방사 구역 ② · 전통불교문화예술관", "Dog Run · Buddhist Art Hall", null],
 ];
 function flatBuild() {
   const svg = document.getElementById("flat");
@@ -645,6 +655,8 @@ function flatBuild() {
   const pz = zone("parking", 718, 262, 128, 96, -10, "#f3e3c3");
   const tz = zone("temple", 942, 210, 156, 34, -50, "#f6e4c4");
   const stz = zone("stage", 330, 690, 236, 150, 0, "#fbe9c8");
+  const dogRun = (cx, cy, w, h, rot) => { const dg = g(svg); el("rect", { x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx: 10, fill: "#a6dcc0", stroke: "#fff", "stroke-width": 3, transform: `rotate(${rot} ${cx} ${cy})` }, dg); el("rect", { x: cx - w / 2 + 5, y: cy - h / 2 + 5, width: w - 10, height: h - 10, rx: 7, fill: "none", stroke: "#2e9e7a", "stroke-width": 2, "stroke-dasharray": "3 4", transform: `rotate(${rot} ${cx} ${cy})` }, dg); return dg; };
+  const dr1 = dogRun(648, 118, 84, 46, -10), dr2 = dogRun(1005, 428, 112, 58, 0);
 
   // icons
   const tent = (p, x, y, s, c) => { poly(p, [[x - s, y + s * .6], [x, y - s * .9], [x + s, y + s * .6]], { fill: c }); poly(p, [[x, y - s * .9], [x + s, y + s * .6], [x, y + s * .6]], { fill: "rgba(0,0,0,.12)" }); poly(p, [[x - s * .26, y + s * .6], [x, y - s * .1], [x + s * .26, y + s * .6]], { fill: "#5a3a22" }); el("line", { x1: x - s * 1.2, y1: y + s * .62, x2: x + s * 1.2, y2: y + s * .62, stroke: "#8a6a4a", "stroke-width": 1.6, "stroke-linecap": "round" }, p); };
@@ -658,6 +670,9 @@ function flatBuild() {
   // school building
   const bld = (p, x, y, w, h, roof, wall = "#fffaf0") => { el("rect", { x: x - w / 2, y: y - h / 2, width: w, height: h, fill: wall, rx: 2 }, p); poly(p, [[x - w / 2 - 5, y - h / 2], [x - w / 2 + 6, y - h / 2 - 12], [x + w / 2 - 6, y - h / 2 - 12], [x + w / 2 + 5, y - h / 2]], { fill: roof }); for (let i = x - w / 2 + 8; i < x + w / 2 - 6; i += 12) el("rect", { x: i, y: y - h / 2 + 6, width: 7, height: 7, fill: "#9fd3e6", rx: 1 }, p); el("rect", { x: x - 5, y: y + h / 2 - 12, width: 10, height: 12, fill: "#8a5a33" }, p); };
   bld(svg, 548, 142, 150, 30, "#6fb06c");
+  paw(dr1, 636, 120, 11, "#1f7a5c"); paw(dr1, 662, 114, 9, "#1f7a5c");
+  bld(svg, 1005, 384, 84, 24, "#2e8e9a"); paw(dr2, 990, 436, 12, "#1f7a5c"); paw(dr2, 1022, 430, 10, "#1f7a5c");
+  T(svg, 1005, 476, "전통불교문화예술관", { "text-anchor": "middle", "font-size": 13.5, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700, "paint-order": "stroke", stroke: FL.bg, "stroke-width": 4 });
   T(svg, 548, 108, "쌍계초등학교", { "text-anchor": "middle", "font-size": 12, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700 });
   // parking: stripes, tents, shower, temple stay
   for (let i = 0; i < 5; i++) el("line", { x1: 668 + i * 24, y1: 228, x2: 668 + i * 24, y2: 292, stroke: "#fff", "stroke-width": 2, transform: "rotate(-10 718 262)" }, pz);
@@ -692,7 +707,7 @@ function flatBuild() {
     const off = k % 2 ? 4 : -4, fg = g(svg, { transform: `translate(${p.x} ${p.y}) rotate(${a}) translate(${off} 0)` });
     el("ellipse", { cx: 0, cy: 0, rx: 3.4, ry: 5.4, fill: "#c4513b" }, fg); el("circle", { cx: 0, cy: -7.6, r: 1.6, fill: "#c4513b" }, fg);
   }
-  const wp = g(svg, { transform: "translate(722 454)" });
+  const wp = g(svg, { transform: "translate(640 486)" });
   el("rect", { x: -74, y: -13, width: 148, height: 26, rx: 13, fill: "#fff" }, wp);
   T(wp, 0, 5, "도보 12분 · 864m", { "text-anchor": "middle", "font-size": 13, fill: "#c4513b", "font-family": "Bagel Fat One, sans-serif" });
 
@@ -700,7 +715,7 @@ function flatBuild() {
   const banner = (x, y, ko, en, w) => { const bg = g(svg); w *= 1.2; el("rect", { x, y, width: w, height: 29, fill: FL.banner }, bg); T(bg, x + 10, y + 20.5, en, { "font-size": 15.5, fill: "#fff", "font-family": "IBM Plex Mono, monospace", "font-weight": 600, "letter-spacing": 1 }); T(bg, x + 2, y + 52, ko, { "font-size": 17.5, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700, "paint-order": "stroke", stroke: FL.bg, "stroke-width": 4, "stroke-linejoin": "round" }); };
   banner(410, 286, "Pet zone · 45동", "Pet Camping", 140);
   banner(570, 300, "Kids zone · 40동", "Kids Camping", 140);
-  banner(660, 118, "C 주차장·언덕 · 135동", "Parking Camp", 150);
+  banner(742, 398, "C 주차장·언덕 · 135동", "Parking Camp", 150);
   banner(926, 300, "A 경내 · 30동", "Temple Camp", 112);
   banner(790, 28, "쌍계사 · 대웅전", "Ssanggyesa", 120);
   banner(498, 712, "공연장 · 부스 · 푸드트럭", "Main Stage", 140);
@@ -710,7 +725,7 @@ function flatBuild() {
   for (const [k, x, y] of [["wc", 450, 760], ["wc", 420, 250], ["wc", 648, 272], ["wc", 1010, 168], ["shower", 680, 214], ["info", 262, 612], ["med", 292, 612], ["park", 106, 330]]) isoBadge(svg, x, y, k, 16, "flatShadow");
 
   // numbered circles
-  const numAt = { 1: [430, 650], 2: [212, 690], 3: [322, 780], 4: [452, 186], 5: [628, 214], 6: [970, 240], 7: [770, 300], 8: [832, 214], 9: [296, 506], 10: [600, 532] };
+  const numAt = { 1: [430, 650], 2: [212, 690], 3: [322, 780], 4: [452, 186], 5: [628, 214], 6: [970, 240], 7: [770, 300], 8: [832, 214], 9: [296, 506], 10: [600, 532], 11: [702, 96], 12: [944, 446] };
   for (const [n, ko, en, id] of FLAT_ITEMS) {
     const [x, y] = numAt[n], ng = g(svg, { class: id ? "zone-pin" : "" });
     el("circle", { cx: x, cy: y, r: 21, fill: FL.num, stroke: "#fff", "stroke-width": 3.5, filter: "url(#flatShadow)" }, ng);
@@ -933,6 +948,7 @@ const CAT = {
   camp:  { color: "#df7a37", dark: "#9c4a14", name: "캠핑 사이트" },
   pet:   { color: "#6aa84f", dark: "#3d7a2a", name: "Pet zone" },
   kids:  { color: "#e8579a", dark: "#a3285f", name: "Kids zone" },
+  dog:   { color: "#2e9e7a", dark: "#1b6b52", name: "방사 구역" },
   stage: { color: "#3b5bdb", dark: "#25399a", name: "공연장" },
   booth: { color: "#f5b82e", dark: "#a8740a", name: "부스" },
 };
@@ -985,7 +1001,7 @@ function miniPin(svg, x, y, kind, r) {
 }
 
 function drawSiteNorth() {
-  const svg = sitePanel([290, -100, 710, 250], "북쪽 캠핑 사이트 배치도");
+  const svg = sitePanel([290, -100, 710, 300], "북쪽 캠핑 사이트·방사 구역 배치도");
   siteBase(svg);
   el("polygon", { points: pts(COURTYARD), fill: "var(--line)" }, svg);
   for (const h of HANOK) el("polygon", { points: pts(rectPoly([h[0], h[1]], h[2], h[3], h[4])), fill: "var(--bldg)" }, svg);
@@ -1005,13 +1021,17 @@ function drawSiteNorth() {
   callout(svg, [372, 30], [430, 110], "B 쌍계초 · 85동", "Pet zone 45 · Kids zone 40 · 캐노피 2");
   callout(svg, [606, 108], [668, 128], "C 주차장·언덕 · 135동", "약 50m × 51m · 샤워실 4동 · 템플스테이");
   callout(svg, [795, 28], [760, -62], "A 쌍계사 경내 · 30동", "9m × 50m · 위치 추정", { anchor: "end" });
-  for (const m of [{ p: [880, -50], t: "쌍계사" }, { p: [925, 6], t: "대웅전" }, { p: [777, 48], t: "일주문" }]) {
+  el("polygon", { points: pts(rectPoly([888, 150], 46, 26, -10)), fill: "var(--bldg)" }, svg);
+  sArea(svg, rectPoly([560, 25], 30, 22, -10), "dog"); sArea(svg, rectPoly([862, 180], 36, 22, -10), "dog");
+  callout(svg, [560, 22], [500, -62], "방사 구역 ①", "C 주차장 옆 · 반려견", { anchor: "end" });
+  callout(svg, [858, 184], [790, 176], "방사 구역 ②", "전통불교문화예술관 · 반려견", { anchor: "end" });
+  for (const m of [{ p: [880, -50], t: "쌍계사" }, { p: [925, 6], t: "대웅전" }, { p: [777, 48], t: "일주문" }, { p: [720, 40], t: "차나무 시배지" }, { p: [912, 150], t: "전통불교문화예술관" }]) {
     el("circle", { cx: m.p[0], cy: m.p[1], r: 2.2, fill: "var(--muted)" }, svg);
     sText(svg, m.p[0] + 5, m.p[1] + 3.5, m.t, { fs: 9, w: 500, fill: "var(--muted)" });
   }
   sText(svg, 560, 228 - 12, "쌍계사길", { fs: 8.5, w: 500, fill: "var(--muted)" });
-  sText(svg, 300, 140, "↓ 공연장·부스 (남쪽 약 450m)", { fs: 9.5, w: 600, fill: "var(--tea)" });
-  scaleBar(svg, 880, 135, 50, 9); northArrow(svg, 980, -80, 12);
+  sText(svg, 300, 190, "↓ 공연장·부스 (남쪽 약 450m)", { fs: 9.5, w: 600, fill: "var(--tea)" });
+  scaleBar(svg, 900, 190, 50, 9); northArrow(svg, 980, -80, 12);
   return svg;
 }
 
@@ -1053,13 +1073,15 @@ const SITE_ROWS = [
   ["kids", "B 쌍계초 · Kids zone", "쌍계초 운동장 동쪽 (입구·화장실 쪽)", "텐트 40동", "캐노피 2 · 화장실"],
   ["camp", "C 주차장·언덕", "쌍계사 주차장", "텐트 135동 · 약 50m × 51m", "샤워실 4동 · 화장실 · 캐노피 2 · 템플스테이"],
   ["stage", "메인 무대 · 관람", "야생차문화센터 남쪽 광장", "무대 12m × 8m · 관람 약 1,400㎡", "FOH · 대기 텐트 · 발전차"],
+  ["dog", "방사 구역 ①", "C 주차장 옆 건물 마당", "반려견 방사 · 크기 확인 필요", "울타리 · 이중문 · 배변봉투함 · 급수대"],
+  ["dog", "방사 구역 ②", "쌍계사 전통불교문화예술관", "반려견 방사 · 크기 확인 필요", "울타리 · 이중문 · 배변봉투함 · 급수대"],
   ["booth", "체험·판매 부스", "광장 서쪽 (펜스 앞)", "14동 · 3m × 3m", ""],
   ["booth", "푸드트럭 · 식음", "광장 남쪽", "6대 · 테이블 구역", "분리수거장 · 화장실"],
   ["booth", "운영 부스", "광장 북쪽 입구", "4동", "종합안내·접수 · 의무 · 분실물 · 운영본부"],
 ];
 function buildSite() {
   document.getElementById("catLegend").innerHTML = [
-    ["camp", "3곳 · 텐트 250동"], ["pet", "쌍계초 45동"], ["kids", "쌍계초 40동"], ["stage", "1곳 · 무대 + 관람"], ["booth", "24 · 체험 14 · 푸드트럭 6 · 운영 4"],
+    ["camp", "3곳 · 텐트 250동"], ["pet", "쌍계초 45동"], ["kids", "쌍계초 40동"], ["dog", "2곳 · C 옆 · 예술관"], ["stage", "1곳 · 무대 + 관람"], ["booth", "24 · 체험 14 · 푸드트럭 6 · 운영 4"],
   ].map(([k, t]) => `<li><i style="background:${CAT[k].color}"></i><b>${CAT[k].name}</b> ${t}</li>`).join("") +
     `<li><i class="pin" style="background:${FAC_STYLE.wc.color}">WC</i>화장실</li><li><i class="pin" style="background:${FAC_STYLE.shower.color}">S</i>샤워실</li>`;
   document.getElementById("siteNorth").appendChild(drawSiteNorth());
