@@ -155,11 +155,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
       .on('postgres_changes', { event: '*', schema: 'public', table: 'shower_slots' }, () => qc.invalidateQueries({ queryKey: ['slots'] }))
       .on('postgres_changes', { event: '*', schema: 'public', table: 'banners' }, () => qc.invalidateQueries({ queryKey: ['banners'] }))
       .on('postgres_changes', { event: '*', schema: 'public', table: 'quotes' }, () => qc.invalidateQueries({ queryKey: ['quotes'] }))
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'press_articles' }, () => qc.invalidateQueries({ queryKey: ['press'] }))
       .subscribe()
     // 모바일 브라우저는 백그라운드에서 웹소켓을 끊는다 — 앞으로 돌아오면 바뀐 것을 한 번에 다시 받는다
     const onVisible = () => {
       if (document.visibilityState !== 'visible') return
-      for (const k of ['photos', 'notifications', 'sessions', 'slots', 'banners']) void qc.invalidateQueries({ queryKey: [k] })
+      for (const k of ['photos', 'notifications', 'sessions', 'slots', 'banners', 'press']) void qc.invalidateQueries({ queryKey: [k] })
     }
     document.addEventListener('visibilitychange', onVisible)
     return () => { document.removeEventListener('visibilitychange', onVisible); supabase.removeChannel(ch) }

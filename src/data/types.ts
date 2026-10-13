@@ -18,3 +18,5 @@ export interface AdminStats {
   users: number
   lucky: number
 }
+
+export interface PressArticle { id: string; url: string; title: string; outlet: string; image_url: string | null; published_at: string | null; is_hidden: boolean; created_at: string }

@@ -7,6 +7,7 @@ import PageHeader from '../components/layout/PageHeader'
 import EventMap from '../components/more/EventMap'
 import { BottomSheet, SectionTitle, Toast } from '../components/ui'
 import SocialLinks from '../components/ui/SocialLinks'
+import PressNews from '../components/more/PressNews'
 import { RidgeGlyph, MoktakGlyph } from '../components/illust'
 import { SPONSOR_TIERS } from '../data/constants'
 import { useApp } from '../data/AppProvider'
@@ -132,8 +133,9 @@ export default function More() {
 
         <section className="pt-8">
           <SectionTitle eyebrow="Follow">산사캠프 소식</SectionTitle>
-          <p className="-mt-2 mb-4 text-[13px] text-sub">라인업과 현장 소식은 SNS에 먼저 올라옵니다.</p>
+          <p className="-mt-2 mb-4 text-[13px] text-sub">라인업과 현장 소식은 SNS에 먼저 올라오고, 언론 보도는 아래에 모아 둡니다.</p>
           <SocialLinks />
+          <PressNews />
         </section>
 
         <section id="map" className="scroll-mt-4 pt-10">
