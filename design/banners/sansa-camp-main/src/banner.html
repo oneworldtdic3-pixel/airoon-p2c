@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>붓쯔 메인 배너</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=block" rel="stylesheet">
+<style>
+  :root { --green:#1C9771; --ink:#231916; --paper:#FFFFFF; --line:#DCEDE6; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 540px; height: 270px; background: var(--paper); overflow: hidden; }
+  body { font-family: 'Noto Sans KR', sans-serif; color: var(--ink); }
+  .banner { position: relative; width: 540px; height: 270px; background: var(--paper); display: grid; grid-template-columns: 1fr 1px 1fr; align-items: center; padding: 34px 26px 40px; }
+  .banner::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: var(--green); }
+  .eyebrow { position: absolute; top: 16px; left: 26px; font-size: 9px; font-weight: 500; letter-spacing: .22em; color: var(--green); }
+  .cta { position: absolute; right: 26px; bottom: 17px; font-size: 10.5px; font-weight: 500; color: var(--ink); display: flex; align-items: center; gap: 5px; }
+  .cta .arrow { width: 16px; height: 16px; border-radius: 50%; background: var(--green); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; }
+  .series { position: absolute; left: 26px; bottom: 18px; font-size: 9px; color: #8A817D; letter-spacing: .02em; }
+  .series b { color: var(--ink); font-weight: 500; }
+  .logo { display: flex; justify-content: center; }
+  .logo img { height: 128px; display: block; }
+  .rule { width: 1px; height: 150px; background: var(--line); }
+  .tee { display: flex; justify-content: center; }
+  .tee img { display: block; }
+</style>
+</head>
+<body>
+<div class="banner">
+  <div class="eyebrow">SANSA CAMP × BUDDHZ</div>
+  <div class="logo"><img src="logo.svg" alt="붓쯔 BUDDHZ"></div>
+  <div class="rule"></div>
+  <div class="tee"><img id="tee" alt=""></div>
+  <div class="series" id="series"></div>
+  <div class="cta">붓쯔 티셔츠 보기 <span class="arrow">→</span></div>
+</div>
+<script>
+  const v = new URLSearchParams(location.search).get('v') || 'drop';
+  const all = { bubble: '버블붓다', drop: '드랍더붓다', hache: '하체붓다' };
+  const img = document.getElementById('tee');
+  img.src = v + '.svg';
+  img.alt = all[v];
+  img.style.height = v === 'drop' ? '112px' : '132px';
+  document.getElementById('series').innerHTML = Object.entries(all)
+    .map(([k, n]) => k === v ? '<b>' + n + '</b>' : n).join(' · ');
+</script>
+</body>
+</html>
