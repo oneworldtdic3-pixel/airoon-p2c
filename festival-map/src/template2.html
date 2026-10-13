@@ -139,11 +139,11 @@ svg text { user-select: none; }
 
   <section class="site" id="siteSec" aria-labelledby="siteTitle">
     <h2 id="siteTitle">행사장 배치도</h2>
-    <p class="lede">캠핑 사이트, 방사 구역, 공연장, 부스를 실제 비율로 그렸습니다. 캠핑 사이트가 모인 북쪽과 공연장이 있는 남쪽은 약 450m 떨어져 있어 두 장으로 나눴습니다.</p>
+    <p class="lede">캠핑 사이트, Pet zone·Kids zone, 공연장, 부스를 실제 비율로 그렸습니다. 캠핑 사이트가 모인 북쪽과 공연장이 있는 남쪽은 약 450m 떨어져 있어 두 장으로 나눴습니다.</p>
     <ul class="cat-legend" id="catLegend"></ul>
-    <figure class="panel"><figcaption>북쪽 · 캠핑 사이트 A · B · C</figcaption><div class="svgbox" id="siteNorth"></div></figure>
+    <figure class="panel"><figcaption>북쪽 · 캠핑 사이트 A · B(Pet · Kids) · C</figcaption><div class="svgbox" id="siteNorth"></div></figure>
     <div class="site-grid">
-      <figure class="panel"><figcaption>남쪽 · 공연장 · 부스 · 방사 구역</figcaption><div class="svgbox" id="siteSouth"></div></figure>
+      <figure class="panel"><figcaption>남쪽 · 공연장 · 부스</figcaption><div class="svgbox" id="siteSouth"></div></figure>
       <div class="table-box"><table class="area-table" id="siteTable"></table></div>
     </div>
   </section>
@@ -158,7 +158,8 @@ svg text { user-select: none; }
     <ol>
       <li><b>맨 위 안내도는 한눈에 보도록 거리를 줄여 그렸습니다.</b> 남북·동서 위치 관계는 실측을 따르지만, 정확한 크기와 거리는 행사장 배치도와 구역별 배치도를 보세요.</li>
       <li><b>쌍계사 경내 텐트존의 정확한 자리.</b> 일주문에서 금강문 사이 진입로로 추정했습니다.</li>
-      <li><b>방사 구역.</b> 반려견 방사 구역으로 이해했고, 잔디 필지인 운수리 669-6에 가안으로 두었습니다. 다른 뜻이거나 다른 자리라면 알려 주세요.</li>
+      <li><b>Pet zone · Kids zone 나누기.</b> 쌍계초 85동을 서쪽 45동(Pet), 동쪽 40동(Kids)으로 나눈 가안입니다. 아이들이 입구·화장실 가까이 있도록 Kids zone을 동쪽에 두었습니다. 비율이나 방향이 다르면 알려 주세요.</li>
+      <li><b>운수리 669-6 필지.</b> 방사 구역 가안을 빼면서 지도에서도 지웠습니다. 쓸 용도가 있으면 알려 주세요.</li>
       <li><b>부스·푸드트럭 수와 무대 크기.</b> 공연장 배치도의 수치는 가안입니다.</li>
       <li><b>주차장 화장실·샤워실 핀의 방향.</b> 쌍계초 핀은 PPTX 배치를 실제 운동장 방향(입구가 남동쪽)에 맞춰 찍었습니다. 주차장은 PPTX 배치를 실제 주차장에 어느 방향으로 놓을지 아직 정해지지 않아, 핀이 PPTX 기준 위치입니다.</li>
       <li><b>주차장 배치 방향.</b> 실측 주차장은 약 50m × 51m입니다. PPTX 배치는 면적은 맞지만 가로로 긴 모양입니다.</li>
@@ -171,6 +172,10 @@ const ZONES = __ZONES__;
 const IMG_STAGE = "__STAGE__";
 const IMG_PARCEL = "__PARCEL__";
 const PREFIX = { temple: "A", school: "B", parking: "C" };
+// 쌍계초 tents split by column: west 9 columns = Pet zone (45), east columns by the entrance and toilet = Kids zone (40)
+const SCHOOL_SPLIT = 0.448; // fraction of the PPTX ground width
+const SUB = { pet: { name: "Pet zone", color: "#6aa84f", dark: "#3d7a2a" }, kids: { name: "Kids zone", color: "#e8579a", dark: "#a3285f" } };
+const schoolSub = (t, gr) => ((t.x + t.w / 2 - gr.x) / gr.w < SCHOOL_SPLIT ? "pet" : "kids");
 
 // ---------- map data, metres (x east, y south), traced from Kakao map captures ----------
 const VB = { x: 30, y: -110, w: 960, h: 900 };
@@ -310,13 +315,12 @@ const ISO_ZONES = {
   school:  { c: [540, 170], a: 80, b: 40, fill: "#ecd3a0", pin: 6, rows: 4, cols: 9 },
   parking: { c: [760, 230], a: 62, b: 56, fill: "#d3cec4", pin: 7, rows: 6, cols: 5 },
   temple:  { c: [1010, 226], a: 12, b: 62, fill: "#eadcbf", pin: 5, rows: 8, cols: 2 },
-  booth:   { c: [380, 445], a: 34, b: 26, fill: "#a8d47c", pin: 4 },
   stage:   { c: [420, 740], a: 100, b: 70, fill: "#fbe7c4", pin: 1 },
 };
 const TENT_COLORS = ["#f08a3c", "#f5b82e", "#4fa3d9", "#e4574b", "#7cc06a", "#f08a3c", "#9b7fe6"];
 const LEGEND_ITEMS = [
   [1, "#3b5bdb", "메인 무대 · 공연장", "stage"], [2, "#e0a21a", "체험·판매 부스 14동", "stage"], [3, "#e0a21a", "푸드트럭 6대 · 식음", "stage"],
-  [4, "#4f9a3a", "반려견 방사 구역 (가안)", "booth"], [5, "#e0702a", "A 쌍계사 경내 캠핑 · 30동", "temple"], [6, "#e0702a", "B 쌍계초 캠핑 · 85동", "school"],
+  [4, "#4f9a3a", "B 쌍계초 · Pet zone 45동", "school"], [5, "#e8579a", "B 쌍계초 · Kids zone 40동", "school"], [6, "#e0702a", "A 쌍계사 경내 캠핑 · 30동", "temple"],
   [7, "#e0702a", "C 주차장·언덕 캠핑 · 135동", "parking"], [8, "#8a5a33", "템플스테이", "parking"], [9, "#2e8e9a", "하동야생차박물관", null], [10, "#3d7a2a", "쌍계사 차나무 시배지", null],
 ];
 const BADGES = { wc: ["#4a4f57", "화장실"], shower: ["#178f9a", "샤워실"], info: ["#d6337a", "종합안내소"], med: ["#e2552d", "의무실"], park: ["#1f6fd1", "주차장 · 정류소"] };
@@ -365,8 +369,11 @@ function isoBuild() {
   }
   // parking stripes, courtyard, school track, dog-run fence
   { const z = ISO_ZONES.parking; for (let x = -z.a + 12; x < z.a; x += 21) { const [x1, y1] = iso(...z.c, x, -z.b + 4), [x2, y2] = iso(...z.c, x, z.b - 4); el("line", { x1, y1, x2, y2, stroke: "#fff", "stroke-width": 1.4, opacity: .8 }, zoneG.parking); } }
-  { const z = ISO_ZONES.school; el("path", { d: roundedPath([iso(...z.c, -z.a + 8, -z.b + 8), iso(...z.c, z.a - 8, -z.b + 8), iso(...z.c, z.a - 8, z.b - 8), iso(...z.c, -z.a + 8, z.b - 8)], 22), fill: "none", stroke: "#fff", "stroke-width": 1.6, opacity: .75 }, zoneG.school); }
-  { const z = ISO_ZONES.booth; el("path", { d: roundedPath([iso(...z.c, -z.a + 3, -z.b + 3), iso(...z.c, z.a - 3, -z.b + 3), iso(...z.c, z.a - 3, z.b - 3), iso(...z.c, -z.a + 3, z.b - 3)], 4), fill: "none", stroke: "#fff", "stroke-width": 2.4, "stroke-dasharray": "2 5", "stroke-linecap": "round" }, zoneG.booth); }
+  { const z = ISO_ZONES.school, sp = -z.a + 2 * z.a * SCHOOL_SPLIT;
+    el("path", { d: roundedPath([iso(...z.c, -z.a + 4, -z.b + 4), iso(...z.c, sp - 2, -z.b + 4), iso(...z.c, sp - 2, z.b - 4), iso(...z.c, -z.a + 4, z.b - 4)], 4), fill: "#c4e6a4" }, zoneG.school);
+    el("path", { d: roundedPath([iso(...z.c, sp + 2, -z.b + 4), iso(...z.c, z.a - 4, -z.b + 4), iso(...z.c, z.a - 4, z.b - 4), iso(...z.c, sp + 2, z.b - 4)], 4), fill: "#fbd3e4" }, zoneG.school);
+    const [x1, y1] = iso(...z.c, sp, -z.b + 2), [x2, y2] = iso(...z.c, sp, z.b - 2);
+    el("line", { x1, y1, x2, y2, stroke: "#fff", "stroke-width": 2.4, "stroke-dasharray": "2 5", "stroke-linecap": "round" }, zoneG.school); }
   plate(ground, 1080, 110, 72, 48, "#ead8b2");
 
   // ---- standing objects, painter-sorted by base y ----
@@ -411,7 +418,8 @@ function isoBuild() {
     const z = ISO_ZONES[id], sx = 2 * (z.a - 8) / z.cols, sy = 2 * (z.b - 8) / z.rows;
     for (let i = 0; i < z.rows; i++) for (let j = 0; j < z.cols; j++) {
       const [x, y] = iso(...z.c, -z.a + 8 + (j + .5) * sx, -z.b + 8 + (i + .5) * sy);
-      const c = TENT_COLORS[(i * 3 + j * 5) % TENT_COLORS.length];
+      const lx = -z.a + 8 + (j + .5) * sx, pet = id === "school" && lx < -z.a + 2 * z.a * SCHOOL_SPLIT;
+      const c = id !== "school" ? TENT_COLORS[(i * 3 + j * 5) % TENT_COLORS.length] : pet ? ["#4f9a3a", "#7cc06a", "#2f7a46"][(i + j) % 3] : ["#e8579a", "#f5b82e", "#4fa3d9"][(i + j) % 3];
       add(y, () => tent(zoneG[id], x, y, id === "temple" ? 5.5 : 6.5, c));
     }
   }
@@ -459,7 +467,7 @@ function isoBuild() {
   const rl = el("text", { transform: `matrix(${C30 * .45} ${-S30 * 1.6} ${C30} ${S30} 300 410)`, "font-size": 15, fill: "#fff", "font-family": "Bagel Fat One, sans-serif", "letter-spacing": 2 }, svg); rl.textContent = "화개천";
 
   // numbered pins
-  const pinAt = { 1: iso(stx, sty, 0, 0, 34), 2: iso(...S.c, -92, -10, 14), 3: iso(...S.c, -10, 58, 14), 4: iso(...ISO_ZONES.booth.c, 0, 0), 5: iso(1010, 226, 0, -30), 6: iso(540, 170, 0, 0), 7: iso(760, 230, 0, 0), 8: [838, 228], 9: [340, 486], 10: [612, 506] };
+  const pinAt = { 1: iso(stx, sty, 0, 0, 34), 2: iso(...S.c, -92, -10, 14), 3: iso(...S.c, -10, 58, 14), 4: iso(540, 170, -44, 0), 5: iso(540, 170, 38, 0), 6: iso(1010, 226, 0, -30), 7: iso(760, 230, 0, 0), 8: [838, 228], 9: [340, 486], 10: [612, 506] };
   for (const [n, color, label, id] of LEGEND_ITEMS) {
     const [x, y] = pinAt[n];
     const g = el("g", { class: id ? "zone-pin" : "", "data-id": id || "", filter: "url(#isoShadow)" }, svg);
@@ -475,7 +483,8 @@ function isoBuild() {
   isoPill(svg, 160, 368, "쌍계사 정류소 · 공영주차장", { bg: "#fff", fg: "#1f4f9a", fs: 10.5, border: "#9cc0ea" });
   isoPill(svg, 1090, 34, "쌍계사", { bg: "#5a3a22", fg: "#fff", fs: 15, border: "#fff" });
   isoPill(svg, 925, 300, "일주문", { bg: "#fff", fg: "#5a3a22", fs: 10.5, border: "#d7b88c" });
-  isoPill(svg, 452, 478, "방사 구역", { bg: "#4f9a3a", fg: "#fff", fs: 11, border: "#fff" });
+  isoPill(svg, ...iso(540, 186, -44, 52), "Pet zone", { bg: "#4f9a3a", fg: "#fff", fs: 11.5, border: "#fff" });
+  isoPill(svg, ...iso(540, 186, 36, 52), "Kids zone", { bg: "#e8579a", fg: "#fff", fs: 11.5, border: "#fff" });
 
   // title + info box
   const tg = el("g", {}, svg);
@@ -492,7 +501,7 @@ function isoBuild() {
   const I = (y, s, o = {}) => { const t = el("text", { x: 866, y, "font-size": 12.5, fill: "#2b4a30", "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 500, ...o }, ib); t.textContent = s; };
   I(668, "쌍계사 · 하동군 화개면 쌍계사길 59", { "font-weight": 700, "font-size": 13.5 });
   I(692, "캠핑 사이트 3곳 · 텐트 250동");
-  I(712, "공연장 · 부스 24 · 반려견 방사 구역");
+  I(712, "Pet · Kids zone은 쌍계초 · 공연장 · 부스 24");
   I(740, "Tip. 공연장에서 쌍계사 일주문까지", { fill: "#c8402c", "font-weight": 700 });
   I(760, "쌍계사길을 따라 걸어서 약 12분", { fill: "#c8402c", "font-weight": 700 });
   I(782, "※ 거리는 줄여서 그린 안내도입니다", { "font-size": 11, fill: "#5b7a60" });
@@ -541,7 +550,7 @@ function isoLegend() {
 }
 
 // ---------- zone detail (layouts drawn to scale from the PPTX) ----------
-const PAGES = ["temple", "school", "parking", "stage", "booth"];
+const PAGES = ["temple", "school", "parking", "stage"];
 const NAMES = { temple: "A 쌍계사 경내", school: "B 쌍계초", parking: "C 주차장", stage: "공연장", booth: "방사 구역" };
 const DOTS = { temple: "#2f6fe0", school: "#7a55e6", parking: "#d847c9", stage: "#151515", booth: "#6aa84f" };
 for (const z of ZONES) { // Chromium clamps very large SVG font sizes, so convert EMU geometry to 0.1 m units first
@@ -571,10 +580,12 @@ function drawZone(z) {
   const fs = Math.min(tents[0].w, tents[0].h) * 0.26;
   for (const t of tents) {
     const g = el("g", { class: "t-tent", "data-no": t.no }, svg);
-    el("rect", { x: t.x, y: t.y, width: t.w, height: t.h, fill: "var(--tent)", stroke: "var(--surface)", "stroke-width": z.emu_m * 0.12 }, g);
+    const sub = z.id === "school" ? schoolSub(t, z.items.find(i => i.k === "ground")) : null;
+    if (sub) g.dataset.sub = SUB[sub].name;
+    el("rect", { x: t.x, y: t.y, width: t.w, height: t.h, fill: sub ? SUB[sub].color : "var(--tent)", stroke: "var(--surface)", "stroke-width": z.emu_m * 0.12 }, g);
     const tx = el("text", { x: t.x + t.w / 2, y: t.y + t.h / 2 + fs * 0.35, "text-anchor": "middle", "font-size": fs, "font-family": "IBM Plex Mono, monospace", fill: "var(--tent-ink)" }, g);
     tx.textContent = t.no.slice(2);
-    el("title", {}, g).textContent = `${t.no} · 3m × 4m`;
+    el("title", {}, g).textContent = `${t.no}${sub ? " · " + SUB[sub].name : ""} · 3m × 4m`;
   }
   for (const f of z.items.filter(i => i.k === "fac")) {
     el("rect", { x: f.x, y: f.y, width: f.w, height: f.h, rx: z.emu_m * 0.3, fill: "var(--fac)" }, svg);
@@ -621,7 +632,7 @@ function facList(z) {
 
 const ZONE_NOTES = {
   temple: ["일주문–금강문 진입로로 추정한 자리입니다. 쌍계초에서 일주문까지 501m, 도보 7분.", "두 줄 배치, 가운데 통로 하나. 입구는 동쪽 끝입니다.", "캐노피는 위쪽 줄 동쪽 끝, 입구 바로 옆입니다."],
-  school: ["카카오맵 실측 운동장 약 58m × 28m로, PPTX의 30m × 60m와 맞습니다.", "다섯 줄 배치, 줄 사이마다 통로가 있습니다. 입구는 동쪽 통로입니다.", "캐노피 2동은 북동쪽 모서리, 화장실은 남동쪽 모서리입니다."],
+  school: ["서쪽 9열 45동은 Pet zone(초록), 입구·화장실 쪽 동쪽 40동은 Kids zone(분홍)입니다. 가운데 통로에 칸막이 펜스를 둡니다.", "카카오맵 실측 운동장 약 58m × 28m로, PPTX의 30m × 60m와 맞습니다.", "다섯 줄 배치, 줄 사이마다 통로가 있습니다. 입구는 동쪽 통로입니다.", "캐노피 2동은 북동쪽 모서리, 화장실은 남동쪽 모서리입니다."],
   parking: ["카카오맵 실측 약 50m × 51m(약 2,500㎡). PPTX 배치를 3m × 4m 텐트로 환산한 면적(약 30m × 84m)과 비슷하지만 모양은 다릅니다.", "본 구역 125동과 언덕 사이트 10동을 합한 수입니다.", "샤워실 4동은 북쪽, 화장실은 서쪽, 템플스테이는 동쪽 끝입니다.", "입구는 남서쪽, 캐노피 2동이 입구 옆에 있습니다."],
 };
 
@@ -639,6 +650,7 @@ function renderZone(z) {
       <div><span class="k">텐트</span><span class="v">${z.tents}동</span></div>
       <div><span class="k">구역 크기</span><span class="v">${z.size}</span></div>
       <div><span class="k">텐트 1동</span><span class="v">${tw}m × ${th}m</span></div>
+      ${z.id === "school" ? `<div><span class="k">구역</span><span class="v">Pet 45 · Kids 40</span></div>` : ""}
       <div><span class="k">번호</span><span class="v">${t[0].no} ~ ${t[t.length - 1].no}</span></div>
       <div><span class="k">시설</span><span class="v">${facList(z)}</span></div>
     </div>
@@ -648,7 +660,7 @@ function renderZone(z) {
   const svg = drawZone(z);
   document.getElementById("plan").appendChild(svg);
   const ro = document.getElementById("readout");
-  svg.addEventListener("pointerover", e => { const g = e.target.closest(".t-tent"); if (g) ro.innerHTML = `<b>${g.dataset.no}</b> · ${z.name} · ${tw}m × ${th}m`; });
+  svg.addEventListener("pointerover", e => { const g = e.target.closest(".t-tent"); if (g) ro.innerHTML = `<b>${g.dataset.no}</b> · ${z.name}${g.dataset.sub ? " · " + g.dataset.sub : ""} · ${tw}m × ${th}m`; });
 }
 
 // Event venue (stage plaza south of 야생차문화센터), metres; outline traced from the satellite capture (~0.46 m/px).
@@ -727,12 +739,12 @@ const VENUE_LEGEND = [
 const pts = a => a.map(p => p.join(",")).join(" ");
 const CAT = {
   camp:  { color: "#df7a37", dark: "#9c4a14", name: "캠핑 사이트" },
-  dog:   { color: "#6aa84f", dark: "#3d7a2a", name: "방사 구역" },
+  pet:   { color: "#6aa84f", dark: "#3d7a2a", name: "Pet zone" },
+  kids:  { color: "#e8579a", dark: "#a3285f", name: "Kids zone" },
   stage: { color: "#3b5bdb", dark: "#25399a", name: "공연장" },
   booth: { color: "#f5b82e", dark: "#a8740a", name: "부스" },
 };
 const VENUE_OFFSET = [185, 627.7]; // venue-local metres -> map metres
-const DOG_RUN = { c: [212, 470], w: 16, h: 26, rot: 0 };
 
 function facPoints(id, poly) {
   const zd = ZONES.find(q => q.id === id); if (!zd) return [];
@@ -789,9 +801,11 @@ function drawSiteNorth() {
   const polys = {
     school: rectPoly([358, 18], 60, 30, 49.5), parking: rectPoly([590, 95], 50, 51, 25), temple: rectPoly([805, 20], 50, 9, -40),
   };
-  sArea(svg, polys.school, "camp"); sArea(svg, polys.parking, "camp"); sArea(svg, polys.temple, "camp", { dash: "4 3" });
+  { const r = 49.5 * Math.PI / 180, dx = Math.cos(r), dy = Math.sin(r), sw = 60 * SCHOOL_SPLIT, ew = 60 - sw;
+    sArea(svg, rectPoly([358 + dx * (sw / 2 - 30), 18 + dy * (sw / 2 - 30)], sw, 30, 49.5), "pet");
+    sArea(svg, rectPoly([358 + dx * (30 - ew / 2), 18 + dy * (30 - ew / 2)], ew, 30, 49.5), "kids"); } sArea(svg, polys.parking, "camp"); sArea(svg, polys.temple, "camp", { dash: "4 3" });
   for (const id of ["school", "parking"]) for (const p of facPoints(id, polys[id])) miniPin(svg, p.x, p.y, p.kind, 5);
-  callout(svg, [372, 30], [430, 110], "B 쌍계초 · 85동", "운동장 30m × 60m · 캐노피 2");
+  callout(svg, [372, 30], [430, 110], "B 쌍계초 · 85동", "Pet zone 45 · Kids zone 40 · 캐노피 2");
   callout(svg, [606, 108], [668, 128], "C 주차장·언덕 · 135동", "약 50m × 51m · 샤워실 4동 · 템플스테이");
   callout(svg, [795, 28], [760, -62], "A 쌍계사 경내 · 30동", "9m × 50m · 위치 추정", { anchor: "end" });
   for (const m of [{ p: [880, -50], t: "쌍계사" }, { p: [925, 6], t: "대웅전" }, { p: [777, 48], t: "일주문" }]) {
@@ -799,13 +813,13 @@ function drawSiteNorth() {
     sText(svg, m.p[0] + 5, m.p[1] + 3.5, m.t, { fs: 9, w: 500, fill: "var(--muted)" });
   }
   sText(svg, 560, 228 - 12, "쌍계사길", { fs: 8.5, w: 500, fill: "var(--muted)" });
-  sText(svg, 300, 140, "↓ 공연장·방사 구역 (남쪽 약 450m)", { fs: 9.5, w: 600, fill: "var(--tea)" });
+  sText(svg, 300, 140, "↓ 공연장·부스 (남쪽 약 450m)", { fs: 9.5, w: 600, fill: "var(--tea)" });
   scaleBar(svg, 880, 135, 50, 9); northArrow(svg, 980, -80, 12);
   return svg;
 }
 
 function drawSiteSouth() {
-  const svg = sitePanel([140, 430, 190, 300], "남쪽 공연장·부스·방사 구역 배치도");
+  const svg = sitePanel([140, 430, 190, 300], "남쪽 공연장·부스 배치도");
   siteBase(svg);
   const L = ([x, y]) => [x + VENUE_OFFSET[0], y + VENUE_OFFSET[1]];
   const R = (x, y, w, h) => [[x, y], [x + w, y], [x + w, y + h], [x, y + h]].map(L);
@@ -813,10 +827,6 @@ function drawSiteSouth() {
   sText(svg, 222, 523, "야생차박물관", { fs: 6.5, w: 500, fill: "var(--muted)" });
   sText(svg, 249, 587, "야생차문화센터", { fs: 6.5, w: 500, fill: "var(--muted)" });
   sText(svg, 296, 714, "티카페하동", { fs: 6.5, w: 500, fill: "var(--muted)" });
-  // dog run
-  sArea(svg, rectPoly(DOG_RUN.c, DOG_RUN.w, DOG_RUN.h, DOG_RUN.rot), "dog");
-  for (const [dx, dy] of [[-3, -5], [3, 3]]) { const x = DOG_RUN.c[0] + dx, y = DOG_RUN.c[1] + dy; el("ellipse", { cx: x, cy: y + 1, rx: 1.6, ry: 1.3, fill: "#fff" }, svg); for (const [px, py] of [[-1.6, -1.2], [-.5, -2], [.6, -2], [1.6, -1.2]]) el("circle", { cx: x + px, cy: y + py, r: .55, fill: "#fff" }, svg); }
-  callout(svg, [220, 466], [236, 474], "방사 구역 (가안)", "반려견 · 669-6", { fs: 7.5 });
   // plaza
   el("polygon", { points: pts(VENUE_POLY.map(L)), fill: "var(--path)", stroke: "var(--muted)", "stroke-width": .8 }, svg);
   el("polygon", { points: pts(R(20, 14, 40, 40)), fill: CAT.stage.color, "fill-opacity": .32, stroke: CAT.stage.dark, "stroke-width": .8, "stroke-dasharray": "3 2" }, svg);
@@ -842,9 +852,9 @@ function drawSiteSouth() {
 
 const SITE_ROWS = [
   ["camp", "A 쌍계사 경내", "일주문–금강문 (추정)", "텐트 30동 · 9m × 50m", "캐노피"],
-  ["camp", "B 쌍계초", "쌍계초등학교 운동장", "텐트 85동 · 30m × 60m", "캐노피 2 · 화장실"],
+  ["pet", "B 쌍계초 · Pet zone", "쌍계초 운동장 서쪽", "텐트 45동", "칸막이 펜스 · 배변봉투함 · 급수대"],
+  ["kids", "B 쌍계초 · Kids zone", "쌍계초 운동장 동쪽 (입구·화장실 쪽)", "텐트 40동", "캐노피 2 · 화장실"],
   ["camp", "C 주차장·언덕", "쌍계사 주차장", "텐트 135동 · 약 50m × 51m", "샤워실 4동 · 화장실 · 캐노피 2 · 템플스테이"],
-  ["dog", "반려견 방사 구역", "운수리 669-6 (가안)", "약 400㎡ (추정)", "울타리 · 배변봉투함 · 급수대 필요"],
   ["stage", "메인 무대 · 관람", "야생차문화센터 남쪽 광장", "무대 12m × 8m · 관람 약 1,400㎡", "FOH · 대기 텐트 · 발전차"],
   ["booth", "체험·판매 부스", "광장 서쪽 (펜스 앞)", "14동 · 3m × 3m", ""],
   ["booth", "푸드트럭 · 식음", "광장 남쪽", "6대 · 테이블 구역", "분리수거장 · 화장실"],
@@ -852,7 +862,7 @@ const SITE_ROWS = [
 ];
 function buildSite() {
   document.getElementById("catLegend").innerHTML = [
-    ["camp", "3곳 · 텐트 250동"], ["dog", "1곳 · 가안"], ["stage", "1곳 · 무대 + 관람"], ["booth", "24 · 체험 14 · 푸드트럭 6 · 운영 4"],
+    ["camp", "3곳 · 텐트 250동"], ["pet", "쌍계초 45동"], ["kids", "쌍계초 40동"], ["stage", "1곳 · 무대 + 관람"], ["booth", "24 · 체험 14 · 푸드트럭 6 · 운영 4"],
   ].map(([k, t]) => `<li><i style="background:${CAT[k].color}"></i><b>${CAT[k].name}</b> ${t}</li>`).join("") +
     `<li><i class="pin" style="background:${FAC_STYLE.wc.color}">WC</i>화장실</li><li><i class="pin" style="background:${FAC_STYLE.shower.color}">S</i>샤워실</li>`;
   document.getElementById("siteNorth").appendChild(drawSiteNorth());
