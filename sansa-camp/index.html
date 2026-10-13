@@ -222,6 +222,14 @@ tr.quiet th .ic{width:16px;height:16px;display:inline-block;vertical-align:-3px;
 .leafs{display:flex;justify-content:center;gap:10px;margin:-4px 0 14px}
 .leafs .ic{width:32px;height:32px}
 .dark .leafs{}
+
+/* 사진 자리: photos/ 에 파일을 넣으면 칸에 맞춰 꽉 채움 */
+.photo{position:relative;overflow:hidden;margin:0}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1}
+.photo:has(img){opacity:1;border-style:solid;border-color:var(--ink)}
+.theme .photo{height:auto;aspect-ratio:16/7}
+.pics .photo{height:auto;aspect-ratio:4/3}
+.duo .photo{height:auto;aspect-ratio:4/3}
 @media(max-width:480px){h2{font-size:31px}#hero h1{font-size:48px}.duo,.pics{grid-template-columns:1fr}.spec{grid-template-columns:1fr}table{font-size:11px}}
 </style>
 </head>
@@ -277,7 +285,7 @@ tr.quiet th .ic{width:16px;height:16px;display:inline-block;vertical-align:-3px;
 
   <article class="theme t1">
     <header><span class="sl">HEALING &amp; SOUND</span><span>몸과 마음의 이완</span></header>
-    <div class="photo"><b>PHOTO</b>아침 숲속 요가 · 싱잉볼 컷</div>
+    <figure class="photo"><b>PHOTO · healing.jpg</b>아침 숲속 요가 · 싱잉볼 컷<img src="photos/healing.jpg" alt="아침 숲속 요가 · 싱잉볼 컷" onerror="this.remove()"></figure>
     <div class="pi"><svg class="ic" style="--fc:#5f8a6b" aria-hidden="true"><use href="#i-lotus"/></svg><h3><span class="no">01</span>아침을 여는 요가 &amp; 선명상 <small>매일 07:00</small></h3><p>지리산의 신선한 아침 공기와 함께 몸의 감각을 깨우는 스트레칭 및 숲속 선명상</p></div>
     <div class="pi"><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-sbowl"/></svg><h3><span class="no">02</span>싱잉볼 사운드 배스</h3><p>화개동천 계곡물 소리와 싱잉볼의 맑은 진동에 온몸을 맡기는 공감각적 사운드 힐링</p></div>
     <div class="pi"><svg class="ic" style="--fc:#5f8a6b" aria-hidden="true"><use href="#i-talk"/></svg><h3><span class="no">03</span>스님과의 즉문즉답 차담</h3><p>일상의 복잡한 고민을 내려놓고 스님과 따뜻한 차 한 잔을 나누며 지혜를 얻는 시간</p></div>
@@ -285,7 +293,7 @@ tr.quiet th .ic{width:16px;height:16px;display:inline-block;vertical-align:-3px;
 
   <article class="theme t2">
     <header><span class="sl">HERITAGE &amp; TASTE</span><span>지리산의 맛과 향</span></header>
-    <div class="photo"><b>PHOTO</b>찻잔을 든 108선다 다도 · 불일폭포 물줄기 컷</div>
+    <figure class="photo"><b>PHOTO · heritage.jpg</b>찻잔을 든 108선다 다도 · 불일폭포 물줄기 컷<img src="photos/heritage.jpg" alt="찻잔을 든 108선다 다도 · 불일폭포 물줄기 컷" onerror="this.remove()"></figure>
     <div class="pi"><svg class="ic" style="--fc:#d3602a" aria-hidden="true"><use href="#i-tea"/></svg><h3><span class="no">04</span>108선다(禪茶) 다도 명상 <small>100명 한정 사전예약</small></h3><p>한국 차(茶)의 시배지 하동 쌍계사 차밭에서 즐기는 정통 다도와 차 명상</p></div>
     <div class="pi"><svg class="ic" style="--fc:#5f8a6b" aria-hidden="true"><use href="#i-fall"/></svg><h3><span class="no">05</span>지리산 불일폭포 힐링 트래킹</h3><p>국립공원 전문 숲 해설사와 함께 지리산 10경 불일폭포 숲길을 걷는 활력 트래킹</p></div>
     <div class="pi"><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-bowl"/></svg><h3><span class="no">06</span>사찰음식 다이닝 &amp; 예불 체험</h3><p>천년의 지혜가 담긴 제철 식재료 사찰공양(발우공양 문화)과 장엄한 산사의 저녁 예불</p></div>
@@ -294,7 +302,7 @@ tr.quiet th .ic{width:16px;height:16px;display:inline-block;vertical-align:-3px;
 
   <article class="theme t3">
     <header><span class="sl">CULTURE &amp; NIGHT</span><span>문화와 쉼</span></header>
-    <div class="photo"><b>PHOTO</b>은은한 산사 야간 공연 컷</div>
+    <figure class="photo"><b>PHOTO · night.jpg</b>은은한 산사 야간 공연 컷<img src="photos/night.jpg" alt="은은한 산사 야간 공연 컷" onerror="this.remove()"></figure>
     <div class="pi"><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-market"/></svg><h3><span class="no">08</span>하동 로컬 산사장터</h3><p>지리산 야생차, 하동 특산물, 수제 로컬 푸드, 친환경 핸드메이드 마켓 운영</p></div>
     <div class="pi"><svg class="ic" style="--fc:#a8414e" aria-hidden="true"><use href="#i-mic"/></svg><h3><span class="no">09</span>포레스트 라이브 (산사토크 &amp; 공연) <small>라인업 추후 공개</small></h3><p>금·토 가을 저녁 산사의 정취를 밝히는 어쿠스틱 라이브 &amp; 아티스트 토크 (21:00 전 종료)</p></div>
   </article>
@@ -353,13 +361,13 @@ tr.quiet th .ic{width:16px;height:16px;display:inline-block;vertical-align:-3px;
           <li>사전 지정 구역 내 피칭</li>
         </ul>
       </div>
-      <div class="pics"><div class="photo"><b>PHOTO</b>텐트 피칭 예시</div><div class="photo"><b>PHOTO</b>캠핑존 전경</div></div>
+      <div class="pics"><figure class="photo"><b>PHOTO · camp-pitch.jpg</b>텐트 피칭 예시<img src="photos/camp-pitch.jpg" alt="텐트 피칭 예시" onerror="this.remove()"></figure><figure class="photo"><b>PHOTO · camp-view.jpg</b>캠핑존 전경<img src="photos/camp-view.jpg" alt="캠핑존 전경" onerror="this.remove()"></figure></div>
     </div>
   </div>
 
   <div class="duo">
     <div class="card"><header style="background:var(--paper)"><h3><svg class="ic" style="--fc:#5f8a6b" aria-hidden="true"><use href="#i-people"/></svg>캠핑 6인 대형</h3></header><div class="in">가족 및 친구 그룹 전용 대형 쉘터 사이트<br><span class="tbd">가격 추후 공개</span></div></div>
-    <div class="card"><header style="background:var(--orange)"><h3><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-paw"/></svg>PET ZONE</h3></header><div class="in">반려견 동반 전용 구역 · 펫티켓 리드줄 필수<br><span class="ok">1~4인 기준 가격 동일</span><div class="photo"><b>PHOTO</b>펫존 무드 컷</div></div></div>
+    <div class="card"><header style="background:var(--orange)"><h3><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-paw"/></svg>PET ZONE</h3></header><div class="in">반려견 동반 전용 구역 · 펫티켓 리드줄 필수<br><span class="ok">1~4인 기준 가격 동일</span><figure class="photo"><b>PHOTO · pet.jpg</b>펫존 무드 컷<img src="photos/pet.jpg" alt="펫존 무드 컷" onerror="this.remove()"></figure></div></div>
   </div>
 
   <div class="card hanok">
@@ -371,7 +379,7 @@ tr.quiet th .ic{width:16px;height:16px;display:inline-block;vertical-align:-3px;
       <div class="row"><span>4인 가족실</span><span class="p">920,000<small>원</small></span></div>
       <div class="row"><span>5인 가족실</span><span class="p">1,150,000<small>원</small></span></div>
       <div class="row"><span>8인 단체실</span><span class="p">1,600,000<small>원</small></span></div>
-      <div class="pics"><div class="photo"><b>PHOTO</b>온돌방 실내</div><div class="photo"><b>PHOTO</b>툇마루</div></div>
+      <div class="pics"><figure class="photo"><b>PHOTO · hanok-room.jpg</b>온돌방 실내<img src="photos/hanok-room.jpg" alt="온돌방 실내" onerror="this.remove()"></figure><figure class="photo"><b>PHOTO · hanok-maru.jpg</b>툇마루<img src="photos/hanok-maru.jpg" alt="툇마루" onerror="this.remove()"></figure></div>
     </div>
   </div>
 
