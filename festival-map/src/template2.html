@@ -341,7 +341,7 @@ const G = {
 const ISO_ZONES = {
   school:  { c: [540, 170], a: 80, b: 40, fill: "#ecd3a0", pin: 6, rows: 4, cols: 9 },
   parking: { c: [760, 230], a: 62, b: 56, fill: "#d3cec4", pin: 7, rows: 6, cols: 5 },
-  temple:  { c: [1010, 226], a: 12, b: 62, fill: "#eadcbf", pin: 5, rows: 8, cols: 2 },
+  temple:  { c: [1010, 226], a: 14, b: 76, fill: "#eadcbf", pin: 5, rows: 15, cols: 2 },
   stage:   { c: [420, 740], a: 100, b: 70, fill: "#fbe7c4", pin: 1 },
 };
 const TENT_COLORS = ["#f08a3c", "#f5b82e", "#4fa3d9", "#e4574b", "#7cc06a", "#f08a3c", "#9b7fe6"];
@@ -447,7 +447,7 @@ function isoBuild() {
       const [x, y] = iso(...z.c, -z.a + 8 + (j + .5) * sx, -z.b + 8 + (i + .5) * sy);
       const lx = -z.a + 8 + (j + .5) * sx, pet = id === "school" && lx < -z.a + 2 * z.a * SCHOOL_SPLIT;
       const c = id !== "school" ? TENT_COLORS[(i * 3 + j * 5) % TENT_COLORS.length] : pet ? ["#4f9a3a", "#7cc06a", "#2f7a46"][(i + j) % 3] : ["#e8579a", "#f5b82e", "#4fa3d9"][(i + j) % 3];
-      add(y, () => tent(zoneG[id], x, y, id === "temple" ? 5.5 : 6.5, c));
+      add(y, () => tent(zoneG[id], x, y, id === "temple" ? 4.4 : 6.5, c));
     }
   }
   // buildings
@@ -472,7 +472,7 @@ function isoBuild() {
   for (let k = 0; k < 7; k++) { const [bx, by] = iso(...S.c, -88, -54 + k * 18); add(by + 6, () => box(svg, bx, by, 6, 6, 9, { roof: k % 2 ? "#ef6b4a" : "#f5b82e", wall: "#fff", noShadow: true })); }
   for (let k = 0; k < 4; k++) { const [fx, fy] = iso(...S.c, -56 + k * 30, 56); add(fy + 8, () => box(svg, fx, fy, 11, 5, 9, { roof: "#f08a3c", wall: "#fff" })); }
   // trees on free ground
-  const clears = [[540, 170, 125, 75], [760, 230, 112, 72], [1010, 226, 72, 48], [1080, 110, 125, 75], [925, 266, 22, 16], [420, 740, 165, 100], [340, 530, 72, 46], [410, 600, 60, 40], [380, 445, 64, 40], [480, 366, 26, 16], [612, 512, 68, 40], [560, 590, 52, 34], [676, 452, 50, 30], [600, 420, 110, 46], [160, 335, 34, 26], [150, 260, 45, 30]];
+  const clears = [[540, 170, 125, 75], [760, 230, 112, 72], [1010, 226, 86, 54], [1080, 110, 125, 75], [925, 266, 22, 16], [420, 740, 165, 100], [340, 530, 72, 46], [410, 600, 60, 40], [380, 445, 64, 40], [480, 366, 26, 16], [612, 512, 68, 40], [560, 590, 52, 34], [676, 452, 50, 30], [600, 420, 110, 46], [160, 335, 34, 26], [150, 260, 45, 30]];
   const blobPoly = G.blob;
   const nearLine = (p, line, d) => distLine(p, line) < d;
   for (let y = 0; y < 870; y += 17) for (let x = 0; x < 1200; x += 19) {
@@ -643,7 +643,7 @@ function flatBuild() {
   el("rect", { x: 435, y: 184, width: 92, height: 92, rx: 10, fill: "#c4e6a4", transform: "rotate(-8 535 230)" }, sz);
   el("rect", { x: 531, y: 184, width: 102, height: 92, rx: 10, fill: "#f9cfe0", transform: "rotate(-8 535 230)" }, sz);
   const pz = zone("parking", 718, 262, 128, 96, -10, "#f3e3c3");
-  const tz = zone("temple", 936, 214, 118, 30, -50, "#f6e4c4");
+  const tz = zone("temple", 942, 210, 156, 34, -50, "#f6e4c4");
   const stz = zone("stage", 330, 690, 236, 150, 0, "#fbe9c8");
 
   // icons
@@ -665,7 +665,9 @@ function flatBuild() {
   const hanok = (p, x, y, s, wall = "#fff3e0") => { el("rect", { x: x - s, y: y - s * .1, width: s * 2, height: s * .8, fill: wall }, p); for (const dx of [-.75, -.25, .25, .75]) el("rect", { x: x + dx * s - s * .06, y: y - s * .1, width: s * .12, height: s * .8, fill: "#b8473a" }, p); el("path", { d: `M${x - s * 1.35} ${y - s * .05} Q${x - s * .7} ${y - s * .2} ${x - s * .85} ${y - s * .6} H${x + s * .85} Q${x + s * .7} ${y - s * .2} ${x + s * 1.35} ${y - s * .05}Z`, fill: "#4b5560" }, p); el("rect", { x: x - s * 1.1, y: y + s * .7, width: s * 2.2, height: s * .16, fill: "#c9b48a" }, p); };
   hanok(svg, 806, 236, 22, "#fff3e0");
   // temple A strip tents + 일주문 + 쌍계사
-  [[904, 246], [924, 226], [944, 204], [964, 182]].forEach(([x, y], i) => tent(tz, x, y, 8, ["#f08a3c", "#4fa3d9", "#f5b82e", "#e4574b"][i]));
+  { const r = -50 * Math.PI / 180, cs = Math.cos(r), sn = Math.sin(r), pts = [];
+    for (let row = 0; row < 2; row++) for (let i = 0; i < 15; i++) { const lx = -70 + i * 10, ly = row ? 8 : -6; pts.push([942 + lx * cs - ly * sn, 210 + lx * sn + ly * cs, (i + row * 2) % 5]); }
+    pts.sort((p, q) => p[1] - q[1]).forEach(([x, y, k]) => tent(tz, x, y, 4.3, ["#f08a3c", "#4fa3d9", "#f5b82e", "#e4574b", "#7cc06a"][k])); }
   hanok(svg, 892, 292, 12);
   T(svg, 892, 318, "일주문", { "text-anchor": "middle", "font-size": 11.5, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700 });
   hanok(svg, 990, 82, 44); hanok(svg, 1040, 132, 22); hanok(svg, 930, 110, 20);
@@ -994,6 +996,11 @@ function drawSiteNorth() {
   { const r = 49.5 * Math.PI / 180, dx = Math.cos(r), dy = Math.sin(r), sw = 60 * SCHOOL_SPLIT, ew = 60 - sw;
     sArea(svg, rectPoly([358 + dx * (sw / 2 - 30), 18 + dy * (sw / 2 - 30)], sw, 30, 49.5), "pet");
     sArea(svg, rectPoly([358 + dx * (30 - ew / 2), 18 + dy * (30 - ew / 2)], ew, 30, 49.5), "kids"); } sArea(svg, polys.parking, "camp"); sArea(svg, polys.temple, "camp", { dash: "4 3" });
+  { const zd = ZONES.find(q => q.id === "temple"), gr = zd.items.find(i => i.k === "ground"), [a, b, , d] = polys.temple;
+    for (const t of zd.items.filter(i => i.k === "tent")) {
+      const u = (t.x + t.w / 2 - gr.x) / gr.w, v = (t.y + t.h / 2 - gr.y) / gr.h;
+      el("polygon", { points: pts(rectPoly([a[0] + (b[0] - a[0]) * u + (d[0] - a[0]) * v, a[1] + (b[1] - a[1]) * u + (d[1] - a[1]) * v], 1.5, 3.6, -40)), fill: "#fff", stroke: CAT.camp.dark, "stroke-width": .4 }, svg);
+    } }
   for (const id of ["school", "parking"]) for (const p of facPoints(id, polys[id])) miniPin(svg, p.x, p.y, p.kind, 5);
   callout(svg, [372, 30], [430, 110], "B 쌍계초 · 85동", "Pet zone 45 · Kids zone 40 · 캐노피 2");
   callout(svg, [606, 108], [668, 128], "C 주차장·언덕 · 135동", "약 50m × 51m · 샤워실 4동 · 템플스테이");
