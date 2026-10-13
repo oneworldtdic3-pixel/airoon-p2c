@@ -399,10 +399,10 @@ function isoBuild() {
     el("path", { d: roundedPath([iso(...z.c, -z.a + 4, -z.b + 4), iso(...z.c, z.a - 4, -z.b + 4), iso(...z.c, z.a - 4, z.b - 4), iso(...z.c, -z.a + 4, z.b - 4)], 4), fill: PK.tint }, zoneG.school); }
   plate(ground, 1080, 110, 72, 48, "#ead8b2");
   // dog runs (방사 구역): beside camp C, and at the Buddhist culture & art hall
-  for (const [cx, cy, a, b] of [[700, 118, 26, 20], [1122, 306, 30, 24]]) {
+  for (const [cx, cy, a, b] of [[704, 112, 34, 26], [1124, 312, 38, 30]]) {
     plate(ground, cx, cy, a, b, "#a6dcc0", { stroke: "#2e9e7a" });
     el("path", { d: roundedPath([iso(cx, cy, -a + 3, -b + 3), iso(cx, cy, a - 3, -b + 3), iso(cx, cy, a - 3, b - 3), iso(cx, cy, -a + 3, b - 3)], 3), fill: "none", stroke: "#fff", "stroke-width": 2.2, "stroke-dasharray": "2 5", "stroke-linecap": "round" }, ground);
-    for (const [dx, dy] of [[-9, -2], [9, 4]]) { const x = cx + dx, y = cy + dy; el("ellipse", { cx: x, cy: y + 2, rx: 3.6, ry: 2.8, fill: "#1f7a5c" }, ground); for (const [px, py] of [[-3.6, -2.4], [-1.2, -4.2], [1.2, -4.2], [3.6, -2.4]]) el("circle", { cx: x + px, cy: y + py, r: 1.2, fill: "#1f7a5c" }, ground); }
+    for (const [dx, dy] of [[-12, -3], [12, 5]]) { const x = cx + dx, y = cy + dy; el("ellipse", { cx: x, cy: y + 2, rx: 4.6, ry: 3.6, fill: "#1f7a5c" }, ground); for (const [px, py] of [[-3.6, -2.4], [-1.2, -4.2], [1.2, -4.2], [3.6, -2.4]]) el("circle", { cx: x + px, cy: y + py, r: 1.2, fill: "#1f7a5c" }, ground); }
   }
 
   // ---- standing objects, painter-sorted by base y ----
@@ -458,7 +458,7 @@ function isoBuild() {
   add(530 + 34, () => box(svg, 340, 530, 46, 22, 20, { roof: "#2e8e9a", gable: true, label: "야생차박물관", windows: true, fs: 11.5 }));
   add(600 + 29, () => box(svg, 410, 600, 38, 20, 16, { roof: "#3aa0a8", gable: true, label: "문화센터", windows: true, fs: 11 }));
   add(188 + 12, () => box(svg, 756, 188, 14, 10, 13, { roof: "#178f9a", gable: true, label: "샤워실", fs: 7 }));
-  add(262 + 17, () => box(svg, 838, 262, 10, 24, 16, { roof: "#8a5a33", gable: true, label: "템플", fs: 7 }));
+  add(262 + 22, () => box(svg, 842, 262, 14, 30, 20, { roof: "#8a5a33", gable: true, label: "템플스테이", fs: 7.5, windows: true }));
   add(266 + 6, () => box(svg, 925, 266, 8, 4, 13, { roof: "#4b5560", gable: true, rh: 6 }));
   add(258 + 19, () => box(svg, 1132, 258, 26, 12, 16, { roof: "#2e8e9a", gable: true, label: "예술관", fs: 9, windows: true }));
   for (const [x, y, a, b, h, lab] of [[1100, 92, 30, 16, 16, "대웅전"], [1040, 122, 18, 12, 12, ""], [1132, 136, 16, 10, 11, ""], [1062, 70, 16, 10, 11, ""], [1150, 82, 14, 10, 10, ""], [1015, 90, 12, 8, 10, ""]])
@@ -475,7 +475,7 @@ function isoBuild() {
   for (let k = 0; k < 7; k++) { const [bx, by] = iso(...S.c, -88, -54 + k * 18); add(by + 6, () => box(svg, bx, by, 6, 6, 9, { roof: k % 2 ? "#ef6b4a" : "#f5b82e", wall: "#fff", noShadow: true })); }
   for (let k = 0; k < 4; k++) { const [fx, fy] = iso(...S.c, -56 + k * 30, 56); add(fy + 8, () => box(svg, fx, fy, 11, 5, 9, { roof: "#f08a3c", wall: "#fff" })); }
   // trees on free ground
-  const clears = [[700, 118, 52, 34], [1122, 300, 60, 50], [540, 170, 125, 75], [760, 230, 112, 72], [1010, 226, 86, 54], [1080, 110, 125, 75], [925, 266, 22, 16], [420, 740, 165, 100], [340, 530, 72, 46], [410, 600, 60, 40], [380, 445, 64, 40], [480, 366, 26, 16], [612, 512, 68, 40], [560, 590, 52, 34], [676, 452, 50, 30], [600, 420, 110, 46], [160, 335, 34, 26], [150, 260, 45, 30]];
+  const clears = [[704, 112, 64, 40], [1124, 306, 72, 56], [840, 262, 44, 34], [540, 170, 125, 75], [760, 230, 112, 72], [1010, 226, 86, 54], [1080, 110, 125, 75], [925, 266, 22, 16], [420, 740, 165, 100], [340, 530, 72, 46], [410, 600, 60, 40], [380, 445, 64, 40], [480, 366, 26, 16], [612, 512, 68, 40], [560, 590, 52, 34], [676, 452, 50, 30], [600, 420, 110, 46], [160, 335, 34, 26], [150, 260, 45, 30]];
   const blobPoly = G.blob;
   const nearLine = (p, line, d) => distLine(p, line) < d;
   for (let y = 0; y < 870; y += 17) for (let x = 0; x < 1200; x += 19) {
@@ -497,7 +497,7 @@ function isoBuild() {
   const rl = el("text", { transform: `matrix(${C30 * .45} ${-S30 * 1.6} ${C30} ${S30} 300 410)`, "font-size": 15, fill: "#fff", "font-family": "Bagel Fat One, sans-serif", "letter-spacing": 2 }, svg); rl.textContent = "화개천";
 
   // numbered pins
-  const pinAt = { 1: iso(stx, sty, 0, 0, 34), 2: iso(...S.c, -92, -10, 14), 3: iso(...S.c, -10, 58, 14), 4: iso(540, 170, 0, 0), 5: iso(1010, 226, 0, -30), 6: iso(760, 230, 0, 0), 7: [838, 228], 8: [340, 486], 9: [612, 506], 10: [700, 112], 11: [1122, 300] };
+  const pinAt = { 1: iso(stx, sty, 0, 0, 34), 2: iso(...S.c, -92, -10, 14), 3: iso(...S.c, -10, 58, 14), 4: iso(540, 170, 0, 0), 5: iso(1010, 226, 0, -30), 6: iso(760, 230, 0, 0), 7: [846, 214], 8: [340, 486], 9: [612, 506], 10: [704, 104], 11: [1124, 304] };
   for (const [n, color, label, id] of LEGEND_ITEMS) {
     const [x, y] = pinAt[n];
     const g = el("g", { class: id ? "zone-pin" : "", "data-id": id || "", filter: "url(#isoShadow)" }, svg);
@@ -648,7 +648,7 @@ function flatBuild() {
   const tz = zone("temple", 942, 210, 156, 34, -50, "#f6e4c4");
   const stz = zone("stage", 330, 690, 236, 150, 0, "#fbe9c8");
   const dogRun = (cx, cy, w, h, rot) => { const dg = g(svg); el("rect", { x: cx - w / 2, y: cy - h / 2, width: w, height: h, rx: 10, fill: "#a6dcc0", stroke: "#fff", "stroke-width": 3, transform: `rotate(${rot} ${cx} ${cy})` }, dg); el("rect", { x: cx - w / 2 + 5, y: cy - h / 2 + 5, width: w - 10, height: h - 10, rx: 7, fill: "none", stroke: "#2e9e7a", "stroke-width": 2, "stroke-dasharray": "3 4", transform: `rotate(${rot} ${cx} ${cy})` }, dg); return dg; };
-  const dr1 = dogRun(648, 118, 84, 46, -10), dr2 = dogRun(1005, 428, 112, 58, 0);
+  const dr1 = dogRun(674, 90, 112, 58, -10), dr2 = dogRun(1005, 434, 142, 76, 0);
 
   // icons
   const tent = (p, x, y, s, c) => { poly(p, [[x - s, y + s * .6], [x, y - s * .9], [x + s, y + s * .6]], { fill: c }); poly(p, [[x, y - s * .9], [x + s, y + s * .6], [x, y + s * .6]], { fill: "rgba(0,0,0,.12)" }); poly(p, [[x - s * .26, y + s * .6], [x, y - s * .1], [x + s * .26, y + s * .6]], { fill: "#5a3a22" }); el("line", { x1: x - s * 1.2, y1: y + s * .62, x2: x + s * 1.2, y2: y + s * .62, stroke: "#8a6a4a", "stroke-width": 1.6, "stroke-linecap": "round" }, p); };
@@ -662,15 +662,15 @@ function flatBuild() {
   // school building
   const bld = (p, x, y, w, h, roof, wall = "#fffaf0") => { el("rect", { x: x - w / 2, y: y - h / 2, width: w, height: h, fill: wall, rx: 2 }, p); poly(p, [[x - w / 2 - 5, y - h / 2], [x - w / 2 + 6, y - h / 2 - 12], [x + w / 2 - 6, y - h / 2 - 12], [x + w / 2 + 5, y - h / 2]], { fill: roof }); for (let i = x - w / 2 + 8; i < x + w / 2 - 6; i += 12) el("rect", { x: i, y: y - h / 2 + 6, width: 7, height: 7, fill: "#9fd3e6", rx: 1 }, p); el("rect", { x: x - 5, y: y + h / 2 - 12, width: 10, height: 12, fill: "#8a5a33" }, p); };
   bld(svg, 548, 142, 150, 30, "#6fb06c");
-  paw(dr1, 636, 120, 11, "#1f7a5c"); paw(dr1, 662, 114, 9, "#1f7a5c");
-  bld(svg, 1005, 384, 84, 24, "#2e8e9a"); paw(dr2, 990, 436, 12, "#1f7a5c"); paw(dr2, 1022, 430, 10, "#1f7a5c");
-  T(svg, 1005, 476, "전통불교문화예술관", { "text-anchor": "middle", "font-size": 13.5, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700, "paint-order": "stroke", stroke: FL.bg, "stroke-width": 4 });
+  paw(dr1, 652, 96, 14, "#1f7a5c"); paw(dr1, 690, 86, 12, "#1f7a5c");
+  bld(svg, 1005, 384, 84, 24, "#2e8e9a"); paw(dr2, 980, 442, 15, "#1f7a5c"); paw(dr2, 1030, 434, 13, "#1f7a5c");
+  T(svg, 1005, 492, "전통불교문화예술관", { "text-anchor": "middle", "font-size": 13.5, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700, "paint-order": "stroke", stroke: FL.bg, "stroke-width": 4 });
   T(svg, 548, 108, "쌍계초등학교", { "text-anchor": "middle", "font-size": 12, fill: FL.ink, "font-family": "IBM Plex Sans KR, sans-serif", "font-weight": 700 });
   // parking: stripes, tents, shower, temple stay
   for (let i = 0; i < 5; i++) el("line", { x1: 668 + i * 24, y1: 228, x2: 668 + i * 24, y2: 292, stroke: "#fff", "stroke-width": 2, transform: "rotate(-10 718 262)" }, pz);
   [[676, 268, "#f08a3c"], [702, 248, "#4fa3d9"], [728, 284, "#f5b82e"], [748, 256, "#e4574b"], [700, 296, "#7cc06a"], [756, 290, "#9b7fe6"]].forEach(([x, y, c]) => tent(pz, x, y, 10, c));
   const hanok = (p, x, y, s, wall = "#fff3e0") => { el("rect", { x: x - s, y: y - s * .1, width: s * 2, height: s * .8, fill: wall }, p); for (const dx of [-.75, -.25, .25, .75]) el("rect", { x: x + dx * s - s * .06, y: y - s * .1, width: s * .12, height: s * .8, fill: "#b8473a" }, p); el("path", { d: `M${x - s * 1.35} ${y - s * .05} Q${x - s * .7} ${y - s * .2} ${x - s * .85} ${y - s * .6} H${x + s * .85} Q${x + s * .7} ${y - s * .2} ${x + s * 1.35} ${y - s * .05}Z`, fill: "#4b5560" }, p); el("rect", { x: x - s * 1.1, y: y + s * .7, width: s * 2.2, height: s * .16, fill: "#c9b48a" }, p); };
-  hanok(svg, 806, 236, 22, "#fff3e0");
+  hanok(svg, 812, 232, 32, "#fff3e0");
   // temple A strip tents + 일주문 + 쌍계사
   { const r = -50 * Math.PI / 180, cs = Math.cos(r), sn = Math.sin(r), pts = [];
     for (let row = 0; row < 2; row++) for (let i = 0; i < 15; i++) { const lx = -70 + i * 10, ly = row ? 8 : -6; pts.push([942 + lx * cs - ly * sn, 210 + lx * sn + ly * cs, (i + row * 2) % 5]); }
@@ -716,7 +716,7 @@ function flatBuild() {
   for (const [k, x, y] of [["wc", 450, 760], ["wc", 420, 250], ["wc", 648, 272], ["wc", 1010, 168], ["shower", 680, 214], ["info", 262, 612], ["med", 292, 612], ["park", 106, 330]]) isoBadge(svg, x, y, k, 16, "flatShadow");
 
   // numbered circles
-  const numAt = { 1: [430, 650], 2: [212, 690], 3: [322, 780], 4: [452, 186], 5: [970, 240], 6: [770, 300], 7: [832, 214], 8: [296, 506], 9: [600, 532], 10: [702, 96], 11: [944, 446] };
+  const numAt = { 1: [430, 650], 2: [212, 690], 3: [322, 780], 4: [452, 186], 5: [970, 240], 6: [770, 300], 7: [846, 190], 8: [296, 506], 9: [600, 532], 10: [744, 66], 11: [928, 440] };
   for (const [n, ko, en, id] of FLAT_ITEMS) {
     const [x, y] = numAt[n], ng = g(svg, { class: id ? "zone-pin" : "" });
     el("circle", { cx: x, cy: y, r: 21, fill: FL.num, stroke: "#fff", "stroke-width": 3.5, filter: "url(#flatShadow)" }, ng);
@@ -1010,7 +1010,7 @@ function drawSiteNorth() {
   callout(svg, [606, 108], [668, 128], "C 주차장·언덕 · 135동", "약 50m × 51m · 샤워실 4동 · 템플스테이");
   callout(svg, [795, 28], [760, -62], "A 쌍계사 경내 · 30동", "9m × 50m · 위치 추정", { anchor: "end" });
   el("polygon", { points: pts(rectPoly([888, 150], 46, 26, -10)), fill: "var(--bldg)" }, svg);
-  sArea(svg, rectPoly([560, 25], 30, 22, -10), "dog"); sArea(svg, rectPoly([862, 180], 36, 22, -10), "dog");
+  sArea(svg, rectPoly([560, 25], 40, 30, -10), "dog"); sArea(svg, rectPoly([862, 182], 48, 30, -10), "dog");
   callout(svg, [560, 22], [500, -62], "방사 구역 ①", "C 주차장 옆 · 반려견", { anchor: "end" });
   callout(svg, [858, 184], [790, 176], "방사 구역 ②", "전통불교문화예술관 · 반려견", { anchor: "end" });
   for (const m of [{ p: [880, -50], t: "쌍계사" }, { p: [925, 6], t: "대웅전" }, { p: [777, 48], t: "일주문" }, { p: [720, 40], t: "차나무 시배지" }, { p: [912, 150], t: "전통불교문화예술관" }]) {
