@@ -327,6 +327,11 @@ ul.star li::before{content:"☆";position:absolute;left:0;color:#b24a1c;font-wei
 .place-tags{list-style:none;display:flex;justify-content:center;gap:8px;padding:16px 20px 18px;flex-wrap:wrap}
 .place-tags li{font-size:13px;font-weight:700;color:#f8f2e5;border:1.5px solid rgba(248,242,229,.55);border-radius:99px;padding:5px 13px}
 .place-tags li::before{content:"#"}
+.place-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:8px;padding:8px 8px 0;height:560px}
+.place-grid figure{position:relative;margin:0;overflow:hidden;border-radius:4px}
+.place-grid .g1{grid-row:1/3}
+.place-grid img{width:100%;height:100%;object-fit:cover;display:block}
+.place-grid figcaption{position:absolute;left:10px;bottom:10px;background:rgba(20,16,13,.78);color:#f8f2e5;font-size:13px;font-weight:700;padding:4px 10px;border-radius:3px}
 /*MAPCSS*/
 /* 행사장 안내도 */
 #map{background:var(--paper)}
@@ -365,7 +370,7 @@ ul.star li::before{content:"☆";position:absolute;left:0;color:#b24a1c;font-wei
 <section id="place">
   <figure class="place-ph">
     <div class="ph-empty"><b>PHOTO · ssanggyesa.jpg</b>하동 쌍계사 전경 사진</div>
-    <img src="photos/ssanggyesa.jpg" alt="지리산 하동 쌍계사 전경" onerror="this.remove()">
+    <img src="photos/ssanggyesa.jpg" alt="지리산 하동 쌍계사 전경" style="object-position:50% 40%" onerror="this.remove()">
     <figcaption>
       <span class="loc">LOCATION</span>
       <p class="pl1">지리산 · 천년 고찰</p>
@@ -373,6 +378,7 @@ ul.star li::before{content:"☆";position:absolute;left:0;color:#b24a1c;font-wei
       <p class="pl3">경남 하동군 화개면 쌍계사길 59</p>
     </figcaption>
   </figure>
+  <div class="place-grid"><figure class="g1"><img src="photos/sg-pagoda.jpg" alt="쌍계사 경내 석탑과 은행나무"><figcaption>천년 고찰의 가을</figcaption></figure><figure class="g2"><img src="photos/sg-stream.jpg" alt="화개동천 계곡"><figcaption>화개동천 계곡</figcaption></figure><figure class="g3"><img src="photos/sg-wall.jpg" alt="쌍계사 돌담과 낙엽"><figcaption>돌담길 산책</figcaption></figure></div>
   <ul class="place-tags"><li>차(茶) 시배지</li><li>화개동천</li><li>국보 진감선사대성탑비</li></ul>
 </section>
 
