@@ -163,7 +163,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
                 const mineB = bookingOf(s.id)
                 return (
                   <li key={s.id} className="flex items-center gap-3 py-3.5">
-                    <span className={`tnum min-w-[3.4em] shrink-0 font-extrabold ${PROGRAM_TIME_TBD ? 'text-[15px] text-sub' : 'text-[20px]'}`}>{when}</span>
+                    <span className={`tnum min-w-[3.4em] shrink-0 font-extrabold ${PROGRAM_TIME_TBD ? 'text-[13px] text-sub' : 'text-[20px]'}`}>{when}</span>
                     <span className="flex-1 text-[13px]">
                       <span className={`tnum font-bold ${left ? 'text-deep' : 'text-gray-400'}`}>{left ? `${left}석 남음` : '마감'}</span>
                       {left > 0 && left <= 5 && <span className="ml-1.5 text-[11px] font-bold text-ember">곧 마감</span>}
