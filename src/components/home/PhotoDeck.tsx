@@ -142,17 +142,21 @@ export default function PhotoDeck() {
             {full ? (
               <img src={c.url} alt={c.kind === 'ad' ? `${c.sponsor} · ${c.title}` : '2026 산사캠프 with 쌍계사 포스터'} draggable={false} className="absolute inset-0 h-full w-full object-cover object-top" />
             ) : (
-              <img src={c.url} alt={c.kind === 'photo' ? `${c.spot} 사진` : c.kind === 'ad' ? c.title : '2026 산사캠프 포스터'} draggable={false} className={`absolute left-[8%] right-[8%] top-[28%] w-[84%] rounded-2xl object-cover ring-1 ring-white/30 ${c.kind === 'event' ? 'h-[38%]' : 'h-[52%]'}`} />
+              <img src={c.url} alt={c.kind === 'photo' ? `${c.spot} 사진` : c.kind === 'ad' ? c.title : '2026 산사캠프 포스터'} draggable={false} className={`absolute left-[8%] right-[8%] top-[28%] w-[84%] rounded-2xl object-cover ring-1 ring-white/30 ${c.kind === 'event' ? 'h-[34%]' : 'h-[52%]'}`} />
             )}
             {c.kind === 'ad' && c.full && <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-ink/85 via-ink/40 to-transparent" />}
+            {c.kind === 'event' && c.full && <div className="absolute inset-x-0 bottom-0 h-[34%] bg-gradient-to-t from-black/55 via-black/20 to-transparent" />}
             {c.kind === 'ad' && <span className="absolute left-4 top-4 rounded-md bg-white/90 px-1.5 py-0.5 text-[10px] font-extrabold text-ink">부스참여업체</span>}
             <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 text-white">
               {c.kind === 'event' && c.full ? (
-                <div />
+                <span className="inline-flex shrink-0 flex-col rounded-full border-2 border-ink bg-white px-3.5 py-1.5 text-ink shadow-[0_6px_16px_rgba(0,0,0,0.25)]">
+                  <span className="whitespace-nowrap text-[9.5px] font-extrabold uppercase leading-none tracking-[0.18em] text-sub">Why Sansa Camp</span>
+                  <span className="mt-1 whitespace-nowrap text-[13.5px] font-extrabold leading-none">산사캠프 기획의도</span>
+                </span>
               ) : c.kind === 'event' ? (
                 <div>
                   <p className="text-[12px] font-semibold tracking-wide opacity-85">2026 산사에서 즐기는 마인드 디톡스</p>
-                  <p className="mt-0.5 text-[20px] font-extrabold leading-tight">11.06 FRI – 11.08 SUN</p>
+                  <p className="mt-0.5 whitespace-nowrap text-[16px] font-extrabold leading-tight">11.06 FRI – 11.08 SUN</p>
                   <p className="mt-1 text-[12px] opacity-80">하동 쌍계사 일원 · 700명 한정</p>
                   {c.link && <p className="mt-2 inline-flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1 text-[11.5px] font-extrabold">티켓 구매하기 →</p>}
                 </div>
