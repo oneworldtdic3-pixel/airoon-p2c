@@ -292,6 +292,17 @@ ul.star li::before{content:"☆";position:absolute;left:0;color:#b24a1c;font-wei
 .callout b{font-weight:900}
 .callout mark{background:#fbf7ee;padding:0 3px}
 .callout small{display:block;font-weight:700;font-size:13px;margin-top:4px}
+.callout.must{display:block;background:#a63d2c;color:#f8f2e5;border:0;border-top:4px solid var(--ink);border-bottom:4px solid var(--ink);margin:18px -20px 6px;padding:18px 22px 20px}
+.must-h{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.must-badge{background:#f0cf7c;color:var(--ink);font:400 15px 'Black Han Sans';padding:5px 12px 4px;border:2px solid var(--ink);border-radius:4px;transform:rotate(-2deg);box-shadow:2px 2px 0 var(--ink)}
+.must-h b{font:400 21px 'Black Han Sans';color:#fff}
+.must-1{font-size:16px;font-weight:700}
+.must-1 b{color:#ffe4a3;font-weight:900}
+.must-2{font:400 22px/1.4 'Black Han Sans';margin:6px 0 8px;color:#fff}
+.must-2 span{background:#f0cf7c;color:var(--ink);padding:1px 8px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.must-3{font-size:14px;font-weight:700;color:#ffe4a3}
+.cta-warn{display:flex;align-items:center;justify-content:center;gap:8px;background:#f0cf7c;color:var(--ink);border:3px solid var(--ink);font-weight:900;font-size:15px;padding:10px 14px;margin-top:22px;text-align:left;line-height:1.45}
+.cta-warn b{background:var(--ink);color:#f0cf7c;font:400 13px 'Black Han Sans';padding:4px 8px 3px;border-radius:3px;flex:none}
 /*MAPCSS*/
 /* 행사장 안내도 */
 #map{background:var(--paper)}
@@ -357,7 +368,7 @@ ul.star li::before{content:"☆";position:absolute;left:0;color:#b24a1c;font-wei
       <li>공식판매처 : (주)아이룬 여행사</li>
       <li>판매 기간 : <span class="tbc">추후 공지</span></li>
       <li>1인당 구매 가능 수량 : <span class="tbc">추후 공지</span></li>
-      <li>한정 수량으로 운영되어 판매가 조기 종료될 수 있습니다.</li>
+      <li>캠핑존은 1사이트당 최대 4인까지 수용 가능하며, <mark>3~4번째 추가 인원은 '추가상품'에서 필히 선택</mark>해 주세요. <small>36개월 미만 무료 (증빙 필수)</small></li><li>한정 수량으로 운영되어 판매가 조기 종료될 수 있습니다.</li>
       <li>108선다 다도 명상은 <mark>100명 한정 사전예약</mark> 프로그램입니다.</li>
     </ul></div>
   </div>
@@ -405,7 +416,7 @@ ul.star li::before{content:"☆";position:absolute;left:0;color:#b24a1c;font-wei
       <div class="row"><span>2인</span><span class="p">500,000<small>원</small></span></div>
       <div class="row"><span>3인</span><span class="p">650,000<small>원</small></span></div>
       <div class="row"><span>4인</span><span class="p">800,000<small>원</small></span></div>
-      <div class="callout"><svg class="ic" style="--fc:#5f8a6b" aria-hidden="true"><use href="#i-people"/></svg><p><b>1사이트당 최대 4인까지 수용 가능</b>하며, 3~4번째 추가 인원은 <mark>'추가상품'에서 필히 선택</mark>해 주세요.<small>(36개월 미만 무료 / 증빙 필수)</small></p></div>
+      <div class="callout must"><div class="must-h"><span class="must-badge">필수 확인</span><b>인원 추가 시 꼭 확인하세요!</b></div><p class="must-1">1사이트당 <b>최대 4인</b>까지 수용 가능합니다.</p><p class="must-2">3~4번째 추가 인원은<br><span>'추가상품'에서 필히 선택</span>해 주세요.</p><p class="must-3">※ 36개월 미만 무료 (증빙 필수)</p></div>
       <div class="spec">
         <svg viewBox="0 0 150 120" role="img" aria-label="사이트 규격 3m × 6m">
           <rect x="18" y="14" width="114" height="78" fill="#e9dcc0" stroke="#1c1714" stroke-width="2.5" stroke-dasharray="6 4"/>
@@ -552,6 +563,7 @@ ul.star li::before{content:"☆";position:absolute;left:0;color:#b24a1c;font-wei
 <div class="band"></div>
 <section id="cta" class="dark">
   <h2>올가을, 지리산 단풍 아래서<br>비우고 채우러 가요</h2>
+  <p class="cta-warn"><b>필수</b>캠핑존 3~4번째 인원은 '추가상품'을 꼭 함께 선택해 주세요!</p>
   <a class="btn" href="#"><svg class="ic" style="--fc:#f2ead9" aria-hidden="true"><use href="#i-ticket"/></svg>2026 산사캠프 사전예약 신청하기</a>
   <p class="seller">공식판매처 (주)아이룬 여행사 · 총 250동 · 100% 사전예약제</p>
 </section>
