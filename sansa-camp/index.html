@@ -335,6 +335,20 @@ ul.star li::before{content:"☆";position:absolute;left:0;color:#b24a1c;font-wei
 .card-sub{background:#e7efe9;border-bottom:2px solid var(--ink);padding:11px 20px;font-size:14.5px;font-weight:700}
 .card-sub b{color:var(--pine);font-weight:900}
 .zone .n{padding-bottom:12px}
+.resv{margin-top:56px}
+.resv-top{display:grid;grid-template-columns:1fr 210px;gap:16px;margin-bottom:18px;align-items:stretch}
+.resv-info{display:flex;flex-direction:column;gap:12px}
+.ri2{flex:1;background:var(--pine);color:#f8f2e5;border:3px solid var(--ink);border-radius:8px;box-shadow:4px 4px 0 var(--ink);padding:14px 18px;display:flex;flex-direction:column;justify-content:center}
+.ri2 span{font-size:13px;font-weight:700;color:#f0cf7c}
+.ri2 b{font:400 21px/1.35 'Black Han Sans';margin-top:2px}
+.resv-qr{margin:0;background:#fff;border:3px solid var(--ink);border-radius:8px;box-shadow:4px 4px 0 var(--ink);overflow:hidden;display:flex;flex-direction:column}
+.resv-qr img{width:100%;display:block}
+.resv-qr figcaption{background:var(--ink);color:#f0cf7c;text-align:center;font-weight:900;font-size:13.5px;padding:6px}
+.resv-h{font:400 20px 'Black Han Sans';margin-bottom:8px}
+.resv-list{margin:0;padding-left:22px;font-size:14.5px}
+.resv-list li{padding:4px 0;line-height:1.55}
+.resv-list li::marker{font-weight:900;color:#a63d2c}
+.resv-note{margin-top:12px;padding-top:10px;border-top:1.5px dashed var(--line);font-size:13.5px;font-weight:700;color:var(--mute)}
 /*MAPCSS*/
 /* 행사장 안내도 */
 #map{background:var(--paper)}
@@ -360,7 +374,7 @@ ul.star li::before{content:"☆";position:absolute;left:0;color:#b24a1c;font-wei
 .zone .n{font:700 28px 'IBM Plex Mono';padding:10px 12px 0}
 .zone .n small{font:900 14px 'Noto Sans KR'}
 .zone p{padding:2px 12px 12px;font-size:12.5px;color:var(--mute);line-height:1.5}
-@media(max-width:480px){.legend2,.zones,.dist{grid-template-columns:1fr}h2{font-size:31px}#hero h1{font-size:48px}.duo,.pics{grid-template-columns:1fr}.spec{grid-template-columns:1fr}table{font-size:12px}}
+@media(max-width:480px){.resv-top{grid-template-columns:1fr}.legend2,.zones,.dist{grid-template-columns:1fr}h2{font-size:31px}#hero h1{font-size:48px}.duo,.pics{grid-template-columns:1fr}.spec{grid-template-columns:1fr}table{font-size:12px}}
 </style>
 </head>
 <body>
@@ -572,7 +586,30 @@ ul.star li::before{content:"☆";position:absolute;left:0;color:#b24a1c;font-wei
     <figure class="photo"><b>PHOTO · night.jpg</b>은은한 산사 야간 공연 컷<img src="photos/night.jpg" alt="은은한 산사 야간 공연 컷" onerror="this.remove()"></figure>
     <div class="pi"><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-market"/></svg><h3><span class="no">08</span>하동 로컬 산사장터</h3><p>지리산 야생차, 하동 특산물, 수제 로컬 푸드, 친환경 핸드메이드 마켓 운영</p></div>
     <div class="pi"><svg class="ic" style="--fc:#c0503a" aria-hidden="true"><use href="#i-mic"/></svg><h3><span class="no">09</span>포레스트 라이브 (산사토크 &amp; 공연) <small>라인업 추후 공개</small></h3><p>금·토 가을 저녁 산사의 정취를 밝히는 어쿠스틱 라이브 &amp; 아티스트 토크 (21:00 전 종료)</p></div>
-  </section>
+  </article>
+
+  <div class="resv">
+    <div class="ph"><svg class="ic" style="--fc:#5f8a6b" aria-hidden="true"><use href="#i-cal"/></svg><h2 class="pill">프로그램 사전예약 안내</h2><svg class="ic" style="--fc:#d3602a" aria-hidden="true"><use href="#i-ticket"/></svg></div>
+    <div class="resv-top">
+      <div class="resv-info">
+        <div class="ri2"><span>사전예약 기간</span><b>10월 28일(수) ~ 11월 1일(일)</b></div>
+        <div class="ri2"><span>예약 방법</span><b>산사캠프 APP을 통한<br>프로그램별 사전예약</b></div>
+      </div>
+      <figure class="resv-qr"><img src="photos/qr-sansacamp.png" alt="산사캠프 사전예약 QR · sansacamp.com"><figcaption>QR 스캔 후 예약</figcaption></figure>
+    </div>
+    <div class="infobox">
+      <h3 class="resv-h">예약 시 유의사항</h3>
+      <ol class="resv-list">
+        <li>프로그램별 참여 인원이 제한되어 있어 <mark>조기 마감</mark>될 수 있습니다.</li>
+        <li>원활한 운영을 위해 1인당 예약 가능한 프로그램 수에 제한이 있을 수 있습니다.</li>
+        <li>프로그램별 운영 시간과 장소를 확인하신 후 예약해 주세요.</li>
+        <li>예약한 프로그램의 <mark>참여 시간에 맞춰 현장에 도착</mark>해 주세요.</li>
+        <li>예약 취소 및 변경 관련 사항은 APP 내 안내를 확인해 주세요.</li>
+      </ol>
+      <p class="resv-note">※ 프로그램별 세부 일정 및 예약 가능 인원은 APP에서 확인하실 수 있습니다.</p>
+    </div>
+  </div>
+</section>
 
 <!-- 5. 타임테이블 -->
 <svg class="eave" viewBox="0 0 645 46" preserveAspectRatio="none" aria-hidden="true" style="background:var(--paper)"><path d="M0 46 L0 30 Q120 30 230 14 L322 2 L415 14 Q525 30 645 30 L645 46 Z" fill="#162b22"/><path d="M0 30 Q120 30 230 14 L322 2 L415 14 Q525 30 645 30" fill="none" stroke="#c8973b" stroke-width="3"/></svg>
