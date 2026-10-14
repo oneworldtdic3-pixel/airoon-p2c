@@ -25,8 +25,9 @@ export const SOCIAL = [
 ] as const
 
 /** 공양·예불 — 예약 없는 고정 안내 일정. 첫날 14:00 입재, 마지막 날 11:00 회향에 맞춤 */
-export interface MealSlot { id: string; day: (typeof EVENT_DAYS)[number]; time: string; title: string; location: string; kind: 'meal' | 'ritual'; note: string }
+export interface MealSlot { id: string; day: (typeof EVENT_DAYS)[number]; time: string; title: string; location: string; kind: 'meal' | 'ritual' | 'info'; note: string }
 export const MEALS: MealSlot[] = [
+  { id: 'info-1-in', day: '2026-11-06', time: '14:00', title: '입장 등록 (체크인)', location: '종합안내소', kind: 'info', note: '14:00부터 · QR 팔찌 수령' },
   { id: 'rit-1-e', day: '2026-11-06', time: '17:55', title: '저녁예불 및 법고', location: '대웅전', kind: 'ritual', note: '자율참여' },
   { id: 'meal-1-d', day: '2026-11-06', time: '17:00', title: '저녁공양', location: '공양간', kind: 'meal', note: '예약 없이 이용' },
   { id: 'rit-2-m', day: '2026-11-07', time: '04:20', title: '새벽예불', location: '대웅전', kind: 'ritual', note: '자율참여' },
@@ -38,4 +39,4 @@ export const MEALS: MealSlot[] = [
   { id: 'meal-3-b', day: '2026-11-08', time: '06:00', title: '아침공양', location: '공양간', kind: 'meal', note: '예약 없이 이용' },
 ]
 export const mealAt = (m: MealSlot) => `${m.day}T${m.time}:00+09:00`
-export const mealTag = (m: MealSlot) => (m.kind === 'meal' ? '공양' : '예불')
+export const mealTag = (m: MealSlot) => (m.kind === 'meal' ? '공양' : m.kind === 'ritual' ? '예불' : '입장')

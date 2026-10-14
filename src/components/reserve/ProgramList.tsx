@@ -109,7 +109,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
               <span className="tnum min-w-[3.2em] shrink-0 text-[14px] font-extrabold">{m.time}</span>
               <span className="min-w-0 flex-1 truncate text-[13.5px] font-bold">{m.title}</span>
               <span className="shrink-0 text-[11.5px] text-sub">{m.location} · {m.note}</span>
-              <span className={`shrink-0 rounded-md px-1.5 py-0.5 text-[10.5px] font-extrabold ${m.kind === 'meal' ? 'bg-sun text-ink' : 'bg-mint text-deep'}`}>{mealTag(m)}</span>
+              <span className={`shrink-0 rounded-md px-1.5 py-0.5 text-[10.5px] font-extrabold ${m.kind === 'meal' ? 'bg-sun text-ink' : m.kind === 'info' ? 'bg-sky/40 text-ink' : 'bg-mint text-deep'}`}>{mealTag(m)}</span>
             </li>
           ))}
         </ul>

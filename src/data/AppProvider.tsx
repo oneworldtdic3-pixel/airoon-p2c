@@ -105,8 +105,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       return data as Profile
     },
   })
-  const programsQ = useQuery({ queryKey: ['programs'], queryFn: async () => (await supabase.from('programs').select('*').order('sort')).data as Program[] })
-  const sessionsQ = useQuery({ queryKey: ['sessions'], queryFn: async () => (await supabase.from('program_sessions').select('*').order('starts_at')).data as ProgramSession[] })
+  const programsQ = useQuery({ queryKey: ['programs'], queryFn: async () => (await supabase.from('programs').select('*').eq('is_active', true).order('sort')).data as Program[] })
+  const sessionsQ = useQuery({ queryKey: ['sessions'], queryFn: async () => (await supabase.from('program_sessions').select('*').eq('is_active', true).order('starts_at')).data as ProgramSession[] })
   const slotsQ = useQuery({ queryKey: ['slots'], queryFn: async () => (await supabase.from('shower_slots').select('*').order('starts_at')).data as ShowerSlot[] })
   const notiQ = useQuery({ queryKey: ['notifications'], queryFn: async () => (await supabase.from('notifications').select('*').order('created_at', { ascending: false }).limit(50)).data as AppNotification[] })
   const bannersQ = useQuery({
