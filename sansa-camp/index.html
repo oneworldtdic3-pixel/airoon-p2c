@@ -312,6 +312,8 @@ ul.star li::before{content:"☆";position:absolute;left:0;color:#b24a1c;font-wei
 .fee-note h3{font:400 21px 'Black Han Sans';margin-bottom:8px;display:flex;align-items:center;gap:8px}
 .fee-note h3::before{content:"!";width:24px;height:24px;border-radius:50%;background:#a63d2c;color:#fff;display:grid;place-items:center;font:900 14px 'Noto Sans KR'}
 .row small.rn{display:block;font-size:12.5px;font-weight:500;color:var(--mute);margin-top:1px}
+.duo.solo{grid-template-columns:1fr}
+.duo.solo .photo{aspect-ratio:16/6}
 /*MAPCSS*/
 /* 행사장 안내도 */
 #map{background:var(--paper)}
@@ -421,7 +423,7 @@ ul.star li::before{content:"☆";position:absolute;left:0;color:#b24a1c;font-wei
   <div class="card camp">
     <header><h3><svg class="ic" style="--fc:#c8973b;--sc:#d7c19b" aria-hidden="true"><use href="#i-tent"/></svg>캠핑존</h3><small>Camping Zone</small></header>
     <div class="in">
-      <div class="row"><span>1인 캠핑존 티켓<small class="rn">1사이트는 2인 기준</small></span><span class="p">190,000<small>원</small></span></div>
+      <div class="row"><span>캠핑존 1사이트 (2인)<small class="rn">1사이트는 2인 기준</small></span><span class="p">190,000<small>원</small></span></div>
       <div class="row"><span>1인 단독 사이트 이용 추가요금<small class="rn">단독 사용 시</small></span><span class="p">380,000<small>원</small></span></div>
       <div class="row"><span>인원 추가요금 (성인)<small class="rn">3번째 · 4번째 고객</small></span><span class="p">150,000<small>원</small></span></div>
       <div class="row"><span>인원 추가요금 (36개월 이상~미취학아동)<small class="rn">3번째 · 4번째 고객</small></span><span class="p">100,000<small>원</small></span></div>
@@ -446,8 +448,8 @@ ul.star li::before{content:"☆";position:absolute;left:0;color:#b24a1c;font-wei
     </div>
   </div>
 
-  <div class="duo">
-    <div class="card"><header style="background:var(--paper)"><h3><svg class="ic" style="--fc:#5f8a6b" aria-hidden="true"><use href="#i-people"/></svg>캠핑 6인 대형</h3></header><div class="in">가족 및 친구 그룹 전용 대형 쉘터 사이트<br><span class="tbd">가격 추후 공개</span></div></div>
+  <div class="duo solo">
+    
     <div class="card"><header style="background:var(--orange)"><h3><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-paw"/></svg>PET ZONE</h3></header><div class="in">반려견 동반 전용 구역 · 펫티켓 리드줄 필수<br><span class="ok">1~4인 기준 가격 동일</span><figure class="photo"><b>PHOTO · pet.jpg</b>펫존 무드 컷<img src="photos/pet.jpg" alt="펫존 무드 컷" onerror="this.remove()"></figure></div></div>
   </div>
 
