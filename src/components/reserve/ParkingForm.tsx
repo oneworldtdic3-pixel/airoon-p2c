@@ -19,9 +19,10 @@ export default function ParkingForm({ toast }: { toast: (m: string) => void }) {
 
   return (
     <div className="space-y-7">
-      <p className="border-l-2 border-ember pl-4 text-[15px] font-bold leading-snug">
-        쌍계사 경내는 차량이 들어갈 수 없습니다.<span className="mt-1 block text-[13px] font-medium text-sub">아래 두 곳 중 한 곳에 세워 주세요.</span>
-      </p>
+      <div className="rounded-tile bg-sun/30 px-4 py-3.5">
+        <p className="text-[15px] font-extrabold leading-snug">주차 무료 · 사전등록제(1팀 1대) · 미등록 차량 진입 불가</p>
+        <p className="mt-1.5 text-[13px] leading-relaxed text-sub">차량번호와 이용 일자를 미리 등록해 주세요. 등록하지 않은 차량은 주차장에 들어올 수 없습니다. 쌍계사 경내는 차량이 들어갈 수 없으니 아래 두 곳 중 한 곳에 세워 주세요.</p>
+      </div>
 
       <fieldset>
         <legend className="eyebrow mb-3">주차 구역</legend>
