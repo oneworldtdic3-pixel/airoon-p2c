@@ -1,6 +1,7 @@
 import { QRCodeSVG } from 'qrcode.react'
 import { useApp } from '../../data/AppProvider'
 import { fmtDay, fmtTime } from '../../lib/format'
+import { PROGRAM_TIME_TBD } from '../../data/constants'
 import { BottomSheet } from '../ui'
 import type { Booking } from '../../data/types'
 
@@ -17,7 +18,7 @@ export default function QrTicket({ booking, onClose, onCancel }: { booking: Book
             <div className="px-5 pb-4 pt-5">
               <p className="eyebrow text-deep">{fmtDay(s.starts_at)}</p>
               <p className="mt-1 flex items-baseline gap-2">
-                <span className="tnum text-[32px] font-extrabold leading-none">{fmtTime(s.starts_at)}</span>
+                <span className={`tnum font-extrabold leading-none ${PROGRAM_TIME_TBD ? 'text-[20px] text-sub' : 'text-[32px]'}`}>{PROGRAM_TIME_TBD ? '시간 협의중' : fmtTime(s.starts_at)}</span>
                 <span className="text-[16px] font-extrabold">{p.title}</span>
               </p>
               <p className="mt-1.5 text-[13px] text-sub">{p.location}</p>
@@ -36,8 +37,8 @@ export default function QrTicket({ booking, onClose, onCancel }: { booking: Book
           <button
             type="button"
             onClick={async () => {
-              if (!window.confirm(`${p.title} ${fmtTime(s.starts_at)} 예약을 취소할까요?`)) return
-              await onCancel?.(booking, p.title, `${fmtDay(s.starts_at)} ${fmtTime(s.starts_at)}`)
+              if (!window.confirm(`${p.title} ${fmtDay(s.starts_at)} 예약을 취소할까요?`)) return
+              await onCancel?.(booking, p.title, `${fmtDay(s.starts_at)}${PROGRAM_TIME_TBD ? '' : ' ' + fmtTime(s.starts_at)}`)
               onClose()
             }}
             className="mt-3 w-full py-3 text-center text-[13px] font-semibold text-sub underline underline-offset-2"

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp } from '../../data/AppProvider'
-import { EVENT_DAYS, MEALS, mealAt, mealTag } from '../../data/constants'
+import { EVENT_DAYS, MEALS, PROGRAM_TIME_TBD, mealAt, mealTag } from '../../data/constants'
 import { dayKey, fmtDay, fmtTime } from '../../lib/format'
 import { todayEventDay, daysUntilStart } from '../../lib/dday'
 import { SectionTitle, Segmented } from '../ui'
@@ -37,7 +37,7 @@ export default function TodaySchedule() {
   const all = [
     ...sessions.filter((s) => dayKey(s.starts_at) === day).map((s) => ({ kind: 'session' as const, at: s.starts_at, s })),
     ...MEALS.filter((m) => m.day === day).map((m) => ({ kind: 'meal' as const, at: mealAt(m), m })),
-  ].sort((a, b) => Date.parse(a.at) - Date.parse(b.at))
+  ].sort((a, b) => (PROGRAM_TIME_TBD && a.kind !== b.kind ? (a.kind === 'meal' ? -1 : 1) : Date.parse(a.at) - Date.parse(b.at)))
   const LIMIT = 10
   const shown = all.slice(0, LIMIT)
   const allTitle = di !== null ? '오늘의 프로그램' : daysUntilStart() > 0 ? '첫날 프로그램' : '프로그램'
@@ -80,7 +80,7 @@ export default function TodaySchedule() {
                       </div>
                     ) : (
                     <Link to={`/reserve?tab=${m.kind}`} className="flex items-baseline gap-4 border-t hairline py-3.5 first:border-t-0">
-                      <span className="tnum min-w-[3.4em] shrink-0 text-[17px] font-extrabold text-ink">{fmtTime(m.at)}</span>
+                      <span className={`tnum min-w-[3.4em] shrink-0 font-extrabold ${m.kind === 'program' && PROGRAM_TIME_TBD ? 'text-[13px] text-sub' : 'text-[17px] text-ink'}`}>{m.kind === 'program' && PROGRAM_TIME_TBD ? '협의중' : fmtTime(m.at)}</span>
                       <span className="min-w-0 flex-1">
                         <span className="block truncate text-[15px] font-semibold">{m.title}</span>
                         <span className="block truncate text-[12px] text-sub">{m.sub}</span>
@@ -111,7 +111,7 @@ export default function TodaySchedule() {
             return (
               <li key={s.id}>
                 <Link to="/reserve?tab=program" className="flex items-baseline gap-4 border-t hairline py-3.5 first:border-t-0">
-                  <span className="tnum min-w-[3.4em] shrink-0 text-[17px] font-extrabold text-ink">{fmtTime(s.starts_at)}</span>
+                  <span className={`tnum min-w-[3.4em] shrink-0 font-extrabold ${PROGRAM_TIME_TBD ? 'text-[13px] text-sub' : 'text-[17px] text-ink'}`}>{PROGRAM_TIME_TBD ? '협의중' : fmtTime(s.starts_at)}</span>
                   <span className="min-w-0 flex-1 truncate text-[15px] font-semibold">{p?.title}</span>
                   <span className={`tnum shrink-0 text-[12px] font-bold ${booked ? 'text-deep' : left ? 'text-deep' : 'text-gray-400'}`}>{booked ? '내 예약' : left ? `${left}석` : '마감'}</span>
                 </Link>

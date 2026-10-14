@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useApp } from '../../data/AppProvider'
-import { EVENT_DAYS, MEALS, mealTag } from '../../data/constants'
+import { EVENT_DAYS, MEALS, PROGRAM_TIME_TBD, mealTag, sessionLabel } from '../../data/constants'
 import { dayKey, fmtDay, fmtTime } from '../../lib/format'
 import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { BottomSheet, Chip, Tag } from '../ui'
@@ -75,14 +75,14 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
                     <Icon name="qr" size={18} className="shrink-0 text-deep" />
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-[14px] font-bold">{p.title}</span>
-                      <span className="tnum block text-[12px] text-sub">{fmtDay(s.starts_at)} {fmtTime(s.starts_at)} · QR 보기</span>
+                      <span className="tnum block text-[12px] text-sub">{fmtDay(s.starts_at)} {PROGRAM_TIME_TBD ? '시간 협의중' : fmtTime(s.starts_at)} · QR 보기</span>
                     </span>
                   </button>
                   <button
                     type="button"
                     onClick={async () => {
-                      if (!window.confirm(`${p.title} ${fmtTime(s.starts_at)} 예약을 취소할까요?\n취소한 자리는 다른 분이 예약할 수 있습니다.`)) return
-                      await cancel(b, p.title, `${fmtDay(s.starts_at)} ${fmtTime(s.starts_at)}`)
+                      if (!window.confirm(`${p.title} ${fmtDay(s.starts_at)} 예약을 취소할까요?\n취소한 자리는 다른 분이 예약할 수 있습니다.`)) return
+                      await cancel(b, p.title, `${fmtDay(s.starts_at)} ${sessionLabel(s.starts_at)}`)
                     }}
                     className="shrink-0 rounded-full border border-deep/30 px-3 py-1.5 text-[12px] font-bold text-deep active:bg-white"
                   >
@@ -95,6 +95,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
         </section>
       )}
 
+      {PROGRAM_TIME_TBD && <p className="mb-3 rounded-tile bg-sun/30 px-4 py-2.5 text-[12.5px] font-semibold text-ink">프로그램 시간대는 협의 중입니다. 날짜별로 먼저 예약해 두시면, 시간이 확정되는 대로 알림으로 안내해 드립니다.</p>}
       <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5">
         {EVENT_DAYS.map((d, i) => <Chip key={d} active={day === d} onClick={() => setDay(d)}>{i + 1}일차 · 11.{Number(d.slice(-2))}</Chip>)}
       </div>
@@ -132,8 +133,8 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
                     <p className="mt-2 text-[14px] leading-relaxed text-ink/80">{p.description}</p>
                     <div className="mt-3 flex items-center gap-3">
                       <div className="flex gap-1.5">
-                        {ss.map((s) => (
-                          <span key={s.id} className={`tnum rounded-md px-2 py-1 text-[12px] font-bold ${s.booked_count >= s.capacity ? 'bg-gray-100 text-gray-400 line-through' : 'bg-mint text-deep'}`}>{fmtTime(s.starts_at)}</span>
+                        {ss.map((s, k) => (
+                          <span key={s.id} className={`tnum rounded-md px-2 py-1 text-[12px] font-bold ${s.booked_count >= s.capacity ? 'bg-gray-100 text-gray-400 line-through' : 'bg-mint text-deep'}`}>{sessionLabel(s.starts_at, k, ss.length)}</span>
                         ))}
                       </div>
                       <span className="ml-auto flex items-center gap-2">
@@ -156,12 +157,13 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
             <p className="mt-2 text-[14px] leading-relaxed">{open.description}</p>
             <p className="eyebrow mb-2 mt-6">{fmtDay(`${day}T00:00:00+09:00`)}</p>
             <ul className="divide-y hairline border-y">
-              {sessions.filter((s) => s.program_id === open.id && dayKey(s.starts_at) === day).sort((a, b) => a.starts_at.localeCompare(b.starts_at)).map((s) => {
+              {sessions.filter((s) => s.program_id === open.id && dayKey(s.starts_at) === day).sort((a, b) => a.starts_at.localeCompare(b.starts_at)).map((s, k, arr) => {
                 const left = s.capacity - s.booked_count
+                const when = sessionLabel(s.starts_at, k, arr.length)
                 const mineB = bookingOf(s.id)
                 return (
                   <li key={s.id} className="flex items-center gap-3 py-3.5">
-                    <span className="tnum min-w-[3.4em] shrink-0 text-[20px] font-extrabold">{fmtTime(s.starts_at)}</span>
+                    <span className={`tnum min-w-[3.4em] shrink-0 font-extrabold ${PROGRAM_TIME_TBD ? 'text-[15px] text-sub' : 'text-[20px]'}`}>{when}</span>
                     <span className="flex-1 text-[13px]">
                       <span className={`tnum font-bold ${left ? 'text-deep' : 'text-gray-400'}`}>{left ? `${left}석 남음` : '마감'}</span>
                       {left > 0 && left <= 5 && <span className="ml-1.5 text-[11px] font-bold text-ember">곧 마감</span>}
@@ -170,7 +172,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
                     {mineB ? (
                       <span className="flex flex-col items-end gap-1">
                         <span className="rounded-full bg-mint px-3 py-1 text-[12px] font-extrabold text-deep">예약 완료</span>
-                        <button type="button" onClick={() => void cancel(mineB, open.title, `${fmtDay(s.starts_at)} ${fmtTime(s.starts_at)}`)} className="px-2 py-1 text-[12px] font-semibold text-sub underline underline-offset-2">취소하기</button>
+                        <button type="button" onClick={() => void cancel(mineB, open.title, `${fmtDay(s.starts_at)} ${when}`)} className="px-2 py-1 text-[12px] font-semibold text-sub underline underline-offset-2">취소하기</button>
                       </span>
                     ) : (
                       <button type="button" disabled={left === 0 || atLimit || bookedProgramIds.has(open.id)} onClick={() => book(s.id)} className="btn !px-5 !py-2.5 !text-[14px]">
