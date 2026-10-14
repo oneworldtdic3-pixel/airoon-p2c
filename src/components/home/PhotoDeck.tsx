@@ -4,7 +4,7 @@ import { useApp } from '../../data/AppProvider'
 import Icon from '../ui/Icon'
 
 type Card =
-  | { kind: 'event'; id: string; url: string; full?: boolean }
+  | { kind: 'event'; id: string; url: string; full?: boolean; link?: string }
   | { kind: 'photo'; id: string; url: string; spot: string; nickname: string; likes: number }
   | { kind: 'ad'; id: string; url: string; sponsor: string; title: string; sub: string; link: string; bg: string; full: boolean }
 
@@ -13,6 +13,8 @@ const Arrow = () => (
 )
 
 /** BEST PHOTO 1장 + 광고 배너 2장 이상을 겹친 카드 덱. 손가락을 따라오는 가로 스와이프, 3.5초 자동 전환(조작 후 8초간 멈춤) */
+const TICKET_URL = 'https://naver.me/Ghwqi86o'
+
 export default function PhotoDeck() {
   const { photos, banners } = useApp()
   const nav = useNavigate()
@@ -21,7 +23,8 @@ export default function PhotoDeck() {
     // 실제 배너 이미지(seed 가 아닌 것)는 카드 전면에 채우고, 개발용 일러스트는 안쪽 액자형으로
     const ads: Card[] = banners.map((b) => ({ kind: 'ad', id: b.id, url: b.image, sponsor: b.sponsor, title: b.title, sub: b.sub, link: b.link, bg: b.bg, full: !b.image_path.startsWith('seed:') }))
     const events: Card[] = [
-      { kind: 'event', id: 'poster', url: '/poster-square.jpg' },
+      // 정사각 포스터 카드 → 네이버 티켓 구매 페이지(새 창). 세로 포스터 카드 → 기획의도
+      { kind: 'event', id: 'poster', url: '/poster-square.jpg', link: TICKET_URL },
       { kind: 'event', id: 'poster-full', url: '/poster-card.jpg', full: true },
     ]
     return best ? [events[0], { kind: 'photo', id: best.id, url: best.url, spot: best.spot_tag, nickname: best.nickname, likes: best.likes_count }, events[1], ...ads] : [...events, ...ads]
@@ -117,7 +120,8 @@ export default function PhotoDeck() {
         const full = c.kind !== 'photo' && c.full
         // 광고 링크가 외부 주소(https://…)면 새 창(쇼핑몰 등), 앱 내부 경로면 화면 이동
         const go = () => {
-          if (c.kind === 'ad' && /^https?:\/\//i.test(c.link)) { window.open(c.link, '_blank', 'noopener,noreferrer'); return }
+          const ext = c.kind === 'ad' ? c.link : c.kind === 'event' ? c.link : undefined
+          if (ext && /^https?:\/\//i.test(ext)) { window.open(ext, '_blank', 'noopener,noreferrer'); return }
           nav(c.kind === 'photo' ? '/photo' : c.kind === 'ad' ? c.link : '/about')
         }
         return (
@@ -149,6 +153,7 @@ export default function PhotoDeck() {
                   <p className="text-[12px] font-semibold tracking-wide opacity-85">2026 산사에서 즐기는 마인드 디톡스</p>
                   <p className="mt-0.5 text-[20px] font-extrabold leading-tight">11.06 FRI – 11.08 SUN</p>
                   <p className="mt-1 text-[12px] opacity-80">하동 쌍계사 일원 · 700명 한정</p>
+                  {c.link && <p className="mt-2 inline-flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1 text-[11.5px] font-extrabold">티켓 구매하기 →</p>}
                 </div>
               ) : c.kind === 'photo' ? (
                 <div>
@@ -162,7 +167,7 @@ export default function PhotoDeck() {
                   <p className="mt-1 text-[12px] opacity-80">{c.sub}</p>
                 </div>
               )}
-              <button onClick={(e) => { e.stopPropagation(); go() }} aria-label={c.kind === 'photo' ? '포토 전체 보기' : c.kind === 'ad' ? `${c.sponsor} 자세히` : '기획의도 보기'} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-ink transition active:scale-90"><Arrow /></button>
+              <button onClick={(e) => { e.stopPropagation(); go() }} aria-label={c.kind === 'photo' ? '포토 전체 보기' : c.kind === 'ad' ? `${c.sponsor} 자세히` : c.kind === 'event' && c.link ? '티켓 구매하기 (새 창)' : '기획의도 보기'} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-ink transition active:scale-90"><Arrow /></button>
             </div>
           </article>
         )
