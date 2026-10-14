@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { SOCIAL } from '../../data/constants'
+import { extClick } from '../../lib/external'
 
 const icons: Record<string, ReactNode> = {
   instagram: (
@@ -20,7 +21,7 @@ export default function SocialLinks({ compact = false }: { compact?: boolean }) 
     <ul className={`flex ${compact ? 'gap-2' : 'gap-2.5'}`}>
       {SOCIAL.map((s) => (
         <li key={s.id}>
-          <a href={s.url} target="_blank" rel="noopener noreferrer" aria-label={`산사캠프 ${s.name} (새 창)`}
+          <a href={s.url} target="_blank" rel="noopener noreferrer" onClick={extClick} aria-label={`산사캠프 ${s.name} (새 창)`}
              className={`flex items-center gap-2 rounded-full border border-line bg-white font-bold text-ink transition active:scale-95 ${compact ? 'px-3 py-2 text-[12.5px]' : 'px-4 py-2.5 text-[13.5px]'}`}>
             <span className="text-deep">{icons[s.id]}</span>{s.name}
           </a>

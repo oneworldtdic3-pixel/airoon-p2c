@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '../../lib/supabase'
 import type { PressArticle } from '../../data/types'
+import { extClick } from '../../lib/external'
 
 const SHOW = 4
 
@@ -36,7 +37,7 @@ export default function PressNews() {
       <ul className="divide-y divide-line border-y border-line">
         {list.map((a) => (
           <li key={a.id}>
-            <a href={a.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 py-3 active:opacity-70">
+            <a href={a.url} target="_blank" rel="noopener noreferrer" onClick={extClick} className="flex items-center gap-3 py-3 active:opacity-70">
               <div className="min-w-0 flex-1">
                 <p className="line-clamp-2 text-[14px] font-bold leading-snug">{a.title}</p>
                 <p className="mt-1 truncate text-[12px] text-sub">

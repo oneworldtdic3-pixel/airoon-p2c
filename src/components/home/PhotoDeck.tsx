@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState, type PointerEvent as RPointerEven
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../../data/AppProvider'
 import Icon from '../ui/Icon'
+import { openExternal } from '../../lib/external'
 
 type Card =
   | { kind: 'event'; id: string; url: string; full?: boolean; link?: string }
@@ -121,7 +122,7 @@ export default function PhotoDeck() {
         // 광고 링크가 외부 주소(https://…)면 새 창(쇼핑몰 등), 앱 내부 경로면 화면 이동
         const go = () => {
           const ext = c.kind === 'ad' ? c.link : c.kind === 'event' ? c.link : undefined
-          if (ext && /^https?:\/\//i.test(ext)) { window.open(ext, '_blank', 'noopener,noreferrer'); return }
+          if (ext && /^https?:\/\//i.test(ext)) { openExternal(ext); return }
           nav(c.kind === 'photo' ? '/photo' : c.kind === 'ad' ? c.link : '/about')
         }
         return (
