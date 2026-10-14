@@ -27,7 +27,7 @@ export default function TodaySchedule() {
       return s ? { id: b.id, at: s.starts_at, title: '샤워실', sub: `${s.building} 부스 · ${s.gender === 'F' ? '여성' : '남성'}`, kind: 'shower' as const, tag: '' } : null
     }),
     ...MEALS.map((m) => ({ id: m.id, at: mealAt(m), title: m.title, sub: `${m.location} · ${m.note}`, kind: 'meal' as const, tag: mealTag(m) })),
-  ].filter((x): x is NonNullable<typeof x> => !!x).sort((a, b) => a.at.localeCompare(b.at))
+  ].filter((x): x is NonNullable<typeof x> => !!x).sort((a, b) => Date.parse(a.at) - Date.parse(b.at))
   // 직접 고르기 전까지는 로그인 상태면 내 일정, 아니면 전체 프로그램 (데이터가 늦게 와도 맞게 따라간다)
   const myBookings = mine.filter((m) => m.kind !== 'meal')
   const [picked, setTab] = useState<Tab | null>(null)
@@ -37,7 +37,9 @@ export default function TodaySchedule() {
   const all = [
     ...sessions.filter((s) => dayKey(s.starts_at) === day).map((s) => ({ kind: 'session' as const, at: s.starts_at, s })),
     ...MEALS.filter((m) => m.day === day).map((m) => ({ kind: 'meal' as const, at: mealAt(m), m })),
-  ].sort((a, b) => a.at.localeCompare(b.at)).slice(0, 8)
+  ].sort((a, b) => Date.parse(a.at) - Date.parse(b.at))
+  const LIMIT = 10
+  const shown = all.slice(0, LIMIT)
   const allTitle = di !== null ? '오늘의 프로그램' : daysUntilStart() > 0 ? '첫날 프로그램' : '프로그램'
 
   return (
@@ -94,7 +96,7 @@ export default function TodaySchedule() {
         )
       ) : (
         <ol>
-          {all.map((row) => {
+          {shown.map((row) => {
             if (row.kind === 'meal') return (
               <li key={row.m.id} className="flex items-baseline gap-4 border-t hairline py-3.5 first:border-t-0">
                 <span className="tnum min-w-[3.4em] shrink-0 text-[17px] font-extrabold text-ink">{row.m.time}</span>
@@ -116,6 +118,7 @@ export default function TodaySchedule() {
               </li>
             )
           })}
+          {all.length > LIMIT && <li className="border-t hairline py-3 text-center"><Link to="/reserve?tab=program" className="text-[13px] font-bold text-deep">이 날 일정 {all.length - LIMIT}개 더 보기</Link></li>}
           {!all.length && <li className="py-6 text-center text-[13px] text-sub">이 날의 프로그램이 아직 없습니다</li>}
         </ol>
       )}
