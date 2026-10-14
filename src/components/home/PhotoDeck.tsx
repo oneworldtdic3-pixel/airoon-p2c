@@ -118,7 +118,7 @@ export default function PhotoDeck() {
         // 광고 링크가 외부 주소(https://…)면 새 창(쇼핑몰 등), 앱 내부 경로면 화면 이동
         const go = () => {
           if (c.kind === 'ad' && /^https?:\/\//i.test(c.link)) { window.open(c.link, '_blank', 'noopener,noreferrer'); return }
-          nav(c.kind === 'photo' ? '/photo' : c.kind === 'ad' ? c.link : '/reserve')
+          nav(c.kind === 'photo' ? '/photo' : c.kind === 'ad' ? c.link : '/about')
         }
         return (
           <article
@@ -162,7 +162,7 @@ export default function PhotoDeck() {
                   <p className="mt-1 text-[12px] opacity-80">{c.sub}</p>
                 </div>
               )}
-              <button onClick={(e) => { e.stopPropagation(); go() }} aria-label={c.kind === 'photo' ? '포토 전체 보기' : c.kind === 'ad' ? `${c.sponsor} 자세히` : '예약하기'} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-ink transition active:scale-90"><Arrow /></button>
+              <button onClick={(e) => { e.stopPropagation(); go() }} aria-label={c.kind === 'photo' ? '포토 전체 보기' : c.kind === 'ad' ? `${c.sponsor} 자세히` : '기획의도 보기'} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-ink transition active:scale-90"><Arrow /></button>
             </div>
           </article>
         )
