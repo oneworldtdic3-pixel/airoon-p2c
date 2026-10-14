@@ -1,0 +1,35 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "numbered-section-labels",
+        "value": "*",
+        "files": [
+          "sansa-camp/index.html"
+        ],
+        "createdAt": "2026-10-14T05:32:20.821Z",
+        "reason": "source content: the user's PDF numbers its sections 01–07 and dates its notes; labels are copy, not scaffolding"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "sansa-camp/index.html"
+        ],
+        "createdAt": "2026-10-14T05:34:20.433Z",
+        "reason": "design source: mirrors the HERE'S YOUR pill chip in the user's reference image"
+      },
+      {
+        "rule": "wide-tracking",
+        "value": "*",
+        "files": [
+          "sansa-camp/index.html"
+        ],
+        "createdAt": "2026-10-14T05:34:20.445Z",
+        "reason": "design source: coupon chips mirror the letter-spaced HELLO-15 code in the user's reference image"
+      }
+    ]
+  }
+}
