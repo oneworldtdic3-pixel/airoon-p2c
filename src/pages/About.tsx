@@ -2,8 +2,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import Icon from '../components/ui/Icon'
 import SponsorStrip from '../components/home/SponsorStrip'
 
-// 기획의도 · WHY SANSA CAMP — 운영팀 기획 페이지(PDF)를 10조각 이미지로. 마지막 CTA·주최/후원은 앱에서 직접 그린다(링크·최신 목록 반영).
-const PARTS = Array.from({ length: 10 }, (_, i) => `/about/p${i + 1}.jpg`)
+// 기획의도 · WHY SANSA CAMP — 운영팀 기획 페이지(PDF)를 9조각 이미지로. 마지막 CTA·주최/후원은 앱에서 직접 그린다(링크·최신 목록 반영).
+const PARTS = Array.from({ length: 9 }, (_, i) => `/about/p${i + 1}.jpg`)
 
 export default function About() {
   const nav = useNavigate()
@@ -16,7 +16,7 @@ export default function About() {
       </header>
       <div className="mx-auto max-w-[430px]">
         {PARTS.map((src, i) => (
-          <img key={src} src={src} alt={i === 0 ? '2026 산사캠프 with 쌍계사 — 쉬러 갔다가 더 지쳐서 돌아온 적, 있나요? 비우러 와서, 채워 가는 2박 3일' : ''} width={1109} height={1577} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" draggable={false} className="block h-auto w-full" />
+          <img key={src} src={src} alt={i === 0 ? '2026 산사캠프 with 쌍계사 — 쉬러 갔다가 더 지쳐서 돌아온 적, 있나요? 비우러 와서, 채워 가는 2박 3일' : ''} width={1109} height={1479} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" draggable={false} className="block h-auto w-full" />
         ))}
 
         {/* 마무리 CTA — 이미지 대신 실제 버튼 */}
