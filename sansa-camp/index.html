@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>왜, 산사캠프인가</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #F4952A;
+    --orange-deep: #E57A12;
+    --orange-text: #A04C00;
+    --orange-soft: #FCC266;
+    --peach: #FFF1DE;
+    --green: #2F4A12;
+    --green-mid: #45661D;
+    --green-ink: #22360B;
+    --mint: #E4F6DC;
+    --mint-deep: #CDEBC0;
+    --ink: #2B2B22;
+    --muted: #6B6B5E;
+    --line: #DCDCD0;
+    --white: #FFFFFF;
+    --bg: #F6EFE3;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Noto Sans KR", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+    word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    background: var(--white);
+    overflow: hidden;
+    box-shadow: 0 0 60px rgba(60, 40, 10, .08);
+  }
+  .display {
+    font-family: "Black Han Sans", "Noto Sans KR", sans-serif;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.18;
+  }
+  .wrap { padding: 0 48px; }
+  .center { text-align: center; }
+
+  /* ---------- buttons & chips ---------- */
+  .btn {
+    display: inline-block;
+    background: var(--green);
+    color: #fff;
+    font-weight: 900;
+    font-size: 15px;
+    letter-spacing: .04em;
+    text-decoration: none;
+    padding: 14px 40px;
+    border-radius: 999px;
+    transition: transform .15s ease, background .15s ease;
+  }
+  .btn:hover { background: var(--green-ink); transform: translateY(-1px); }
+  .coupon {
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 2px dashed var(--green-mid);
+    background: var(--mint);
+    color: var(--green);
+    font-weight: 700;
+    letter-spacing: .14em;
+    font-size: 14px;
+    padding: 8px 22px;
+    border-radius: 999px;
+  }
+  .eyebrow {
+    display: inline-block;
+    background: rgba(255,255,255,.92);
+    color: var(--orange-text);
+    font-weight: 900;
+    font-size: 12px;
+    letter-spacing: .5em;
+    padding: 6px 18px 6px 24px;
+    border-radius: 999px;
+  }
+  .tag {
+    display: inline-block;
+    background: var(--green);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 6px 16px;
+    border-radius: 999px;
+  }
+  .rule { height: 2px; background: var(--line); margin: 64px 48px; border: 0; }
+
+  /* ---------- header ---------- */
+  .brand {
+    position: absolute; top: 26px; left: 0; right: 0;
+    text-align: center; z-index: 3;
+    font-family: "Black Han Sans", sans-serif;
+    font-size: 26px; color: #fff; text-shadow: 0 2px 0 rgba(110,45,0,.4);
+  }
+  .brand small { font-family: "Noto Sans KR"; font-weight: 700; font-size: 11px; letter-spacing: .3em; display: block; color: #fff; margin-top: -2px; }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative;
+    background: radial-gradient(120% 90% at 20% 15%, #E27206 0%, #D46600 55%, #C05A00 100%);
+    padding: 130px 40px 150px;
+    text-align: center;
+    color: #fff;
+  }
+  .hero h1 {
+    font-size: clamp(40px, 9vw, 66px);
+    text-shadow: 0 4px 0 rgba(110, 45, 0, .45);
+    margin: 22px 0 18px;
+    position: relative; z-index: 2;
+  }
+  .hero p { display: inline-block; background: #fff; color: var(--green); padding: 8px 22px; border-radius: 999px; font-weight: 700; font-size: 17px; position: relative; z-index: 2; }
+  .hero .eyebrow { position: relative; z-index: 2; }
+  .hero .deco { position: absolute; z-index: 1; }
+  .hero .d1 { width: 260px; top: -60px; right: -80px; opacity: .95; }
+  .hero .d2 { width: 150px; bottom: 70px; left: -30px; transform: rotate(-18deg); }
+  .hero .d3 { width: 92px; top: 120px; left: 36px; transform: rotate(14deg); }
+  .hero .wave { position: absolute; left: 0; right: 0; bottom: -1px; width: 100%; height: 90px; z-index: 2; }
+
+  /* ---------- intro ---------- */
+  .intro { padding: 24px 48px 0; text-align: center; }
+  .intro .hi { font-weight: 900; font-size: 18px; }
+  .intro p { color: var(--ink); max-width: 470px; margin: 6px auto 0; }
+  .facts { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 30px 0 22px; }
+  .fact { text-align: center; }
+  .fact .coupon { font-size: 15px; letter-spacing: .06em; }
+  .fact span { display: block; font-size: 12px; color: var(--muted); margin-top: 6px; font-weight: 500; }
+
+  /* ---------- section heading ---------- */
+  .kicker { color: var(--orange-text); font-weight: 900; font-size: 13px; letter-spacing: .25em; }
+  .h2 { font-size: clamp(30px, 6.4vw, 42px); color: var(--green); margin: 8px 0 20px; }
+  .lead { color: var(--ink); max-width: 540px; margin: 0 auto; }
+
+  /* ---------- 01 compare ---------- */
+  .compare { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; margin: 40px 0 28px; }
+  .bubble {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--mint);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 18px;
+  }
+  .bubble h3 { font-family: "Black Han Sans"; font-weight: 400; font-size: 21px; color: var(--green); margin-bottom: 6px; }
+  .bubble p { font-size: 13.5px; line-height: 1.6; color: var(--ink); }
+  .bubble b { color: var(--orange-text); }
+  .badge {
+    width: 92px; height: 92px; border-radius: 50%;
+    background: var(--orange-text); color: #fff;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    font-family: "Black Han Sans"; font-size: 18px; line-height: 1.1;
+    box-shadow: 0 0 0 8px var(--peach);
+  }
+  .callout {
+    background: var(--peach);
+    border-radius: 28px;
+    padding: 22px 28px;
+    font-weight: 700;
+    color: var(--orange-text);
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  /* ---------- 02 why now ---------- */
+  .why { display: grid; gap: 18px; margin-top: 36px; }
+  .why-item { display: grid; grid-template-columns: 84px 1fr; gap: 20px; align-items: center; text-align: left; }
+  .why-item .ic {
+    width: 84px; height: 84px; border-radius: 50%;
+    background: var(--mint); display: flex; align-items: center; justify-content: center;
+  }
+  .why-item .ic svg { width: 44px; height: 44px; }
+  .why-item small { font-weight: 900; color: var(--orange-text); font-size: 12px; letter-spacing: .12em; }
+  .why-item h3 { font-size: 19px; font-weight: 900; color: var(--green); line-height: 1.4; }
+  .why-item p { font-size: 14.5px; color: var(--muted); line-height: 1.7; margin-top: 4px; }
+  .quote {
+    margin-top: 40px;
+    font-family: "Black Han Sans"; font-size: clamp(22px, 4.6vw, 28px);
+    color: var(--green); line-height: 1.4;
+  }
+  .quote em { font-style: normal; color: var(--orange-text); }
+
+  /* ---------- 03 timeline ---------- */
+  .timeline { margin: 36px auto 30px; max-width: 520px; text-align: left; position: relative; }
+  .timeline::before { content: ""; position: absolute; left: 44px; top: 10px; bottom: 10px; border-left: 2px dashed var(--mint-deep); }
+  .tl { display: grid; grid-template-columns: 90px 1fr; gap: 18px; padding: 12px 0; position: relative; }
+  .tl .yr {
+    width: 90px; height: 54px; border-radius: 999px; background: var(--green); color: #fff;
+    font-family: "Black Han Sans"; font-size: 24px; display: flex; align-items: center; justify-content: center;
+    position: relative; z-index: 1;
+  }
+  .tl h3 { font-weight: 900; color: var(--green); font-size: 17px; }
+  .tl p { font-size: 14.5px; color: var(--muted); line-height: 1.65; }
+  .tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 10px 0 24px; }
+  .tags .tag:nth-child(even) { background: var(--orange-text); }
+
+  /* ---------- 04 day & night ---------- */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 36px 0 20px; }
+  .card {
+    border-radius: 200px 200px 28px 28px;
+    padding: 56px 22px 28px;
+    text-align: center;
+  }
+  .card.day { background: var(--mint); }
+  .card.night { background: var(--green); color: #fff; }
+  .card .ic { width: 64px; height: 64px; margin: 0 auto 10px; }
+  .card small { display: block; font-weight: 900; font-size: 12px; letter-spacing: .15em; color: var(--orange-text); }
+  .card.night small { color: var(--orange-soft); }
+  .card h3 { font-family: "Black Han Sans"; font-weight: 400; font-size: 28px; margin: 4px 0 12px; color: var(--green); }
+  .card.night h3 { color: #fff; }
+  .card p { font-size: 14px; line-height: 1.7; }
+  .card.night p { color: #E7EFD9; }
+  .dawn {
+    display: flex; gap: 18px; align-items: center;
+    border: 2px dashed var(--orange); border-radius: 999px;
+    padding: 16px 30px; text-align: left; background: var(--peach);
+  }
+  .dawn svg { flex: none; width: 50px; height: 50px; }
+  .dawn b { color: var(--orange-text); }
+  .dawn p { font-size: 14px; line-height: 1.6; }
+  .hanja { font-family: "Black Han Sans"; color: #C85F00; font-size: 56px; line-height: 1; margin: 6px 0 2px; }
+
+  /* ---------- 05 promises ---------- */
+  .promises { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 34px; text-align: left; }
+  .promise { background: var(--mint); border-radius: 28px; padding: 24px 22px; }
+  .promise .num {
+    width: 38px; height: 38px; border-radius: 50%; background: var(--green); color: #fff;
+    font-family: "Black Han Sans"; font-size: 18px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px;
+  }
+  .promise h3 { font-weight: 900; color: var(--green); font-size: 17px; line-height: 1.4; margin-bottom: 6px; }
+  .promise p { font-size: 14px; color: var(--ink); line-height: 1.65; }
+
+  /* ---------- 06 notes (green wave section) ---------- */
+  .notes-head { padding: 0 48px 40px; text-align: center; }
+  .notes {
+    background:
+      radial-gradient(circle at 15% 10%, rgba(255,255,255,.06) 0 80px, transparent 81px),
+      radial-gradient(circle at 90% 55%, rgba(255,255,255,.05) 0 120px, transparent 121px),
+      var(--green);
+    padding: 40px 0 56px;
+  }
+  .note { padding: 34px 56px; text-align: center; color: #fff; }
+  .note.light {
+    background: #fff; color: var(--ink);
+    margin-left: 28px;
+    border-radius: 200px 0 0 200px;
+  }
+  .note.light.alt { margin: 0 28px 0 0; border-radius: 0 200px 200px 0; }
+  .note small { display: block; font-weight: 900; font-size: 12px; letter-spacing: .14em; color: var(--orange-soft); }
+  .note.light small { color: var(--orange-text); }
+  .note h3 { font-family: "Black Han Sans"; font-weight: 400; font-size: 23px; line-height: 1.35; margin: 6px 0 10px; }
+  .note.light h3 { color: var(--green); }
+  .note p { font-size: 14.5px; line-height: 1.75; max-width: 470px; margin: 0 auto; }
+  .note:not(.light) p { color: #E3EDD2; }
+  .leaves { margin-top: 12px; letter-spacing: 6px; color: var(--orange-soft); font-size: 15px; }
+  .note.light .leaves { color: var(--green-mid); }
+  .sign { text-align: center; color: #fff; font-weight: 700; margin-top: 18px; letter-spacing: .1em; font-size: 14px; }
+
+  /* ---------- 07 habits ---------- */
+  .habits { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 18px; margin-top: 36px; }
+  .habit .disc {
+    width: 150px; height: 150px; border-radius: 50%; background: var(--mint); margin: 0 auto 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .habit:nth-child(2) .disc, .habit:nth-child(3) .disc { background: var(--peach); }
+  .habit .disc svg { width: 74px; height: 74px; }
+  .habit h3 { font-family: "Black Han Sans"; font-weight: 400; color: var(--green); font-size: 20px; }
+  .habit p { font-size: 13.5px; color: var(--muted); line-height: 1.6; margin: 4px 0 12px; }
+  .habit .tag { font-size: 11px; padding: 4px 14px; letter-spacing: .08em; }
+
+  /* ---------- final cta ---------- */
+  .final { position: relative; background: radial-gradient(120% 100% at 80% 0%, #E27206, #D46600 55%, #C05A00); color: #fff; text-align: center; padding: 130px 40px 80px; margin-top: 72px; }
+  .final .wave-top { position: absolute; top: -1px; left: 0; width: 100%; height: 90px; }
+  .final h2 { font-size: clamp(40px, 8.6vw, 60px); text-shadow: 0 4px 0 rgba(110, 45, 0, .45); margin: 18px 0 18px; }
+  .final .info { display: inline-block; background: #fff; border-radius: 28px; padding: 18px 30px; margin-bottom: 22px; }
+  .final .when { color: var(--green); font-weight: 900; font-size: 16px; }
+  .final .where { color: var(--green); font-weight: 700; font-size: 14px; }
+  .final .coupon { background: #fff; border-color: var(--green); }
+  .final .btn { margin-top: 18px; }
+
+  footer { text-align: center; padding: 48px 32px 56px; }
+  footer .brand-foot { font-family: "Black Han Sans"; font-size: 28px; color: var(--green); }
+  footer .credits { font-size: 13px; color: var(--muted); line-height: 2; margin-top: 12px; }
+  footer .credits b { color: var(--green); font-weight: 700; margin-right: 6px; }
+  footer .sns { display: flex; justify-content: center; gap: 10px; margin-bottom: 14px; }
+  footer .sns span { width: 26px; height: 26px; border-radius: 7px; background: var(--green); display: inline-block; }
+
+  @media (max-width: 560px) {
+    .wrap, .intro { padding-left: 20px; padding-right: 20px; }
+    .rule { margin: 52px 20px; }
+    .hero { padding: 110px 20px 130px; }
+    .hero .d1 { width: 190px; right: -90px; }
+    .hero .d3 { display: none; }
+    .compare { grid-template-columns: 1fr 1fr; }
+    .compare .badge { grid-column: 1 / -1; grid-row: 1; margin: 0 auto 4px; }
+    .bubble p { font-size: 12.5px; }
+    .bubble h3 { font-size: 17px; }
+    .split, .promises { grid-template-columns: 1fr; }
+    .card { border-radius: 160px 160px 28px 28px; }
+    .note { padding: 30px 28px; }
+    .note.light { margin-left: 16px; }
+    .note.light.alt { margin-right: 16px; }
+    .habit .disc { width: 120px; height: 120px; }
+    .dawn { border-radius: 28px; padding: 16px 20px; }
+    .tl { grid-template-columns: 76px 1fr; }
+    .tl .yr { width: 76px; font-size: 20px; }
+    .timeline::before { left: 38px; }
+  }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="brand">山寺캠프</div>
+
+    <!-- persimmon slice -->
+    <svg class="deco d1" viewBox="0 0 200 200" aria-hidden="true">
+      <circle cx="100" cy="100" r="96" fill="#FFB347"/>
+      <circle cx="100" cy="100" r="84" fill="#FFD27A"/>
+      <g stroke="#F4952A" stroke-width="5" stroke-linecap="round">
+        <line x1="100" y1="100" x2="100" y2="22"/><line x1="100" y1="100" x2="155" y2="45"/>
+        <line x1="100" y1="100" x2="178" y2="100"/><line x1="100" y1="100" x2="155" y2="155"/>
+        <line x1="100" y1="100" x2="100" y2="178"/><line x1="100" y1="100" x2="45" y2="155"/>
+        <line x1="100" y1="100" x2="22" y2="100"/><line x1="100" y1="100" x2="45" y2="45"/>
+      </g>
+      <circle cx="100" cy="100" r="14" fill="#FFF4D8"/>
+    </svg>
+    <!-- whole persimmon -->
+    <svg class="deco d2" viewBox="0 0 120 120" aria-hidden="true">
+      <ellipse cx="60" cy="68" rx="50" ry="44" fill="#E9700F"/>
+      <ellipse cx="44" cy="54" rx="14" ry="9" fill="#FFB866" opacity=".7"/>
+      <path d="M60 30 C40 18 26 30 30 36 C42 34 50 34 60 38 C70 34 78 34 90 36 C94 30 80 18 60 30Z" fill="#3E5F1F"/>
+      <rect x="57" y="14" width="6" height="18" rx="3" fill="#2F4A12"/>
+    </svg>
+    <!-- tea leaf -->
+    <svg class="deco d3" viewBox="0 0 80 80" aria-hidden="true">
+      <path d="M10 70 C10 30 40 8 72 8 C72 44 48 70 10 70Z" fill="#45661D"/>
+      <path d="M14 66 C30 48 46 30 66 14" stroke="#CDEBC0" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+
+    <span class="eyebrow">WHY SANSA CAMP</span>
+    <h1 class="display">쉬러 갔다가<br>더 지쳐서<br>돌아온 적, 있나요?</h1>
+    <p>산사캠프는 그 질문에서 시작했습니다.</p>
+
+    <svg class="wave" viewBox="0 0 720 90" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 50 C160 100 280 0 440 30 C560 52 640 70 720 34 L720 90 L0 90Z" fill="#fff"/>
+    </svg>
+  </section>
+
+  <!-- ============ INTRO ============ -->
+  <section class="intro">
+    <p class="hi">안녕하세요, 산사캠프입니다.</p>
+    <p>2박 3일 동안 산사의 시간표를 빌려 살아보는 캠프.<br><b>비우러 와서, 채워 가는 곳</b>입니다.</p>
+    <div class="facts">
+      <div class="fact"><span class="coupon">11.6 – 11.8</span><span>2박 3일</span></div>
+      <div class="fact"><span class="coupon">하동 쌍계사</span><span>지리산 자락</span></div>
+      <div class="fact"><span class="coupon">700명</span><span>사전예약 한정</span></div>
+    </div>
+    <a class="btn" href="#reserve">프로그램 사전예약하기</a>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 01 ============ -->
+  <section class="wrap center">
+    <div class="kicker">01 · 기획의도</div>
+    <h2 class="display h2">캠핑 페스티벌과 템플스테이,<br>그 사이의 빈자리</h2>
+    <p class="lead">요즘 우리의 쉼은 둘 중 하나였습니다. 음악과 사람과 소비로 가득 찬 캠핑 페스티벌, 아니면 조용하지만 처음 가기엔 문턱이 높게 느껴지는 템플스테이. 신나지만 지치거나, 고요하지만 낯설거나.</p>
+
+    <div class="compare">
+      <div class="bubble">
+        <h3>캠핑 페스티벌</h3>
+        <p><b>즐겁다</b><br>그런데 시끄럽고<br>돌아오면 더 피곤하다</p>
+      </div>
+      <div class="badge">산사<br>캠프</div>
+      <div class="bubble">
+        <h3>템플스테이</h3>
+        <p><b>고요하다</b><br>그런데 어렵고<br>혼자 가기엔 망설여진다</p>
+      </div>
+    </div>
+
+    <div class="callout">텐트를 치는 설렘은 그대로,<br>밤에는 산사의 고요 속으로.</div>
+    <p class="lead">산사캠프는 그 사이를 잇기 위해 만들었습니다. 낮에는 친구, 가족, 반려견과 함께 걷고 마시고 웃습니다. 밤이 되면 산사가 원래 지켜 온 침묵으로 함께 들어갑니다.<br><br>종교를 배우러 오는 자리가 아닙니다. <b>1,300년 동안 쉼의 방법을 지켜 온 곳에서, 그 방법을 잠시 빌려 쓰는 자리</b>입니다.</p>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 02 ============ -->
+  <section class="wrap center">
+    <div class="kicker">02 · 왜 지금인가</div>
+    <h2 class="display h2">지금 우리에게<br>산사캠프가 필요한 이유</h2>
+
+    <div class="why">
+      <div class="why-item">
+        <div class="ic"><svg viewBox="0 0 48 48" fill="none" stroke="#2F4A12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="13" y="5" width="22" height="38" rx="5"/><line x1="21" y1="37" x2="27" y2="37"/><circle cx="34" cy="10" r="5" fill="#F4952A" stroke="none"/></svg></div>
+        <div><small>늘 연결된 삶</small><h3>알림이 꺼지지 않는 하루</h3><p>눈 뜨면 화면을 보고, 잠들 때까지 화면을 봅니다. 쉬는 시간에도 우리는 무언가를 확인하고 있습니다. 끊어 본 적이 없으니 끊는 법도 잊었습니다.</p></div>
+      </div>
+      <div class="why-item">
+        <div class="ic"><svg viewBox="0 0 48 48" fill="none" stroke="#2F4A12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="12" width="36" height="28" rx="5"/><circle cx="24" cy="26" r="7"/><path d="M17 12l3-5h8l3 5"/><circle cx="36" cy="18" r="2" fill="#F4952A" stroke="none"/></svg></div>
+        <div><small>소비가 된 휴식</small><h3>쉬는 것도 '해내야' 하는 일</h3><p>예쁜 곳에 가서 사진을 남기고, 일정표를 꽉 채우는 여행. 쉼마저 성과처럼 관리하다 보니 다녀와도 쉰 것 같지 않습니다.</p></div>
+      </div>
+      <div class="why-item">
+        <div class="ic"><svg viewBox="0 0 48 48" fill="none" stroke="#2F4A12" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="24" cy="20" r="11"/><path d="M19 31v6h10v-6"/><line x1="20" y1="42" x2="28" y2="42"/><path d="M24 14v6l4 3" stroke="#F4952A"/></svg></div>
+        <div><small>AI 시대의 질문</small><h3>나답게 산다는 건 뭘까</h3><p>기계가 대신해 주는 일이 많아질수록, 나는 무엇으로 사는지 묻게 됩니다. 그 질문은 빠른 곳보다 느린 곳에서 더 잘 들립니다.</p></div>
+      </div>
+    </div>
+
+    <p class="quote">더 많이 채우는 법은 넘쳐납니다.<br><em>잘 비우는 법</em>을 알려주는 곳은 드뭅니다.</p>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 03 ============ -->
+  <section class="wrap center">
+    <div class="kicker">03 · 왜 쌍계사인가</div>
+    <h2 class="display h2">첫 번째 산사캠프를<br>쌍계사에서 여는 이유</h2>
+    <p class="lead">지리산 남쪽 화개골, 두 계곡이 만나는 자리에 쌍계사가 있습니다. 차와 선과 이야기가 오래 쌓인 곳. 비움과 채움을 처음 이야기하기에 이보다 맞는 곳을 찾지 못했습니다.</p>
+
+    <div class="timeline">
+      <div class="tl"><div class="yr">723</div><div><h3>산사가 세워지다</h3><p>신라 성덕왕 때 창건된, 1,300년 된 지리산의 절입니다.</p></div></div>
+      <div class="tl"><div class="yr">828</div><div><h3>이 땅에 차가 처음 심어지다</h3><p>당에서 가져온 차 씨앗을 지리산 자락에 심었다고 전합니다. 우리나라 차 시배지가 바로 이곳입니다.</p></div></div>
+      <div class="tl"><div class="yr">840</div><div><h3>차와 범패의 터전이 되다</h3><p>진감선사가 절을 크게 중창하고, 차를 가꾸며 범패를 널리 전했습니다.</p></div></div>
+    </div>
+
+    <div class="tags">
+      <span class="tag">차 시배지</span><span class="tag">불일폭포</span><span class="tag">호리병 속 별천지</span><span class="tag">108선다 차명상</span>
+    </div>
+    <p class="lead">최치원은 이 골짜기를 <b>'호리병 속에 따로 있는 별천지'</b>라 불렀습니다. 산사캠프는 그 별천지에서 2박 3일을 보내는 일입니다.</p>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 04 ============ -->
+  <section class="wrap center">
+    <div class="kicker">04 · 비움과 채움</div>
+    <h2 class="display h2">하루를 둘로 나누었습니다</h2>
+    <div class="hanja">空·滿</div>
+    <p class="lead">산사캠프에서 가장 먼저 정한 원칙이자, 끝까지 양보하지 않은 원칙입니다. 낮과 밤을 나누는 것.</p>
+
+    <div class="split">
+      <div class="card day">
+        <svg class="ic" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="13" fill="#F4952A"/><g stroke="#F4952A" stroke-width="4" stroke-linecap="round"><line x1="32" y1="5" x2="32" y2="12"/><line x1="32" y1="52" x2="32" y2="59"/><line x1="5" y1="32" x2="12" y2="32"/><line x1="52" y1="32" x2="59" y2="32"/><line x1="13" y1="13" x2="18" y2="18"/><line x1="46" y1="46" x2="51" y2="51"/><line x1="13" y1="51" x2="18" y2="46"/><line x1="46" y1="18" x2="51" y2="13"/></g></svg>
+        <small>DAY · 낮</small>
+        <h3>채우는 시간</h3>
+        <p>불일폭포 트래킹, 쌍계사 역사 탐방, 싱잉볼, 산사장터, 사찰음식과 예불 체험, 스님과의 대화, 저녁 공연까지. 마음껏 걷고 만나고 웃는 시간입니다.</p>
+      </div>
+      <div class="card night">
+        <svg class="ic" viewBox="0 0 64 64" aria-hidden="true"><path d="M42 10a22 22 0 1 0 12 30A18 18 0 0 1 42 10Z" fill="#FCC266"/><circle cx="16" cy="14" r="2" fill="#E4F6DC"/><circle cx="54" cy="12" r="1.6" fill="#E4F6DC"/></svg>
+        <small>21:00 – 06:00 · 고요의 시간</small>
+        <h3>비우는 시간</h3>
+        <p>공연은 21시 전에 끝납니다. 그다음부터는 소리를 낮추고, 화면을 내려놓고, 산사의 밤에 귀를 기울입니다. 앱 속 광고 배너도 이 시간엔 스스로 숨습니다.</p>
+      </div>
+    </div>
+
+    <div class="dawn">
+      <svg viewBox="0 0 50 50" aria-hidden="true"><path d="M5 36h40" stroke="#2F4A12" stroke-width="3" stroke-linecap="round"/><path d="M12 36a13 13 0 0 1 26 0" fill="#F4952A"/><g stroke="#F4952A" stroke-width="3" stroke-linecap="round"><line x1="25" y1="8" x2="25" y2="15"/><line x1="8" y1="20" x2="13" y2="24"/><line x1="42" y1="20" x2="37" y2="24"/></g></svg>
+      <p><b>07:00 · 새벽 — 다시 깨어나는 시간</b><br>무대 앞 선명상과 요가로 아침을 엽니다. 마지막 날은 공연 대신 새벽 명상으로 캠프를 닫습니다.</p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 05 ============ -->
+  <section class="wrap center">
+    <div class="kicker">05 · 산사캠프의 약속</div>
+    <h2 class="display h2">산사에 머무는 손님으로서<br>지키기로 한 것들</h2>
+
+    <div class="promises">
+      <div class="promise"><div class="num">1</div><h3>일주문 안은 그대로 둡니다</h3><p>무대, 부스, 현수막처럼 눈에 띄는 것은 모두 일주문 바깥에만 세웁니다. 절 안의 풍경은 그 모습 그대로입니다.</p></div>
+      <div class="promise"><div class="num">2</div><h3>불을 피우지 않습니다</h3><p>오래된 목조 건축이 숲과 함께 있는 산사입니다. 버너, 화로대, 모닥불 없이 지냅니다. 식사는 쌍계사 공양으로 함께합니다.</p></div>
+      <div class="promise"><div class="num">3</div><h3>밤의 고요를 지킵니다</h3><p>21시부터 다음 날 6시까지는 고요의 시간. 우리 모두가 함께 지키는 약속입니다.</p></div>
+      <div class="promise"><div class="num">4</div><h3>한 사람 한 사람을 셉니다</h3><p>공양 그릇도, 물품도 사람 수만큼 정확히 준비합니다. 그래서 모든 티켓은 1인 기준이고, 모든 프로그램은 앱에서 미리 예약합니다.</p></div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <!-- ============ 06 ============ -->
+  <div class="notes-head">
+    <div class="kicker">06 · 준비 노트</div>
+    <h2 class="display h2">이 캠프를 준비하며<br>우리가 아끼게 된 것들</h2>
+    <p class="lead">처음엔 행사 하나를 만든다고 생각했습니다. 준비할수록 하나씩 마음이 붙었습니다. 그 마음들을 여기 조금 남겨 둡니다.</p>
+  </div>
+
+  <section class="notes">
+    <div class="note">
+      <small>시작</small>
+      <h3>"비우러 와서 채워 가는 2박 3일"</h3>
+      <p>가장 먼저 쓴 한 줄입니다. 수십 번 기획서를 고치는 동안에도 이 문장만은 한 글자도 바뀌지 않았습니다. 지금도 무언가를 결정할 때 이 문장에 먼저 물어봅니다.</p>
+      <div class="leaves">❦ ❦ ❦</div>
+    </div>
+    <div class="note light">
+      <small>떼제에서 배운 것</small>
+      <h3>다시 오라고 붙잡지 않기로 했습니다</h3>
+      <p>프랑스의 떼제 공동체는 찾아온 이들을 붙잡지 않고, 일상으로 돌려보냅니다. 산사캠프도 그렇게 하기로 했습니다. 우리가 바라는 성공은 재방문율이 아니라, 여러분이 집에 가져간 작은 습관 하나가 오래 남는 것입니다.</p>
+      <div class="leaves">❦ ❦ ❦</div>
+    </div>
+    <div class="note">
+      <small>8월 15일</small>
+      <h3>네 글자를 받던 날</h3>
+      <p>영담스님께서 직접 써 주신 '山寺캠프' 글씨를 받았습니다. 포스터 한가운데 있는 바로 그 글씨입니다. 화면 속 기획이 처음으로 손으로 만질 수 있는 무언가가 된 날이었습니다.</p>
+      <div class="leaves">❦ ❦ ❦</div>
+    </div>
+    <div class="note light alt">
+      <small>8월 21일 · 현장답사</small>
+      <h3>텐트 자리를 하나하나 세어 보았습니다</h3>
+      <p>천 명을 모시고 싶었습니다. 그런데 쌍계사에서 텐트가 놓일 자리를 직접 걸으며 세어 보니, 산사의 고요를 지키면서 모실 수 있는 인원은 700명이었습니다. 숫자를 줄인 대신 여백을 지켰습니다.</p>
+      <div class="leaves">❦ ❦ ❦</div>
+    </div>
+    <div class="note">
+      <small>쌍계사의 마음</small>
+      <h3>다섯 끼의 공양</h3>
+      <p>쌍계사가 2박 3일 동안 다섯 번의 공양과 머물 자리를 기꺼이 내어 주셨습니다. 이 캠프는 우리가 만든 행사이기 전에, 산사가 열어 준 문입니다.</p>
+      <div class="leaves">❦ ❦ ❦</div>
+    </div>
+    <div class="note light">
+      <small>함께한 사람들</small>
+      <h3>혼자서는 만들 수 없었습니다</h3>
+      <p>스님들, 불교문화사업단, 하동의 이웃들, 함께 밤을 새운 동료들. 한 사람의 아이디어가 이만큼 커진 건, 같은 풍경을 함께 그려 준 사람들 덕분입니다.</p>
+      <div class="leaves">❦ ❦ ❦</div>
+    </div>
+    <p class="sign">— 산사캠프 사무국 드림</p>
+  </section>
+
+  <!-- ============ 07 ============ -->
+  <section class="wrap center" style="margin-top:72px">
+    <div class="kicker">07 · 집으로 가져가는 것</div>
+    <h2 class="display h2">캠프는 3일,<br>습관은 그다음부터</h2>
+    <p class="lead">산사캠프가 끝나는 일요일 11시. 그날 이후 여러분의 일상에 이런 것 하나쯤 남아 있기를 바랍니다.</p>
+
+    <div class="habits">
+      <div class="habit">
+        <div class="disc"><svg viewBox="0 0 80 80" aria-hidden="true"><path d="M14 34h44v10a20 20 0 0 1-20 20h-4a20 20 0 0 1-20-20Z" fill="#F4952A"/><path d="M58 38h4a7 7 0 0 1 0 14h-6" fill="none" stroke="#F4952A" stroke-width="4"/><path d="M28 14c-4 6 4 8 0 14M40 12c-4 6 4 8 0 14" stroke="#45661D" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="10" y="66" width="52" height="4" rx="2" fill="#2F4A12"/></svg></div>
+        <h3>차 한 잔의 멈춤</h3>
+        <p>하루 한 번, 차를 우리는 동안만큼은 아무것도 하지 않기</p>
+        <span class="tag">TEA</span>
+      </div>
+      <div class="habit">
+        <div class="disc"><svg viewBox="0 0 80 80" aria-hidden="true"><rect x="22" y="10" width="36" height="60" rx="8" fill="#2F4A12"/><rect x="27" y="17" width="26" height="42" rx="3" fill="#22360B"/><path d="M46 28a10 10 0 1 0 6 14 8 8 0 0 1-6-14Z" fill="#FCC266"/></svg></div>
+        <h3>밤 아홉 시의 화면 끄기</h3>
+        <p>산사의 고요의 시간을 집에서도 한 시간만</p>
+        <span class="tag">21:00</span>
+      </div>
+      <div class="habit">
+        <div class="disc"><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="18" r="8" fill="#F4952A"/><path d="M40 28c-8 0-12 8-12 16l12 4 12-4c0-8-4-16-12-16Z" fill="#45661D"/><path d="M14 58c8-8 18-10 26-6 8-4 18-2 26 6-10 6-42 6-52 0Z" fill="#2F4A12"/></svg></div>
+        <h3>아침 오 분 앉기</h3>
+        <p>새벽 선명상처럼, 눈 뜨고 바로 숨부터 고르기</p>
+        <span class="tag">5 MIN</span>
+      </div>
+      <div class="habit">
+        <div class="disc"><svg viewBox="0 0 80 80" aria-hidden="true"><path d="M8 62 L30 26 L42 44 L52 32 L72 62Z" fill="#45661D"/><path d="M24 36 L30 26 L36 36Z" fill="#E4F6DC"/><g fill="#F4952A"><ellipse cx="28" cy="70" rx="5" ry="3"/><ellipse cx="42" cy="66" rx="5" ry="3"/><ellipse cx="56" cy="70" rx="5" ry="3"/></g></svg></div>
+        <h3>천천히 걷기</h3>
+        <p>목적지 없이 동네 한 바퀴, 불일폭포 가던 걸음으로</p>
+        <span class="tag">WALK</span>
+      </div>
+    </div>
+
+    <p class="quote">다시 오지 않아도 괜찮습니다.<br><em>여기서 얻은 고요</em>를 오래 쓰시면 됩니다.</p>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="final" id="reserve">
+    <svg class="wave-top" viewBox="0 0 720 90" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 0 L720 0 L720 40 C600 80 500 20 360 44 C220 68 120 90 0 52Z" fill="#fff"/>
+    </svg>
+    <span class="eyebrow">SEE YOU AT SANSA</span>
+    <h2 class="display">비우러 와서,<br>채워 가세요</h2>
+    <div class="info"><p class="when">2026. 11. 6(금) 14:00 – 11. 8(일) 11:00</p>
+    <p class="where">하동 쌍계사 일원 · 700명 한정</p></div><br>
+    <span class="coupon">山寺 · 2026</span><br>
+    <a class="btn" href="#reserve">프로그램 사전예약하기</a>
+  </section>
+
+  <footer>
+    <div class="sns"><span></span><span></span></div>
+    <div class="brand-foot">山寺캠프</div>
+    <div class="credits">
+      <div><b>주최</b>쌍계사 · 한국불교문화사업단</div>
+      <div><b>주관</b>산사캠프</div>
+      <div><b>후원</b>NH농협 · NH투자증권 · 도반HC</div>
+      <div><b>언론사</b>불교닷컴</div>
+    </div>
+  </footer>
+
+</main>
+</body>
+</html>
