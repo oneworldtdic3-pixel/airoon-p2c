@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import SponsorBuddhz from './pages/SponsorBuddhz'
 import About from './pages/About'
+import GoExternal from './pages/GoExternal'
 import AppShell from './components/layout/AppShell'
 import Home from './pages/Home'
 import Reserve from './pages/Reserve'
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="terms" element={<Terms />} />
         <Route path="sponsor/buddhz" element={<SponsorBuddhz />} />
         <Route path="about" element={<About />} />
+        <Route path="go" element={<GoExternal />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

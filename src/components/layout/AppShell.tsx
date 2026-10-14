@@ -12,7 +12,7 @@ const tabs = [
 
 export default function AppShell() {
   const { pathname } = useLocation()
-  const hideTabs = pathname === '/login' || pathname.startsWith('/admin') || pathname === '/privacy' || pathname === '/terms' || pathname.startsWith('/sponsor/') || pathname === '/about'
+  const hideTabs = pathname === '/login' || pathname.startsWith('/admin') || pathname === '/privacy' || pathname === '/terms' || pathname.startsWith('/sponsor/') || pathname === '/about' || pathname === '/go'
   return (
     <div className="mx-auto min-h-dvh w-full max-w-[430px] overflow-x-clip bg-white">
       <main className={hideTabs ? '' : 'pb-[calc(76px+env(safe-area-inset-bottom))]'}>
