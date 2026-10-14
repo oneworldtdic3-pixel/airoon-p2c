@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "sansa-camp/index.html"
+        ],
+        "createdAt": "2026-10-14T06:19:15.432Z",
+        "reason": "editorial hairline-table layout: text intentionally sits flush on rules, like a printed brochure"
+      }
+    ]
+  }
+}
