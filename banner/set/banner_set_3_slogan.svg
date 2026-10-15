@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5000 520" width="5000" height="520"><defs>
+<clipPath id="qrclip" clipPathUnits="objectBoundingBox"><rect width="1" height="1" rx="0.055" ry="0.055"/></clipPath>
 <pattern id="dotsO" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="7" cy="7" r="2.8" fill="#b5300d"/></pattern>
 <style>@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&amp;family=Jua&amp;display=block');
 .h{font-family:'Black Han Sans','Noto Sans KR',sans-serif} .j{font-family:'Jua','Noto Sans KR',sans-serif}</style></defs><rect width="5000" height="520" fill="#fff"/>
