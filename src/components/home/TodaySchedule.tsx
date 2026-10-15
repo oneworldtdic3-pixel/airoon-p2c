@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp } from '../../data/AppProvider'
-import { EVENT_DAYS, MEALS, PROGRAM_TIME_TBD, mealAt, mealTag } from '../../data/constants'
+import { EVENT_DAYS, MEALS, mealAt, mealTag, timeTbd } from '../../data/constants'
 import { dayKey, fmtDay, fmtTime } from '../../lib/format'
 import { todayEventDay, daysUntilStart } from '../../lib/dday'
 import { SectionTitle, Segmented } from '../ui'
@@ -20,11 +20,11 @@ export default function TodaySchedule() {
     ...bookings.filter((b) => b.status === 'confirmed').map((b) => {
       const s = sessions.find((x) => x.id === b.session_id)
       const p = s && programs.find((x) => x.id === s.program_id)
-      return s && p ? { id: b.id, at: s.starts_at, title: p.title, sub: p.location, kind: 'program' as const, tag: '' } : null
+      return s && p ? { id: b.id, at: s.starts_at, title: p.title, sub: p.location, kind: 'program' as const, tag: '', tbd: timeTbd(p) } : null
     }),
     ...showerBookings.filter((b) => b.status === 'confirmed').map((b) => {
       const s = slots.find((x) => x.id === b.slot_id)
-      return s ? { id: b.id, at: s.starts_at, title: '샤워실', sub: `${s.building} 부스 · ${s.gender === 'F' ? '여성' : '남성'}`, kind: 'shower' as const, tag: '' } : null
+      return s ? { id: b.id, at: s.starts_at, title: '샤워실', sub: `${s.building} 부스 · ${s.gender === 'F' ? '여성' : '남성'}`, kind: 'shower' as const, tag: '', tbd: false } : null
     }),
     ...MEALS.map((m) => ({ id: m.id, at: mealAt(m), title: m.title, sub: `${m.location} · ${m.note}`, kind: 'meal' as const, tag: mealTag(m) })),
   ].filter((x): x is NonNullable<typeof x> => !!x).sort((a, b) => Date.parse(a.at) - Date.parse(b.at))
@@ -37,7 +37,10 @@ export default function TodaySchedule() {
   const all = [
     ...sessions.filter((s) => dayKey(s.starts_at) === day).map((s) => ({ kind: 'session' as const, at: s.starts_at, s })),
     ...MEALS.filter((m) => m.day === day).map((m) => ({ kind: 'meal' as const, at: mealAt(m), m })),
-  ].sort((a, b) => (PROGRAM_TIME_TBD && a.kind !== b.kind ? (a.kind === 'meal' ? -1 : 1) : Date.parse(a.at) - Date.parse(b.at)))
+  ]
+  // 시각 미정 회차는 시각이 정해진 일정(공양·예불·확정 프로그램) 뒤로 보낸다
+  const untimed = (r: (typeof all)[number]) => (r.kind === 'session' && timeTbd(programs.find((x) => x.id === r.s.program_id)) ? 1 : 0)
+  all.sort((a, b) => untimed(a) - untimed(b) || Date.parse(a.at) - Date.parse(b.at))
   const LIMIT = 10
   const shown = all.slice(0, LIMIT)
   const allTitle = di !== null ? '오늘의 프로그램' : daysUntilStart() > 0 ? '첫날 프로그램' : '프로그램'
@@ -80,7 +83,7 @@ export default function TodaySchedule() {
                       </div>
                     ) : (
                     <Link to={`/reserve?tab=${m.kind}`} className="flex items-baseline gap-4 border-t hairline py-3.5 first:border-t-0">
-                      <span className={`tnum min-w-[3.4em] shrink-0 font-extrabold ${m.kind === 'program' && PROGRAM_TIME_TBD ? 'text-[12px] text-sub' : 'text-[17px] text-ink'}`}>{m.kind === 'program' && PROGRAM_TIME_TBD ? '시간 협의중' : fmtTime(m.at)}</span>
+                      <span className={`tnum min-w-[3.4em] shrink-0 font-extrabold ${m.kind === 'program' && m.tbd ? 'text-[12px] text-sub' : 'text-[17px] text-ink'}`}>{m.kind === 'program' && m.tbd ? '시간 협의중' : fmtTime(m.at)}</span>
                       <span className="min-w-0 flex-1">
                         <span className="block truncate text-[15px] font-semibold">{m.title}</span>
                         <span className="block truncate text-[12px] text-sub">{m.sub}</span>
@@ -111,7 +114,7 @@ export default function TodaySchedule() {
             return (
               <li key={s.id}>
                 <Link to="/reserve?tab=program" className="flex items-baseline gap-4 border-t hairline py-3.5 first:border-t-0">
-                  <span className={`tnum min-w-[3.4em] shrink-0 font-extrabold ${PROGRAM_TIME_TBD ? 'text-[12px] text-sub' : 'text-[17px] text-ink'}`}>{PROGRAM_TIME_TBD ? '시간 협의중' : fmtTime(s.starts_at)}</span>
+                  <span className={`tnum min-w-[3.4em] shrink-0 font-extrabold ${timeTbd(p) ? 'text-[12px] text-sub' : 'text-[17px] text-ink'}`}>{timeTbd(p) ? '시간 협의중' : fmtTime(s.starts_at)}</span>
                   <span className="min-w-0 flex-1 truncate text-[15px] font-semibold">{p?.title}</span>
                   <span className={`tnum shrink-0 text-[12px] font-bold ${booked ? 'text-deep' : left ? 'text-deep' : 'text-gray-400'}`}>{booked ? '내 예약' : left ? `${left}석` : '마감'}</span>
                 </Link>

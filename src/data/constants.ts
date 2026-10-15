@@ -8,9 +8,11 @@ export const programBookingOpen = () => Date.now() >= Date.parse(PROGRAM_BOOKING
 
 /** 프로그램 시간대 확정 전: 회차 시각 대신 '시간 협의중' 으로 표시. 확정되면 false 로 */
 export const PROGRAM_TIME_TBD = true
+/** 이 프로그램의 시각이 아직 미정인가 — DB programs.time_confirmed 가 켜진 프로그램은 실제 시각을 보여준다 */
+export const timeTbd = (p?: { time_confirmed?: boolean } | null) => PROGRAM_TIME_TBD && !p?.time_confirmed
 /** 회차 시각 표시 (확정 전엔 '시간 협의중', 같은 날 여러 회차면 'n회차') */
-export const sessionLabel = (iso: string, idx?: number, total?: number) =>
-  PROGRAM_TIME_TBD ? (total && total > 1 && idx !== undefined ? `${idx + 1}회차` : '시간 협의중') : fmtTime(iso)
+export const sessionLabel = (iso: string, idx?: number, total?: number, p?: { time_confirmed?: boolean } | null) =>
+  timeTbd(p) ? (total && total > 1 && idx !== undefined ? `${idx + 1}회차` : '시간 협의중') : fmtTime(iso)
 
 export const EVENT_DAYS = ['2026-11-06', '2026-11-07', '2026-11-08'] as const
 export const SPOTS: SpotTag[] = ['일주문', '대웅전 계단', '차밭 능선', '불일폭포']
