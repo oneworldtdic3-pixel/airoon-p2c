@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useApp } from '../../data/AppProvider'
-import { EVENT_DAYS, MEALS, PROGRAM_TIME_TBD, mealTag, sessionLabel } from '../../data/constants'
+import { EVENT_DAYS, MEALS, PROGRAM_BOOKING_LABEL, PROGRAM_TIME_TBD, mealTag, programBookingOpen, sessionLabel } from '../../data/constants'
 import { dayKey, fmtDay, fmtTime } from '../../lib/format'
 import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { BottomSheet, Chip, Tag } from '../ui'
@@ -9,7 +9,7 @@ import QrTicket from './QrTicket'
 import type { Booking, Program } from '../../data/types'
 
 export default function ProgramList({ toast }: { toast: (m: string) => void }) {
-  const { programs, sessions, bookings, bookSession, cancelBooking } = useApp()
+  const { user, programs, sessions, bookings, bookSession, cancelBooking } = useApp()
   const requireAuth = useRequireAuth()
   const [day, setDay] = useState<string>(EVENT_DAYS[0])
   const [open, setOpen] = useState<Program | null>(null)
@@ -27,6 +27,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
   const DAILY_MAX = 3 // 1인당 하루 프로그램 예약 상한 (DB book_session 과 동일)
   const myToday = mine.filter((b) => { const s = sessions.find((x) => x.id === b.session_id); return s && dayKey(s.starts_at) === day })
   const atLimit = myToday.length >= DAILY_MAX
+  const bookingOpen = programBookingOpen() || !!user?.is_admin
   const bookedProgramIds = new Set(mine.map((b) => sessions.find((x) => x.id === b.session_id)?.program_id))
   const bookingOf = (sid: string) => mine.find((b) => b.session_id === sid)
 
@@ -95,7 +96,12 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
         </section>
       )}
 
-      {PROGRAM_TIME_TBD && <p className="mb-3 rounded-tile bg-sun/30 px-4 py-2.5 text-[12.5px] font-semibold text-ink">프로그램 시간대는 협의 중입니다. 날짜별로 먼저 예약해 두시면, 시간이 확정되는 대로 알림으로 안내해 드립니다.</p>}
+      {!bookingOpen ? (
+        <div className="mb-3 rounded-tile bg-sun/40 px-4 py-3">
+          <p className="text-[14px] font-extrabold">프로그램 예약은 {PROGRAM_BOOKING_LABEL}부터 가능합니다</p>
+          <p className="mt-1 text-[12.5px] leading-relaxed text-ink/80">티켓 판매가 마감된 뒤 예약을 엽니다. 지금은 프로그램 내용을 미리 보실 수 있고, 오픈되면 알림으로 안내해 드립니다.{PROGRAM_TIME_TBD && ' 프로그램 시간대는 협의 중입니다.'}</p>
+        </div>
+      ) : PROGRAM_TIME_TBD && <p className="mb-3 rounded-tile bg-sun/30 px-4 py-2.5 text-[12.5px] font-semibold text-ink">프로그램 시간대는 협의 중입니다. 날짜별로 먼저 예약해 두시면, 시간이 확정되는 대로 알림으로 안내해 드립니다.</p>}
       <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5">
         {EVENT_DAYS.map((d, i) => <Chip key={d} active={day === d} onClick={() => setDay(d)}>{i + 1}일차 · 11.{Number(d.slice(-2))}</Chip>)}
       </div>
@@ -175,8 +181,8 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
                         <button type="button" onClick={() => void cancel(mineB, open.title, `${fmtDay(s.starts_at)} ${when}`)} className="px-2 py-1 text-[12px] font-semibold text-sub underline underline-offset-2">취소하기</button>
                       </span>
                     ) : (
-                      <button type="button" disabled={left === 0 || atLimit || bookedProgramIds.has(open.id)} onClick={() => book(s.id)} className="btn !px-5 !py-2.5 !text-[14px]">
-                        {left === 0 ? '마감' : bookedProgramIds.has(open.id) ? '다른 회차 예약됨' : atLimit ? '하루 3개 초과' : '예약하기'}
+                      <button type="button" disabled={!bookingOpen || left === 0 || atLimit || bookedProgramIds.has(open.id)} onClick={() => book(s.id)} className="btn !px-5 !py-2.5 !text-[14px]">
+                        {!bookingOpen ? `${PROGRAM_BOOKING_LABEL} 오픈` : left === 0 ? '마감' : bookedProgramIds.has(open.id) ? '다른 회차 예약됨' : atLimit ? '하루 3개 초과' : '예약하기'}
                       </button>
                     )}
                   </li>

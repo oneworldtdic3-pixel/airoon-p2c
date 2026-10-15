@@ -1,6 +1,11 @@
 import type { SpotTag } from './types'
 import { fmtTime } from '../lib/format'
 
+/** 프로그램 예약 오픈 시각 — 티켓 판매 마감 후 10월 말. DB program_booking_opens_at() 과 같은 값 */
+export const PROGRAM_BOOKING_OPENS = '2026-10-31T00:00:00+09:00'
+export const PROGRAM_BOOKING_LABEL = '10월 말'
+export const programBookingOpen = () => Date.now() >= Date.parse(PROGRAM_BOOKING_OPENS)
+
 /** 프로그램 시간대 확정 전: 회차 시각 대신 '시간 협의중' 으로 표시. 확정되면 false 로 */
 export const PROGRAM_TIME_TBD = true
 /** 회차 시각 표시 (확정 전엔 '시간 협의중', 같은 날 여러 회차면 'n회차') */

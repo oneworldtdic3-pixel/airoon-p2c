@@ -6,6 +6,7 @@ const MESSAGES: Record<string, string> = {
   PROGRAM_DAILY_LIMIT: '프로그램은 1인당 하루 3개까지 예약할 수 있습니다',
   PROGRAM_OVERLAP: '이미 예약한 프로그램과 시간이 겹칩니다',
   SESSION_FULL: '마감된 회차입니다',
+  BOOKING_NOT_OPEN: '프로그램 예약은 10월 말부터 가능합니다',
   BOOKING_NOT_FOUND: '예약을 찾을 수 없습니다',
   SLOT_NOT_FOUND: '슬롯을 찾을 수 없습니다',
   SLOT_FULL: '마감된 슬롯입니다',
