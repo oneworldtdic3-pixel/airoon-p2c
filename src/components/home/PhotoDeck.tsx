@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useApp } from '../../data/AppProvider'
 import Icon from '../ui/Icon'
 import { openExternal } from '../../lib/external'
+import { TICKETS } from './TicketFab'
 
 type Card =
   | { kind: 'event'; id: string; url: string; full?: boolean; link?: string }
@@ -14,8 +15,6 @@ const Arrow = () => (
 )
 
 /** BEST PHOTO 1장 + 광고 배너 2장 이상을 겹친 카드 덱. 손가락을 따라오는 가로 스와이프, 3.5초 자동 전환(조작 후 8초간 멈춤) */
-const TICKET_URL = 'https://naver.me/Ghwqi86o'
-
 export default function PhotoDeck() {
   const { photos, banners } = useApp()
   const nav = useNavigate()
@@ -25,7 +24,7 @@ export default function PhotoDeck() {
     const ads: Card[] = banners.map((b) => ({ kind: 'ad', id: b.id, url: b.image, sponsor: b.sponsor, title: b.title, sub: b.sub, link: b.link, bg: b.bg, full: !b.image_path.startsWith('seed:') }))
     const events: Card[] = [
       // 정사각 포스터 카드 → 네이버 티켓 구매 페이지(새 창). 세로 포스터 카드 → 기획의도
-      { kind: 'event', id: 'poster', url: '/poster-square.jpg', link: TICKET_URL },
+      { kind: 'event', id: 'poster', url: '/poster-square.jpg', link: TICKETS.hanok.url },
       { kind: 'event', id: 'poster-full', url: '/poster-card.jpg', full: true },
     ]
     return best ? [events[0], { kind: 'photo', id: best.id, url: best.url, spot: best.spot_tag, nickname: best.nickname, likes: best.likes_count }, events[1], ...ads] : [...events, ...ads]
@@ -158,7 +157,7 @@ export default function PhotoDeck() {
                   <p className="text-[12px] font-semibold tracking-wide opacity-85">2026 산사에서 즐기는 마인드 디톡스</p>
                   <p className="mt-0.5 whitespace-nowrap text-[16px] font-extrabold leading-tight">11.06 FRI – 11.08 SUN</p>
                   <p className="mt-1 text-[12px] opacity-80">하동 쌍계사 일원 · 700명 한정</p>
-                  {c.link && <p className="mt-2 inline-flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1 text-[11.5px] font-extrabold">티켓 구매하기 →</p>}
+                  {c.link && <p className="mt-2 inline-flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1 text-[11.5px] font-extrabold">한옥 예매하기 →</p>}
                 </div>
               ) : c.kind === 'photo' ? (
                 <div>
@@ -172,7 +171,7 @@ export default function PhotoDeck() {
                   <p className="mt-1 text-[12px] opacity-80">{c.sub}</p>
                 </div>
               )}
-              <button onClick={(e) => { e.stopPropagation(); go() }} aria-label={c.kind === 'photo' ? '포토 전체 보기' : c.kind === 'ad' ? `${c.sponsor} 자세히` : c.kind === 'event' && c.link ? '티켓 구매하기 (새 창)' : '기획의도 보기'} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-ink transition active:scale-90"><Arrow /></button>
+              <button onClick={(e) => { e.stopPropagation(); go() }} aria-label={c.kind === 'photo' ? '포토 전체 보기' : c.kind === 'ad' ? `${c.sponsor} 자세히` : c.kind === 'event' && c.link ? '한옥 예매하기 (새 창)' : '기획의도 보기'} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-ink transition active:scale-90"><Arrow /></button>
             </div>
           </article>
         )

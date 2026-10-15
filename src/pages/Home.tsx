@@ -6,6 +6,7 @@ import SponsorStrip from '../components/home/SponsorStrip'
 import InstallStrip from '../components/home/InstallStrip'
 import LivePhotos from '../components/home/LivePhotos'
 import ArtistTeaser from '../components/home/ArtistTeaser'
+import TicketFab from '../components/home/TicketFab'
 
 export default function Home() {
   return (
@@ -18,7 +19,8 @@ export default function Home() {
       <TodaySchedule />
       <LivePhotos />
       <SponsorStrip />
-      <div className="h-6" />
+      <div className="h-28" />
+      <TicketFab />
     </>
   )
 }
