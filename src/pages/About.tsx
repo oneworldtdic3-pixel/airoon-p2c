@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import Icon from '../components/ui/Icon'
 import SponsorStrip from '../components/home/SponsorStrip'
+import { PROGRAM_BOOKING_LABEL, programBookingOpen } from '../data/constants'
 
 // 기획의도 · WHY SANSA CAMP — 운영팀 기획 페이지(PDF)를 9조각 이미지로. 마지막 CTA·주최/후원은 앱에서 직접 그린다(링크·최신 목록 반영).
 const PARTS = Array.from({ length: 9 }, (_, i) => `/about/p${i + 1}.jpg`)
@@ -24,7 +25,8 @@ export default function About() {
           <h2 className="text-[30px] font-extrabold leading-[1.2]">비우러 와서,<br />채워 가세요</h2>
           <p className="tnum mt-5 text-[14px] font-bold">2026. 11. 6(금) 14:00 – 11. 8(일) 11:00</p>
           <p className="mt-1 text-[13.5px] font-semibold text-ink/80">하동 쌍계사 일원 · 700명 한정</p>
-          <Link to="/reserve?tab=program" className="mt-7 inline-flex items-center justify-center rounded-full bg-ember px-8 py-3.5 text-[15px] font-extrabold text-white shadow-[0_8px_20px_rgba(240,85,42,0.35)] transition active:scale-[0.97]">프로그램 사전예약하기</Link>
+          <Link to="/reserve?tab=program" className="mt-7 inline-flex items-center justify-center rounded-full bg-ember px-8 py-3.5 text-[15px] font-extrabold text-white shadow-[0_8px_20px_rgba(240,85,42,0.35)] transition active:scale-[0.97]">{programBookingOpen() ? '프로그램 사전예약하기' : '프로그램 미리 보기'}</Link>
+          {!programBookingOpen() && <p className="mt-3 text-[12.5px] font-bold text-ink/75">프로그램 예약은 {PROGRAM_BOOKING_LABEL}부터 가능합니다</p>}
         </section>
         <div className="pb-[calc(env(safe-area-inset-bottom)+24px)]"><SponsorStrip /></div>
       </div>
