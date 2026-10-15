@@ -349,6 +349,22 @@ ul.star li::before{content:"☆";position:absolute;left:0;color:#b24a1c;font-wei
 .resv-list li{padding:4px 0;line-height:1.55}
 .resv-list li::marker{font-weight:900;color:#a63d2c}
 .resv-note{margin-top:12px;padding-top:10px;border-top:1.5px dashed var(--line);font-size:13.5px;font-weight:700;color:var(--mute)}
+.hv{margin:6px -20px 10px;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+.hv-ph{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:260px 170px;gap:6px;padding:6px;background:var(--ink)}
+.hv-ph figure{position:relative;margin:0;overflow:hidden}
+.hv-ph .h1{grid-column:1/3}
+.hv-ph img{width:100%;height:100%;object-fit:cover;display:block}
+.hv-ph figcaption{position:absolute;left:8px;bottom:8px;background:rgba(20,16,13,.78);color:#f8f2e5;font-size:12.5px;font-weight:700;padding:3px 9px;border-radius:3px}
+.hv-why{background:#f6ead0;padding:18px 20px 16px}
+.hv-q{font:400 22px/1.3 'Black Han Sans'}
+.hv-q b{color:#a63d2c}
+.hv-per{display:inline-block;margin:6px 0 12px;background:var(--ink);color:#f0cf7c;font-size:13.5px;font-weight:700;padding:4px 12px;border-radius:99px}
+.hv-per b{font-family:'IBM Plex Mono'}
+.hv-why ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hv-why li{display:flex;gap:10px;align-items:flex-start;background:#fbf7ee;border:2px solid var(--ink);border-radius:6px;padding:10px 12px}
+.hv-why li .ic{flex:none;width:34px;height:34px}
+.hv-why li b{display:block;font-size:14.5px;font-weight:900}
+.hv-why li span{font-size:12.5px;color:var(--mute);line-height:1.45}
 /*MAPCSS*/
 /* 행사장 안내도 */
 #map{background:var(--paper)}
@@ -374,7 +390,7 @@ ul.star li::before{content:"☆";position:absolute;left:0;color:#b24a1c;font-wei
 .zone .n{font:700 28px 'IBM Plex Mono';padding:10px 12px 0}
 .zone .n small{font:900 14px 'Noto Sans KR'}
 .zone p{padding:2px 12px 12px;font-size:12.5px;color:var(--mute);line-height:1.5}
-@media(max-width:480px){.resv-top{grid-template-columns:1fr}.legend2,.zones,.dist{grid-template-columns:1fr}h2{font-size:31px}#hero h1{font-size:48px}.duo,.pics{grid-template-columns:1fr}.spec{grid-template-columns:1fr}table{font-size:12px}}
+@media(max-width:480px){.hv-why ul{grid-template-columns:1fr}.resv-top{grid-template-columns:1fr}.legend2,.zones,.dist{grid-template-columns:1fr}h2{font-size:31px}#hero h1{font-size:48px}.duo,.pics{grid-template-columns:1fr}.spec{grid-template-columns:1fr}table{font-size:12px}}
 </style>
 </head>
 <body>
@@ -510,6 +526,23 @@ ul.star li::before{content:"☆";position:absolute;left:0;color:#b24a1c;font-wei
     <header><h3><svg class="ic" style="--fc:#c8973b;--sc:#d7c19b" aria-hidden="true"><use href="#i-hanok"/></svg>한옥 방사 스테이</h3><small>Hanok Stay</small></header>
     <div class="in">
       <p class="fine" style="margin:10px 0 4px">전통 한옥의 고즈넉한 온돌방에서 머무는 템플스테이형 객실</p>
+      <div class="hv">
+        <div class="hv-ph">
+          <figure class="h1"><img src="photos/hanok-court.jpg" alt="지리산 능선이 보이는 한옥 방사 마당"><figcaption>지리산 능선이 보이는 한옥 마당</figcaption></figure>
+          <figure class="h2"><img src="photos/hanok-gate.jpg" alt="차나무가 있는 한옥 대문"><figcaption>차나무가 반기는 한옥 대문</figcaption></figure>
+          <figure class="h3"><img src="photos/hanok-hall.jpg" alt="쌍계사 숲 옆 방사 건물"><figcaption>숲과 계곡을 품은 방사</figcaption></figure>
+        </div>
+        <div class="hv-why">
+          <p class="hv-q">2인실 <b>500,000원</b>, 이렇게 구성돼요</p>
+          <p class="hv-per">1인 <b>250,000원</b> · 2박 3일 기준</p>
+          <ul>
+            <li><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-hanok"/></svg><span><b>전통 한옥 온돌방 2박</b>텐트·장비 준비 없이 지붕 아래에서 편히</span></li>
+            <li><svg class="ic" style="--fc:#c8973b" aria-hidden="true"><use href="#i-bowl"/></svg><span><b>사찰공양 5식 × 2인</b>2박 3일 모든 끼니 포함</span></li>
+            <li><svg class="ic" style="--fc:#5f8a6b" aria-hidden="true"><use href="#i-lotus"/></svg><span><b>9대 프로그램 전체 참여</b>현장 추가 결제 0원</span></li>
+            <li><svg class="ic" style="--fc:#c0503a" aria-hidden="true"><use href="#i-gift"/></svg><span><b>웰컴 기프트 키트 × 2인</b>산사캠프 한정판 굿즈팩</span></li>
+          </ul>
+        </div>
+      </div>
       <div class="row"><span>2인실<small class="rn">2인 기준</small></span><span class="p">500,000<small>원</small></span></div>
       <div class="row"><span>3인실<small class="rn">3인 기준</small></span><span class="p">700,000<small>원</small></span></div>
       <div class="row"><span>4인실<small class="rn">4인 기준</small></span><span class="p">900,000<small>원</small></span></div>
