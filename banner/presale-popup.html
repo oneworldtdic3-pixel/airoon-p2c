@@ -6,15 +6,18 @@
 <title>프로그램 사전예약 안내</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
+  /* 산사캠프 포스터 팔레트 */
   :root {
-    --paper: #f5efe4;
-    --ink: #2b2a26;
-    --ink-soft: #5d5a52;
-    --pine: #3f5a4a;
+    --sky: #55bfe8;
+    --green: #2ea35a;
+    --green-light: #49b56c;
+    --orange: #e8521f;
+    --yellow: #f0e83a;
+    --line: #111;
+    --white: #fff;
     --naver: #03c75a;
-    --sun: #d9774b;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background: #d9d4ca; }
@@ -23,7 +26,7 @@
     display: grid;
     place-items: center;
     font-family: "Noto Sans KR", sans-serif;
-    color: var(--ink);
+    color: var(--line);
     -webkit-font-smoothing: antialiased;
   }
 
@@ -32,115 +35,166 @@
     width: 600px;
     height: 750px;
     overflow: hidden;
-    background: radial-gradient(120% 80% at 50% 0%, #fbf7ef 0%, var(--paper) 60%, #ece3d3 100%);
+    background: var(--sky);
   }
+  .art { position: absolute; inset: 0; width: 100%; height: 100%; }
 
-  .scenery { position: absolute; inset: auto 0 0 0; width: 100%; height: 330px; }
-
-  .content {
-    position: relative;
-    z-index: 1;
-    padding: 92px 40px 0;
+  .head {
+    position: absolute;
+    top: 100px; left: 0; right: 0;
     text-align: center;
   }
-
-
-  h1 {
-    font-family: "Noto Serif KR", serif;
+  .head .sub {
+    font-size: 17px;
     font-weight: 900;
-    font-size: 46px;
-    line-height: 1.22;
-    letter-spacing: -.02em;
+    letter-spacing: -.01em;
   }
-  h1 em { font-style: normal; color: var(--pine); }
-
-  .rule {
-    width: 36px; height: 2px;
-    margin: 26px auto;
-    background: var(--ink);
-    opacity: .5;
+  h1 {
+    margin-top: 8px;
+    font-family: "Black Han Sans", sans-serif;
+    font-weight: 400;
+    font-size: 54px;
+    line-height: 1.12;
+    letter-spacing: -.01em;
   }
+  h1 em { font-style: normal; color: var(--orange); }
 
+  .card {
+    position: absolute;
+    top: 352px; left: 44px; right: 44px;
+    padding: 26px 20px;
+    background: var(--white);
+    border: 3px solid var(--line);
+    border-radius: 20px;
+    box-shadow: 6px 6px 0 var(--line);
+    text-align: center;
+  }
   .message {
     font-size: 19px;
-    line-height: 1.75;
-    color: var(--ink-soft);
+    font-weight: 500;
+    line-height: 1.8;
     word-break: keep-all;
   }
-  .message strong { color: var(--ink); font-weight: 700; }
+  .message strong { font-weight: 900; }
   .message .hl {
-    background: linear-gradient(transparent 62%, rgba(3, 199, 90, .22) 62%);
-    padding: 0 2px;
+    background: linear-gradient(transparent 55%, var(--yellow) 55%);
+    padding: 0 3px;
   }
 
   .steps {
+    position: absolute;
+    top: 560px; left: 0; right: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
-    margin-top: 34px;
+    gap: 6px;
   }
   .step {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 13px;
-    background: rgba(255, 255, 255, .7);
-    border: 1px solid rgba(43, 42, 38, .1);
-    border-radius: 12px;
+    gap: 7px;
+    padding: 8px 12px 8px 8px;
+    background: var(--white);
+    border: 2.5px solid var(--line);
+    border-radius: 999px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 700;
     white-space: nowrap;
   }
   .step b {
     display: grid;
     place-items: center;
-    width: 20px; height: 20px;
+    width: 22px; height: 22px;
+    border: 2px solid var(--line);
     border-radius: 50%;
-    background: var(--pine);
-    color: #fff;
+    color: var(--white);
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 900;
   }
-  .step.naver b { background: var(--naver); }
-  .arrow { color: var(--ink-soft); opacity: .6; font-size: 14px; }
+  .step.s1 b { background: var(--naver); }
+  .step.s2 b { background: var(--orange); }
+  .step.s3 b { background: var(--sky); }
+  .arrow { color: var(--white); font-size: 18px; font-weight: 900; -webkit-text-stroke: 1px var(--line); }
 
   .note {
     position: absolute;
-    z-index: 1;
-    left: 0; right: 0; bottom: 26px;
+    left: 0; right: 0; bottom: 30px;
     text-align: center;
     font-size: 13px;
-    color: rgba(255, 255, 255, .85);
-    letter-spacing: .02em;
+    font-weight: 700;
+    color: var(--white);
   }
 </style>
 </head>
 <body>
   <div class="banner" role="img" aria-label="프로그램 사전예약 안내: 네이버에서 티켓을 구매하신 고객님에 한해 산사캠프 전용 앱을 통해 사전 프로그램 예약이 가능합니다.">
-    <svg class="scenery" viewBox="0 0 600 330" preserveAspectRatio="none" aria-hidden="true">
-      <circle cx="455" cy="120" r="34" fill="#d9774b" opacity=".85"/>
-      <path d="M0 170 C70 130 120 120 180 150 C230 175 270 110 340 100 C410 92 460 150 520 140 C560 133 585 120 600 115 L600 330 L0 330 Z" fill="#c9cdbd"/>
-      <path d="M0 210 C60 185 110 160 170 175 C240 192 280 150 350 155 C420 160 470 200 540 190 C570 186 590 178 600 175 L600 330 L0 330 Z" fill="#6f8a77"/>
-      <path d="M0 255 C80 230 150 215 230 232 C300 247 360 225 430 228 C500 231 555 250 600 245 L600 330 L0 330 Z" fill="#3f5a4a"/>
-      <path d="M0 290 C100 275 200 268 300 278 C400 288 500 280 600 272 L600 330 L0 330 Z" fill="#2c4337"/>
+    <svg class="art" viewBox="0 0 600 750" aria-hidden="true">
+      <defs>
+        <pattern id="dots" width="7" height="7" patternUnits="userSpaceOnUse">
+          <circle cx="3.5" cy="3.5" r="1.4" fill="#111" opacity=".28"/>
+        </pattern>
+        <g id="cloud">
+          <circle cx="105" cy="200" r="68"/>
+          <circle cx="185" cy="135" r="80"/>
+          <circle cx="300" cy="108" r="96"/>
+          <circle cx="415" cy="135" r="80"/>
+          <circle cx="495" cy="200" r="68"/>
+          <circle cx="200" cy="232" r="72"/>
+          <circle cx="300" cy="238" r="80"/>
+          <circle cx="400" cy="232" r="72"/>
+        </g>
+      </defs>
+
+      <!-- 해 -->
+      <circle cx="540" cy="58" r="52" fill="#e8521f" stroke="#111" stroke-width="4"/>
+
+      <!-- 뒷산 -->
+      <path d="M-10 360 L90 285 L160 320 L250 255 L340 315 L420 265 L520 320 L610 290 L610 760 L-10 760 Z"
+            fill="#49b56c" stroke="#111" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M-10 360 L90 285 L160 320 L250 255 L340 315 L420 265 L520 320 L610 290 L610 760 L-10 760 Z" fill="url(#dots)"/>
+
+      <!-- 앞 잔디 -->
+      <path d="M-10 470 C120 450 220 462 300 468 C390 474 500 452 610 462 L610 760 L-10 760 Z"
+            fill="#2ea35a" stroke="#111" stroke-width="4"/>
+      <path d="M-10 470 C120 450 220 462 300 468 C390 474 500 452 610 462 L610 760 L-10 760 Z" fill="url(#dots)"/>
+
+      <!-- 단풍 덤불 -->
+      <path d="M-10 760 L-10 668 C5 640 45 632 65 652 C85 628 125 636 132 668 C150 662 168 690 160 760 Z"
+            fill="#e8521f" stroke="#111" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M610 760 L610 662 C595 636 560 630 540 650 C520 628 482 638 476 668 C458 664 442 692 450 760 Z"
+            fill="#e8521f" stroke="#111" stroke-width="4" stroke-linejoin="round"/>
+
+      <!-- 풀 -->
+      <g fill="none" stroke="#111" stroke-width="3" stroke-linecap="round">
+        <path d="M200 670 l-6 -16 M208 670 l0 -20 M216 670 l6 -16"/>
+        <path d="M390 660 l-6 -16 M398 660 l0 -20 M406 660 l6 -16"/>
+        
+      </g>
+
+      <!-- 구름: 외곽선 → 흰 면 -->
+      <use href="#cloud" fill="#111" stroke="#111" stroke-width="8"/>
+      <use href="#cloud" fill="#fff"/>
     </svg>
 
-    <div class="content">
+    <div class="head">
+      <p class="sub">산사캠프 with 쌍계사</p>
       <h1>프로그램<br><em>사전예약</em> 안내</h1>
-      <div class="rule"></div>
+    </div>
+
+    <div class="card">
       <p class="message">
         <strong class="hl">네이버에서 티켓을 구매하신 고객님</strong>에 한해<br>
         <strong>산사캠프 전용 앱</strong>을 통해<br>
         사전 프로그램 예약이 가능합니다.
       </p>
-      <div class="steps" aria-hidden="true">
-        <span class="step naver"><b>1</b>네이버 티켓 구매</span>
-        <span class="arrow">›</span>
-        <span class="step"><b>2</b>전용 앱 접속</span>
-        <span class="arrow">›</span>
-        <span class="step"><b>3</b>프로그램 예약</span>
-      </div>
+    </div>
+
+    <div class="steps" aria-hidden="true">
+      <span class="step s1"><b>1</b>네이버 티켓 구매</span>
+      <span class="arrow">›</span>
+      <span class="step s2"><b>2</b>전용 앱 접속</span>
+      <span class="arrow">›</span>
+      <span class="step s3"><b>3</b>프로그램 예약</span>
     </div>
 
     <p class="note">※ 네이버 티켓 구매 고객 전용 서비스입니다.</p>
