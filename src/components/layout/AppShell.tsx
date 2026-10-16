@@ -1,4 +1,7 @@
+import { useEffect } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { useApp } from '../../data/AppProvider'
+import { syncPush } from '../../lib/push'
 import Icon from '../ui/Icon'
 import { NicknamePrompt } from '../NicknameSheet'
 
@@ -12,6 +15,9 @@ const tabs = [
 
 export default function AppShell() {
   const { pathname } = useLocation()
+  const { user } = useApp()
+  // 알림을 켠 기기는 로그인 계정이 바뀌면 그 계정에 다시 묶는다 (예약 리마인드 대상)
+  useEffect(() => { void syncPush() }, [user?.id])
   const hideTabs = pathname === '/login' || pathname.startsWith('/admin') || pathname === '/privacy' || pathname === '/terms' || pathname.startsWith('/sponsor/') || pathname === '/about' || pathname === '/go'
   return (
     <div className="mx-auto min-h-dvh w-full max-w-[430px] overflow-x-clip bg-white">

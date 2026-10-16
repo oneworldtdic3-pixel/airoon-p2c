@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import PageHeader from '../components/layout/PageHeader'
 import Icon from '../components/ui/Icon'
@@ -6,6 +7,10 @@ import { MoktakGlyph } from '../components/illust'
 import { useApp } from '../data/AppProvider'
 import { timeAgo } from '../lib/format'
 import { useRequireAuth } from '../hooks/useRequireAuth'
+import { useToast } from '../hooks/useToast'
+import { Toast } from '../components/ui'
+import InstallSheet from '../components/InstallSheet'
+import { clearAppBadge, disablePush, enablePush, getPushState, testPush, type PushState } from '../lib/push'
 
 const label: Record<string, string> = { booth: '잔여석', luckydraw: '럭키드로우', reminder: '리마인드', market: '산사장터', notice: '안내' }
 // 알림 종류별 바로 가기: 프로그램 관련(잔여석·리마인드)은 예약 탭으로, 럭키드로우는 더보기로
@@ -18,10 +23,50 @@ const shortcut: Record<string, { to: string; label: string } | undefined> = {
 export default function Notifications() {
   const { notifications, consent, setConsent } = useApp()
   const requireAuth = useRequireAuth()
+  const { msg, show } = useToast()
+  const [push, setPush] = useState<PushState | null>(null)
+  const [busy, setBusy] = useState(false)
+  const [installOpen, setInstallOpen] = useState(false)
+  useEffect(() => { clearAppBadge(); void getPushState().then(setPush) }, [])
+  const togglePush = async (on: boolean) => {
+    setBusy(true)
+    if (on) {
+      const r = await enablePush()
+      if (r.ok) show('알림을 켰습니다. 잠시 뒤 테스트 알림이 옵니다')
+      else show(r.error)
+    } else {
+      await disablePush()
+      show('이 기기의 알림을 껐습니다')
+    }
+    setPush(await getPushState())
+    setBusy(false)
+  }
+  const pushSub: Record<PushState, string> = {
+    on: '이 기기로 운영 공지와 예약 10분 전 안내를 보내 드려요.',
+    off: '휴대폰 상단에 바로 알림이 떠요. 무료이고, 언제든 끌 수 있어요.',
+    denied: '알림이 차단되어 있어요. 휴대폰·브라우저 설정에서 sansacamp.com 알림을 허용해 주세요.',
+    'ios-install': '아이폰은 홈 화면에 추가한 산사캠프 앱에서 알림을 켤 수 있어요.',
+    unsupported: '이 브라우저는 알림을 지원하지 않아요. Chrome이나 Safari에서 열어 주세요.',
+  }
   return (
     <>
       <PageHeader eyebrow="실시간" title="알림" glyph={<MoktakGlyph className="w-12" />} />
       <div className="px-5 pb-6">
+        {push && (
+          <div className="mb-3 rounded-tile border-2 border-deep/20 bg-white px-4 py-3.5">
+            <div className="flex items-center gap-4">
+              <div className="min-w-0 flex-1">
+                <p className="text-[14px] font-bold">휴대폰 알림 받기</p>
+                <p className="mt-0.5 text-[12px] leading-snug text-sub">{pushSub[push]}</p>
+              </div>
+              {(push === 'on' || push === 'off') && <Toggle on={push === 'on'} label="휴대폰 알림 받기" onChange={(v) => { if (!busy) void togglePush(v) }} />}
+              {push === 'ios-install' && <button type="button" onClick={() => setInstallOpen(true)} className="btn-ghost shrink-0 !px-3 !py-2 !text-[12.5px]">추가 방법</button>}
+            </div>
+            {push === 'on' && (
+              <button type="button" disabled={busy} onClick={async () => { setBusy(true); show((await testPush()) ? '테스트 알림을 보냈습니다' : '보내지 못했습니다. 알림을 껐다 다시 켜 주세요'); setBusy(false) }} className="mt-2 text-[12px] font-bold text-deep underline underline-offset-2">테스트 알림 보내기</button>
+            )}
+          </div>
+        )}
         <div className="flex items-center gap-4 rounded-tile bg-mint px-4 py-3.5">
           <div className="min-w-0 flex-1">
             <p className="text-[14px] font-bold">카카오 알림톡으로도 받기</p>
@@ -48,6 +93,8 @@ export default function Notifications() {
           ))}
         </ol>
       </div>
+      <InstallSheet open={installOpen} onClose={() => setInstallOpen(false)} />
+      <Toast msg={msg} />
     </>
   )
 }

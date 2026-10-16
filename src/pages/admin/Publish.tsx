@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../../lib/supabase'
 import { useApp } from '../../data/AppProvider'
 import { toMessage } from '../../data/errors'
@@ -15,6 +15,7 @@ export default function Publish({ toast }: { toast: (m: string) => void }) {
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [busy, setBusy] = useState(false)
+  const pushCount = useQuery({ queryKey: ['push-count'], queryFn: async () => (await supabase.rpc('push_subscriber_count')).data as number | null }).data
 
   const remove = async (id: string) => {
     if (!window.confirm('이 알림을 삭제할까요?')) return
@@ -50,7 +51,7 @@ export default function Publish({ toast }: { toast: (m: string) => void }) {
           <textarea id="b" value={body} onChange={(e) => setBody(e.target.value)} rows={3} maxLength={200} placeholder="한두 문장이면 충분합니다" className="field resize-none" />
         </div>
         <button type="submit" disabled={busy || !title.trim()} className="btn w-full">{busy ? '발행 중' : '지금 발행'}</button>
-        <p className="text-[11px] text-gray-400">발행 즉시 모든 참가자의 알림 탭과 홈 상단에 실시간으로 뜹니다. 카카오 알림톡 발송은 추후 연동.</p>
+        <p className="text-[11px] text-gray-400">발행 즉시 모든 참가자의 알림 탭과 홈 상단에 실시간으로 뜨고, 알림을 켠 기기 {pushCount ?? '–'}대에 휴대폰 푸시로도 갑니다. 카카오 알림톡은 템플릿 승인 후 함께 발송됩니다.</p>
       </form>
       <section>
         <h2 className="eyebrow mb-1">최근 발행</h2>
