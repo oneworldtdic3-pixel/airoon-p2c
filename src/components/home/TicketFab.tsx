@@ -24,9 +24,10 @@ const Tent = () => (
 export default function TicketFab() {
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-[calc(88px+env(safe-area-inset-bottom))] z-30 mx-auto flex max-w-[430px] flex-col items-end gap-2.5 px-4" aria-label="문의·예매 바로가기">
-      <button type="button" onClick={() => openExternal(KAKAO_CHANNEL.chat)}
-        className="pointer-events-auto inline-flex items-center gap-2 rounded-full bg-[#FEE500] py-3 pl-4 pr-5 text-[15px] font-extrabold text-[#191919] shadow-[0_10px_24px_rgba(120,100,0,0.28)] ring-1 ring-[#EBD300] transition active:scale-95">
-        <KakaoBubble />카카오 문의하기
+      <button type="button" onClick={() => openExternal(KAKAO_CHANNEL.chat)} aria-label="카카오톡으로 문의하기"
+        className="pointer-events-auto flex h-14 w-14 flex-col items-center justify-center gap-0.5 rounded-full bg-[#FEE500] text-[#191919] shadow-[0_10px_24px_rgba(120,100,0,0.28)] ring-1 ring-[#EBD300] transition active:scale-95">
+        <KakaoBubble />
+        <span className="text-[9.5px] font-extrabold leading-none">문의</span>
       </button>
       <button type="button" onClick={() => openExternal(TICKETS.hanok.url)}
         className="pointer-events-auto inline-flex items-center gap-2 rounded-full bg-[#FBE9D2] py-3 pl-4 pr-5 text-[15px] font-extrabold text-[#7A4A12] shadow-[0_10px_24px_rgba(122,74,18,0.28)] ring-1 ring-[#F1D7B3] transition active:scale-95">
