@@ -8,6 +8,7 @@ import LivePhotos from '../components/home/LivePhotos'
 import ArtistTeaser from '../components/home/ArtistTeaser'
 import TicketFab from '../components/home/TicketFab'
 import HomePopup from '../components/home/HomePopup'
+import PushPrompt from '../components/home/PushPrompt'
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
       <div className="h-44" />
       <TicketFab />
       <HomePopup />
+      <PushPrompt />
     </>
   )
 }
