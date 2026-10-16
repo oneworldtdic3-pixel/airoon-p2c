@@ -9,7 +9,7 @@ self.addEventListener('push', (e) => {
   try { d = e.data ? e.data.json() : {} } catch { d = { body: e.data ? e.data.text() : '' } }
   const show = self.registration.showNotification(d.title || '산사캠프', {
     body: d.body || '',
-    icon: '/icon-192.png',
+    // icon 은 넣지 않는다 — 홈 화면 앱은 왼쪽에 앱 아이콘이 이미 붙어서, 넣으면 오른쪽에 같은 아이콘이 한 번 더 보인다
     badge: '/badge-96.png',
     tag: d.tag || undefined,
     renotify: !!d.tag,
