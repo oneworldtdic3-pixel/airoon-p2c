@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>프로그램 사전예약 안내</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f5efe4;
+    --ink: #2b2a26;
+    --ink-soft: #5d5a52;
+    --pine: #3f5a4a;
+    --naver: #03c75a;
+    --sun: #d9774b;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: #d9d4ca; }
+  body {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    font-family: "Noto Sans KR", sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .banner {
+    position: relative;
+    width: 600px;
+    height: 750px;
+    overflow: hidden;
+    background: radial-gradient(120% 80% at 50% 0%, #fbf7ef 0%, var(--paper) 60%, #ece3d3 100%);
+  }
+
+  .scenery { position: absolute; inset: auto 0 0 0; width: 100%; height: 330px; }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    padding: 64px 40px 0;
+    text-align: center;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    border: 1px solid rgba(63, 90, 74, .35);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .14em;
+    color: var(--pine);
+  }
+  .tag::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--sun);
+  }
+
+  h1 {
+    margin-top: 26px;
+    font-family: "Noto Serif KR", serif;
+    font-weight: 900;
+    font-size: 46px;
+    line-height: 1.22;
+    letter-spacing: -.02em;
+  }
+  h1 em { font-style: normal; color: var(--pine); }
+
+  .rule {
+    width: 36px; height: 2px;
+    margin: 26px auto;
+    background: var(--ink);
+    opacity: .5;
+  }
+
+  .message {
+    font-size: 19px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    word-break: keep-all;
+  }
+  .message strong { color: var(--ink); font-weight: 700; }
+  .message .hl {
+    background: linear-gradient(transparent 62%, rgba(3, 199, 90, .22) 62%);
+    padding: 0 2px;
+  }
+
+  .steps {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 34px;
+  }
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 13px;
+    background: rgba(255, 255, 255, .7);
+    border: 1px solid rgba(43, 42, 38, .1);
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .step b {
+    display: grid;
+    place-items: center;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--pine);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .step.naver b { background: var(--naver); }
+  .arrow { color: var(--ink-soft); opacity: .6; font-size: 14px; }
+
+  .note {
+    position: absolute;
+    z-index: 1;
+    left: 0; right: 0; bottom: 26px;
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255, 255, 255, .85);
+    letter-spacing: .02em;
+  }
+</style>
+</head>
+<body>
+  <div class="banner" role="img" aria-label="프로그램 사전예약 안내: 네이버에서 티켓을 구매하신 고객님에 한해 산사캠프 전용 앱을 통해 사전 프로그램 예약이 가능합니다.">
+    <svg class="scenery" viewBox="0 0 600 330" preserveAspectRatio="none" aria-hidden="true">
+      <circle cx="455" cy="120" r="34" fill="#d9774b" opacity=".85"/>
+      <path d="M0 170 C70 130 120 120 180 150 C230 175 270 110 340 100 C410 92 460 150 520 140 C560 133 585 120 600 115 L600 330 L0 330 Z" fill="#c9cdbd"/>
+      <path d="M0 210 C60 185 110 160 170 175 C240 192 280 150 350 155 C420 160 470 200 540 190 C570 186 590 178 600 175 L600 330 L0 330 Z" fill="#6f8a77"/>
+      <path d="M0 255 C80 230 150 215 230 232 C300 247 360 225 430 228 C500 231 555 250 600 245 L600 330 L0 330 Z" fill="#3f5a4a"/>
+      <path d="M0 290 C100 275 200 268 300 278 C400 288 500 280 600 272 L600 330 L0 330 Z" fill="#2c4337"/>
+    </svg>
+
+    <div class="content">
+      <span class="tag">NOTICE</span>
+      <h1>프로그램<br><em>사전예약</em> 안내</h1>
+      <div class="rule"></div>
+      <p class="message">
+        <strong class="hl">네이버에서 티켓을 구매하신 고객님</strong>에 한해<br>
+        <strong>산사캠프 전용 앱</strong>을 통해<br>
+        사전 프로그램 예약이 가능합니다.
+      </p>
+      <div class="steps" aria-hidden="true">
+        <span class="step naver"><b>1</b>네이버 티켓 구매</span>
+        <span class="arrow">›</span>
+        <span class="step"><b>2</b>전용 앱 접속</span>
+        <span class="arrow">›</span>
+        <span class="step"><b>3</b>프로그램 예약</span>
+      </div>
+    </div>
+
+    <p class="note">※ 네이버 티켓 구매 고객 전용 서비스입니다.</p>
+  </div>
+</body>
+</html>
