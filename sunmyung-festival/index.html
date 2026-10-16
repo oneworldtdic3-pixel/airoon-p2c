@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>마음처방전 상세페이지</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@700&family=Jua&family=Noto+Sans+KR:wght@500;700;900&family=Noto+Serif+KR:wght@900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #56bdea;
+    --cream: #fffdf5;
+    --yellow: #f3ea3a;
+    --green: #2b9953;
+    --sand: #d9b48a;
+    --orange: #e9531d;
+    --brown: #7a4a35;
+    --ink: #111;
+    --sub: #444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: #e9e6dc; }
+  body {
+    width: 860px; margin: 0 auto; background: var(--cream); color: var(--ink);
+    font-family: 'Noto Sans KR', sans-serif; font-weight: 500;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .jua { font-family: 'Jua', sans-serif; font-weight: 400; }
+  .hand { font-family: 'Gaegu', cursive; font-weight: 700; }
+  svg.ic { display: block; overflow: visible; }
+
+  /* 망점 질감: 히어로 일러스트와 같은 인쇄 느낌 */
+  .dots-green {
+    background-color: var(--green);
+    background-image: radial-gradient(rgba(0,0,0,.16) 1.1px, transparent 1.4px);
+    background-size: 5px 5px;
+  }
+  section { position: relative; border-top: 4px solid var(--ink); }
+
+  /* ---------- HERO ---------- */
+  .hero { background: var(--sky); height: 1000px; position: relative; overflow: hidden; border-top: 0; }
+  .hero .art { position: absolute; left: 0; bottom: 0; width: 860px; height: 527px; object-fit: cover; object-position: center top; }
+  .hero .sun { position: absolute; right: 66px; top: 46px; width: 140px; height: 140px; }
+  .hero .cloud { position: absolute; left: 50px; top: 140px; width: 760px; height: 400px; z-index: 2; }
+  .hero .title { position: absolute; left: 0; right: 0; top: 214px; text-align: center; z-index: 3; }
+  .hero .title small { display: block; font-size: 25px; letter-spacing: -.3px; }
+  .hero .title h1 { font-size: 142px; line-height: 1.05; letter-spacing: -2px; font-weight: 400; margin-top: 6px; }
+  .hero .title .hanja { display: block; font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 26px; letter-spacing: 8px; margin-top: 10px; }
+  .hero .tag {
+    position: absolute; left: 152px; bottom: 54px; background: #fff; border: 3px solid var(--ink);
+    padding: 3px 16px 1px; font-size: 25px; transform: rotate(-3deg);
+  }
+
+  /* ---------- INTRO ---------- */
+  .intro { padding: 120px 70px 108px; border-top: 4px solid var(--ink); }
+  .intro .kicker { color: var(--green); font-size: 27px; }
+  .intro h2 { font-size: 52px; line-height: 1.38; margin: 30px 0 46px; font-weight: 400; }
+  .intro p { font-size: 18.5px; line-height: 2.15; color: #333; }
+
+  /* ---------- MAP ---------- */
+  .map { height: 1150px; padding: 60px 0 0; overflow: hidden; }
+  .map h3 { position: relative; z-index: 2; color: #fff; font-size: 54px; padding-left: 70px; font-weight: 400; text-shadow: 0 3px 0 rgba(0,0,0,.18); }
+  .map .road { position: absolute; left: 0; top: 0; }
+  .sign { position: absolute; z-index: 3; }
+  .sign .board {
+    position: relative; display: flex; align-items: center; gap: 12px;
+    background: var(--brown); color: #fff; border: 3.5px solid var(--ink); border-radius: 10px;
+    padding: 12px 24px 10px 14px; font-size: 32px; white-space: nowrap;
+    box-shadow: 4px 5px 0 rgba(0,0,0,.25);
+  }
+  .sign .num {
+    width: 40px; height: 40px; flex: none; border-radius: 50%; background: var(--cream); color: var(--ink);
+    border: 3px solid var(--ink); display: grid; place-items: center; font-size: 24px; line-height: 1; padding-top: 2px;
+  }
+  .sign .post { width: 18px; height: 44px; background: var(--brown); border: 3.5px solid var(--ink); border-top: 0; margin-left: 46px; }
+  .note {
+    position: absolute; z-index: 3; border: 3px solid var(--ink); padding: 14px 18px 10px 18px; font-size: 22px; line-height: 1.55;
+    box-shadow: 3px 4px 0 rgba(0,0,0,.2);
+  }
+  .note .ic { position: absolute; width: 86px; height: 86px; }
+  .landmark { position: absolute; z-index: 1; }
+
+  /* ---------- STOP SECTIONS ---------- */
+  .stop { padding: 104px 62px 110px; }
+  .stop-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 44px; }
+  .stop-head .kicker { font-size: 25px; color: var(--orange); }
+  .stop-head h3 { font-size: 64px; font-weight: 400; margin-top: 10px; line-height: 1.1; }
+  .badge { width: 132px; height: 132px; flex: none; margin-bottom: -6px; margin-right: 4px; }
+
+  .photo {
+    background: #fff; border: 3.5px solid var(--ink); padding: 20px 20px 0; position: relative;
+    box-shadow: 4px 5px 0 rgba(0,0,0,.12);
+  }
+  .photo .ph { display: grid; place-items: center; color: #586f5f; font-size: 17px; font-weight: 700; text-align: center; line-height: 1.6; }
+  .photo .cap { font-size: 22px; padding: 14px 14px 16px; color: var(--ink); }
+  .tape { position: absolute; top: -14px; left: 50%; width: 146px; height: 36px; margin-left: -73px; background: rgba(243,234,58,.88); transform: rotate(1deg); }
+  .tape::after { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 3px; background: rgba(0,0,0,.08); }
+
+  .qa { margin-top: 56px; display: flex; flex-direction: column; gap: 26px; }
+  .q { align-self: flex-start; background: #fff; border: 3px solid var(--ink); border-radius: 22px; padding: 16px 26px 16px 18px; display: flex; gap: 16px; align-items: center; }
+  .q .ic { width: 50px; height: 50px; flex: none; }
+  .q b { display: block; color: var(--green); font-size: 15px; font-weight: 900; }
+  .q strong { display: block; font-family: 'Jua'; font-weight: 400; font-size: 28px; line-height: 1.3; }
+  .q span { display: block; color: var(--sub); font-size: 16px; margin-top: 4px; }
+  .a { align-self: flex-end; background: var(--orange); color: #fff; border: 3px solid var(--ink); border-radius: 22px; padding: 24px 28px; font-size: 27px; line-height: 1.5; }
+
+  .stop.yellow { background: var(--yellow); }
+  .stop.yellow .kicker { color: #b4361d; }
+  .lead { font-size: 19px; line-height: 2.1; margin: -6px 0 56px; }
+
+  .shelf { position: relative; height: 330px; margin: 0 8px; }
+  .shelf .plank { position: absolute; left: 4px; right: 4px; bottom: 0; height: 36px; background: var(--brown); border: 3.5px solid var(--ink); border-radius: 3px; }
+  .jar { position: absolute; bottom: 33px; text-align: center; }
+  .jar svg { display: block; }
+  .jar .lbl { position: absolute; left: 0; right: 0; text-align: center; }
+  .jar .lbl .ic { margin: 0 auto 6px; }
+  .jar .lbl b { display: block; font-family: 'Jua'; font-weight: 400; font-size: 40px; line-height: 1; }
+  .jar .lbl i { display: block; font-style: normal; font-family: 'Gaegu'; font-weight: 700; font-size: 17px; margin-top: 8px; }
+
+  .hwadu { display: flex; gap: 34px; align-items: center; margin: 56px 0 50px; }
+  .hwadu .slip { width: 132px; height: 214px; background: #fff; border: 3.5px solid var(--ink); transform: rotate(-4deg); position: relative; flex: none;
+    display: grid; place-items: center; font-family: 'Jua'; font-size: 30px; line-height: 1.2; text-align: center; padding-top: 6px; }
+  .hwadu .slip::before { content: ''; position: absolute; top: 12px; left: 50%; width: 12px; height: 12px; margin-left: -6px; border: 3px solid var(--ink); border-radius: 50%; }
+  .hwadu p { font-size: 20px; line-height: 1.9; }
+
+  .stop.green { color: #fff; }
+  .stop.green .kicker { color: var(--yellow); }
+  .stop.green h3 { color: #fff; text-shadow: 0 3px 0 rgba(0,0,0,.2); }
+  .card { background: var(--cream); color: var(--ink); border: 3.5px solid var(--ink); border-radius: 22px; padding: 40px 40px 36px; margin-top: 40px; }
+  .card h4 { font-family: 'Jua'; font-weight: 400; font-size: 35px; line-height: 1.5; margin-bottom: 18px; }
+  .card p { font-size: 18.5px; line-height: 2; }
+
+  .stop.sand { background: var(--sand); }
+  .stop.sand .kicker { color: #8a3418; }
+  .duo { display: flex; gap: 28px; align-items: flex-start; margin-top: 4px; }
+  .vow { flex: 1; background: var(--cream); border: 3.5px solid var(--ink); transform: rotate(2deg); padding: 28px 30px 20px; position: relative;
+    background-image: repeating-linear-gradient(transparent 0 45px, #c9bfa3 45px 47px); background-position: 0 66px; }
+  .vow h5 { font-family: 'Jua'; font-weight: 400; font-size: 28px; margin-bottom: 18px; }
+  .vow p { font-family: 'Gaegu'; font-weight: 700; font-size: 20px; height: 47px; }
+  .vow small { display: block; text-align: right; font-size: 13px; color: #666; margin-top: 4px; }
+  .vow .ic { position: absolute; right: -14px; top: -34px; width: 78px; height: 78px; }
+
+  /* ---------- 약봉투 ---------- */
+  .envelope { background: var(--sky); padding: 112px 0 120px; }
+  .envelope h3 { text-align: center; color: #fff; font-size: 52px; font-weight: 400; text-shadow: 0 3px 0 rgba(0,0,0,.2); }
+  .env { position: relative; width: 560px; margin: 56px auto 0; background: #fff; border: 3.5px solid var(--ink); transform: rotate(-1.5deg); padding: 0 0 34px; }
+  .env .flap { height: 40px; background: #f1ecdd; border-bottom: 3px dashed var(--ink); }
+  .env .in { padding: 32px 40px 0; }
+  .env .top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 20px; border-bottom: 7px solid var(--green); }
+  .env .top b { font-family: 'Jua'; font-weight: 400; font-size: 44px; letter-spacing: 22px; }
+  .env .top span { font-family: 'Noto Serif KR'; font-weight: 900; font-size: 20px; letter-spacing: 1px; }
+  .env .row { display: flex; align-items: flex-end; margin-top: 22px; font-size: 18px; font-weight: 700; }
+  .env .row em { width: 108px; font-style: normal; }
+  .env .row span { flex: 1; border-bottom: 2px solid var(--ink); font-family: 'Gaegu'; font-weight: 700; font-size: 21px; padding-bottom: 2px; }
+  .env .dose { margin-top: 36px; font-weight: 700; font-size: 18px; }
+  .env table { width: 100%; border-collapse: collapse; margin-top: 12px; border: 3px solid var(--ink); }
+  .env td { border: 2px solid var(--ink); text-align: center; height: 66px; font-size: 15px; font-weight: 700; vertical-align: top; padding-top: 10px; width: 25%; }
+  .env td.hl { background: var(--yellow); line-height: 1.4; vertical-align: middle; padding-top: 0; }
+  .env .line { text-align: center; margin-top: 22px; font-family: 'Jua'; font-size: 24px; }
+  .seal { position: absolute; z-index: 2; right: -44px; bottom: -48px; width: 132px; height: 132px; transform: rotate(-9deg); mix-blend-mode: multiply; }
+  .envelope .fine { text-align: center; color: var(--ink); font-size: 20px; margin-top: 70px; }
+
+  /* ---------- 참여 안내 ---------- */
+  .info { padding: 110px 62px 116px; }
+  .info h3 { font-size: 52px; font-weight: 400; margin-bottom: 40px; }
+  .info dl { border-top: 4px solid var(--ink); border-bottom: 4px solid var(--ink); }
+  .info .r { display: flex; align-items: center; padding: 20px 0; border-bottom: 2px dashed var(--ink); font-size: 19px; }
+  .info .r:last-child { border-bottom: 0; }
+  .info dt { width: 172px; display: flex; align-items: center; gap: 12px; font-weight: 900; flex: none; }
+  .info dt .ic { width: 32px; height: 32px; }
+  .tip { display: flex; align-items: center; gap: 26px; margin-top: 36px; }
+  .tip img { width: 172px; height: 86px; object-fit: cover; border: 3.5px solid var(--ink); border-radius: 46px; }
+  .tip p { font-size: 20px; line-height: 1.75; color: #333; }
+
+  footer { background: var(--ink); color: #fff; padding: 46px 62px 52px; display: flex; justify-content: space-between; align-items: flex-end; }
+  footer .k { color: var(--yellow); font-size: 18px; font-weight: 700; }
+  footer h6 { font-family: 'Jua'; font-weight: 400; font-size: 34px; margin-top: 4px; }
+  @page { size: 860px 10332px; margin: 0; }
+  footer p { text-align: right; font-size: 15px; font-weight: 700; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     아이콘 세트 · 손그림 잉크 라인 + 단색 면 + 망점
+     규칙: 잉크선 3px(64 그리드) · 팔레트 7색만 사용 · 미세한 손떨림 필터
+     ========================================================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="rough" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="stampInk" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" result="grain"/>
+      <feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.1 1.45" result="mask"/>
+      <feComposite in="SourceGraphic" in2="mask" operator="in" result="speckled"/>
+      <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="2" result="w"/>
+      <feDisplacementMap in="speckled" in2="w" scale="3"/>
+    </filter>
+    <pattern id="dots" width="4.2" height="4.2" patternUnits="userSpaceOnUse">
+      <circle cx="2.1" cy="2.1" r="1" fill="#111" opacity=".42"/>
+    </pattern>
+    <pattern id="dotsL" width="6" height="6" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="1.35" fill="#111" opacity=".35"/>
+    </pattern>
+
+    <!-- 1. 문진표 : 마음처방소 -->
+    <symbol id="i-munjin" viewBox="0 0 64 64">
+      <g stroke="#111" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M13.5 12.6Q13.2 9.6 16.2 9.5L47.2 8.7Q50.3 8.7 50.4 11.8L51.1 53.4Q51.2 56.6 48 56.7L16.6 57.4Q13.4 57.5 13.3 54.3Z" fill="#fffdf5"/>
+        <path d="M13.6 40L51 39.2 51.1 53.4Q51.2 56.6 48 56.7L16.6 57.4Q13.4 57.5 13.3 54.3Z" fill="url(#dots)" stroke="none"/>
+        <path d="M24 5.4L40.4 5 40.8 13.4 24.3 13.9Z" fill="#e9531d"/>
+        <path d="M19.4 20.4l6.4-.2.2 6.3-6.4.2zM19.6 31.2l6.4-.1.1 6.3-6.4.1z" fill="#fff" stroke-width="2.4"/>
+        <path d="M20.3 23.4l2.3 2.5 4.9-6.6M20.6 34.2l2.3 2.5 4.9-6.6" fill="none" stroke="#2b9953" stroke-width="3"/>
+        <path d="M30.8 23.6h13.4M30.9 34.4h9.6M19.8 45.6h14" fill="none" stroke-width="2.6"/>
+        <path d="M35.2 59.8l2.4-8.6 15.2-15.3 6.2 6.1-15.3 15.3z" fill="#f3ea3a"/>
+        <path d="M49.4 39.3l6.1 6.1" fill="none" stroke-width="2.4"/>
+        <path d="M35.2 59.8l1.2-4.3 3.1 3.1z" fill="#111"/>
+      </g>
+    </symbol>
+
+    <!-- 2. 약첩 : 마음 약국 -->
+    <symbol id="i-yakcheop" viewBox="0 0 64 64">
+      <g stroke="#111" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M8.6 17.6L55.4 15.4 56.6 50.6 9.8 52.6Z" fill="#fffdf5"/>
+        <path d="M9.4 39.5L56.2 37.6 56.6 50.6 9.8 52.6Z" fill="url(#dots)" stroke="none"/>
+        <path d="M8.6 17.6L19.4 28.2 30 16.5M44.4 52 55.4 40.2 56.6 50.6" fill="none" stroke-width="2.2"/>
+        <path d="M32.2 15.2L33.4 52.8M7.4 34.6L57.6 32.9" fill="none" stroke="#e9531d" stroke-width="3.4"/>
+        <path d="M32.8 33.8c-5-8-13.6-6-10.4-.6 2.5 4.2 8.4 2.2 10.4.6zM32.8 33.8c5.5-7.8 14-5.4 10.6-.2-2.7 4.1-8.6 1.7-10.6.2z" fill="#e9531d" stroke-width="2.6"/>
+        <path d="M32.6 34.2l-4.6 9.6M33 34.2l5.4 9" fill="none" stroke="#e9531d" stroke-width="3"/>
+        <path d="M40.4 19.6l12.6-.6.8 11.4-12.6.6z" fill="#fff" stroke-width="2.2"/>
+      </g>
+      <text x="47.3" y="28.6" text-anchor="middle" font-family="Noto Serif KR" font-weight="900" font-size="9.4" fill="#111">藥</text>
+    </symbol>
+
+    <!-- 3. 빈 발우 + 떨어지는 잎 : 마음 비움터 -->
+    <symbol id="i-baru" viewBox="0 0 64 64">
+      <g stroke="#111" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M6.6 30.4Q8 51.6 32 54Q56 51.6 57.4 30.4Z" fill="#7a4a35"/>
+        <path d="M33 53.8Q52 50.6 56.4 34.5L57.4 30.4 46 32.2Q44.8 48 33 53.8Z" fill="url(#dots)" stroke="none"/>
+        <path d="M6.6 30.4Q32 38.6 57.4 30.4Q32 22.4 6.6 30.4Z" fill="#d9b48a"/>
+        <path d="M23 53.2L22 58.6H42L41 53.2" fill="#7a4a35"/>
+        <path d="M13.4 36.4Q15.4 44.6 22.6 48.4" fill="none" stroke="#fffdf5" stroke-width="2.6"/>
+        <path d="M36.4 13.6Q42.6 3.6 53.6 6.4Q48.8 16.6 36.4 13.6Z" fill="#2b9953"/>
+        <path d="M36.4 13.6L47 8.8" fill="none" stroke-width="2"/>
+        <path d="M31 19.6q-2.6 1.6-1 3.6M27.6 17.4q-1.8 1.2-.8 2.8" fill="none" stroke-width="2"/>
+      </g>
+    </symbol>
+
+    <!-- 4. 붓과 한 줄 : 나만의 화두찾기 -->
+    <symbol id="i-but" viewBox="0 0 64 64">
+      <g stroke="#111" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M4.6 54.2C11.6 47.4 19.6 52.2 27.8 50.4 37.6 48.2 46.8 44 59 49.2 47.6 47.8 38.8 52.4 29.6 55.2 20.2 58 12 55.4 4.6 54.2Z" fill="#111" stroke-width="1.6"/>
+        <path d="M50.2 4.2L57 9.4 36.6 35.4 29.8 30.2Z" fill="#d9b48a"/>
+        <path d="M44.6 11.8l6.4 5M39.2 18.8l6.4 5" fill="none" stroke-width="2.2"/>
+        <path d="M29.8 30.2L36.6 35.4 33.8 39 27 33.8Z" fill="#e9531d"/>
+        <path d="M27 33.8L33.8 39Q30 46.8 20.6 48.6Q22.2 40 27 33.8Z" fill="#111"/>
+        <path d="M54 6.6q4.4-6.2 8.6-1.6" fill="none" stroke-width="2"/>
+      </g>
+    </symbol>
+
+    <!-- 명상 : 좌복 위 뒷모습 -->
+    <symbol id="i-jwaseon" viewBox="0 0 64 64">
+      <g stroke="#111" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M7.6 52.4Q7.8 45.6 16 45.4L48 45.2Q56.4 45.6 56.6 52.2Q56.4 58.6 48.2 58.6L16 58.8Q7.8 58.6 7.6 52.4Z" fill="#e9531d"/>
+        <path d="M14 52.2h36" fill="none" stroke-width="2" stroke-dasharray="3 3.4"/>
+        <path d="M13.4 48.6Q13.2 30.4 32 27.2Q50.8 30.6 50.6 48.4Q32 52.2 13.4 48.6Z" fill="#7a4a35"/>
+        <path d="M37 28.6Q46 33 47.6 48.8Q50.6 48.4 50.6 48.4Q50.8 32.6 37 28.6Z" fill="url(#dots)" stroke="none"/>
+        <path d="M32.2 28.6Q28.6 38.4 33.6 49.4" fill="none" stroke-width="2.2"/>
+        <path d="M32 26.4Q23 26.2 23.2 17.2Q23.6 8.4 32.2 8.4Q40.8 8.6 40.8 17.4Q40.6 26.4 32 26.4Z" fill="#fffdf5"/>
+        <path d="M23.2 15.8q-3-.2-2.6 3.2.4 2.6 2.8 2.2M40.8 15.8q3-.2 2.6 3.2-.4 2.6-2.8 2.2" fill="#fffdf5" stroke-width="2.4"/>
+      </g>
+    </symbol>
+
+    <!-- 차 : 하동 녹차 찻사발 -->
+    <symbol id="i-cha" viewBox="0 0 64 64">
+      <g stroke="#111" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M7.6 34.2Q8.6 52.6 30 54Q51.4 52.6 52.4 34.2Z" fill="#fffdf5"/>
+        <path d="M30.6 53.8Q49.4 52 51.8 38L52.4 34.2 43 36.2Q42 48 30.6 53.8Z" fill="url(#dots)" stroke="none"/>
+        <path d="M7.6 34.2Q30 40.8 52.4 34.2Q30 27.8 7.6 34.2Z" fill="#2b9953"/>
+        <path d="M21.6 53.6L20.8 58.4H39.2L38.4 53.6" fill="#fffdf5"/>
+        <path d="M11.8 43Q30 49 48.4 43" fill="none" stroke="#7a4a35" stroke-width="2.4"/>
+        <path d="M22.4 26.4q-4.2-5 0-9.2 4.2-4.2 0-9M32.6 25.6q-4.2-5 0-9.2 4.2-4.2 0-9" fill="none" stroke-width="2.4"/>
+        <path d="M47 24.4Q46.4 12.4 58.6 7.2Q60.8 20 47 24.4Z" fill="#2b9953"/>
+        <path d="M47 24.4L56.2 11.6" fill="none" stroke-width="2"/>
+      </g>
+    </symbol>
+
+    <!-- 향 : 향꽂이와 연기 -->
+    <symbol id="i-hyang" viewBox="0 0 64 64">
+      <g stroke="#111" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M12.6 45.6Q12.8 57.8 32 58Q51.2 57.8 51.4 45.6Z" fill="#7a4a35"/>
+        <path d="M33 57.8Q50 57 51 47.2L51.4 45.6 43.6 47.2Q43 54.6 33 57.8Z" fill="url(#dots)" stroke="none"/>
+        <path d="M12.6 45.6Q32 51.4 51.4 45.6Q32 40.2 12.6 45.6Z" fill="#d9b48a"/>
+        <path d="M31 45.8L35.6 19.4" fill="none" stroke-width="2.6"/>
+        <path d="M33.6 19.4l2.6-4.6 2 4.8z" fill="#e9531d" stroke-width="2.2"/>
+        <path d="M37.4 12.6C31.6 10.6 32.4 4.8 38.2 5.6 43 6.4 42.6 1.4 38.8 1.2M41.6 15.6c3.6-1.6 6.4.6 5.8 3.6" fill="none" stroke-width="2.2"/>
+      </g>
+    </symbol>
+
+    <!-- 감나무 가지 (하동 대봉감) -->
+    <symbol id="i-gam" viewBox="0 0 150 120">
+      <g stroke="#111" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M2 18Q40 22 70 34Q98 46 146 40L146 47Q100 54 69 42Q38 30 2 26Z" fill="#7a4a35"/>
+        <path d="M60 36Q63 48 58 60" fill="none" stroke-width="3.4"/>
+        <path d="M104 47Q110 58 106 68" fill="none" stroke-width="3.4"/>
+        <path d="M30 24Q20 6 36 2Q42 18 30 24Z" fill="#2b9953"/>
+        <path d="M86 42Q80 24 96 18Q104 34 86 42Z" fill="#2b9953"/>
+        <path d="M122 44Q130 26 146 30Q140 46 122 44Z" fill="#e9531d"/>
+        <path d="M58 60Q40 61 40 80Q41 100 58 100Q76 100 77 80Q77 61 58 60Z" fill="#e9531d"/>
+        <path d="M60 62Q75 66 76 80Q76 98 59 99Q70 92 70 79Q69 67 60 62Z" fill="url(#dots)" stroke="none"/>
+        <path d="M58 60l-9 1 6-5 3-6 3 6 6 5z" fill="#2b9953" stroke-width="2.6"/>
+        <path d="M47 72q2-5 7-6" fill="none" stroke="#fffdf5" stroke-width="3"/>
+        <path d="M106 68Q92 69 92 84Q93 99 106 99Q120 99 121 84Q121 69 106 68Z" fill="#e9531d"/>
+        <path d="M108 70Q119 73 120 84Q120 97 107 98Q115 92 115 83Q114 74 108 70Z" fill="url(#dots)" stroke="none"/>
+        <path d="M106 68l-8 1 5-4 3-5 3 5 5 4z" fill="#2b9953" stroke-width="2.6"/>
+        <path d="M97 78q2-4 6-5" fill="none" stroke="#fffdf5" stroke-width="3"/>
+      </g>
+    </symbol>
+
+    <!-- 석탑 (쌍계사 구층석탑에서) -->
+    <symbol id="i-tap" viewBox="0 0 90 170">
+      <g stroke="#111" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round" fill="#fffdf5">
+        <path d="M43 6l2 0 1 14-4 0z" fill="#d9b48a"/>
+        <circle cx="44" cy="24" r="4.6" fill="#d9b48a"/>
+        <path d="M28 40Q44 30 60 40L64 44 24 44Z"/>
+        <path d="M33 44h22v12H33z"/>
+        <path d="M20 62Q44 50 68 62L72 66 16 66Z"/>
+        <path d="M30 66h28v18H30z"/>
+        <path d="M44 66h14v18H44z" fill="url(#dots)" stroke="none"/>
+        <path d="M12 90Q44 76 76 90L81 95 7 95Z"/>
+        <path d="M25 95h38v28H25z"/>
+        <path d="M44 95h19v28H44z" fill="url(#dots)" stroke="none"/>
+        <path d="M44 95v28" fill="none" stroke-width="2.2"/>
+        <path d="M14 123h60v14H14z" fill="#d9b48a"/>
+        <path d="M4 137h80v18H4z" fill="#d9b48a"/>
+        <path d="M44 137h40v18H44z" fill="url(#dots)" stroke="none"/>
+        <path d="M24 137v18M64 137v18" fill="none" stroke-width="2.2"/>
+      </g>
+    </symbol>
+
+    <!-- 차밭 이랑 -->
+    <symbol id="i-chabat" viewBox="0 0 190 100">
+      <g stroke="#111" stroke-width="3.4" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M40 34Q46 18 64 22Q74 8 94 16Q112 6 126 18Q146 14 152 30Q160 42 140 44L52 46Q32 44 40 34Z" fill="#2b9953"/>
+        <path d="M8 64Q12 46 34 50Q44 34 66 42Q84 30 104 42Q124 32 142 44Q166 40 178 54Q186 70 166 72L22 76Q2 74 8 64Z" fill="#2b9953"/>
+        <path d="M22 76L166 72Q184 70 178 58Q172 68 150 68L30 70Q14 70 22 76Z" fill="url(#dots)" stroke="none"/>
+        <path d="M2 96Q8 82 24 84Q36 72 54 80Q66 70 84 78Q100 70 116 80Q134 72 150 82Q170 78 184 88Q190 96 184 98Z" fill="#2b9953"/>
+        <path d="M58 34l5 4M96 26l5 5M128 30l4 4M30 60l4 5M80 54l5 4M128 56l4 5M160 62l4 4" fill="none" stroke-width="2.4"/>
+      </g>
+    </symbol>
+
+    <!-- 태양 -->
+    <symbol id="i-sun" viewBox="0 0 140 140">
+      <g stroke="#111" stroke-width="3.6" stroke-linejoin="round">
+        <path d="M70 6C105 5 134 33 133 70C133 106 104 134 69 133C33 132 6 105 7 69C8 34 35 7 70 6Z" fill="#e9531d"/>
+        <path d="M108 30C124 46 128 72 120 92C110 116 84 130 58 128C86 122 108 104 113 78C117 60 114 44 108 30Z" fill="url(#dotsL)" stroke="none"/>
+      </g>
+    </symbol>
+
+    <!-- 안내용 작은 아이콘 (32 그리드, 잉크선 2.4px) -->
+    <symbol id="s-date" viewBox="0 0 32 32">
+      <g stroke="#111" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M4.4 8.4L27.6 7.8 27.8 27.6 4.6 28Z" fill="#fffdf5"/>
+        <path d="M4.4 8.4L27.6 7.8 27.7 13.6 4.5 14Z" fill="#e9531d"/>
+        <path d="M10 4.6v6M22 4.4v6" fill="none"/>
+        <path d="M18.6 18.2h5.2v5.2h-5.2z" fill="#f3ea3a" stroke-width="2"/>
+      </g>
+    </symbol>
+    <symbol id="s-place" viewBox="0 0 32 32">
+      <g stroke="#111" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M2.6 27.6L11.4 13.2 16.6 20 20.6 14.2 29.4 27.6Z" fill="#2b9953"/>
+        <path d="M9 9.4Q16 4 23 9.4L24.6 11H7.4Z" fill="#e9531d"/>
+        <path d="M10.4 11v4.6M21.6 11v3.2" fill="none"/>
+      </g>
+    </symbol>
+    <symbol id="s-order" viewBox="0 0 32 32">
+      <g stroke="#111" stroke-width="2.2" stroke-linejoin="round" fill="#d9b48a">
+        <path d="M7.4 28.8C3.8 28.6 3.6 22.6 4.6 19.6 5.6 16.6 9.8 16.4 10.4 20 11 23.6 10.6 29 7.4 28.8Z"/>
+        <ellipse cx="7.8" cy="14" rx="2.2" ry="1.6"/>
+        <path d="M22.6 19.2C19 19 18.8 13 19.8 10 20.8 7 25 6.8 25.6 10.4 26.2 14 25.8 19.4 22.6 19.2Z"/>
+        <ellipse cx="23" cy="4.6" rx="2.2" ry="1.4"/>
+      </g>
+    </symbol>
+    <symbol id="s-time" viewBox="0 0 32 32">
+      <g stroke="#111" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M6.4 23.4Q6.6 29.6 16 29.6Q25.4 29.6 25.6 23.4Z" fill="#7a4a35"/>
+        <path d="M15.4 23.4L17.4 10.6" fill="none"/>
+        <path d="M17.4 10.6l.4-2.6" fill="none" stroke="#e9531d" stroke-width="3"/>
+        <path d="M18.6 6.4c-3-1-2.4-3.8.4-3.4 2.4.4 2.4-2 .6-2.2" fill="none" stroke-width="1.8"/>
+      </g>
+    </symbol>
+    <symbol id="s-apply" viewBox="0 0 32 32">
+      <g stroke="#111" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M8.6 3.6L23.2 3.4Q25 3.4 25 5.2L25.2 27Q25.2 28.8 23.4 28.8L8.8 29Q7 29 7 27.2L6.8 5.4Q6.8 3.6 8.6 3.6Z" fill="#56bdea"/>
+        <path d="M10.4 7.6l11-.2.2 15.2-11 .2z" fill="#fffdf5" stroke-width="2"/>
+        <path d="M12.6 15.2l2.6 2.8 4.4-5.6" fill="none" stroke="#2b9953" stroke-width="2.6"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <svg class="sun ic" viewBox="0 0 140 140"><use href="#i-sun" filter="url(#rough)"/></svg>
+  <img class="art" src="assets/hero.jpg" alt="산사 캠핑장 일러스트">
+  <svg class="cloud" viewBox="0 0 760 400" aria-hidden="true">
+    <path filter="url(#rough)" fill="#fff" stroke="#111" stroke-width="4" stroke-linejoin="round"
+      d="M150 368C78 374 22 334 26 270C30 220 66 196 104 192C86 128 136 80 196 92C214 34 290 6 350 26C392 -2 470 4 506 54C566 40 626 76 630 138C700 148 742 204 724 262C710 318 660 350 606 346C584 382 520 396 470 376C434 402 362 404 326 378C288 400 220 398 196 370C182 372 166 372 150 368Z"/>
+  </svg>
+  <div class="title">
+    <small class="jua">2026 산사캠프 시그니처 프로그램</small>
+    <h1 class="jua">마음처방전</h1>
+    <span class="hanja">心處方箋</span>
+  </div>
+  <div class="tag hand">쉿, 마음 듣는 중</div>
+</section>
+
+<!-- ============ INTRO ============ -->
+<section class="intro">
+  <p class="kicker jua">당신의 마음을 읽고, 선명상의 지혜를 처방합니다</p>
+  <h2 class="jua">온전히 나를 마주하는 시간,<br>내 마음의 소리를<br>들어주는 시간</h2>
+  <p>요즘 마음이 좀 시끄럽진 않으셨나요.<br>
+  산사캠프의 마음처방전은 지금 내 마음 상태를 들여다보고,<br>
+  그에 맞는 명상과 차, 향을 처방받는 작은 진료실입니다.<br>
+  처방을 받았다면 스님과 함께 마음을 비우고, 나만의 화두를 찾아 돌아가세요.</p>
+</section>
+
+<!-- ============ MAP ============ -->
+<section class="map dots-green">
+  <svg class="road" width="860" height="1150" viewBox="0 0 860 1150" aria-hidden="true">
+    <g filter="url(#rough)" fill="none" stroke-linecap="round">
+      <path d="M372 170C520 150 700 196 690 300C680 400 440 420 320 470C170 532 180 676 336 720C500 766 690 790 666 930C650 1030 430 1046 420 1180" stroke="#111" stroke-width="66"/>
+      <path d="M372 170C520 150 700 196 690 300C680 400 440 420 320 470C170 532 180 676 336 720C500 766 690 790 666 930C650 1030 430 1046 420 1180" stroke="#d9b48a" stroke-width="57"/>
+      <path d="M372 170C520 150 700 196 690 300C680 400 440 420 320 470C170 532 180 676 336 720C500 766 690 790 666 930C650 1030 430 1046 420 1180" stroke="#fff" stroke-width="4.5" stroke-dasharray="18 16"/>
+    </g>
+  </svg>
+
+  <h3 class="jua">처방 받으러 가는 길</h3>
+
+  <!-- 풍경 랜드마크: 감나무 · 석탑 · 차밭 -->
+  <svg class="landmark ic" style="left:-6px;top:170px;width:230px;height:184px" viewBox="0 0 150 120"><use href="#i-gam" filter="url(#rough)"/></svg>
+  <svg class="landmark ic" style="right:40px;top:476px;width:92px;height:174px" viewBox="0 0 90 170"><use href="#i-tap" filter="url(#rough)"/></svg>
+  <svg class="landmark ic" style="right:-20px;top:996px;width:250px;height:132px" viewBox="0 0 190 100"><use href="#i-chabat" filter="url(#rough)"/></svg>
+
+  <!-- 1 -->
+  <div class="sign" style="left:466px;top:226px;transform:rotate(-2.5deg)">
+    <div class="board jua"><span class="num">1</span>마음처방소</div><div class="post"></div>
+  </div>
+  <div class="note hand" style="left:474px;top:356px;background:#fff;transform:rotate(1.5deg);padding-right:104px">
+    질문 세 개에 답하면<br>내 마음 유형이 나와요
+    <svg class="ic" style="right:4px;top:-30px" viewBox="0 0 64 64"><use href="#i-munjin" filter="url(#rough)"/></svg>
+  </div>
+
+  <!-- 2 -->
+  <div class="sign" style="left:52px;top:478px;transform:rotate(2deg)">
+    <div class="board jua"><span class="num">2</span>마음 약국</div><div class="post"></div>
+  </div>
+  <div class="note hand" style="left:52px;top:604px;background:#f3ea3a;transform:rotate(-2deg);padding-right:104px">
+    명상 · 차 · 향<br>처방약 받아가기
+    <svg class="ic" style="right:4px;top:-30px" viewBox="0 0 64 64"><use href="#i-yakcheop" filter="url(#rough)"/></svg>
+  </div>
+
+  <!-- 3 -->
+  <div class="sign" style="left:520px;top:700px;transform:rotate(-2deg)">
+    <div class="board jua"><span class="num">3</span>마음 비움터</div><div class="post"></div>
+  </div>
+  <div class="note hand" style="left:528px;top:826px;background:#fff;transform:rotate(2deg);padding-right:104px">
+    스님 해설 들으며<br>천천히 비우기
+    <svg class="ic" style="right:4px;top:-30px" viewBox="0 0 64 64"><use href="#i-baru" filter="url(#rough)"/></svg>
+  </div>
+
+  <!-- 4 -->
+  <div class="sign" style="left:70px;top:880px;transform:rotate(1.5deg)">
+    <div class="board jua"><span class="num">4</span>나만의 화두찾기</div><div class="post"></div>
+  </div>
+  <div class="note hand" style="left:76px;top:1006px;background:#56bdea;transform:rotate(-2deg);padding-right:104px">
+    비운 자리에<br>나의 서원 세우기
+    <svg class="ic" style="right:4px;top:-30px" viewBox="0 0 64 64"><use href="#i-but" filter="url(#rough)"/></svg>
+  </div>
+</section>
+
+<!-- ============ STOP 1 ============ -->
+<section class="stop">
+  <div class="stop-head">
+    <div><p class="kicker hand">첫 번째 정류장</p><h3 class="jua">마음처방소</h3></div>
+    <svg class="badge ic" viewBox="0 0 132 132" aria-hidden="true">
+      <g filter="url(#rough)">
+        <path d="M66 6C100 5 127 31 126 66C126 100 99 127 65 126C31 125 6 99 7 65C8 32 33 7 66 6Z" fill="#f3ea3a" stroke="#111" stroke-width="3.6"/>
+        <use href="#i-munjin" x="30" y="28" width="72" height="72"/>
+        <circle cx="112" cy="22" r="17" fill="#fffdf5" stroke="#111" stroke-width="3.2"/>
+      </g>
+      <text x="112" y="30" text-anchor="middle" font-family="Jua" font-size="23">1</text>
+    </svg>
+  </div>
+
+  <div class="photo" style="transform:rotate(-1deg)">
+    <div class="tape"></div>
+    <div class="ph" style="height:404px;background:#dce9df">[사진] 마음처방소 부스 현장</div>
+    <div class="cap hand">마음처방소 앞, 차례를 기다리는 중</div>
+  </div>
+
+  <div class="qa">
+    <div class="q"><svg class="ic" viewBox="0 0 64 64"><use href="#i-jwaseon" filter="url(#rough)"/></svg>
+      <div><b>Q1</b><strong>나를 알려주세요</strong><span>MBTI로 나를 소개해요</span></div></div>
+    <div class="q"><svg class="ic" viewBox="0 0 64 64"><use href="#i-baru" filter="url(#rough)"/></svg>
+      <div><b>Q2</b><strong>요즘 나의 고민은?</strong><span>6가지 고민 중에서 골라요</span></div></div>
+    <div class="q"><svg class="ic" viewBox="0 0 64 64"><use href="#i-cha" filter="url(#rough)"/></svg>
+      <div><b>Q3</b><strong>이 고민이 나에게 왜 중요할까요?</strong><span>AI와 채팅하며 천천히 풀어봐요</span></div></div>
+    <div class="a jua">답을 바탕으로 AI가 유형을 분석해<br>24가지 마음 유형 중 하나의<br>마음처방전을 발급해 드려요</div>
+  </div>
+</section>
+
+<!-- ============ STOP 2 ============ -->
+<section class="stop yellow">
+  <div class="stop-head">
+    <div><p class="kicker hand">두 번째 정류장</p><h3 class="jua">마음 약국</h3></div>
+    <svg class="badge ic" viewBox="0 0 132 132" aria-hidden="true">
+      <g filter="url(#rough)">
+        <path d="M66 6C100 5 127 31 126 66C126 100 99 127 65 126C31 125 6 99 7 65C8 32 33 7 66 6Z" fill="#fffdf5" stroke="#111" stroke-width="3.6"/>
+        <use href="#i-yakcheop" x="28" y="30" width="76" height="76"/>
+        <circle cx="112" cy="22" r="17" fill="#e9531d" stroke="#111" stroke-width="3.2"/>
+      </g>
+      <text x="112" y="30" text-anchor="middle" font-family="Jua" font-size="23" fill="#fff">2</text>
+    </svg>
+  </div>
+  <p class="lead">처방전을 들고 약국 창구로 오세요.<br>마음 약사가 처방에 맞는 약을 지어 드리고,<br>‘나의 명상’을 어떻게 하면 되는지 차근차근 알려드려요.</p>
+
+  <div class="shelf">
+    <!-- 명상 -->
+    <div class="jar" style="left:44px;width:180px">
+      <svg width="180" height="248" viewBox="0 0 180 248"><g filter="url(#rough)" stroke="#111" stroke-width="3.6" stroke-linejoin="round">
+        <path d="M54 6h72v26H54z" fill="#2b9953"/>
+        <path d="M30 34Q30 28 38 28H142Q150 28 150 34V40Q170 44 170 64V226Q170 244 152 244H28Q10 244 10 226V64Q10 44 30 40Z" fill="#fff"/>
+        <path d="M150 64Q160 70 160 90V220Q160 236 146 238Q154 230 154 216V90Q154 74 150 64Z" fill="url(#dotsL)" stroke="none"/>
+      </g></svg>
+      <div class="lbl" style="top:64px"><svg class="ic" width="62" height="62" viewBox="0 0 64 64"><use href="#i-jwaseon" filter="url(#rough)"/></svg><b>명상</b><i>내 유형 맞춤 명상법</i></div>
+    </div>
+    <!-- 차 -->
+    <div class="jar" style="left:304px;width:186px">
+      <svg width="186" height="206" viewBox="0 0 186 206"><g filter="url(#rough)" stroke="#111" stroke-width="3.6" stroke-linejoin="round">
+        <path d="M44 6h98v26H44z" fill="#e9531d"/>
+        <path d="M24 32H162Q176 32 176 46V186Q176 202 160 202H26Q10 202 10 186V46Q10 32 24 32Z" fill="#fff"/>
+        <path d="M166 50V184Q166 196 154 196Q160 190 160 180V52Q162 48 166 50Z" fill="url(#dotsL)" stroke="none"/>
+      </g></svg>
+      <div class="lbl" style="top:46px"><svg class="ic" width="62" height="62" viewBox="0 0 64 64"><use href="#i-cha" filter="url(#rough)"/></svg><b>차</b><i>마음 다독이는 한 잔</i></div>
+    </div>
+    <!-- 향 -->
+    <div class="jar" style="left:568px;width:176px">
+      <svg width="176" height="278" viewBox="0 0 176 278"><g filter="url(#rough)" stroke="#111" stroke-width="3.6" stroke-linejoin="round">
+        <path d="M58 6h60v24H58z" fill="#56bdea"/>
+        <path d="M88 30C140 30 168 50 168 100V256Q168 274 150 274H26Q8 274 8 256V100C8 50 36 30 88 30Z" fill="#fff"/>
+        <path d="M148 70Q160 86 160 110V252Q160 266 146 268Q154 260 154 246V110Q154 88 148 70Z" fill="url(#dotsL)" stroke="none"/>
+      </g></svg>
+      <div class="lbl" style="top:84px"><svg class="ic" width="62" height="62" viewBox="0 0 64 64"><use href="#i-hyang" filter="url(#rough)"/></svg><b>향</b><i>공간을 채우는 향</i></div>
+    </div>
+    <div class="plank"></div>
+  </div>
+
+  <div class="hwadu">
+    <div class="slip">나<br>의<br><br>화<br>두</div>
+    <p>그리고 약봉투 안에는 <b>불교적 지혜 한 줄</b>이 함께 들어 있어요.<br>세 가지 처방과 함께 가져가는, 나만의 화두입니다.</p>
+  </div>
+
+  <div class="photo" style="transform:rotate(1deg)">
+    <div class="ph" style="height:380px;background:#e7e2c8">[사진] 마음 약국 처방약 수령 장면</div>
+    <div class="cap hand">약 지어 드릴게요</div>
+  </div>
+</section>
+
+<!-- ============ STOP 3 ============ -->
+<section class="stop green dots-green">
+  <div class="stop-head">
+    <div><p class="kicker hand">세 번째 정류장</p><h3 class="jua">마음 비움터</h3></div>
+    <svg class="badge ic" viewBox="0 0 132 132" aria-hidden="true">
+      <g filter="url(#rough)">
+        <path d="M66 6C100 5 127 31 126 66C126 100 99 127 65 126C31 125 6 99 7 65C8 32 33 7 66 6Z" fill="#d9b48a" stroke="#111" stroke-width="3.6"/>
+        <use href="#i-baru" x="28" y="26" width="78" height="78"/>
+        <circle cx="112" cy="22" r="17" fill="#fffdf5" stroke="#111" stroke-width="3.2"/>
+      </g>
+      <text x="112" y="30" text-anchor="middle" font-family="Jua" font-size="23">3</text>
+    </svg>
+  </div>
+  <div class="photo" style="transform:rotate(-1deg)">
+    <div class="ph" style="height:420px;background:#dce9df">[사진] 스님 명상 해설 장면</div>
+    <div class="cap hand">스님 말씀 한 마디에 어깨가 툭</div>
+  </div>
+  <div class="card">
+    <h4>나만의 맞춤 명상을 알아보고,<br>내면을 바라보는 시간</h4>
+    <p>스님의 해설로 내가 받은 명상 처방을 이해하고,<br>감정과 생각을 차분히 비워냅니다.</p>
+  </div>
+</section>
+
+<!-- ============ STOP 4 ============ -->
+<section class="stop sand">
+  <div class="stop-head">
+    <div><p class="kicker hand">마지막 정류장</p><h3 class="jua">나만의 화두찾기</h3></div>
+    <svg class="badge ic" viewBox="0 0 132 132" aria-hidden="true">
+      <g filter="url(#rough)">
+        <path d="M66 6C100 5 127 31 126 66C126 100 99 127 65 126C31 125 6 99 7 65C8 32 33 7 66 6Z" fill="#56bdea" stroke="#111" stroke-width="3.6"/>
+        <use href="#i-but" x="28" y="28" width="76" height="76"/>
+        <circle cx="112" cy="22" r="17" fill="#f3ea3a" stroke="#111" stroke-width="3.2"/>
+      </g>
+      <text x="112" y="30" text-anchor="middle" font-family="Jua" font-size="23">4</text>
+    </svg>
+  </div>
+  <p class="lead">맞춤 명상으로 마음을 비워냈다면,<br>이번엔 화두를 바탕으로 나의 방향과 서원을 세워봅니다.</p>
+  <div class="duo">
+    <div class="photo" style="width:350px;transform:rotate(-2deg)">
+      <div class="ph" style="height:316px;background:#dbe8ef;color:#4d6577">[사진]<br>화두 카드 작성 장면</div>
+      <div class="cap hand">또박또박, 나에게 쓰는 말</div>
+    </div>
+    <div class="vow">
+      <svg class="ic" viewBox="0 0 64 64"><use href="#i-but" filter="url(#rough)"/></svg>
+      <h5>나의 서원 카드</h5>
+      <p>나의 화두 :</p>
+      <p>그래서 나는,</p>
+      <p>하겠습니다.</p>
+      <small>※ 예시</small>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 약봉투 ============ -->
+<section class="envelope">
+  <h3 class="jua">이런 약봉투를 받아 가요</h3>
+  <div class="env">
+    <div class="flap"></div>
+    <div class="in">
+      <div class="top"><b>약봉투</b><span>心處方箋</span></div>
+      <div class="row"><em>성 명</em><span>[참가자 이름]</span></div>
+      <div class="row"><em>마음 유형</em><span>[24가지 중 1]</span></div>
+      <div class="row"><em>처 방</em><span>[명상] · [차] · [향]</span></div>
+      <p class="dose">복용법</p>
+      <table><tr><td>아침</td><td>점심</td><td>저녁</td><td class="hl">마음이<br>시끄러울 때</td></tr></table>
+      <p class="line">‘[나의 화두 한 줄]’</p>
+    </div>
+    <!-- 직인: 동그란 스티커 대신 붉은 인주 도장 -->
+    <svg class="seal" viewBox="0 0 122 122" aria-hidden="true">
+      <g filter="url(#stampInk)" fill="none" stroke="#d8401a">
+        <path d="M12 10Q61 6 111 11Q115 61 111 112Q61 116 11 112Q7 61 12 10Z" stroke-width="7"/>
+        <path d="M22 21Q61 18 101 21Q104 61 101 101Q61 104 21 101Q18 61 22 21Z" stroke-width="2.4"/>
+        <g fill="#d8401a" stroke="none" font-family="Noto Serif KR" font-weight="900" font-size="31" text-anchor="middle">
+          <text x="79" y="56">마</text><text x="79" y="92">음</text>
+          <text x="43" y="56">약</text><text x="43" y="92">국</text>
+        </g>
+      </g>
+    </svg>
+  </div>
+  <p class="fine hand">※ 예시예요. 실제 처방전·약봉투 디자인은 달라질 수 있어요.</p>
+</section>
+
+<!-- ============ 참여 안내 ============ -->
+<section class="info">
+  <h3 class="jua">참여 안내</h3>
+  <dl>
+    <div class="r"><dt><svg class="ic" viewBox="0 0 32 32"><use href="#s-date" filter="url(#rough)"/></svg>일시</dt><dd>2026. 11. 6(금) – 11. 8(일) 중 [운영 시간 확인 필요]</dd></div>
+    <div class="r"><dt><svg class="ic" viewBox="0 0 32 32"><use href="#s-place" filter="url(#rough)"/></svg>장소</dt><dd>하동 쌍계사 일원 [부스 위치 확인 필요]</dd></div>
+    <div class="r"><dt><svg class="ic" viewBox="0 0 32 32"><use href="#s-order" filter="url(#rough)"/></svg>순서</dt><dd>마음처방소 → 마음 약국 → 마음 비움터 → 나만의 화두찾기</dd></div>
+    <div class="r"><dt><svg class="ic" viewBox="0 0 32 32"><use href="#s-time" filter="url(#rough)"/></svg>소요 시간</dt><dd>[확인 필요]</dd></div>
+    <div class="r"><dt><svg class="ic" viewBox="0 0 32 32"><use href="#s-apply" filter="url(#rough)"/></svg>신청</dt><dd>산사캠프 전용 앱 사전예약 [확인 필요]</dd></div>
+    <div class="r"><dt><svg class="ic" viewBox="0 0 64 64"><use href="#i-yakcheop" filter="url(#rough)"/></svg>받는 것</dt><dd>마음처방전 · 처방약(명상 · 차 · 향) · 나의 화두</dd></div>
+  </dl>
+  <div class="tip">
+    <img src="assets/dog.png" alt="">
+    <p class="hand">처방 물품은 마음 유형에 따라 조금씩 달라요.<br>사람이 몰리면 잠깐 기다릴 수 있어요.</p>
+  </div>
+</section>
+
+<footer>
+  <div><p class="k">2026 산사에서 즐기는 마인드 디톡스</p><h6>산사캠프 with 쌍계사</h6></div>
+  <p>2026.11.06 FRI – 11.08 SUN<br>하동 쌍계사 일원 · 사전예약 700명 한정</p>
+</footer>
+
+</body>
+</html>
