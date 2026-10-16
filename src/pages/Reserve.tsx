@@ -6,6 +6,7 @@ import ProgramList from '../components/reserve/ProgramList'
 import ShowerGrid from '../components/reserve/ShowerGrid'
 import ParkingForm from '../components/reserve/ParkingForm'
 import { useToast } from '../hooks/useToast'
+import { KakaoChatLine } from '../components/KakaoChat'
 
 type Tab = 'program' | 'shower' | 'parking'
 
@@ -23,6 +24,7 @@ export default function Reserve() {
         {tab === 'program' && <ProgramList toast={show} />}
         {tab === 'shower' && <ShowerGrid toast={show} />}
         {tab === 'parking' && <ParkingForm toast={show} />}
+        <KakaoChatLine />
       </div>
       <Toast msg={msg} />
     </>

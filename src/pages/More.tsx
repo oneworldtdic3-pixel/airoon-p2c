@@ -16,6 +16,7 @@ import { useToast } from '../hooks/useToast'
 import { fmtPhone } from '../lib/format'
 import { toMessage } from '../data/errors'
 import { DEFAULT_NICK, NicknameSheet } from '../components/NicknameSheet'
+import { KakaoChatCard } from '../components/KakaoChat'
 
 const guides = [
   ['화기 전면 금지, 취사 없음', '라이터·버너·향초처럼 불을 쓰는 물품은 가져올 수 없습니다. 식사는 공양간과 산사장터에서.'],
@@ -100,6 +101,10 @@ export default function More() {
               <button onClick={() => nav('/login', { state: { from: '/more' } })} className="btn !px-4 !py-2.5 !text-[13px]">로그인</button>
             </div>
           )}
+        </section>
+
+        <section className="pt-6">
+          <KakaoChatCard />
         </section>
 
         {user && (

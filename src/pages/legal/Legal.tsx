@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import Icon from '../../components/ui/Icon'
+import { KAKAO_CHANNEL } from '../../components/KakaoChat'
+import { extClick } from '../../lib/external'
 
 const OPERATOR = { name: '주식회사 아이룬 (산사캠프 사무국)', email: 'info@airoon.kr', site: 'https://sansacamp.com' }
 const UPDATED = '2026년 10월 11일'
@@ -14,7 +16,7 @@ function Doc({ title, children }: { title: string; children: React.ReactNode }) 
       <div className="prose-sm mt-8 space-y-7 text-[14px] leading-relaxed text-ink/85 [&_h2]:mb-2 [&_h2]:text-[16px] [&_h2]:font-extrabold [&_h2]:text-ink [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5">
         {children}
       </div>
-      <p className="mt-10 text-[12px] text-sub">문의: {OPERATOR.email}</p>
+      <p className="mt-10 text-[12px] text-sub">문의: {OPERATOR.email} · <a href={KAKAO_CHANNEL.chat} target="_blank" rel="noopener noreferrer" onClick={extClick} className="font-bold text-deep underline underline-offset-2">카카오톡 채널 상담</a></p>
     </div>
   )
 }
