@@ -1,6 +1,7 @@
 import { openExternal } from '../../lib/external'
+import { KAKAO_CHANNEL } from '../KakaoChat'
 
-// 홈 고정 예매 버튼 — 하단 탭 바로 위 오른쪽에 떠 있는 풍선형 버튼 2개. 네이버 예매 페이지로 바로 연결.
+// 홈 고정 풍선형 버튼 — 하단 탭 바로 위 오른쪽. 카카오톡 문의 + 네이버 예매 2개.
 export const TICKETS = {
   hanok: { label: '한옥 예매하기', url: 'https://naver.me/Ghwqi86o' },
   camp: { label: '캠핑존 예매하기', url: 'https://naver.me/IMZ2Cni4' },
@@ -11,6 +12,9 @@ const Hanok = () => (
     <path d="M3 10c3-1 5-3 9-6 4 3 6 5 9 6" /><path d="M5 10v10h14V10" /><path d="M10 20v-6h4v6" /><path d="M2 10h20" />
   </svg>
 )
+const KakaoBubble = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.6 2 11c0 2.8 1.9 5.3 4.7 6.7L5.8 21l4-2.6c.7.1 1.4.2 2.2.2 5.5 0 10-3.6 10-8S17.5 3 12 3z" /></svg>
+)
 const Tent = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="M3 20 12 4l9 16" /><path d="M8.5 20 12 12l3.5 8" /><path d="M2 20h20" />
@@ -19,7 +23,11 @@ const Tent = () => (
 
 export default function TicketFab() {
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-[calc(88px+env(safe-area-inset-bottom))] z-30 mx-auto flex max-w-[430px] flex-col items-end gap-2.5 px-4" aria-label="예매 바로가기">
+    <div className="pointer-events-none fixed inset-x-0 bottom-[calc(88px+env(safe-area-inset-bottom))] z-30 mx-auto flex max-w-[430px] flex-col items-end gap-2.5 px-4" aria-label="문의·예매 바로가기">
+      <button type="button" onClick={() => openExternal(KAKAO_CHANNEL.chat)}
+        className="pointer-events-auto inline-flex items-center gap-2 rounded-full bg-[#FEE500] py-3 pl-4 pr-5 text-[15px] font-extrabold text-[#191919] shadow-[0_10px_24px_rgba(120,100,0,0.28)] ring-1 ring-[#EBD300] transition active:scale-95">
+        <KakaoBubble />카카오 문의하기
+      </button>
       <button type="button" onClick={() => openExternal(TICKETS.hanok.url)}
         className="pointer-events-auto inline-flex items-center gap-2 rounded-full bg-[#FBE9D2] py-3 pl-4 pr-5 text-[15px] font-extrabold text-[#7A4A12] shadow-[0_10px_24px_rgba(122,74,18,0.28)] ring-1 ring-[#F1D7B3] transition active:scale-95">
         <Hanok />{TICKETS.hanok.label}
