@@ -49,7 +49,7 @@
   .hero .title .hanja { display: block; font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 26px; letter-spacing: 8px; margin-top: 10px; }
   .hero .tag {
     position: absolute; left: 152px; bottom: 54px; background: #fff; border: 3px solid var(--ink);
-    padding: 3px 16px 1px; font-size: 25px; transform: rotate(-3deg);
+    padding: 7px 16px 5px; font-size: 25px; transform: rotate(-3deg);
   }
 
   /* ---------- INTRO ---------- */
@@ -136,7 +136,7 @@
   .duo { display: flex; gap: 28px; align-items: flex-start; margin-top: 4px; }
   .vow { flex: 1; background: var(--cream); border: 3.5px solid var(--ink); transform: rotate(2deg); padding: 28px 30px 20px; position: relative;
     background-image: repeating-linear-gradient(transparent 0 45px, #c9bfa3 45px 47px); background-position: 0 66px; }
-  .vow h5 { font-family: 'Jua'; font-weight: 400; font-size: 28px; margin-bottom: 18px; }
+  .vow h4 { font-family: 'Jua'; font-weight: 400; font-size: 28px; margin-bottom: 18px; }
   .vow p { font-family: 'Gaegu'; font-weight: 700; font-size: 20px; height: 47px; }
   .vow small { display: block; text-align: right; font-size: 13px; color: #666; margin-top: 4px; }
   .vow .ic { position: absolute; right: -14px; top: -34px; width: 78px; height: 78px; }
@@ -175,9 +175,9 @@
 
   footer { background: var(--ink); color: #fff; padding: 46px 62px 52px; display: flex; justify-content: space-between; align-items: flex-end; }
   footer .k { color: var(--yellow); font-size: 18px; font-weight: 700; }
-  footer h6 { font-family: 'Jua'; font-weight: 400; font-size: 34px; margin-top: 4px; }
+  footer .name { font-family: 'Jua'; font-weight: 400; font-size: 34px; margin-top: 4px; }
   @page { size: 860px 10332px; margin: 0; }
-  footer p { text-align: right; font-size: 15px; font-weight: 700; line-height: 1.8; }
+  footer > p { text-align: right; font-size: 15px; font-weight: 700; line-height: 1.8; }
 </style>
 </head>
 <body>
@@ -614,7 +614,7 @@
     </div>
     <div class="vow">
       <svg class="ic" viewBox="0 0 64 64"><use href="#i-but" filter="url(#rough)"/></svg>
-      <h5>나의 서원 카드</h5>
+      <h4>나의 서원 카드</h4>
       <p>나의 화두 :</p>
       <p>그래서 나는,</p>
       <p>하겠습니다.</p>
@@ -670,7 +670,7 @@
 </section>
 
 <footer>
-  <div><p class="k">2026 산사에서 즐기는 마인드 디톡스</p><h6>산사캠프 with 쌍계사</h6></div>
+  <div><p class="k">2026 산사에서 즐기는 마인드 디톡스</p><p class="name">산사캠프 with 쌍계사</p></div>
   <p>2026.11.06 FRI – 11.08 SUN<br>하동 쌍계사 일원 · 사전예약 700명 한정</p>
 </footer>
 

@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "sunmyung-festival/index.html"
+        ],
+        "createdAt": "2026-10-16T03:48:30.467Z",
+        "reason": "user instruction: '색감은 그대로' — cream #fffdf5 is the original page palette"
+      }
+    ]
+  }
+}
