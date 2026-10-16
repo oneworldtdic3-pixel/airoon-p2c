@@ -10,6 +10,7 @@ export interface ShowerBooking { id: string; user_id: string; slot_id: string; s
 export interface ParkingBooking { id: string; user_id: string; zone: 'P1' | 'P2'; car_number: string; dates: string[] }
 export interface Photo { id: string; user_id: string; spot_tag: SpotTag; storage_path: string; url: string; likes_count: number; is_hidden: boolean; created_at: string; nickname: string }
 export interface AppNotification { id: string; type: 'booth' | 'luckydraw' | 'reminder' | 'market' | 'notice'; title: string; body: string; created_at: string }
+export interface Popup { id: string; title: string; body: string; image_url: string; link: string; button_label: string; starts_at: string | null; ends_at: string | null; is_active: boolean; sort: number; created_at: string; updated_at: string }
 export interface Banner { id: string; sponsor: string; title: string; sub: string; image_path: string; image: string; link: string; bg: string; is_active: boolean; sort: number }
 export interface AdminStats {
   programs: { id: string; title: string; capacity: number; booked: number }[]

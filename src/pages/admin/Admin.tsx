@@ -11,8 +11,9 @@ import Banners from './Banners'
 import Parking from './Parking'
 import Press from './Press'
 import Members from './Members'
+import Popups from './Popups'
 
-type Tab = 'stats' | 'members' | 'parking' | 'publish' | 'photos' | 'banners' | 'press'
+type Tab = 'stats' | 'members' | 'parking' | 'publish' | 'popups' | 'photos' | 'banners' | 'press'
 
 export default function Admin() {
   const { ready, user } = useApp()
@@ -40,7 +41,7 @@ export default function Admin() {
           <span className="w-8" />
         </div>
         <div className="mt-2">
-          <Segmented<Tab> value={tab} onChange={setTab} options={[{ value: 'stats', label: '현황' }, { value: 'members', label: '회원' }, { value: 'parking', label: '주차' }, { value: 'publish', label: '알림' }, { value: 'photos', label: '사진' }, { value: 'banners', label: '배너' }, { value: 'press', label: '언론' }]} />
+          <Segmented<Tab> value={tab} onChange={setTab} options={[{ value: 'stats', label: '현황' }, { value: 'members', label: '회원' }, { value: 'parking', label: '주차' }, { value: 'publish', label: '알림' }, { value: 'popups', label: '팝업' }, { value: 'photos', label: '사진' }, { value: 'banners', label: '배너' }, { value: 'press', label: '언론' }]} />
         </div>
       </header>
       <div className="px-5 pb-12 pt-5">
@@ -48,6 +49,7 @@ export default function Admin() {
         {tab === 'members' && <Members toast={show} />}
         {tab === 'parking' && <Parking toast={show} />}
         {tab === 'publish' && <Publish toast={show} />}
+        {tab === 'popups' && <Popups toast={show} />}
         {tab === 'photos' && <Photos toast={show} />}
         {tab === 'banners' && <Banners toast={show} />}
         {tab === 'press' && <Press toast={show} />}

@@ -7,6 +7,7 @@ import InstallStrip from '../components/home/InstallStrip'
 import LivePhotos from '../components/home/LivePhotos'
 import ArtistTeaser from '../components/home/ArtistTeaser'
 import TicketFab from '../components/home/TicketFab'
+import HomePopup from '../components/home/HomePopup'
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
       <SponsorStrip />
       <div className="h-28" />
       <TicketFab />
+      <HomePopup />
     </>
   )
 }
