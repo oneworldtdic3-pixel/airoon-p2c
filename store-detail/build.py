@@ -39,8 +39,9 @@ LINK = f'style="color:{C_RED};font-weight:bold;text-decoration:none;"'
 HL = 'style="background:linear-gradient(transparent 55%,#f3d27a 55%);"'   # 원본의 노란 형광펜 강조
 HL_ON_RED = f'style="color:{C_YELLOW};"'
 
-TEL = f'<a href="tel:0222695002" {LINK}>02-2269-5002</a>'
-MAIL = f'<a href="mailto:info@airoon.kr" {LINK}>info@airoon.kr</a>'
+# 스마트스토어는 외부 링크(<a href>)를 지우거나 판매 제재할 수 있어 전화·메일은 링크 없이 강조 글자로만
+TEL = f'<b {LINK}>02-2269-5002</b>'
+MAIL = f'<b {LINK}>info@airoon.kr</b>'
 
 
 def e(s):
@@ -442,7 +443,7 @@ def s25():
     contact = (f'<p style="margin:0 0 2px;font-size:14px;color:#9a9288;">문의</p>'
                f'<p style="margin:0 0 6px;font-size:20px;font-weight:900;color:#ffffff;">산사캠프 운영사무국</p>'
                f'<p style="margin:0 0 18px;padding-bottom:18px;border-bottom:1px solid #4a443c;">'
-               f'<a href="tel:0222695002" {link}>02-2269-5002</a> · <a href="mailto:info@airoon.kr" {link}>info@airoon.kr</a></p>')
+               f'<b {link}>02-2269-5002</b> · <b {link}>info@airoon.kr</b></p>')
     return (f'<div style="padding:32px 20px;margin:0;background:{INK};">'
             f'{contact}<table style="width:100%;border-collapse:collapse;">{trs}</table></div>')
 
@@ -461,7 +462,7 @@ PRODUCTS = [
      [s13, s9, s10, s11, s12, s14]),
 ]
 
-FORBIDDEN = [r"<script", r"<style", r"\bclass=", r"<iframe", r"<form", r"position\s*:\s*fixed", r"<link"]
+FORBIDDEN = [r"<script", r"<style", r"\bclass=", r"<iframe", r"<form", r"position\s*:\s*fixed", r"<link", r"<a[\s>]", r"href="]
 
 
 def build_product(blocks):
@@ -516,6 +517,40 @@ section h2 small{{font-weight:normal;opacity:.8;font-size:12px;margin-left:6px}}
     os.makedirs(os.path.join(ROOT, "public", "store-detail"), exist_ok=True)
     with open(os.path.join(ROOT, "public", "store-detail", "preview.html"), "w", encoding="utf-8") as f:
         f.write(page)
+
+    # 복사 페이지 (public/, noindex) — 휴대폰에서 버튼 한 번으로 상품별 HTML 복사
+    blocks = "".join(
+        f'<section><h2>{e(t)}</h2><p class="meta">{len(h):,}자 · store-detail/{f}</p>'
+        f'<button onclick="cp({i})">HTML 복사하기</button><span class="ok" id="ok{i}"></span>'
+        f'<textarea id="t{i}" readonly>{html.escape(h)}</textarea></section>'
+        for i, (f, t, h) in enumerate(previews))
+    copy_page = f"""<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>스마트스토어 상세 HTML 복사 · 산사캠프</title>
+<style>
+body{{margin:0;padding:16px;background:#efe9dd;font-family:sans-serif;color:#211d1a}}
+h1{{font-size:20px;margin:0 0 6px}} .lead{{font-size:14px;margin:0 0 18px;color:#4a443c;line-height:1.6}}
+section{{background:#fbf7ee;border:3px solid #211d1a;border-radius:10px;padding:16px;margin:0 0 16px}}
+h2{{font-size:18px;margin:0 0 4px}} .meta{{font-size:12px;color:#6b6358;margin:0 0 12px}}
+button{{font-size:17px;font-weight:bold;padding:12px 18px;background:#eecf7c;border:3px solid #211d1a;border-radius:30px;color:#211d1a}}
+.ok{{margin-left:10px;font-weight:bold;color:#1f3b2f}}
+textarea{{display:block;width:100%;box-sizing:border-box;height:90px;margin-top:12px;font-size:11px}}
+</style></head><body>
+<h1>스마트스토어 상세 HTML 복사</h1>
+<p class="lead">① 상품 버튼 「HTML 복사하기」 → ② 스마트스토어 상품 수정 › 상세설명 › <b>HTML 작성</b> 칸의 기존 내용을 모두 지우고 붙여넣기 → ③ 모바일 미리보기 확인 → ④ 저장</p>
+{blocks}
+<script>
+function cp(i){{var t=document.getElementById('t'+i),ok=document.getElementById('ok'+i);
+function done(){{ok.textContent='복사됨 ✓';setTimeout(function(){{ok.textContent=''}},3000)}}
+if(navigator.clipboard&&navigator.clipboard.writeText){{navigator.clipboard.writeText(t.value).then(done,function(){{t.select();document.execCommand('copy');done()}})}}
+else{{t.select();document.execCommand('copy');done()}}}}
+</script>
+</body></html>
+"""
+    with open(os.path.join(ROOT, "public", "store-detail", "copy.html"), "w", encoding="utf-8") as f:
+        f.write(copy_page)
 
     for fname, title, nhtml, nchar, nchar_sp, imgs in stats:
         print(f"{fname}\tHTML {nhtml:,}자\t본문 {nchar_sp:,}자(공백 제외 {nchar:,}자)\t이미지 {len(imgs)}장")
