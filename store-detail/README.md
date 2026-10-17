@@ -8,10 +8,10 @@
 
 | 파일 | 상품 | HTML 글자 수 | 화면 글자 수 (공백 포함 / 제외) | 이미지 |
 |---|---|---|---|---|
-| `product-1-hanok-2to4.html` | 1. 한옥 스테이 (2~4인실) | 17,750 | 2,686 / 2,086 | 18장 |
-| `product-2-hanok-5to6.html` | 2. 한옥 가족·단체실 (5~6인실) | 17,930 | 2,797 / 2,176 | 17장 |
-| `product-3-camping.html` | 3. 캠핑존 스테이 | 19,032 | 3,094 / 2,402 | 17장 |
-| `product-4-petkids.html` | 4. Pet & Kids존 | 19,527 | 3,219 / 2,500 | 17장 |
+| `product-1-hanok-2to4.html` | 1. 한옥 스테이 (2~4인실) | 17,954 | 2,686 / 2,086 | 19장 |
+| `product-2-hanok-5to6.html` | 2. 한옥 가족·단체실 (5~6인실) | 18,134 | 2,797 / 2,176 | 18장 |
+| `product-3-camping.html` | 3. 캠핑존 스테이 | 19,236 | 3,094 / 2,402 | 18장 |
+| `product-4-petkids.html` | 4. Pet & Kids존 | 19,731 | 3,219 / 2,500 | 18장 |
 
 ## 배치 순서 (구성표 No)
 
@@ -23,11 +23,11 @@
 
 ## 상품별 이미지 목록
 
-- 1번: 15-hanok-photos-2, 16-twin-room-card, 09-price-receipt + 공통 15장
-- 2번: 15-hanok-photos-2, 09-price-receipt + 공통 15장
-- 3번·4번: 09-price-receipt, 12-site-size + 공통 15장
-- 공통 15장: 01-poster, 02-location-photos-2, 03-date-banner, 07-entry-steps, 19-site-map,
-  20-program-01-yoga, 20-program-02-singing-bowl, 20-program-04-tea-break, 20-program-05-trekking,
+- 1번: 15-hanok-photos-2, 16-twin-room-card, 09-price-receipt + 공통 16장
+- 2번: 15-hanok-photos-2, 09-price-receipt + 공통 16장
+- 3번·4번: 09-price-receipt, 12-site-size + 공통 16장
+- 공통 16장: 01-poster, 02-location-photos-2, 03-date-banner, 07-entry-steps, 19-site-map,
+  20-program-01-yoga, 20-program-02-singing-bowl, 20-program-03-monk-qa, 20-program-04-tea-break, 20-program-05-trekking,
   20-program-06-temple-food-yebul, 20-program-07-docent, 20-program-09-forest-live, 21-program-qr,
   22-timetable, 24-closing-banner
 
@@ -49,6 +49,7 @@
 | 20-program-01-yoga.jpg | 3장 x67~780, 563~962px | 848×423 | 109KB |
 | 20-program-02-singing-bowl.jpg | 3장 x160~780, 1190~1655px | 848×489 | 75KB |
 | 20-program-04-tea-meditation.jpg | 3장 x67~780, 1932~2334px | 848×426 | 96KB |
+| 20-program-03-monk-qa.jpg | 선명상 팀 제공 사진 2장 합성 (스님 상담 / 마음 처방전) | 848×782 | 79KB |
 | 20-program-04-tea-break.jpg | 대표님 제공 자료사진 3장 (시민선방 찻자리) 합성 — 위 1장 + 아래 2장 | 848×772 | 139KB |
 | 20-program-05-trekking.jpg | 3장 x160~780, 2562~3026px | 848×488 | 102KB |
 | 20-program-06-temple-food-yebul.jpg | 3장 x160~780, 3160~3626px | 848×490 | 72KB |
@@ -58,7 +59,7 @@
 | 22-timetable.jpg | 4장 0~1190px 내용을 HTML로 다시 만들어 렌더링 (`timetable/`, "108선다 차명상" → "차 한잔에 쉼을 담고") | 848×1061 | 84KB |
 | 24-closing-banner.jpg | 4장 2834~3090px ('필수' 안내 줄·사전예약 신청 버튼 제외) | 848×256 | 21KB |
 
-프로그램 사진은 원본에 있는 7장만 사용 (03 차담, 08 산사장터는 원본에 사진 없음 → 텍스트만).
+프로그램 사진: 03은 선명상 팀 제공 사진, 04는 대표님 제공 사진, 나머지는 원본 상세에서 자름. 08 산사장터는 사진 없음 → 텍스트만.
 
 ## 미확정 / 확인 필요
 
@@ -105,3 +106,4 @@
 - 2026-10-17: 프로그램 04 사진을 대표님 제공 실제 사진(시민선방 찻자리 3장)으로 교체 → `20-program-04-tea-break.jpg`. 이전 `20-program-04-tea-meditation.jpg`(현수막 합성본)는 상세에서 더 쓰지 않음
 - 2026-10-17: 15번 한옥 사진을 대표님 제공 원본 사진으로 교체 → `15-hanok-photos-2.jpg`. 이미지 속에 있던 '한옥 방사 스테이' 제목·설명은 텍스트로 뺌. 이전 `15-hanok-photos.jpg`는 상세에서 더 쓰지 않음
 - 2026-10-17: 2번 LOCATION 사진을 대표님 제공 원본 사진으로 교체 → `02-location-photos-2.jpg`. 이전 `02-location-photos.jpg`는 상세에서 더 쓰지 않음
+- 2026-10-17: 프로그램 03 '스님과의 즉문즉답 차담'에 선명상 팀 사진(스님 상담·마음 처방전) 추가 → `20-program-03-monk-qa.jpg` (선명상 팀 합류 예정, 마음 처방전은 03 프로그램 안에서 진행)
