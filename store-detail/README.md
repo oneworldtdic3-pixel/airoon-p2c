@@ -26,7 +26,7 @@
 - 1번: 15-hanok-photos-2, 16-twin-room-card, 09-price-receipt + 공통 15장
 - 2번: 15-hanok-photos-2, 09-price-receipt + 공통 15장
 - 3번·4번: 09-price-receipt, 12-site-size + 공통 15장
-- 공통 15장: 01-poster, 02-location-photos, 03-date-banner, 07-entry-steps, 19-site-map,
+- 공통 15장: 01-poster, 02-location-photos-2, 03-date-banner, 07-entry-steps, 19-site-map,
   20-program-01-yoga, 20-program-02-singing-bowl, 20-program-04-tea-break, 20-program-05-trekking,
   20-program-06-temple-food-yebul, 20-program-07-docent, 20-program-09-forest-live, 21-program-qr,
   22-timetable, 24-closing-banner
@@ -37,6 +37,7 @@
 |---|---|---|---|
 | 01-poster.jpg | 1장 0~1197px | 848×1197 | 312KB |
 | 02-location-photos.jpg | 1장 1198~1600px + 1838~2578px (LOCATION·주소 문구, 해시태그 제외하고 이어 붙임) | 848×1142 | 324KB |
+| 02-location-photos-2.jpg | 대표님 제공 쌍계사 가을 원본 사진 4장 합성 (다리·은행나무 전경 / 천년 고찰의 가을 / 화개동천 계곡 / 돌담길 산책, 원본 상세와 같은 배치·설명) | 848×1170 | 352KB |
 | 03-date-banner.jpg | 1장 2655~3080px | 848×425 | 37KB |
 | 07-entry-steps.jpg | 1장 4465~4765px | 848×300 | 29KB |
 | 09-price-receipt.jpg | 2장 36~375px + 425~1420px ("모든 요금은 2박 기준…" 줄 제외) | 848×1334 | 140KB |
@@ -103,3 +104,4 @@
 - 2026-10-17: 12번 캠핑 안내에 '사이트는 예약 순서대로 임의 배정됩니다.' 추가
 - 2026-10-17: 프로그램 04 사진을 대표님 제공 실제 사진(시민선방 찻자리 3장)으로 교체 → `20-program-04-tea-break.jpg`. 이전 `20-program-04-tea-meditation.jpg`(현수막 합성본)는 상세에서 더 쓰지 않음
 - 2026-10-17: 15번 한옥 사진을 대표님 제공 원본 사진으로 교체 → `15-hanok-photos-2.jpg`. 이미지 속에 있던 '한옥 방사 스테이' 제목·설명은 텍스트로 뺌. 이전 `15-hanok-photos.jpg`는 상세에서 더 쓰지 않음
+- 2026-10-17: 2번 LOCATION 사진을 대표님 제공 원본 사진으로 교체 → `02-location-photos-2.jpg`. 이전 `02-location-photos.jpg`는 상세에서 더 쓰지 않음

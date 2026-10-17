@@ -79,7 +79,7 @@ def s2():
         f"<p {P}><b>2026년 11월 6일(금)~8일(일), 2박 3일</b></p>"
         f'<p style="margin:0;font-size:15px;color:#555;">#차(茶) 시배지 #화개동천 #국보 진감선사대성탑비</p>'
     )
-    return img_block("02-location-photos.jpg",
+    return img_block("02-location-photos-2.jpg",
                      "지리산 하동 쌍계사 가을 단풍 사진 - 천년 고찰 쌍계사 구층석탑, 화개동천 계곡, 돌담길 산책") + section("", body)
 
 
