@@ -27,7 +27,7 @@
 - 2번: 15-hanok-photos, 09-price-receipt + 공통 15장
 - 3번·4번: 09-price-receipt, 12-site-size + 공통 15장
 - 공통 15장: 01-poster, 02-location-photos, 03-date-banner, 07-entry-steps, 19-site-map,
-  20-program-01-yoga, 20-program-02-singing-bowl, 20-program-04-tea-meditation, 20-program-05-trekking,
+  20-program-01-yoga, 20-program-02-singing-bowl, 20-program-04-tea-break, 20-program-05-trekking,
   20-program-06-temple-food-yebul, 20-program-07-docent, 20-program-09-forest-live, 21-program-qr,
   22-timetable, 24-closing-banner
 
@@ -47,6 +47,7 @@
 | 20-program-01-yoga.jpg | 3장 x67~780, 563~962px | 848×423 | 109KB |
 | 20-program-02-singing-bowl.jpg | 3장 x160~780, 1190~1655px | 848×489 | 75KB |
 | 20-program-04-tea-meditation.jpg | 3장 x67~780, 1932~2334px | 848×426 | 96KB |
+| 20-program-04-tea-break.jpg | 대표님 제공 자료사진 3장 (시민선방 찻자리) 합성 — 위 1장 + 아래 2장 | 848×772 | 139KB |
 | 20-program-05-trekking.jpg | 3장 x160~780, 2562~3026px | 848×488 | 102KB |
 | 20-program-06-temple-food-yebul.jpg | 3장 x160~780, 3160~3626px | 848×490 | 72KB |
 | 20-program-07-docent.jpg | 3장 x160~780, 3758~4226px | 848×492 | 80KB |
@@ -99,3 +100,4 @@
 - 2026-10-17: 캠핑 1인 입장권 행 삭제, '1인 이용 시에도 사이트 요금 동일' 문구 추가
 - 2026-10-17: 타임테이블 이미지 아래에 '※ 현장 상황 및 운영 일정에 따라 변동될 수 있습니다.' 텍스트 추가
 - 2026-10-17: 12번 캠핑 안내에 '사이트는 예약 순서대로 임의 배정됩니다.' 추가
+- 2026-10-17: 프로그램 04 사진을 대표님 제공 실제 사진(시민선방 찻자리 3장)으로 교체 → `20-program-04-tea-break.jpg`. 이전 `20-program-04-tea-meditation.jpg`(현수막 합성본)는 상세에서 더 쓰지 않음
