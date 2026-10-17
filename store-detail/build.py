@@ -212,8 +212,10 @@ def s14():
 
 
 def s15():
-    return img_block("15-hanok-photos.jpg",
-                     "하동 쌍계사 한옥 방사 스테이 사진 - 지리산 능선이 보이는 한옥 마당, 차나무가 반기는 한옥 대문, 숲과 계곡을 품은 방사 템플스테이 객실")
+    head = section("한옥 방사 스테이",
+                   f'<p style="margin:0;font-size:16px;color:#444;">전통 한옥의 고즈넉한 온돌방에서 머무는 템플스테이형 객실</p>')
+    return head + img_block("15-hanok-photos-2.jpg",
+                            "하동 쌍계사 한옥 방사 스테이 사진 - 지리산 능선이 보이는 한옥 마당, 차나무가 반기는 한옥 대문, 숲과 계곡을 품은 방사 템플스테이 객실")
 
 
 def s16():

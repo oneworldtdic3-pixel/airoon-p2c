@@ -8,10 +8,10 @@
 
 | 파일 | 상품 | HTML 글자 수 | 화면 글자 수 (공백 포함 / 제외) | 이미지 |
 |---|---|---|---|---|
-| `product-1-hanok-2to4.html` | 1. 한옥 스테이 (2~4인실) | 17,489 | 2,643 / 2,054 | 18장 |
-| `product-2-hanok-5to6.html` | 2. 한옥 가족·단체실 (5~6인실) | 17,669 | 2,755 / 2,144 | 17장 |
-| `product-3-camping.html` | 3. 캠핑존 스테이 | 19,026 | 3,094 / 2,402 | 17장 |
-| `product-4-petkids.html` | 4. Pet & Kids존 | 19,521 | 3,219 / 2,500 | 17장 |
+| `product-1-hanok-2to4.html` | 1. 한옥 스테이 (2~4인실) | 17,750 | 2,686 / 2,086 | 18장 |
+| `product-2-hanok-5to6.html` | 2. 한옥 가족·단체실 (5~6인실) | 17,930 | 2,797 / 2,176 | 17장 |
+| `product-3-camping.html` | 3. 캠핑존 스테이 | 19,032 | 3,094 / 2,402 | 17장 |
+| `product-4-petkids.html` | 4. Pet & Kids존 | 19,527 | 3,219 / 2,500 | 17장 |
 
 ## 배치 순서 (구성표 No)
 
@@ -23,8 +23,8 @@
 
 ## 상품별 이미지 목록
 
-- 1번: 15-hanok-photos, 16-twin-room-card, 09-price-receipt + 공통 15장
-- 2번: 15-hanok-photos, 09-price-receipt + 공통 15장
+- 1번: 15-hanok-photos-2, 16-twin-room-card, 09-price-receipt + 공통 15장
+- 2번: 15-hanok-photos-2, 09-price-receipt + 공통 15장
 - 3번·4번: 09-price-receipt, 12-site-size + 공통 15장
 - 공통 15장: 01-poster, 02-location-photos, 03-date-banner, 07-entry-steps, 19-site-map,
   20-program-01-yoga, 20-program-02-singing-bowl, 20-program-04-tea-break, 20-program-05-trekking,
@@ -42,6 +42,7 @@
 | 09-price-receipt.jpg | 2장 36~375px + 425~1420px ("모든 요금은 2박 기준…" 줄 제외) | 848×1334 | 140KB |
 | 12-site-size.jpg | 2장 x55~240, 2320~2522px (3m×4m 도식만, 848폭 여백 채움) | 848×250 | 8KB |
 | 15-hanok-photos.jpg | 2장 2840~3582px | 848×742 | 197KB |
+| 15-hanok-photos-2.jpg | 대표님 제공 한옥 원본 사진 3장 합성 (마당 / 차나무 대문 / 계곡 쪽 방사, 사진 설명 문구 원본과 동일) | 848×840 | 235KB |
 | 16-twin-room-card.jpg | 2장 3582~3936px | 848×354 | 46KB |
 | 19-site-map.jpg | 2장 5355~6163px (하단 주소줄 제외) | 848×808 | 143KB |
 | 20-program-01-yoga.jpg | 3장 x67~780, 563~962px | 848×423 | 109KB |
@@ -101,3 +102,4 @@
 - 2026-10-17: 타임테이블 이미지 아래에 '※ 현장 상황 및 운영 일정에 따라 변동될 수 있습니다.' 텍스트 추가
 - 2026-10-17: 12번 캠핑 안내에 '사이트는 예약 순서대로 임의 배정됩니다.' 추가
 - 2026-10-17: 프로그램 04 사진을 대표님 제공 실제 사진(시민선방 찻자리 3장)으로 교체 → `20-program-04-tea-break.jpg`. 이전 `20-program-04-tea-meditation.jpg`(현수막 합성본)는 상세에서 더 쓰지 않음
+- 2026-10-17: 15번 한옥 사진을 대표님 제공 원본 사진으로 교체 → `15-hanok-photos-2.jpg`. 이미지 속에 있던 '한옥 방사 스테이' 제목·설명은 텍스트로 뺌. 이전 `15-hanok-photos.jpg`는 상세에서 더 쓰지 않음
