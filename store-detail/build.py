@@ -383,7 +383,9 @@ def s25():
             f'<h3 style="margin:0 0 12px;font-size:20px;font-weight:bold;color:#ffffff;">문의 · 주최 · 후원</h3>{body}</div>')
 
 
-COMMON = [s1, s2, s3, s4, s6, s7, s19, s20, s21, s22, s23, s8, s24, s25]
+# 메인 포스터(1)는 모든 상품 맨 위, 그다음 상품별 블록, 그다음 공통 블록
+TOP = [s1]
+COMMON = [s2, s3, s4, s6, s7, s19, s20, s21, s22, s23, s8, s24, s25]
 
 PRODUCTS = [
     ("product-1-hanok.html", "1. 한옥 방사 스테이 (2~6인실)",
@@ -398,7 +400,7 @@ FORBIDDEN = [r"<script", r"<style", r"\bclass=", r"<iframe", r"<form", r"positio
 
 
 def build_product(blocks):
-    inner = "\n".join(b() for b in blocks + COMMON)
+    inner = "\n".join(b() for b in TOP + blocks + COMMON)
     return f"<div {WRAP}>\n{inner}\n</div>\n"
 
 
