@@ -2,7 +2,7 @@
 """산사캠프 스마트스토어 상세 HTML 생성기.
 
 실행: python3 store-detail/build.py  (레포 루트에서)
-결과: store-detail/product-*.html 4개, public/store-detail/preview.html, store-detail/README.md 의 통계 표
+결과: store-detail/product-*.html 3개, public/store-detail/preview.html, store-detail/README.md 의 통계 표
 
 문구·가격을 바꿀 때는 이 파일의 텍스트만 고치고 다시 실행하면 4개 상품에 동시에 반영됩니다.
 스마트스토어 'HTML 작성' 칸 규칙: script/style/class/iframe/form/position:fixed 금지, 인라인 style 만 사용.
@@ -241,6 +241,21 @@ HANOK_5TO6 = [
 ]
 
 
+def s17_balance():
+    # 한옥을 1개 상품으로 합쳐서, 5·6인실은 스토어에서 '객실 1차 + 잔금' 두 옵션으로 결제됨 (구매흐름 점검 결과 금액)
+    body = (
+        f'<div style="background:#fff3d6;border:2px solid {C_RED};border-radius:8px;padding:18px 16px;">'
+        f'<p style="margin:0 0 10px;font-size:18px;font-weight:bold;color:{C_RED};">[필수 확인] 5인실·6인실은 잔금 옵션을 꼭 함께 선택해 주세요!</p>'
+        + lines([
+            "· 5인실 = 객실 1,000,000원 + 5인실 잔금 100,000원 (합계 1,100,000원)",
+            "· 6인실 = 객실 1,000,000원 + 6인실 잔금 300,000원 (합계 1,300,000원)",
+            "<b>잔금 옵션이 빠진 예약은 운영팀이 확인 후 개별 연락드립니다.</b>",
+        ])
+        + "</div>"
+    )
+    return section("", body)
+
+
 def s18(with_6=True):
     # 6인실 안내는 6인실을 파는 5~6인실 상품에만 (2~4인실 상품에는 6인실이 없음)
     body = lines(([
@@ -371,13 +386,11 @@ def s25():
 COMMON = [s1, s2, s3, s4, s6, s7, s19, s20, s21, s22, s23, s8, s24, s25]
 
 PRODUCTS = [
-    ("product-1-hanok-2to4.html", "1. 한옥 스테이 (2~4인실)",
-     [s15, s16, s9, lambda: s17(HANOK_2TO4), lambda: s18(with_6=False)]),
-    ("product-2-hanok-5to6.html", "2. 한옥 가족·단체실 (5~6인실)",
-     [s15, s9, lambda: s17(HANOK_5TO6), s18]),
-    ("product-3-camping.html", "3. 캠핑존 스테이",
+    ("product-1-hanok.html", "1. 한옥 방사 스테이 (2~6인실)",
+     [s15, s16, s9, lambda: s17(HANOK_2TO4 + HANOK_5TO6), s17_balance, s18]),
+    ("product-2-camping.html", "2. 캠핑존 스테이",
      [s9, s10, s11, s12, s14]),
-    ("product-4-petkids.html", "4. Pet & Kids존",
+    ("product-3-petkids.html", "3. Pet & Kids존",
      [s13, s9, s10, s11, s12, s14]),
 ]
 
