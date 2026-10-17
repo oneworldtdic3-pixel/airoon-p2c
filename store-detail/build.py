@@ -316,8 +316,10 @@ def s21():
 
 
 def s22():
-    return img_block("22-timetable.jpg",
-                     "산사캠프 2박 3일 타임테이블 - 11월 6일 체크인, 사찰공양 5식, 요가, 싱잉볼, 트래킹, 다도 명상, 산사토크 공연 19:00–20:30, 11월 8일 11:00 체크아웃")
+    return (img_block("22-timetable.jpg",
+                      "산사캠프 2박 3일 타임테이블 - 11월 6일 체크인, 사찰공양 5식, 요가, 싱잉볼, 트래킹, 다도 명상, 산사토크 공연 19:00–20:30, 11월 8일 11:00 체크아웃")
+            + '<div style="padding:12px 20px 20px;margin:0;background:#162b22;">'
+              '<p style="margin:0;font-size:14px;color:#e8e2d4;text-align:center;">※ 현장 상황 및 운영 일정에 따라 변동될 수 있습니다.</p></div>')
 
 
 RULES = [
