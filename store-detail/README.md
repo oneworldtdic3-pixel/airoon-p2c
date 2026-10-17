@@ -1,0 +1,75 @@
+# 스마트스토어 상세 (2026-10-17 재구성)
+
+구성표 기준으로 "사진·그래픽 = 이미지, 가격·규정·시간·연락처 = 텍스트"로 나눈 상세 HTML입니다.
+원본 통이미지 4장(`public/sansa-camp-detail-20261015-1~4.jpg`)은 건드리지 않았습니다.
+
+- 미리보기: https://sansacamp.com/store-detail/preview.html (noindex)
+- 붙여 넣을 파일 (스마트스토어 'HTML 작성' 칸에 파일 내용 전체 복사)
+
+| 파일 | 상품 | HTML 글자 수 | 화면 글자 수 (공백 포함 / 제외) | 이미지 |
+|---|---|---|---|---|
+| `product-1-hanok-2to4.html` | 1. 한옥 스테이 (2~4인실) | 17,402 | 2,656 / 2,069 | 18장 |
+| `product-2-hanok-5to6.html` | 2. 한옥 가족·단체실 (5~6인실) | 17,484 | 2,716 / 2,119 | 17장 |
+| `product-3-camping.html` | 3. 캠핑존 스테이 | 18,939 | 3,015 / 2,349 | 17장 |
+| `product-4-petkids.html` | 4. Pet & Kids존 | 19,434 | 3,140 / 2,447 | 17장 |
+
+## 배치 순서 (구성표 No)
+
+- 공통 블록: 1 → 2 → 3 → 4 → 6 → 7 → 19 → 20 → 21 → 22 → 23 → 8 → 24 → 25 (5 해시태그는 스토어 태그 칸용, 본문 제외)
+- 1. 한옥 2~4인실: 15 → 16 → 9 → 17(2·3·4인실) → 18 → 공통
+- 2. 한옥 5~6인실: 15 → 9 → 17(5·6인실 + 6인실 7~8번째 추가) → 18 → 공통
+- 3. 캠핑존: 9 → 10 → 11 → 12 → 14 → 공통
+- 4. Pet & Kids존: 13 → 9 → 10 → 11 → 12 → 14 → 공통
+
+## 상품별 이미지 목록
+
+- 1번: 15-hanok-photos, 16-twin-room-card, 09-price-receipt + 공통 15장
+- 2번: 15-hanok-photos, 09-price-receipt + 공통 15장
+- 3번·4번: 09-price-receipt, 12-site-size + 공통 15장
+- 공통 15장: 01-poster, 02-location-photos, 03-date-banner, 07-entry-steps, 19-site-map,
+  20-program-01-yoga, 20-program-02-singing-bowl, 20-program-04-tea-meditation, 20-program-05-trekking,
+  20-program-06-temple-food-yebul, 20-program-07-docent, 20-program-09-forest-live, 21-program-qr,
+  22-timetable, 24-closing-banner
+
+이미지 주소: `https://sansacamp.com/store-detail/20261017/파일명` (파일 위치: `public/store-detail/20261017/`)
+
+| 파일 | 원본 위치 | 크기 | 용량 |
+|---|---|---|---|
+| 01-poster.jpg | 1장 0~1197px | 848×1197 | 312KB |
+| 02-location-photos.jpg | 1장 1198~1600px + 1838~2578px (LOCATION·주소 문구, 해시태그 제외하고 이어 붙임) | 848×1142 | 324KB |
+| 03-date-banner.jpg | 1장 2655~3080px | 848×425 | 37KB |
+| 07-entry-steps.jpg | 1장 4465~4765px | 848×300 | 29KB |
+| 09-price-receipt.jpg | 2장 36~375px + 425~1420px ("모든 요금은 2박 기준…" 줄 제외) | 848×1334 | 140KB |
+| 12-site-size.jpg | 2장 x55~240, 2320~2522px (3m×4m 도식만, 848폭 여백 채움) | 848×250 | 8KB |
+| 15-hanok-photos.jpg | 2장 2840~3582px | 848×742 | 197KB |
+| 16-twin-room-card.jpg | 2장 3582~3936px | 848×354 | 46KB |
+| 19-site-map.jpg | 2장 5355~6163px (하단 주소줄 제외) | 848×808 | 143KB |
+| 20-program-01-yoga.jpg | 3장 x67~780, 563~962px | 848×423 | 109KB |
+| 20-program-02-singing-bowl.jpg | 3장 x160~780, 1190~1655px | 848×489 | 75KB |
+| 20-program-04-tea-meditation.jpg | 3장 x67~780, 1932~2334px | 848×426 | 96KB |
+| 20-program-05-trekking.jpg | 3장 x160~780, 2562~3026px | 848×488 | 102KB |
+| 20-program-06-temple-food-yebul.jpg | 3장 x160~780, 3160~3626px | 848×490 | 72KB |
+| 20-program-07-docent.jpg | 3장 x160~780, 3758~4226px | 848×492 | 80KB |
+| 20-program-09-forest-live.jpg | 3장 x67~780, 4388~4790px | 848×426 | 73KB |
+| 21-program-qr.jpg | 3장 x535~810, 5222~5606px (QR 카드만) | 848×432 | 28KB |
+| 22-timetable.jpg | 4장 0~1190px 내용을 HTML로 다시 만들어 렌더링 (`timetable/`) | 848×1061 | 84KB |
+| 24-closing-banner.jpg | 4장 2834~3090px ('필수' 안내 줄·사전예약 신청 버튼 제외) | 848×256 | 21KB |
+
+프로그램 사진은 원본에 있는 7장만 사용 (03 차담, 08 산사장터는 원본에 사진 없음 → 텍스트만).
+
+## 미확정 / 확인 필요
+
+- **4번 아티스트**: '추후 공개'로 표기 (`build.py` 의 `ARTIST`)
+- **4번 공연 시간 11.6(금)**: 19:00–20:30 으로 둠 — **확인 필요** (`SHOW_TIME_FRI`, 토요일 19:00–20:30 은 확정)
+- **22번 타임테이블**: 공연 칸만 19:30–21:00 → **19:00–20:30** 으로 수정해 다시 렌더링. 나머지 시간·내용은 원본 그대로.
+  단, 원본의 '저녁 사찰공양 18:00–19:30' 행은 그대로라 공연(19:00~)과 30분 겹침 — **확인 필요**
+- **16번 카드 5인실 버전**: 만들지 않음 — **검토 필요** (현재 2~4인실 상품에만 2인실 카드 사용)
+- 18번 요금 유의사항은 원고대로 2~4인실 상품에도 '6인실 최대 8인' 문구가 들어감 — 필요하면 1번 상품에서 제외 검토
+
+## 수정 방법
+
+1. 문구·가격 수정: `store-detail/build.py` 텍스트를 고친 뒤 레포 루트에서 `python3 store-detail/build.py`
+   → 상품 HTML 4개와 `public/store-detail/preview.html` 이 다시 만들어집니다.
+2. 타임테이블 수정: `store-detail/timetable/timetable.html` 수정 → 같은 폴더에 Pretendard OTF
+   (`npm pack pretendard` 의 `dist/public/static/`)를 두고 `node render.mjs <timetable.html 절대경로> out.png`
+   → 848px PNG 를 JPG(품질 85)로 저장해 `public/store-detail/20261017/22-timetable.jpg` 교체.
