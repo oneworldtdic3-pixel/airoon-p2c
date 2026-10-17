@@ -52,7 +52,7 @@
 | 20-program-07-docent.jpg | 3장 x160~780, 3758~4226px | 848×492 | 80KB |
 | 20-program-09-forest-live.jpg | 3장 x67~780, 4388~4790px | 848×426 | 73KB |
 | 21-program-qr.jpg | 3장 x535~810, 5222~5606px (QR 카드만) | 848×432 | 28KB |
-| 22-timetable.jpg | 4장 0~1190px 내용을 HTML로 다시 만들어 렌더링 (`timetable/`) | 848×1061 | 84KB |
+| 22-timetable.jpg | 4장 0~1190px 내용을 HTML로 다시 만들어 렌더링 (`timetable/`, "108선다 차명상" → "차 한잔에 쉼을 담고") | 848×1061 | 84KB |
 | 24-closing-banner.jpg | 4장 2834~3090px ('필수' 안내 줄·사전예약 신청 버튼 제외) | 848×256 | 21KB |
 
 프로그램 사진은 원본에 있는 7장만 사용 (03 차담, 08 산사장터는 원본에 사진 없음 → 텍스트만).
@@ -73,3 +73,8 @@
 2. 타임테이블 수정: `store-detail/timetable/timetable.html` 수정 → 같은 폴더에 Pretendard OTF
    (`npm pack pretendard` 의 `dist/public/static/`)를 두고 `node render.mjs <timetable.html 절대경로> out.png`
    → 848px PNG 를 JPG(품질 85)로 저장해 `public/store-detail/20261017/22-timetable.jpg` 교체.
+
+## 변경 이력
+
+- 2026-10-17: 프로그램명 '108선다 다도 명상' → **'차 한잔에 쉼을 담고'** (티켓 판매 안내, 프로그램 04, 타임테이블 이미지).
+  단, `20-program-04-tea-meditation.jpg` 사진 속 현수막 글씨("쌍계사 시민선방 108 禪茶 다도 명상")는 사진 일부라 그대로임.
