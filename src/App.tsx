@@ -1,4 +1,6 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { naverPageView } from './lib/naverWcs'
 import SponsorBuddhz from './pages/SponsorBuddhz'
 import About from './pages/About'
 import GoExternal from './pages/GoExternal'
@@ -13,6 +15,14 @@ import Admin from './pages/admin/Admin'
 import { Privacy, Terms } from './pages/legal/Legal'
 
 export default function App() {
+  // 네이버 전환추적 PV: 첫 페이지는 index.html 공통 스크립트가 보내고, 이후 라우트 이동마다 보낸다
+  const { pathname } = useLocation()
+  const firstPv = useRef(true)
+  useEffect(() => {
+    if (firstPv.current) { firstPv.current = false; return }
+    naverPageView()
+  }, [pathname])
+
   return (
     <Routes>
       <Route element={<AppShell />}>
