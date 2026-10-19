@@ -28,10 +28,10 @@ const paths: Record<string, { line: ReactNode; fill?: ReactNode }> = {
   qr: { line: <><rect x="4" y="4" width="6" height="6" rx="1" /><rect x="14" y="4" width="6" height="6" rx="1" /><rect x="4" y="14" width="6" height="6" rx="1" /><path d="M14 14h2v2h-2zM18 14h2M14 18v2M18 18h2v2" /></> },
 }
 
-export default function Icon({ name, size = 22, className = '', fill = false }: { name: keyof typeof paths | string; size?: number; className?: string; fill?: boolean }) {
+export default function Icon({ name, size = 22, className = '', fill = false, strokeWidth = 1.75 }: { name: keyof typeof paths | string; size?: number; className?: string; fill?: boolean; strokeWidth?: number }) {
   const d = paths[name]
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
       {fill && d?.fill ? d.fill : d?.line}
     </svg>
   )
