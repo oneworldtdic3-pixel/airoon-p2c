@@ -9,6 +9,9 @@ import QrTicket from './QrTicket'
 import { naverConversion } from '../../lib/naverWcs'
 import type { Booking, Program } from '../../data/types'
 
+// 프로그램 사진: gallery 가 있으면 전체, 없으면 대표 사진 1장
+const picsOf = (p: Program) => (p.gallery?.length ? p.gallery : p.image_url ? [p.image_url] : [])
+
 export default function ProgramList({ toast }: { toast: (m: string) => void }) {
   const { user, programs, sessions, bookings, bookSession, cancelBooking } = useApp()
   const requireAuth = useRequireAuth()
@@ -138,6 +141,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
                       {p.pet_allowed && <Icon name="paw" size={16} className="text-deep" />}
                     </div>
                     <p className="mt-1 text-[12.5px] text-sub">{p.location} · {p.duration}</p>
+                    {p.image_url && <img src={p.image_url} alt={p.title} loading="lazy" className="mt-3 aspect-[16/9] w-full rounded-tile object-cover" />}
                     <p className="mt-2 text-[14px] leading-relaxed text-ink/80">{p.description}</p>
                     <div className="mt-3 flex items-center gap-3">
                       <div className="flex min-w-0 flex-wrap gap-1.5">
@@ -163,6 +167,11 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
           <div>
             <p className="text-[13px] text-sub">{open.location} · {open.duration}{open.pet_allowed && ' · 반려견 동반 가능'}</p>
             <p className="mt-2 text-[14px] leading-relaxed">{open.description}</p>
+            {picsOf(open).length > 0 && (
+              <div className="no-scrollbar mt-4 flex snap-x gap-2 overflow-x-auto">
+                {picsOf(open).map((src) => <img key={src} src={src} alt={open.title} loading="lazy" className="h-48 w-auto max-w-none shrink-0 snap-start rounded-tile object-cover" />)}
+              </div>
+            )}
             <p className="eyebrow mb-2 mt-6">{fmtDay(`${day}T00:00:00+09:00`)}</p>
             <ul className="divide-y hairline border-y">
               {sessions.filter((s) => s.program_id === open.id && dayKey(s.starts_at) === day).sort((a, b) => a.starts_at.localeCompare(b.starts_at)).map((s, k, arr) => {
