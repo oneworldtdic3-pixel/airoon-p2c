@@ -4,6 +4,7 @@ import { EVENT_DAYS, SHOWER_BOOTHS, SHOWER_BOOTH_CAPACITY } from '../../data/con
 import { dayKey, fmtTime } from '../../lib/format'
 import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { Chip } from '../ui'
+import { naverConversion } from '../../lib/naverWcs'
 
 const DAILY_MAX = 2 // 1인당 하루 예약 가능 횟수 (DB book_shower 와 동일)
 
@@ -60,6 +61,7 @@ export default function ShowerGrid({ toast }: { toast: (m: string) => void }) {
                 if (atLimit) return toast(`샤워실은 1인당 하루 ${DAILY_MAX}회까지 예약할 수 있습니다`)
                 const r = await bookShower(s.id)
                 toast(r.ok ? '샤워실을 예약했습니다' : r.error)
+                if (r.ok) naverConversion('schedule')
               })}
               className={`rounded-xl border py-2.5 text-center transition duration-150 active:scale-95 ${mine ? 'border-deep bg-brand-grad text-onbrand' : full ? 'border-transparent bg-gray-50 text-gray-300' : blocked ? 'border-line bg-white text-gray-400' : 'border-line bg-white text-ink'}`}
             >
