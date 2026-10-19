@@ -2,7 +2,7 @@ export type SpotTag = '일주문' | '대웅전 계단' | '차밭 능선' | '불�
 export type BookingStatus = 'confirmed' | 'cancelled' | 'noshow'
 
 export interface Profile { id: string; nickname: string; phone: string | null; team_id: string | null; is_admin: boolean; kakao_alimtalk_consent: boolean }
-export interface Program { id: string; title: string; description: string; location: string; duration: string; pet_allowed: boolean; capacity: number; sort: number; is_active: boolean; time_confirmed?: boolean }
+export interface Program { id: string; title: string; description: string; location: string; duration: string; pet_allowed: boolean; capacity: number; sort: number; is_active: boolean; time_confirmed?: boolean; image_url?: string | null; gallery?: string[] | null }
 export interface ProgramSession { id: string; program_id: string; starts_at: string; capacity: number; booked_count: number; is_active: boolean }
 export interface Booking { id: string; user_id: string; session_id: string; qr_code: string; status: BookingStatus }
 export interface ShowerSlot { id: string; building: string; gender: 'F' | 'M'; starts_at: string; capacity: number; booked_count: number }
