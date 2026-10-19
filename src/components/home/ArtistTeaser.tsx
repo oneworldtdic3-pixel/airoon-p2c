@@ -1,6 +1,6 @@
-const MARQUEE = 'ARTIST LINE-UP · DIVA-X · SANSA CAMP 2026 · 11.06 – 11.08 · HADONG SSANGGYESA · MORE ARTISTS SOON · '
+const MARQUEE = 'ARTIST LINE-UP · JAZZ VOCALIST WOONGSAN · SANSA CAMP 2026 · 11.06 – 11.08 · HADONG SSANGGYESA · MORE ARTISTS SOON · '
 
-/** 아티스트 라인업 배너 — 확정 전 "라인업 예정" 표기. 클릭 이동 없음 */
+/** 아티스트 라인업 배너 — 확정 아티스트: 재즈 보컬리스트 웅산. 클릭 이동 없음 */
 export default function ArtistTeaser() {
   return (
     <section className="px-5 pt-10">
@@ -8,15 +8,15 @@ export default function ArtistTeaser() {
         <img src="/line-up.png" alt="LINE UP" width={103} height={98} className="h-[46px] w-auto" />
         <span className="pb-0.5 text-[15px] font-extrabold tracking-[-0.02em]">아티스트 라인업</span>
       </h2>
-      <div role="img" aria-label="아티스트 라인업 예정: DIVA-X" className="relative block aspect-[5/4] select-none overflow-hidden rounded-tile bg-[#0A0A0B] text-white">
+      <div role="img" aria-label="아티스트 라인업 확정: 재즈 보컬리스트 웅산" className="relative block aspect-[5/4] select-none overflow-hidden rounded-tile bg-[#0A0A0B] text-white">
         <img
-          src="/artists/diva-x.jpg"
+          src="/artists/woongsan.jpg"
           alt=""
           aria-hidden
           loading="lazy"
           decoding="async"
           draggable={false}
-          className="absolute inset-y-0 left-0 h-full w-[calc(100%-2.25rem)] object-cover object-[50%_52%]"
+          className="absolute inset-y-0 left-0 h-full w-[calc(100%-2.25rem)] object-cover object-[30%_30%]"
         />
         {/* 위·아래 글자 가독성용 어둠 */}
         <span aria-hidden className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/60 to-transparent" />
@@ -30,9 +30,9 @@ export default function ArtistTeaser() {
 
         {/* 하단 카피 */}
         <div className="absolute bottom-4 left-4 right-12">
-          <span className="inline-block rounded-full bg-pink px-2.5 py-0.5 text-[11px] font-black tracking-[0.06em] shadow-[0_6px_16px_rgba(255,45,138,0.45)]">라인업 예정</span>
-          <p className="mt-1.5 text-[32px] font-black leading-none tracking-[-0.04em]">DIVA-X</p>
-          <p className="mt-1.5 text-[12px] font-bold text-white/85">산사의 밤을 채울 아티스트 · 더 많은 라인업 곧 공개</p>
+          <span className="inline-block rounded-full bg-pink px-2.5 py-0.5 text-[11px] font-black tracking-[0.06em] shadow-[0_6px_16px_rgba(255,45,138,0.45)]">라인업 확정</span>
+          <p className="mt-1.5 text-[32px] font-black leading-none tracking-[-0.04em]">웅산 <span className="align-middle text-[14px] font-extrabold tracking-[0.12em] text-white/80">WOONGSAN</span></p>
+          <p className="mt-1.5 text-[12px] font-bold text-white/85">아시아를 대표하는 재즈 보컬리스트 · 산사의 밤을 채웁니다</p>
         </div>
 
         {/* 오른쪽 세로 마퀴 */}
