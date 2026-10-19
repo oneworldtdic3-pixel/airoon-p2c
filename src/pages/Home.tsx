@@ -21,7 +21,7 @@ export default function Home() {
       <TodaySchedule />
       <LivePhotos />
       <SponsorStrip />
-      <div className="h-44" />
+      <div className="h-60" />
       <TicketFab />
       <HomePopup />
       <PushPrompt />
