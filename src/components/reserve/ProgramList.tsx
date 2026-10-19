@@ -6,6 +6,7 @@ import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { BottomSheet, Chip, Tag } from '../ui'
 import Icon from '../ui/Icon'
 import QrTicket from './QrTicket'
+import { naverConversion } from '../../lib/naverWcs'
 import type { Booking, Program } from '../../data/types'
 
 export default function ProgramList({ toast }: { toast: (m: string) => void }) {
@@ -42,6 +43,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
       const r = await bookSession(sid)
       if (!r.ok) return toast(r.error)
       toast('예약되었습니다')
+      naverConversion('schedule')
       setOpen(null)
       if (r.booking) setTicket(r.booking)
     })
