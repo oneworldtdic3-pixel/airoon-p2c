@@ -4,6 +4,7 @@ import { EVENT_DAYS } from '../../data/constants'
 import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { Chip } from '../ui'
 import Icon from '../ui/Icon'
+import { naverConversion } from '../../lib/naverWcs'
 
 const zones = [
   { id: 'P1' as const, name: '제1주차장', how: '도보 10분', desc: '일주문 입구까지 걸어서' },
@@ -56,6 +57,7 @@ export default function ParkingForm({ toast }: { toast: (m: string) => void }) {
         onClick={() => requireAuth(async () => {
           const r = await saveParking(zone, car, dates)
           toast(r.ok ? '주차 정보를 등록했습니다' : r.error)
+          if (r.ok) naverConversion('lead')
         })}
       >
         {parking ? '주차 정보 수정' : '등록하기'}
