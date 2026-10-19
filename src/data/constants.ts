@@ -36,6 +36,7 @@ export const TEST_PHONES = { user: '+821012345678', admin: '+821000000000', otp:
 export const SOCIAL = [
   { id: 'instagram', name: '인스타그램', handle: '@sansacamp', url: 'https://www.instagram.com/sansacamp' },
   { id: 'youtube', name: '유튜브', handle: '@sansacamp', url: 'https://www.youtube.com/@sansacamp' },
+  { id: 'tiktok', name: '틱톡', handle: '@sansacamp', url: 'https://www.tiktok.com/@sansacamp' },
 ] as const
 
 /** 공양·예불 — 예약 없는 고정 안내 일정. 첫날 14:00 입재, 마지막 날 11:00 회향에 맞춤 */
