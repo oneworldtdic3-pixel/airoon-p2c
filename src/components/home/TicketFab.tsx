@@ -22,9 +22,10 @@ const Tent = () => (
   </svg>
 )
 
-export default function TicketFab() {
+/** hidden: 홈 맨 아래(후원사·SNS)까지 내려오면 내용을 가리지 않게 살짝 내려가며 사라진다 */
+export default function TicketFab({ hidden = false }: { hidden?: boolean }) {
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-[calc(88px+env(safe-area-inset-bottom))] z-30 mx-auto flex max-w-[430px] flex-col items-end gap-2.5 px-4" aria-label="문의·예매 바로가기">
+    <div inert={hidden} className={`pointer-events-none fixed inset-x-0 bottom-[calc(88px+env(safe-area-inset-bottom))] z-30 mx-auto flex max-w-[430px] flex-col items-end gap-2.5 px-4 transition duration-300 ease-out ${hidden ? 'translate-y-6 opacity-0 [&>*]:!pointer-events-none' : ''}`} aria-label="문의·예매 바로가기">
       <button type="button" onClick={() => openExternal(KAKAO_CHANNEL.chat)} aria-label="카카오톡으로 문의하기"
         className="pointer-events-auto flex h-14 w-14 flex-col items-center justify-center gap-0.5 rounded-full bg-[#FEE500] text-[#191919] shadow-[0_10px_24px_rgba(120,100,0,0.28)] ring-1 ring-[#EBD300] transition active:scale-95">
         <KakaoBubble />
