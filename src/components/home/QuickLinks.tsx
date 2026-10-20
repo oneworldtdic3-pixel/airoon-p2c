@@ -12,25 +12,22 @@ const items = [
 
 export default function QuickLinks() {
   return (
-    <section className="px-5 pt-12">
-      <h2 className="mb-4 flex items-end gap-1.5">
+    <section className="px-5 pt-10">
+      <h2 className="mb-3 flex items-end gap-1.5">
         <img src="/now-sansa.png?v=2" alt="NOW Sansa" width={166} height={94} className="h-[46px] w-auto" />
         <span className="pb-0.5 text-[15px] font-extrabold tracking-[-0.02em]">사전 예약하기</span>
       </h2>
-      <div className="grid grid-cols-2 gap-3">
+      {/* 다른 앱의 퀵메뉴처럼: 작은 아이콘 타일 + 아래 라벨, 한 줄에 다섯 개 */}
+      <div className="grid grid-cols-5 gap-x-1.5">
         {items.map((it) => (
-          <Link
-            key={it.label}
-            to={it.to}
-            style={{ backgroundImage: it.grad, boxShadow: `0 14px 26px -12px ${it.glow}, inset 0 1px 0 rgba(255,255,255,0.35)` }}
-            className="relative flex aspect-[1.2] flex-col items-center justify-center gap-3 overflow-hidden rounded-card text-white transition duration-200 active:scale-[0.96]"
-          >
-            {/* 좌상단 광택 — 평면 색면에 입체감 */}
-            <span aria-hidden="true" className="pointer-events-none absolute -left-6 -top-10 h-28 w-28 rounded-full bg-white/25 blur-2xl" />
-            <span className="relative grid h-14 w-14 place-items-center rounded-[18px] bg-white/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.5),0_6px_14px_-6px_rgba(0,0,0,0.18)] ring-1 ring-white/30">
-              <Icon name={it.icon} size={30} strokeWidth={2.1} className="drop-shadow-[0_1px_1px_rgba(0,0,0,0.12)]" />
+          <Link key={it.label} to={it.to} className="flex flex-col items-center gap-1.5 py-1 transition duration-200 active:scale-[0.94]">
+            <span
+              style={{ backgroundImage: it.grad, boxShadow: `0 8px 16px -8px ${it.glow}, inset 0 1px 0 rgba(255,255,255,0.4)` }}
+              className="grid h-[52px] w-[52px] place-items-center rounded-[17px] text-white"
+            >
+              <Icon name={it.icon} size={25} strokeWidth={2.1} className="drop-shadow-[0_1px_1px_rgba(0,0,0,0.12)]" />
             </span>
-            <span className="relative text-[16px] font-extrabold tracking-[-0.02em] [text-shadow:0_1px_2px_rgba(0,0,0,0.12)]">{it.label}</span>
+            <span className="whitespace-nowrap text-[12px] font-bold tracking-[-0.02em] text-ink">{it.label}</span>
           </Link>
         ))}
       </div>
