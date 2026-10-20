@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import PageHeader from '../components/layout/PageHeader'
 import PhotoGrid from '../components/photo/PhotoGrid'
 import UploadSheet from '../components/photo/UploadSheet'
@@ -16,7 +17,10 @@ export default function Photo() {
   const { photos } = useApp()
   const [spot, setSpot] = useState<SpotTag | 'ALL'>('ALL')
   const [upload, setUpload] = useState(false)
-  const [view, setView] = useState<PhotoT | null>(null)
+  // 열어 둔 사진은 주소(?p=사진id)에 담는다 — 댓글 알림을 누르면 그 사진이 바로 열린다
+  const [sp, setSp] = useSearchParams()
+  const viewId = sp.get('p')
+  const setView = (p: PhotoT | null) => setSp(p ? { p: p.id } : {}, { replace: !p })
   const { msg, show } = useToast()
   const requireAuth = useRequireAuth()
   const list = useMemo(
@@ -40,7 +44,7 @@ export default function Photo() {
       </div>
 
       <UploadSheet open={upload} onClose={() => setUpload(false)} toast={show} />
-      <PhotoViewer photoId={view?.id ?? null} onClose={() => setView(null)} toast={show} />
+      <PhotoViewer photoId={viewId} onClose={() => setView(null)} toast={show} />
       <Toast msg={msg} />
     </>
   )

@@ -3,8 +3,9 @@
 //  POST { kind: 'init' }                          VAPID 키가 없으면 만들어 Vault 에 저장 (개인키는 서버 밖으로 나가지 않음)
 //  POST { kind: 'reminder' }                      매 분 크론: 10분 뒤 시작하는 프로그램 예약자의 기기로
 //  POST { kind: 'notice', notification_id }       알림 발행 트리거: 구독한 모든 기기로
+//  POST { kind: 'comment', comment_id }           사진 댓글 트리거: 사진 주인·같은 사진 댓글 단 사람(user_notifications)의 기기로
 //  POST { kind: 'self-test', endpoint }           기기 스스로 테스트 (이미 등록된 그 endpoint 로만 보냄)
-//  인증: init·reminder·notice 는 헤더 x-cron-secret 을 Vault 값과 대조 (alimtalk_check_secret 공용)
+//  인증: init·reminder·notice·comment 는 헤더 x-cron-secret 을 Vault 값과 대조 (alimtalk_check_secret 공용)
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts'
 import { createClient } from 'npm:@supabase/supabase-js@2'
 import { generateVapidKeys, sendPush, type PushSub, type VapidKeys } from './webpush.ts'
@@ -64,8 +65,23 @@ async function noticeJobs(notificationId: string): Promise<Job[]> {
   return subs.map((s) => ({ sub: s, ref_id: n.id, msg: { title: n.title, body: n.body || '', url: '/notifications', tag: `notice-${n.id}` } }))
 }
 
+async function commentJobs(commentId: string): Promise<Job[]> {
+  const { data: rows, error } = await admin.from('user_notifications').select('user_id, photo_id, on_my_photo, actor_nickname, body').eq('comment_id', commentId)
+  if (error) throw error
+  if (!rows?.length) return []
+  const { data: subs, error: e2 } = await admin.from('push_subscriptions').select('id, endpoint, p256dh, auth, user_id').in('user_id', [...new Set(rows.map((r) => r.user_id))])
+  if (e2) throw e2
+  return rows.flatMap((r) => (subs ?? []).filter((s) => s.user_id === r.user_id).map((s) => ({
+    sub: s as Sub, ref_id: commentId,
+    msg: {
+      title: r.on_my_photo ? `${r.actor_nickname}님이 내 사진에 댓글을 남겼어요` : `${r.actor_nickname}님이 함께 댓글 단 사진에 답했어요`,
+      body: r.body, url: `/photo?p=${r.photo_id}`, tag: `comment-${r.photo_id}`,
+    },
+  })))
+}
+
 // ---- 발송 + 기록 -------------------------------------------------------------------------------
-async function run(kind: 'reminder' | 'notice', jobs: Job[], keys: VapidKeys) {
+async function run(kind: 'reminder' | 'notice' | 'comment', jobs: Job[], keys: VapidKeys) {
   if (!jobs.length) return { sent: 0, failed: 0, skipped: 0 }
   const { data: done } = await admin.from('push_log').select('ref_id, subscription_id').eq('kind', kind).in('ref_id', [...new Set(jobs.map((j) => j.ref_id))])
   const doneKey = new Set((done ?? []).map((d) => `${d.ref_id}:${d.subscription_id}`))
@@ -97,7 +113,7 @@ async function run(kind: 'reminder' | 'notice', jobs: Job[], keys: VapidKeys) {
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return json({})
   if (req.method !== 'POST') return json({ error: 'method' }, 405)
-  let payload: { kind?: string; notification_id?: string; endpoint?: string } = {}
+  let payload: { kind?: string; notification_id?: string; comment_id?: string; endpoint?: string } = {}
   try { payload = await req.json() } catch { /* empty body */ }
   const kind = payload.kind
 
@@ -116,10 +132,10 @@ Deno.serve(async (req) => {
     const { data: ok } = await admin.rpc('alimtalk_check_secret', { p: req.headers.get('x-cron-secret') ?? '' })
     if (!ok) return json({ error: 'unauthorized' }, 401)
     if (kind === 'init') { const k = await vapid(true); return json({ ok: true, publicKey: k?.publicKey }) }
-    if (kind !== 'reminder' && kind !== 'notice') return json({ error: 'bad kind' }, 400)
+    if (kind !== 'reminder' && kind !== 'notice' && kind !== 'comment') return json({ error: 'bad kind' }, 400)
     const keys = await vapid()
     if (!keys) return json({ skipped: 'not_configured' })
-    const jobs = kind === 'reminder' ? await reminderJobs() : await noticeJobs(payload.notification_id ?? '')
+    const jobs = kind === 'reminder' ? await reminderJobs() : kind === 'comment' ? await commentJobs(payload.comment_id ?? '') : await noticeJobs(payload.notification_id ?? '')
     return json(await run(kind, jobs, keys))
   } catch (e) {
     console.error('send-push', e instanceof Error ? e.message : e)

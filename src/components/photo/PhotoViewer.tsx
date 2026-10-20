@@ -1,4 +1,6 @@
+import { useEffect } from 'react'
 import { useApp } from '../../data/AppProvider'
+import { useMyNotifications } from '../../data/myNotifications'
 import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { timeAgo } from '../../lib/format'
 import { BottomSheet } from '../ui'
@@ -10,6 +12,9 @@ export default function PhotoViewer({ photoId, onClose, toast }: { photoId: stri
   const { photos, likedIds, toggleLike } = useApp()
   const requireAuth = useRequireAuth()
   const current = photoId ? photos.find((p) => p.id === photoId) : undefined
+  // 이 사진의 댓글 알림은 사진을 열면 읽은 것으로
+  const { markRead } = useMyNotifications()
+  useEffect(() => { if (current) void markRead({ photoId: current.id }) }, [current, markRead])
   return (
     <BottomSheet open={!!current} onClose={onClose} title={current?.spot_tag}>
       {current && (

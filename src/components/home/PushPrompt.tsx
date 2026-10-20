@@ -64,6 +64,7 @@ export default function PushPrompt() {
         <ul className="mt-3">
           <Row>우천·장소 변경 같은 <b>운영 공지</b>를 바로 받아요</Row>
           <Row>예약한 프로그램 <b>시작 10분 전</b>에 알려 드려요</Row>
+          <Row>내 사진에 <b>댓글</b>이 달리면 바로 답할 수 있어요</Row>
           <Row>무료이고, 알림 탭에서 언제든 끌 수 있어요</Row>
         </ul>
         {state === 'ios-install' && <p className="mt-2 rounded-xl bg-sun/30 px-3 py-2 text-[12.5px] leading-snug">아이폰은 산사캠프를 <b>홈 화면에 추가</b>한 뒤 그 앱에서 알림을 켤 수 있어요.</p>}
