@@ -6,7 +6,7 @@ import { fmtPhone } from '../../lib/format'
 import { Chip } from '../../components/ui'
 
 type Row = { id: string; zone: 'P1' | 'P2'; car_number: string; dates: string[]; updated_at: string; profiles: { nickname: string; phone: string | null } | null }
-const ZONE = { P1: '제1주차장 · 도보', P2: '제2주차장 · 셔틀' } as const
+const ZONE = { P1: '제1주차장 · 도보', P2: '제2주차장 · 도보' } as const
 
 /** 관리자 · 주차 등록 목록. 차량번호 검색, 구역·일차 필터, 현장 대조용 */
 export default function Parking({ toast }: { toast: (m: string) => void }) {

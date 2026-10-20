@@ -3,6 +3,7 @@ import Icon from '../ui/Icon'
 
 // 타일마다 브랜드 팔레트(민트·스카이·선·엠버)에서 한 색씩 — 같은 채도·명도로 맞춰 한 세트로 읽히게 한다.
 const items = [
+  { to: '/reserve?tab=camp', label: '캠핑 사이트', icon: 'pin', grad: 'linear-gradient(155deg, #7CE0A0 0%, #3DBF6E 55%, #1E8E5A 100%)', glow: 'rgba(30,142,90,0.42)' },
   { to: '/reserve?tab=program', label: '프로그램', icon: 'lantern', grad: 'linear-gradient(155deg, #5EE6C6 0%, #22CDB8 55%, #0AB5B0 100%)', glow: 'rgba(10,181,176,0.45)' },
   { to: '/reserve?tab=shower', label: '샤워실', icon: 'shower', grad: 'linear-gradient(155deg, #7FD8FF 0%, #4DB8F5 55%, #3399E8 100%)', glow: 'rgba(51,153,232,0.42)' },
   { to: '/reserve?tab=parking', label: '주차장', icon: 'car', grad: 'linear-gradient(155deg, #FFCB52 0%, #FBAE2C 55%, #F29312 100%)', glow: 'rgba(242,147,18,0.42)' },

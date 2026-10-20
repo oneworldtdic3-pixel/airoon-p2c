@@ -7,8 +7,8 @@ import Icon from '../ui/Icon'
 import { naverConversion } from '../../lib/naverWcs'
 
 const zones = [
-  { id: 'P1' as const, name: '제1주차장', how: '도보 10분', desc: '일주문 입구까지 걸어서' },
-  { id: 'P2' as const, name: '제2주차장', how: '셔틀 7분', desc: '20분 간격 상시 운행' },
+  { id: 'P1' as const, name: '제1주차장', how: '도보 이동', desc: '일주문 입구까지 걸어서' },
+  { id: 'P2' as const, name: '제2주차장', how: '도보 이동', desc: '도보 동선은 행사장 약도 참고' },
 ]
 
 export default function ParkingForm({ toast }: { toast: (m: string) => void }) {
