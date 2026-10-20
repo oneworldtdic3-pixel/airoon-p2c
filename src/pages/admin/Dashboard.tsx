@@ -52,7 +52,7 @@ export default function Dashboard() {
         <h2 className="eyebrow mb-1">주차장</h2>
         <ul className="divide-y hairline text-[14px]">
           <li className="flex justify-between py-3"><span className="font-bold">제1주차장 · 도보</span><span className="tnum">{s.parking.P1}대</span></li>
-          <li className="flex justify-between py-3"><span className="font-bold">제2주차장 · 셔틀</span><span className="tnum">{s.parking.P2}대</span></li>
+          <li className="flex justify-between py-3"><span className="font-bold">제2주차장 · 도보</span><span className="tnum">{s.parking.P2}대</span></li>
           <li className="flex justify-between py-3"><span className="font-bold">럭키드로우 응모</span><span className="tnum">{s.lucky}명</span></li>
         </ul>
       </section>
