@@ -7,6 +7,7 @@ import { priceLabel, useCampEvent, useZoneSummary, type ZoneSummary } from '../.
 import { openExternal } from '../../lib/external'
 import { BottomSheet } from '../ui'
 import { TICKETS } from './TicketFab'
+import PetNotice from '../camp/PetNotice'
 
 // 홈 — 캠핑존 A/B/C 비교 카드. 숫자(남은 자리·최근 예약)는 관리자 > 캠핑 > 구역·설정에서 고친다.
 export default function ZoneCards() {
@@ -66,6 +67,7 @@ export default function ZoneCards() {
           )
         })}
       </div>
+      {list.some((z) => z.pet_allowed) && <PetNotice className="mt-3" />}
 
       <BottomSheet open={!!alertFor} onClose={() => setAlertFor(null)} title="빈자리 알림 신청">
         {alertFor && (

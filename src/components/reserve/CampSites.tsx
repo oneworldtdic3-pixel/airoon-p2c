@@ -10,6 +10,7 @@ import { extraFeeLines, priceLabel, siteNumberKey, useCampBoard, useCampEvent, u
 import { useRequireAuth } from '../../hooks/useRequireAuth'
 import { naverConversion } from '../../lib/naverWcs'
 import SiteMap, { SiteLegend, siteState } from '../camp/SiteMap'
+import PetNotice from '../camp/PetNotice'
 import Icon from '../ui/Icon'
 
 type Order = { order_id: string; zone_id: string | null; qty: number; used: number; buyer_name: string }
@@ -310,14 +311,17 @@ export default function CampSites({ toast }: { toast: (m: string) => void }) {
   function ZoneInfo() {
     if (!zones.length) return null
     return (
-      <ul className="space-y-2">
-        {zones.map((z) => (
-          <li key={z.id} className="flex items-center gap-3 rounded-tile border border-line px-4 py-3">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1F7A8C] text-[14px] font-black text-white">{z.code}</span>
-            <span className="min-w-0 flex-1"><span className="block text-[14px] font-bold">{z.name} <span className="tnum font-normal text-sub">· {z.capacity}동</span></span><span className="block text-[12px] text-sub">{z.subtitle}{z.pet_allowed ? ' · 반려견 가능' : ''}{z.ground ? ` · ${z.ground}` : ''}</span></span>
-          </li>
-        ))}
-      </ul>
+      <div className="space-y-3">
+        <ul className="space-y-2">
+          {zones.map((z) => (
+            <li key={z.id} className="flex items-center gap-3 rounded-tile border border-line px-4 py-3">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1F7A8C] text-[14px] font-black text-white">{z.code}</span>
+              <span className="min-w-0 flex-1"><span className="block text-[14px] font-bold">{z.name} <span className="tnum font-normal text-sub">· {z.capacity}동</span></span><span className="block text-[12px] text-sub">{z.subtitle}{z.pet_allowed ? ' · 반려견 가능' : ''}{z.ground ? ` · ${z.ground}` : ''}</span></span>
+            </li>
+          ))}
+        </ul>
+        {zones.some((z) => z.pet_allowed) && <PetNotice />}
+      </div>
     )
   }
 }
