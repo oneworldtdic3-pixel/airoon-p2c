@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "design/sansa-camp-poster/index.html"
+        ],
+        "createdAt": "2026-10-23T08:09:23.444Z",
+        "reason": "Claude: cream hanji-paper background is carried over from the user's original Sansa Camp poster PDF, which uses the same cream surface"
+      }
+    ]
+  }
+}
