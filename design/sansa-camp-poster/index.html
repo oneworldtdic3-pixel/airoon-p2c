@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080">
+<title>산사캠프 · 쌍계사 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700;900&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pine-950: #14211b;
+    --pine-900: #1b2b23;
+    --pine-800: #24382e;
+    --pine-600: #4a6355;
+    --paper:    #f3ece0;
+    --paper-2:  #ebe2d2;
+    --ink:      #1f2620;
+    --ink-2:    #4b5249;
+    --ink-3:    #63665b;
+    --rule:     #d6cbb7;
+    --dancheong:#b4472a;   /* single accent: 단청 vermilion */
+    --gold:     #c9a96a;   /* only on dark surfaces, as a tint of paper */
+    --serif: "Noto Serif KR", serif;
+    --sans: "IBM Plex Sans KR", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "tnum" 1;
+    word-break: keep-all;
+  }
+  .poster { position: relative; width: 1080px; display: flex; flex-direction: column; }
+
+  /* paper grain */
+  .poster::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 50;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .2  0 0 0 0 .17  0 0 0 0 .1  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity: .16; mix-blend-mode: multiply;
+  }
+
+  .eyebrow { font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; }
+  .label { font-size: 13px; font-weight: 500; color: var(--ink-3); letter-spacing: .02em; }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative; color: var(--paper);
+    background:
+      radial-gradient(120% 80% at 85% 0%, #2f4a3b 0%, transparent 55%),
+      radial-gradient(90% 70% at 0% 100%, #101a15 0%, transparent 60%),
+      var(--pine-900);
+    padding: 60px 72px 150px;
+  }
+  .hero-top { display: flex; justify-content: space-between; align-items: baseline; }
+  .hero-top .eyebrow { color: var(--gold); }
+  .hero-top .edition { font-family: var(--serif); font-weight: 600; font-size: 17px; color: var(--paper); opacity: .85; letter-spacing: .02em; }
+
+  .title-block { position: relative; z-index: 2; margin-top: 40px; display: grid; grid-template-columns: 1fr auto; align-items: start; }
+  .title {
+    font-family: var(--serif); font-weight: 900; font-size: 168px; line-height: 1; letter-spacing: -.05em;
+    color: var(--paper);
+  }
+  .title .dot { color: var(--dancheong); margin: 0 -.06em; }
+  .temple {
+    writing-mode: vertical-rl; font-family: var(--serif); font-weight: 700; font-size: 64px; letter-spacing: .14em;
+    color: var(--paper); line-height: 1; padding-top: 6px;
+    border-left: 1px solid rgba(243,236,224,.25); padding-left: 22px;
+  }
+  .temple small { display: block; font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: .3em; color: var(--gold); margin-top: 18px; }
+  .lede { margin-top: 22px; font-family: var(--serif); font-weight: 500; font-size: 30px; letter-spacing: -.01em; color: #e8e0cf; max-width: 760px; }
+
+  .meta { position: relative; z-index: 3; margin-top: 36px; display: flex; border-top: 1px solid rgba(243,236,224,.22); width: fit-content; }
+  .meta div { padding: 16px 40px 0 0; margin-right: 40px; }
+  .meta div + div { border-left: 1px solid rgba(243,236,224,.22); padding-left: 40px; }
+  .meta .label { color: var(--gold); font-size: 12px; letter-spacing: .14em; }
+  .meta strong { display: block; margin-top: 4px; font-size: 24px; font-weight: 600; letter-spacing: -.01em; color: var(--paper); white-space: nowrap; }
+
+  .ridges { position: absolute; left: 0; width: 100%; bottom: -1px; height: 200px; z-index: 0; }
+
+  /* ---------- SECTION SCAFFOLD ---------- */
+  .wrap { padding: 0 72px; }
+  .sec-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 22px; }
+  .sec-head h2 { font-family: var(--serif); font-weight: 700; font-size: 30px; letter-spacing: -.02em; }
+  .sec-head .aside { font-size: 14px; font-weight: 600; color: var(--dancheong); }
+
+  /* ---------- INCLUDED ---------- */
+  .included { margin-top: 34px; }
+  .inc-list { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 2px solid var(--ink); }
+  .inc-list li { list-style: none; padding: 18px 20px 4px 0; position: relative; }
+  .inc-list li + li { padding-left: 22px; border-left: 1px solid var(--rule); }
+  .inc-list .num { font-family: var(--serif); font-size: 14px; font-weight: 600; color: var(--ink-3); }
+  .inc-list b { display: block; margin-top: 6px; font-family: var(--serif); font-weight: 700; font-size: 26px; letter-spacing: -.02em; }
+  .inc-list span { display: block; margin-top: 2px; font-size: 15px; color: var(--ink-2); }
+  .inc-list li.hl b, .inc-list li.hl .num { color: var(--dancheong); }
+
+  /* ---------- STAYS ---------- */
+  .stays { margin-top: 44px; display: grid; grid-template-columns: 1.08fr 1fr; background: #faf6ee; border-radius: 6px; box-shadow: 0 1px 0 #fff inset, 0 24px 48px -28px rgba(42,52,38,.35); }
+  .stay { padding: 34px 36px 30px; }
+  .stay + .stay { border-left: 1px solid var(--rule); }
+  .stay-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .stay-head h3 { font-family: var(--serif); font-weight: 900; font-size: 38px; letter-spacing: -.03em; }
+  .stay-head .count { font-size: 14px; font-weight: 600; color: var(--ink-2); }
+  .stay-head .count b { font-family: var(--serif); font-size: 22px; color: var(--ink); font-weight: 700; margin: 0 1px; }
+
+  .price { margin-top: 16px; display: flex; align-items: baseline; gap: 14px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
+  .price .label { font-size: 14px; color: var(--ink-2); font-weight: 600; }
+  .price b { font-family: var(--serif); font-size: 52px; font-weight: 900; color: var(--dancheong); line-height: 1; letter-spacing: -.02em; }
+  .facts { margin-top: 14px; display: grid; gap: 4px; font-size: 16px; }
+  .facts .sub { color: var(--ink-3); font-size: 14px; }
+
+  .rental { margin-top: 18px; padding: 14px 16px; background: var(--paper-2); border-radius: 4px; }
+  .rental h4 { font-size: 16px; font-weight: 700; }
+  .rental h4 em { font-style: normal; color: var(--dancheong); }
+  .rental h4 small { font-weight: 500; color: var(--ink-3); font-size: 14px; }
+  .rental p { font-size: 14px; color: var(--ink-2); line-height: 1.6; }
+  .rental p.own { margin-top: 4px; font-weight: 600; color: var(--ink); }
+
+  .zones { margin-top: 20px; }
+  .zone-bar { display: flex; height: 10px; border-radius: 2px; overflow: hidden; gap: 2px; }
+  .zone-legend { margin-top: 10px; display: flex; font-size: 13px; color: var(--ink-2); }
+  .zone-legend span { display: flex; align-items: baseline; gap: 6px; }
+  .zone-legend b { font-family: var(--serif); font-size: 17px; color: var(--ink); }
+
+  .hanok .intro { margin-top: 12px; font-size: 15px; color: var(--ink-2); }
+  .rooms { margin-top: 18px; border-top: 2px solid var(--ink); }
+  .rooms li { list-style: none; display: grid; grid-template-columns: 1fr auto; align-items: baseline; padding: 13px 0; border-bottom: 1px solid var(--rule); }
+  .rooms .r { font-family: var(--serif); font-weight: 700; font-size: 20px; letter-spacing: -.01em; }
+  .rooms .r small { font-family: var(--sans); font-weight: 500; font-size: 13px; color: var(--ink-3); margin-left: 8px; letter-spacing: 0; }
+  .rooms .p { font-weight: 700; font-size: 15px; color: var(--dancheong); }
+  .hanok .notes { margin-top: 14px; font-size: 14px; color: var(--ink-2); line-height: 1.65; }
+
+  .group-note { margin-top: 14px; font-size: 13.5px; color: var(--ink-3); }
+
+  /* ---------- PROGRAM ---------- */
+  .program { margin-top: 40px; }
+  .prog-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 2px solid var(--ink); }
+  .prog { padding: 15px 22px 15px 0; border-bottom: 1px solid var(--rule); }
+  .prog:nth-child(3n+2), .prog:nth-child(3n) { padding-left: 22px; border-left: 1px solid var(--rule); }
+  .prog .k { font-size: 13px; font-weight: 600; color: var(--ink-3); letter-spacing: .01em; }
+  .prog .t { margin-top: 2px; font-family: var(--serif); font-weight: 700; font-size: 22px; letter-spacing: -.02em; }
+  .prog.feature { background: var(--pine-900); color: var(--paper); border-left-color: var(--pine-900); border-radius: 0 0 4px 4px; }
+  .prog.feature .k { color: var(--gold); }
+
+  /* ---------- NOTICE ---------- */
+  .notice { margin: 30px 0 48px; display: grid; grid-template-columns: 200px 1fr; gap: 28px; padding-top: 22px; border-top: 1px solid var(--rule); }
+  .notice h3 { font-family: var(--serif); font-weight: 700; font-size: 20px; line-height: 1.35; letter-spacing: -.02em; }
+  .notice h3 em { font-style: normal; color: var(--dancheong); }
+  .rules { display: grid; gap: 8px; }
+  .rules li { list-style: none; font-size: 15px; color: var(--ink-2); padding-left: 16px; position: relative; line-height: 1.5; }
+  .rules li::before { content: ""; position: absolute; left: 0; top: .62em; width: 6px; height: 6px; background: var(--dancheong); transform: rotate(45deg); }
+  .rules b { color: var(--ink); font-weight: 700; }
+
+  /* ---------- FOOTER ---------- */
+  footer { margin-top: auto; background: var(--pine-950); color: var(--paper); padding: 40px 72px 38px; display: grid; grid-template-columns: 1.15fr 1fr; gap: 28px 40px; }
+  footer .label { color: var(--gold); letter-spacing: .14em; font-size: 12px; }
+  footer .big { margin-top: 8px; font-family: var(--serif); font-weight: 700; font-size: 30px; letter-spacing: -.02em; line-height: 1.25; }
+  footer .small { margin-top: 10px; font-size: 14px; color: #bcb6a8; }
+  footer .small b { color: var(--paper); font-weight: 600; border-bottom: 1px solid var(--dancheong); }
+  footer .right { text-align: right; }
+  footer .tel { font-family: var(--serif); font-weight: 700; font-size: 30px; letter-spacing: -.01em; margin-top: 8px; }
+  footer .tel small { font-family: var(--sans); font-size: 15px; font-weight: 500; color: #bcb6a8; margin-right: 10px; letter-spacing: 0; }
+  footer .credits { grid-column: 1 / -1; padding-top: 18px; border-top: 1px solid rgba(243,236,224,.14); display: flex; justify-content: space-between; font-size: 13px; color: #9a958a; }
+  footer .credits b { color: #d8d1c2; font-weight: 500; }
+</style>
+</head>
+<body>
+<main class="poster">
+
+  <header class="hero">
+    <div class="hero-top">
+      <span class="eyebrow">Sansa Camp 2026</span>
+      <span class="edition">제1회 산사캠프</span>
+    </div>
+
+    <div class="title-block">
+      <div>
+        <h1 class="title">산사캠프<span class="dot">.</span></h1>
+        <p class="lede">지리산 천년 고찰 곁에 텐트를 치는 2박 3일</p>
+      </div>
+      <div class="temple">쌍계사<small>SSANGGYESA</small></div>
+    </div>
+
+    <div class="meta">
+      <div><span class="label">일정</span><strong>11.6(금) 14:00 – 11.8(일) 11:00</strong></div>
+      <div><span class="label">장소</span><strong>경남 하동 쌍계사 일원</strong></div>
+    </div>
+
+    <svg class="ridges" viewBox="0 0 1080 230" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 120 L90 78 L170 104 L260 52 L340 96 L430 64 L520 110 L610 70 L700 98 L790 40 L880 88 L960 66 L1080 104 L1080 230 L0 230Z" fill="#2b4135" opacity=".55"/>
+      <path d="M0 160 L110 120 L200 146 L300 108 L400 150 L500 118 L600 152 L720 112 L820 148 L920 122 L1000 140 L1080 126 L1080 230 L0 230Z" fill="#3b5446" opacity=".6"/>
+      <path d="M0 196 L140 168 L260 190 L380 162 L520 194 L660 170 L780 192 L900 172 L1080 188 L1080 230 L0 230Z" fill="#c9bfa9" opacity=".35"/>
+      <path d="M0 214 C180 200 320 222 540 210 S900 200 1080 212 L1080 230 L0 230Z" fill="#f3ece0"/>
+    </svg>
+  </header>
+
+  <div class="wrap">
+
+    <section class="included">
+      <div class="sec-head"><h2>티켓 한 장에 이만큼 담겨 있어요</h2></div>
+      <ul class="inc-list">
+        <li><span class="num">01</span><b>2박 숙영</b><span>경내·숲 캠핑 사이트</span></li>
+        <li><span class="num">02</span><b>사찰공양 5식</b><span>2박 3일 식사 전부</span></li>
+        <li><span class="num">03</span><b>전 프로그램</b><span>명상·트래킹·클래스</span></li>
+        <li class="hl"><span class="num">04</span><b>재즈 공연</b><span>11.7(토) 웅산</span></li>
+      </ul>
+    </section>
+
+    <section class="stays">
+      <article class="stay camp">
+        <div class="stay-head"><h3>캠핑존</h3><span class="count">총 <b>250</b>면</span></div>
+        <div class="price"><span class="label">참가비</span><b>협의</b></div>
+        <div class="facts">
+          <span>1사이트 2인 기준 · 최대 4인</span>
+          <span>성인 · 유소아(36개월~미취학) 인원 추가 가능</span>
+          <span class="sub">1인 단독 사이트 이용 가능</span>
+        </div>
+        <div class="rental">
+          <h4>텐트 렌탈 <em>협의</em> <small>/ 동</small></h4>
+          <p>텐트 · 매트 2 · 침낭 1 · 테이블 1 · 의자 1 · 랜턴 1<br>침낭 · 의자 추가 대여 가능</p>
+          <p class="own">개인 텐트 지참도 가능해요</p>
+        </div>
+        <div class="zones">
+          <div class="zone-bar">
+            <i style="flex:30;background:var(--dancheong)"></i>
+            <i style="flex:85;background:var(--pine-600)"></i>
+            <i style="flex:135;background:var(--pine-900)"></i>
+          </div>
+          <div class="zone-legend">
+            <span style="flex:30;min-width:118px">쌍계사 경내 <b>30</b></span>
+            <span style="flex:85">PET&amp;KIDS <b>85</b></span>
+            <span style="flex:135;justify-content:flex-end">숲 언덕 <b>135</b></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="stay hanok">
+        <div class="stay-head"><h3>한옥 방사</h3><span class="count"><b>23</b>실 · <b>73</b>명 한정</span></div>
+        <p class="intro">텐트 대신 사찰 한옥에서 머무는 템플스테이형</p>
+        <ul class="rooms">
+          <li><span class="r">2인실<small>11실</small></span><span class="p">협의</span></li>
+          <li><span class="r">3인실<small>5실</small></span><span class="p">협의</span></li>
+          <li><span class="r">4인 가족실<small>2실</small></span><span class="p">협의</span></li>
+          <li><span class="r">5인 가족실<small>4실</small></span><span class="p">협의</span></li>
+          <li><span class="r">6인 단체실<small>1실 · 최대 8인</small></span><span class="p">협의</span></li>
+        </ul>
+        <p class="notes">실 단위 · 공양 5식, 전 프로그램 포함<br>기준 인원 초과 시 인원 추가 가능</p>
+      </article>
+    </section>
+    <p class="group-note">※ 동호회·카페 단체 참가 금액은 인원과 구성에 맞춰 산사캠프 사무국과 협의해 드립니다</p>
+
+    <section class="program">
+      <div class="sec-head"><h2>2박 3일 프로그램</h2><span class="aside">전 프로그램 앱 사전예약제</span></div>
+      <div class="prog-grid">
+        <div class="prog"><div class="k">매일 07:00</div><div class="t">선명상 · 요가</div></div>
+        <div class="prog"><div class="k">쌍계사 특별 · 100명</div><div class="t">108선다 차명상</div></div>
+        <div class="prog feature"><div class="k">11.7(토) 19:00</div><div class="t">웅산 가을 재즈 공연</div></div>
+        <div class="prog"><div class="k">지리산 숲길</div><div class="t">불일폭포 트래킹</div></div>
+        <div class="prog"><div class="k">육조 혜능대사 이야기</div><div class="t">쌍계사 역사 탐방</div></div>
+        <div class="prog"><div class="k">사찰의 하루</div><div class="t">사찰음식 · 예불 체험</div></div>
+        <div class="prog"><div class="k">마음 이야기</div><div class="t">스님과의 담화</div></div>
+        <div class="prog"><div class="k">산사장터 클래스</div><div class="t">다도 · 싱잉볼</div></div>
+        <div class="prog"><div class="k">반려견과 함께</div><div class="t">PET 하울링 · 트래킹</div></div>
+      </div>
+    </section>
+
+    <section class="notice">
+      <h3>캠퍼분들,<br><em>꼭</em> 확인해 주세요</h3>
+      <ul class="rules">
+        <li><b>화기 사용 금지</b> — 버너·화로대·모닥불 불가 (식사는 공양 제공)</li>
+        <li><b>고요의 시간 21:00–06:00</b> — 산사의 밤을 함께 지켜요</li>
+        <li><b>셔틀 미운영</b> — 자차 이용, 국립공원 주차장 204면 확보</li>
+        <li><b>경내 차량 진입 불가</b> · 입장 QR 팔찌 상시 착용</li>
+      </ul>
+    </section>
+  </div>
+
+  <footer>
+    <div>
+      <span class="label">예매</span>
+      <div class="big">네이버 스마트스토어<br>카카오 스토어</div>
+      <p class="small">“산사캠프” 검색 · 프로그램 예약은 <b>sansacamp.com</b></p>
+    </div>
+    <div class="right">
+      <span class="label">문의 · 단체 참가 상담</span>
+      <div class="tel"><small>산사캠프 사무국</small>02-2269-5002</div>
+      <p class="small">info@airoon.kr</p>
+    </div>
+    <div class="credits">
+      <span>주최 <b>아이룬</b> · 협력 <b>쌍계사</b> · <b>불교문화사업단</b> · <b>농협중앙회</b></span>
+      <span>SANSA CAMP 2026 · 제1회</span>
+    </div>
+  </footer>
+</main>
+</body>
+</html>
