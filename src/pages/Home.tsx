@@ -30,6 +30,25 @@ export default function Home() {
     watch(footer.current, setAtFooter, '0px 0px -35% 0px')
     return () => ios.forEach((io) => io.disconnect())
   }, [])
+  // 아래로 스크롤하는 동안에는 내용을 가리지 않게 내리고, 위로 올리거나 맨 위 근처면 다시 보인다
+  const [scrollingDown, setScrollingDown] = useState(false)
+  useEffect(() => {
+    let last = window.scrollY
+    let raf = 0
+    const onScroll = () => {
+      if (raf) return
+      raf = requestAnimationFrame(() => {
+        raf = 0
+        const y = window.scrollY
+        if (y < 120) setScrollingDown(false)
+        else if (y > last + 6) setScrollingDown(true)
+        else if (y < last - 6) setScrollingDown(false)
+        last = y
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(raf) }
+  }, [])
   return (
     <>
       <Hero />
@@ -42,7 +61,7 @@ export default function Home() {
       <LivePhotos />
       <div ref={footer}><SponsorStrip /></div>
       <div className="h-6" />
-      <TicketFab hidden={atZones || atFooter} />
+      <TicketFab hidden={atZones || atFooter || scrollingDown} />
       <HomePopup />
       <PushPrompt />
     </>
