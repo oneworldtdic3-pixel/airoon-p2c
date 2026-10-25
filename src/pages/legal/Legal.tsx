@@ -10,7 +10,7 @@ function Doc({ title, children }: { title: string; children: React.ReactNode }) 
   return (
     <div className="min-h-dvh bg-white px-6 pb-16 pt-[calc(env(safe-area-inset-top)+12px)]">
       <Link to="/more" aria-label="뒤로" className="-ml-2 inline-block p-2"><Icon name="back" /></Link>
-      <img src="/wordmark.png" alt="산사캠프" className="mt-4 h-10 w-auto" draggable={false} />
+      <img src="/wordmark.webp" alt="산사캠프" width={74} height={40} className="mt-4 h-10 w-auto" draggable={false} />
       <h1 className="mt-6 text-[26px] font-extrabold">{title}</h1>
       <p className="mt-1 text-[12px] text-sub">시행일 {UPDATED} · 운영자 {OPERATOR.name}</p>
       <div className="prose-sm mt-8 space-y-7 text-[14px] leading-relaxed text-ink/85 [&_h2]:mb-2 [&_h2]:text-[16px] [&_h2]:font-extrabold [&_h2]:text-ink [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-5">

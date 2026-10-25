@@ -214,7 +214,7 @@ export default function CampSites({ toast }: { toast: (m: string) => void }) {
                 <li key={s.id}>
                   <button type="button" disabled={dis} aria-pressed={on} onClick={() => pick(s)} className={`w-full rounded-xl border px-2 py-2 text-left transition ${on ? 'border-[#FF5A36] bg-[#FF5A36]/10' : dis ? 'border-gray-100 bg-gray-50 text-gray-500' : 'border-line bg-white active:scale-95'}`}>
                     <span className="tnum block text-[14px] font-extrabold">{s.number}</span>
-                    <span className="block text-[12px] text-sub">{s.width_m && s.depth_m ? `${s.width_m}×${s.depth_m}m` : '크기 미정'}{s.ground ? ` · ${s.ground}` : ''}{s.pet_allowed ? ' · 🐾' : ''}</span>
+                    <span className="block text-[12px] text-sub">{s.width_m && s.depth_m ? `${s.width_m}×${s.depth_m}m` : '크기 미정'}{s.ground ? ` · ${s.ground}` : ''}{s.pet_allowed && <> · <Icon name="paw" size={12} className="inline align-[-2px]" /><span className="sr-only">반려견 가능</span></>}</span>
                     <span className="block text-[12px] font-bold">{st === 'free' ? '빈 자리' : st === 'blocked' ? '선택 불가' : '예약됨'}</span>
                   </button>
                 </li>

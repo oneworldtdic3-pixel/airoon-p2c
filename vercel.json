@@ -14,7 +14,7 @@
   ],
   "rewrites": [
     {
-      "source": "/(about|reserve|terms|privacy)",
+      "source": "/(about|reserve|terms|privacy|photo|notifications|more)",
       "destination": "/$1/index.html"
     },
     {

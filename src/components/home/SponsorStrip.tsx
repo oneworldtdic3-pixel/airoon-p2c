@@ -10,7 +10,7 @@ export default function SponsorStrip() {
             <dt className="eyebrow w-14 shrink-0 whitespace-pre-line leading-[1.35]">{tier}</dt>
             <dd className="flex flex-wrap items-center gap-x-5 gap-y-2">
               {items.map((it) =>
-                it.src ? <img key={it.name} src={it.src} alt={it.name} style={{ height: it.h ?? 22 }} className="w-auto" loading="lazy" />
+                it.src ? <img key={it.name} src={it.src} alt={it.name} width={it.w} height={it.h ?? 22} style={{ height: it.h ?? 22 }} className="w-auto" loading="lazy" decoding="async" />
                        : <span key={it.name} className="text-[13px] font-bold text-ink">{it.name}</span>,
               )}
             </dd>

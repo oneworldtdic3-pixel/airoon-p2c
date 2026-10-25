@@ -22,13 +22,13 @@ export const SHOWER_BOOTHS = [
   { building: '쌍계사', zone: '쌍계사' },
 ] as const
 export const SHOWER_BOOTH_CAPACITY = 6
-export interface SponsorLogo { name: string; src?: string; h?: number }
-/** 주최·주관·후원·언론사. 로고는 public/sponsors (투명 PNG, 높이 160px) */
+export interface SponsorLogo { name: string; src?: string; h?: number; w?: number }
+/** 주최·주관·후원·언론사. 로고는 public/sponsors — 화면 표시 크기의 2배 WebP(원본 PNG는 보관용). h·w = 표시 높이·너비(px) */
 export const SPONSOR_TIERS: { tier: string; items: SponsorLogo[] }[] = [
-  { tier: '주최', items: [{ name: '하동 쌍계사', src: '/sponsors/ssanggyesa.png', h: 26 }] },
-  { tier: '주관', items: [{ name: '산사캠프 사무국', src: '/wordmark.png', h: 30 }] },
-  { tier: '후원', items: [{ name: '도반HC', src: '/sponsors/dobanhc.png', h: 22 }, { name: '붓쯔 BUDDHZ', src: '/sponsors/buddhz.png', h: 30 }] },
-  { tier: '부스\n참여업체', items: [{ name: '하동 쌍계사', src: '/sponsors/ssanggyesa.png', h: 26 }, { name: '붓쯔 BUDDHZ', src: '/sponsors/buddhz.png', h: 30 }, { name: 'FAS CARE', src: '/sponsors/fascare.png', h: 32 }] },
+  { tier: '주최', items: [{ name: '하동 쌍계사', src: '/sponsors/ssanggyesa.webp', h: 26, w: 135 }] },
+  { tier: '주관', items: [{ name: '산사캠프 사무국', src: '/wordmark.webp', h: 30, w: 55 }] },
+  { tier: '후원', items: [{ name: '도반HC', src: '/sponsors/dobanhc.webp', h: 22, w: 165 }, { name: '붓쯔 BUDDHZ', src: '/sponsors/buddhz.png', h: 30, w: 42 }] },
+  { tier: '부스\n참여업체', items: [{ name: '하동 쌍계사', src: '/sponsors/ssanggyesa.webp', h: 26, w: 135 }, { name: '붓쯔 BUDDHZ', src: '/sponsors/buddhz.png', h: 30, w: 42 }, { name: 'FAS CARE', src: '/sponsors/fascare.webp', h: 32, w: 32 }] },
 ]
 /** 개발용 테스트 번호 — Supabase 대시보드 Phone 공급자의 Test phone numbers 에 같은 값을 등록해야 한다 */
 export const TEST_PHONES = { user: '+821012345678', admin: '+821000000000', otp: '123456' }

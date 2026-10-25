@@ -11,6 +11,8 @@ export default function ArtistTeaser() {
       <div role="img" aria-label="아티스트 라인업 확정: 재즈 보컬리스트 웅산" className="relative block aspect-[5/4] select-none overflow-hidden rounded-tile bg-[#0A0A0B] text-white">
         <img
           src="/artists/woongsan.jpg"
+          width={1280}
+          height={1024}
           alt=""
           aria-hidden
           loading="lazy"

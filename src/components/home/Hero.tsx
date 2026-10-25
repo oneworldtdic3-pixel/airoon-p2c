@@ -21,7 +21,7 @@ export default function Hero() {
       {/* 최상단: CI 좌측, D-day 우측 */}
       <div className="relative flex items-center justify-between px-5">
         <Link to="/" aria-label="산사캠프 홈">
-          <img src="/wordmark.png" alt="산사캠프" className="h-[52px] w-auto" draggable={false} />
+          <img src="/wordmark.webp" alt="산사캠프" width={96} height={52} className="h-[52px] w-auto" draggable={false} fetchPriority="high" />
         </Link>
         <div className="flex items-center gap-1">
           <Link to={user ? '/more' : '/login'} className="flex min-h-[44px] items-center gap-2">

@@ -8,6 +8,7 @@ import { openExternal } from '../../lib/external'
 import { BottomSheet } from '../ui'
 import { TICKETS } from './TicketFab'
 import PetNotice from '../camp/PetNotice'
+import Icon from '../ui/Icon'
 import { markBuyClick } from '../../lib/visit'
 
 // 홈 — 캠핑존 A/B/C 비교 카드. 숫자(남은 자리·최근 예약)는 관리자 > 캠핑 > 구역·설정에서 고친다.
@@ -45,7 +46,7 @@ export default function ZoneCards() {
           return (
             <article key={z.id} className="w-[78%] shrink-0 snap-start overflow-hidden rounded-card border border-line bg-white">
               <div className="relative aspect-[16/10] bg-mint">
-                {z.photo_url ? <img src={z.photo_url} alt={`${z.code} ${z.name}`} loading="lazy" className="h-full w-full object-cover" /> : <div aria-hidden="true" className="flex h-full items-center justify-center text-[42px] font-black text-deep/30">{z.code}</div>}
+                {z.photo_url ? <img src={z.photo_url} alt={`${z.code} ${z.name}`} width={320} height={200} loading="lazy" decoding="async" className="h-full w-full object-cover" /> : <div aria-hidden="true" className="flex h-full items-center justify-center text-[42px] font-black text-deep/30">{z.code}</div>}
                 <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[12px] font-black text-ink">{z.code} 구역</span>
                 {soldOut ? <span className="absolute right-3 top-3 rounded-full bg-ink px-2.5 py-1 text-[12px] font-black text-white">매진</span>
                   : <span className="tnum absolute right-3 top-3 rounded-full bg-[#D93A1A] px-2.5 py-1 text-[12px] font-black text-white">남은 자리 {z.remaining}동</span>}
@@ -57,7 +58,7 @@ export default function ZoneCards() {
                   <li className="flex justify-between"><span className="text-sub">가격</span><b>{priceLabel(ev.data)}</b></li>
                   <li className="flex justify-between"><span className="text-sub">바닥</span><b>{z.ground || '안내 예정'}</b></li>
                   <li className="flex justify-between"><span className="text-sub">화장실 · 샤워실</span><b>{z.toilet_distance || z.shower_distance ? `${z.toilet_distance || '-'} · ${z.shower_distance || '-'}` : '안내 예정'}</b></li>
-                  <li className="flex justify-between"><span className="text-sub">반려견</span><b>{z.pet_allowed ? '동반 가능 🐾' : '불가'}</b></li>
+                  <li className="flex justify-between"><span className="text-sub">반려견</span><b className="inline-flex items-center gap-1">{z.pet_allowed ? <>동반 가능<Icon name="paw" size={15} className="text-deep" /></> : '불가'}</b></li>
                 </ul>
                 <p className="tnum mt-3 text-[12px] text-sub">전체 {z.capacity}동{z.recent_bookings ? ` · 최근 ${z.recent_bookings}팀 예약` : ''}</p>
                 {soldOut

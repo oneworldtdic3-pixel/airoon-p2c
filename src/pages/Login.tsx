@@ -103,7 +103,7 @@ export default function Login() {
   return (
     <div className="flex min-h-dvh flex-col px-6 pt-[calc(env(safe-area-inset-top)+12px)]">
       <button onClick={() => nav(-1)} aria-label="뒤로" className="-ml-2 self-start p-2"><Icon name="back" /></button>
-      <img src="/wordmark.png" alt="산사캠프" className="mt-8 h-14 w-auto self-start" draggable={false} />
+      <img src="/wordmark.webp" alt="산사캠프" width={103} height={56} className="mt-8 h-14 w-auto self-start" draggable={false} />
 
       <div role="tablist" className="mt-8 flex gap-6 border-b hairline">
         {([['login', '로그인'], ['signup', '회원가입']] as const).map(([m, l]) => (

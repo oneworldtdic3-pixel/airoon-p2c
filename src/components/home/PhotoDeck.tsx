@@ -4,6 +4,7 @@ import { useApp } from '../../data/AppProvider'
 import Icon from '../ui/Icon'
 import { openExternal } from '../../lib/external'
 import { TICKETS } from './TicketFab'
+import { markBuyClick } from '../../lib/visit'
 
 type Card =
   | { kind: 'event'; id: string; url: string; full?: boolean; link?: string }
@@ -14,7 +15,10 @@ const Arrow = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M9 7h8v8" /></svg>
 )
 
-/** BEST PHOTO 1장 + 광고 배너 2장 이상을 겹친 카드 덱. 손가락을 따라오는 가로 스와이프, 3.5초 자동 전환(조작 후 8초간 멈춤) */
+/** BEST PHOTO 1장 + 광고 배너 2장 이상을 겹친 카드 덱. 손가락을 따라오는 가로 스와이프, 3.5초 자동 전환(조작 후 8초간 멈춤)
+ *  · 일시정지/재생, 이전/다음 버튼 (키보드로도 넘길 수 있게)
+ *  · 덱 안에 키보드 초점이 있거나 '동작 줄이기'가 켜져 있으면 자동 전환하지 않는다
+ *  · 앞 카드가 아닌 카드는 inert — Tab 이 화면 밖 카드로 가지 않게 */
 export default function PhotoDeck() {
   const { photos, banners } = useApp()
   const nav = useNavigate()
@@ -39,6 +43,16 @@ export default function PhotoDeck() {
   const n = cards.length
   const root = useRef<HTMLDivElement>(null)
   const [onScreen, setOnScreen] = useState(true) // 덱이 화면 밖이면 자동 전환·재렌더를 멈춘다
+  const [paused, setPaused] = useState(false)    // 사용자가 일시정지를 눌렀는지
+  const [focusIn, setFocusIn] = useState(false)  // 덱 안에 키보드 초점이 있는지
+  const [reduced, setReduced] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const on = () => setReduced(mq.matches)
+    mq.addEventListener('change', on)
+    return () => mq.removeEventListener('change', on)
+  }, [])
+  const auto = !paused && !focusIn && !reduced
 
   useEffect(() => {
     const el = root.current
@@ -49,13 +63,13 @@ export default function PhotoDeck() {
   }, [])
 
   useEffect(() => {
-    if (n < 2 || !onScreen || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (n < 2 || !onScreen || !auto) return
     const t = window.setInterval(() => {
       if (Date.now() - lastTouch.current < 8000) return
       setIdx((i) => (i + 1) % n)
     }, 3500)
     return () => window.clearInterval(t)
-  }, [n, onScreen])
+  }, [n, onScreen, auto])
 
   const step = (d: 1 | -1) => { lastTouch.current = Date.now(); setIdx((i) => (i + d + n) % n) }
 
@@ -105,6 +119,11 @@ export default function PhotoDeck() {
       onPointerMove={onMove}
       onPointerUp={onUp}
       onPointerCancel={onUp}
+      onFocusCapture={() => setFocusIn(true)}
+      onBlurCapture={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocusIn(false) }}
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="지금 산사캠프 카드"
     >
       {cards.map((c, i) => {
         const pos = (i - idx + n) % n
@@ -121,13 +140,16 @@ export default function PhotoDeck() {
         // 광고 링크가 외부 주소(https://…)면 새 창(쇼핑몰 등), 앱 내부 경로면 화면 이동
         const go = () => {
           const ext = c.kind === 'ad' ? c.link : c.kind === 'event' ? c.link : undefined
-          if (ext && /^https?:\/\//i.test(ext)) { openExternal(ext); return }
+          if (ext && /^https?:\/\//i.test(ext)) { if (c.kind === 'event') markBuyClick(); openExternal(ext); return }
           nav(c.kind === 'photo' ? '/photo' : c.kind === 'ad' ? c.link : '/about')
         }
         return (
           <article
             key={c.id}
             aria-hidden={pos !== 0}
+            inert={pos !== 0}
+            aria-roledescription="slide"
+            aria-label={`${i + 1} / ${n}`}
             role={pos === 0 ? 'link' : undefined}
             tabIndex={pos === 0 ? 0 : -1}
             onClick={() => { if (pos === 0 && !swiped.current) go() }}
@@ -139,9 +161,9 @@ export default function PhotoDeck() {
             <div className={`absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 ${c.kind === 'event' && c.full ? 'to-ink/25' : 'to-ink/70'}`} />
             {!full && <p className="absolute left-0 right-0 top-2 overflow-hidden whitespace-nowrap px-3 text-[64px] font-extrabold leading-none tracking-[-0.04em] text-white/80">{bigWord}</p>}
             {full ? (
-              <img src={c.url} alt={c.kind === 'ad' ? `${c.sponsor} · ${c.title}` : '2026 산사캠프 with 쌍계사 포스터'} draggable={false} className="absolute inset-0 h-full w-full object-cover object-top" />
+              <img src={c.url} alt={c.kind === 'ad' ? `${c.sponsor} · ${c.title}` : '2026 산사캠프 with 쌍계사 포스터'} width={875} height={1000} draggable={false} className="absolute inset-0 h-full w-full object-cover object-top" />
             ) : (
-              <img src={c.url} alt={c.kind === 'photo' ? `${c.spot} 사진` : c.kind === 'ad' ? c.title : '2026 산사캠프 포스터'} draggable={false} className={`absolute left-[8%] right-[8%] top-[28%] w-[84%] rounded-2xl object-cover ring-1 ring-white/30 ${c.kind === 'event' ? 'h-[34%]' : 'h-[52%]'}`} />
+              <img src={c.url} alt={c.kind === 'photo' ? `${c.spot} 사진` : c.kind === 'ad' ? c.title : '2026 산사캠프 포스터'} width={1000} height={509} draggable={false} className={`absolute left-[8%] right-[8%] top-[28%] w-[84%] rounded-2xl object-cover ring-1 ring-white/30 ${c.kind === 'event' ? 'h-[34%]' : 'h-[52%]'}`} />
             )}
             {c.kind === 'ad' && c.full && <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-ink/85 via-ink/40 to-transparent" />}
             {c.kind === 'event' && c.full && <div className="absolute inset-x-0 bottom-0 h-[42%] bg-gradient-to-t from-black/75 via-black/40 to-transparent" />}
@@ -176,10 +198,30 @@ export default function PhotoDeck() {
           </article>
         )
       })}
+      {n > 1 && (
+        <>
+          {/* 이전·다음: 양옆으로 살짝 보이는 카드 위. 일시정지/재생: 오른쪽 아래 */}
+          <button type="button" onPointerDown={(e) => e.stopPropagation()} onClick={() => step(-1)} aria-label="이전 카드"
+            className="absolute left-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-ink shadow-[0_4px_12px_rgba(31,41,55,0.18)] active:scale-95">
+            <Icon name="back" size={18} />
+          </button>
+          <button type="button" onPointerDown={(e) => e.stopPropagation()} onClick={() => step(1)} aria-label="다음 카드"
+            className="absolute right-1 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/95 text-ink shadow-[0_4px_12px_rgba(31,41,55,0.18)] active:scale-95">
+            <Icon name="chevron" size={18} />
+          </button>
+          <button type="button" onPointerDown={(e) => e.stopPropagation()} onClick={() => setPaused((v) => !v)}
+            aria-label={paused || reduced ? '자동 넘김 재생' : '자동 넘김 일시정지'} aria-pressed={paused}
+            className="absolute bottom-1 right-1 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white/95 text-ink shadow-[0_4px_12px_rgba(31,41,55,0.18)] active:scale-95">
+            {paused || reduced
+              ? <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" /></svg>
+              : <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor" /><rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor" /></svg>}
+          </button>
+        </>
+      )}
       <div className="absolute inset-x-0 -bottom-5 flex justify-center gap-1.5" aria-hidden="true">
         {cards.map((c, i) => <span key={c.id} className={`h-1.5 rounded-full transition-all ${i === idx ? 'w-4 bg-ink' : 'w-1.5 bg-gray-300'}`} />)}
       </div>
-      <p className="sr-only">카드를 좌우로 밀어 넘길 수 있습니다</p>
+      <p className="sr-only">카드를 좌우로 밀거나 이전·다음 버튼으로 넘길 수 있습니다</p>
     </div>
   )
 }

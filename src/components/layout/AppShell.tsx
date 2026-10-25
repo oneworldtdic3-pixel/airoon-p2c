@@ -5,6 +5,7 @@ import { syncPush } from '../../lib/push'
 import { useMyNotifications } from '../../data/myNotifications'
 import Icon from '../ui/Icon'
 import { NicknamePrompt } from '../NicknameSheet'
+import TITLES from '../../data/pageTitles.json'
 
 const tabs = [
   { to: '/', label: '홈', icon: 'home' },
@@ -17,6 +18,11 @@ const tabs = [
 export default function AppShell() {
   const { pathname } = useLocation()
   const { user } = useApp()
+  // 화면을 옮길 때 브라우저 제목도 바꾼다 (정적 HTML 제목과 같은 문구)
+  useEffect(() => {
+    const t = (TITLES as Record<string, string>)[pathname] ?? TITLES['/']
+    document.title = t
+  }, [pathname])
   // 알림을 켠 기기는 로그인 계정이 바뀌면 그 계정에 다시 묶는다 (예약 리마인드 대상)
   useEffect(() => { void syncPush() }, [user?.id])
   // 내 사진 댓글 등 '내 소식'에 안 읽은 게 있으면 알림 탭에 빨간 점

@@ -141,7 +141,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
                       {p.pet_allowed && <Icon name="paw" size={16} className="text-deep" />}
                     </div>
                     <p className="mt-1 text-[12.5px] text-sub">{p.location} · {p.duration}</p>
-                    {p.image_url && <img src={p.image_url} alt={p.title} loading="lazy" className="mt-3 aspect-[16/9] w-full rounded-tile object-cover" />}
+                    {p.image_url && <img src={p.image_url} alt={p.title} width={640} height={360} loading="lazy" decoding="async" className="mt-3 aspect-[16/9] w-full rounded-tile bg-gray-100 object-cover" />}
                     <p className="mt-2 text-[14px] leading-relaxed text-ink/80">{p.description}</p>
                     <div className="mt-3 flex items-center gap-3">
                       <div className="flex min-w-0 flex-wrap gap-1.5">

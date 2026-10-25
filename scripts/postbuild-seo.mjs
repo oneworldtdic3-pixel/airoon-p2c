@@ -5,11 +5,13 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 
 const SITE = 'https://sansacamp.com'
 const base = readFileSync('dist/index.html', 'utf8')
+// 화면 제목은 앱(AppShell)과 같은 파일을 쓴다
+const TITLES = JSON.parse(readFileSync('src/data/pageTitles.json', 'utf8'))
 
 const PAGES = [
   {
     route: 'about',
-    title: '산사캠프 기획의도 | 하동 쌍계사 템플스테이 힐링캠프',
+    title: TITLES['/about'],
     description: '가장 조용한 페스티벌, 산사캠프의 기획의도. 하동 쌍계사에서 2박 3일 동안 싱잉볼 명상과 차명상, 산사의 시간표로 마음을 쉬어 가는 힐링캠프를 소개합니다.',
     event: true,
     body: `<h1>산사캠프 기획의도 · WHY SANSA CAMP</h1>
@@ -18,7 +20,7 @@ const PAGES = [
   },
   {
     route: 'reserve',
-    title: '산사캠프 예약 | 프로그램·샤워부스·주차 사전예약',
+    title: TITLES['/reserve'],
     description: '산사캠프 참가자를 위한 프로그램 사전예약, 샤워부스 시간대 예약, 주차 사전등록 안내. 프로그램 예약은 11월 1일부터 열리며 주차는 무료 사전등록제(1팀 1대)입니다.',
     event: true,
     body: `<h1>산사캠프 예약 안내</h1>
@@ -32,7 +34,7 @@ const PAGES = [
   },
   {
     route: 'terms',
-    title: '이용약관 | 산사캠프',
+    title: TITLES['/terms'],
     description: '산사캠프 앱과 행사 참가에 관한 이용약관입니다. 예약, 샤워부스·주차 이용 규칙과 행사장 안전 수칙을 안내합니다.',
     event: false,
     body: `<h1>산사캠프 이용약관</h1>
@@ -40,12 +42,36 @@ const PAGES = [
   },
   {
     route: 'privacy',
-    title: '개인정보처리방침 | 산사캠프',
+    title: TITLES['/privacy'],
     description: '산사캠프 앱의 개인정보처리방침입니다. 수집하는 개인정보 항목, 이용 목적, 보관 기간과 이용자의 권리를 안내합니다.',
     event: false,
     body: `<h1>산사캠프 개인정보처리방침</h1>
       <p>주식회사 아이룬(산사캠프 사무국)이 산사캠프 앱에서 수집하는 개인정보 항목과 이용 목적, 보관 기간, 이용자의 권리를 안내합니다.</p>`,
   },
+  {
+    route: 'photo',
+    title: TITLES['/photo'],
+    description: '산사캠프 참가자들이 하동 쌍계사 행사장에서 올리는 실시간 현장 사진. 일주문, 대웅전 계단, 차밭 능선, 불일폭포의 풍경을 모아 봅니다.',
+    event: false,
+    body: `<h1>산사캠프 포토 · 실시간 현장 사진</h1>
+      <p>산사캠프 참가자가 하동 쌍계사 행사장에서 직접 찍어 올린 사진을 실시간으로 모아 보여 줍니다. 마음에 드는 사진에 좋아요와 댓글을 남길 수 있습니다.</p>`,
+  },
+  {
+    route: 'notifications',
+    title: TITLES['/notifications'],
+    description: '산사캠프 운영 공지와 예약 알림. 우천·장소 변경 같은 공지와 예약한 프로그램 시작 전 알림을 한곳에서 확인합니다.',
+    event: false,
+    body: `<h1>산사캠프 알림</h1>
+      <p>산사캠프 운영 공지와 내 예약 알림을 한곳에서 확인합니다. 휴대폰 알림을 켜 두면 공지와 프로그램 시작 10분 전 알림을 바로 받을 수 있습니다.</p>`,
+  },
+  {
+    route: 'more',
+    title: TITLES['/more'],
+    description: '산사캠프 문의(카카오톡·네이버 톡톡), 하동 쌍계사 행사장 약도, 인스타그램·유튜브·틱톡 SNS, 주최·후원사 안내.',
+    event: false,
+    body: `<h1>산사캠프 더보기</h1>
+      <p>카카오톡과 네이버 톡톡으로 문의할 수 있고, 하동 쌍계사 행사장 약도와 산사캠프 SNS(인스타그램·유튜브·틱톡), 주최·후원사 정보를 확인할 수 있습니다.</p>`,
+  }
 ]
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
