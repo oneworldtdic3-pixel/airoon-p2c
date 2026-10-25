@@ -8,6 +8,7 @@ import { openExternal } from '../../lib/external'
 import { BottomSheet } from '../ui'
 import { TICKETS } from './TicketFab'
 import PetNotice from '../camp/PetNotice'
+import { markBuyClick } from '../../lib/visit'
 
 // 홈 — 캠핑존 A/B/C 비교 카드. 숫자(남은 자리·최근 예약)는 관리자 > 캠핑 > 구역·설정에서 고친다.
 export default function ZoneCards() {
@@ -29,7 +30,7 @@ export default function ZoneCards() {
     if (error) return setMsg(toMessage(error))
     setMsg('신청했습니다. 빈자리가 생기면 이 번호로 안내해 드려요'); setTimeout(() => { setAlertFor(null); setMsg(null) }, 1600)
   }
-  const buy = (z: ZoneSummary) => openExternal(z.smartstore_url || TICKETS.camp.url)
+  const buy = (z: ZoneSummary) => { markBuyClick(); openExternal(z.smartstore_url || TICKETS.camp.url) }
 
   return (
     <section className="px-5 pt-12">

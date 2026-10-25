@@ -3,6 +3,7 @@ import { openExternal } from '../../lib/external'
 import { KAKAO_CHANNEL, NAVER_TALK, NaverTalkGlyph } from '../KakaoChat'
 import { BottomSheet } from '../ui'
 import { naverConversion } from '../../lib/naverWcs'
+import { markBuyClick } from '../../lib/visit'
 
 // 홈 고정 풍선형 버튼 — 하단 탭 바로 위 오른쪽. 문의(카카오톡·네이버 톡톡 선택) + 네이버 예매 2개.
 export const TICKETS = {
@@ -36,11 +37,11 @@ export default function TicketFab({ hidden = false }: { hidden?: boolean }) {
         <KakaoBubble />
         <span className="text-[9.5px] font-extrabold leading-none">문의</span>
       </button>
-      <button type="button" onClick={() => { naverConversion('custom001'); openExternal(TICKETS.hanok.url) }}
+      <button type="button" onClick={() => { naverConversion('custom001'); markBuyClick(); openExternal(TICKETS.hanok.url) }}
         className="pointer-events-auto inline-flex items-center gap-2 rounded-full bg-[#FBE9D2] py-3 pl-4 pr-5 text-[15px] font-extrabold text-[#7A4A12] shadow-[0_10px_24px_rgba(122,74,18,0.28)] ring-1 ring-[#F1D7B3] transition active:scale-95">
         <Hanok />{TICKETS.hanok.label}
       </button>
-      <button type="button" onClick={() => { naverConversion('custom001'); openExternal(TICKETS.camp.url) }}
+      <button type="button" onClick={() => { naverConversion('custom001'); markBuyClick(); openExternal(TICKETS.camp.url) }}
         className="pointer-events-auto inline-flex items-center gap-2 rounded-full bg-[#1E8E5A] py-3 pl-4 pr-5 text-[15px] font-extrabold text-white shadow-[0_10px_24px_rgba(30,142,90,0.38)] transition active:scale-95">
         <Tent />{TICKETS.camp.label}
       </button>

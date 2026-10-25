@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { supabase } from '../../lib/supabase'
 import { openExternal } from '../../lib/external'
 import type { Popup } from '../../data/types'
+import { markPopupShown } from '../../lib/visit'
 
 /** 오늘 날짜(KST) — '오늘 하루 보지 않기' 기준 */
 const todayKst = () => new Date(Date.now() + 9 * 3600_000).toISOString().slice(0, 10)
@@ -86,7 +87,7 @@ export default function HomePopup() {
     if (!ready || shown) return
     if (document.querySelector('[role="dialog"]')) return
     const next = (q.data ?? []).find((p) => popupLive(p) && !dismissed(p.id))
-    if (next) setShown(next)
+    if (next) { markPopupShown(); setShown(next) }
   }, [ready, q.data, shown])
   // 보고 있는 팝업이 관리자에서 꺼지면 바로 내린다
   useEffect(() => {
