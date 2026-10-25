@@ -29,11 +29,11 @@ export default function AppShell() {
       </main>
       <NicknamePrompt />
       {!hideTabs && (
-        <nav className="fixed inset-x-0 bottom-0 z-40 mx-auto max-w-[430px] border-t hairline bg-white/92 pb-[env(safe-area-inset-bottom)] backdrop-blur" aria-label="하단 탭">
+        <nav className="fixed inset-x-0 bottom-0 z-40 mx-auto max-w-[430px] border-t hairline bg-white pb-[env(safe-area-inset-bottom)]" aria-label="하단 탭">
           <ul className="flex">
             {tabs.map((t) => (
               <li key={t.to} className="flex-1">
-                <NavLink to={t.to} end={t.to === '/'} className={({ isActive }) => `flex flex-col items-center gap-1 pb-2 pt-2.5 text-[10.5px] font-bold transition ${isActive ? 'text-deep' : 'text-gray-400'}`}>
+                <NavLink to={t.to} end={t.to === '/'} className={({ isActive }) => `flex flex-col items-center gap-1 pb-2 pt-2.5 text-[12px] font-bold transition ${isActive ? 'text-deep' : 'text-gray-500'}`}>
                   {({ isActive }) => (<><span className="relative"><Icon name={t.icon} size={24} fill={isActive} />{t.to === '/notifications' && unread > 0 && <span className="absolute -right-1 -top-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-[#FF3B30]" aria-label={`새 소식 ${unread}개`} />}</span>{t.label}</>)}
                 </NavLink>
               </li>
