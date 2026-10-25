@@ -116,7 +116,7 @@ export default function TodaySchedule() {
                 <Link to="/reserve?tab=program" className="flex items-baseline gap-4 border-t hairline py-3.5 first:border-t-0">
                   <span className={`tnum min-w-[3.4em] shrink-0 font-extrabold ${timeTbd(p) ? 'text-[12px] text-sub' : 'text-[17px] text-ink'}`}>{timeTbd(p) ? '시간 협의중' : fmtTime(s.starts_at)}</span>
                   <span className="min-w-0 flex-1 truncate text-[15px] font-semibold">{p?.title}</span>
-                  <span className={`tnum shrink-0 text-[12px] font-bold ${booked ? 'text-deep' : left ? 'text-deep' : 'text-gray-400'}`}>{booked ? '내 예약' : left ? `${left}석` : '마감'}</span>
+                  <span className={`tnum shrink-0 text-[12px] font-bold ${booked ? 'text-deep' : left ? 'text-deep' : 'text-gray-500'}`}>{booked ? '내 예약' : left ? `${left}석` : '마감'}</span>
                 </Link>
               </li>
             )

@@ -41,7 +41,7 @@ export default function Hero() {
             </h1>
             <p className="mt-2 flex items-center gap-1.5 text-[12.5px] text-sub">
               <span className="font-bold text-ink">{top.profiles?.nickname ?? '산사러'}</span>님의 한 줄
-              <span className="tnum inline-flex items-center gap-0.5 rounded-full bg-pink/10 px-2 py-0.5 font-bold text-pink"><Icon name="heart" size={11} fill />{top.likes_count}</span>
+              <span className="tnum inline-flex items-center gap-0.5 rounded-full bg-pink/10 px-2 py-0.5 font-bold text-pink-deep"><Icon name="heart" size={11} fill />{top.likes_count}</span>
               <span className="ml-auto font-semibold text-deep">나도 한 줄 <Icon name="chevron" size={12} className="-ml-0.5 inline" /></span>
             </p>
           </button>

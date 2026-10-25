@@ -91,7 +91,7 @@ export default function Notifications() {
                     <span className="min-w-0 flex-1">
                       <span className="block text-[13.5px] leading-snug"><b>{n.actor_nickname}</b>님이 {n.on_my_photo ? '내 사진에 댓글을 남겼어요' : '함께 댓글 단 사진에 답했어요'}</span>
                       <span className="mt-0.5 block truncate text-[13px] text-sub">“{n.body}”</span>
-                      <span className="tnum mt-0.5 block text-[11px] text-gray-400">{timeAgo(n.created_at)} · 눌러서 답글 달기</span>
+                      <span className="tnum mt-0.5 block text-[11px] text-gray-500">{timeAgo(n.created_at)} · 눌러서 답글 달기</span>
                     </span>
                     {!n.read_at && <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#FF3B30]" aria-label="안 읽음" />}
                   </button>
@@ -107,7 +107,7 @@ export default function Notifications() {
               <div className="flex items-center gap-2">
                 {i === 0 && <span className="h-1.5 w-1.5 rounded-full bg-brand-grad" aria-label="최신" />}
                 <span className="text-[11px] font-bold text-deep">{label[n.type]}</span>
-                <span className="tnum ml-auto text-[11px] text-gray-400">{timeAgo(n.created_at)}</span>
+                <span className="tnum ml-auto text-[11px] text-gray-500">{timeAgo(n.created_at)}</span>
               </div>
               <p className="mt-1.5 text-[16px] font-extrabold">{n.title}</p>
               <p className="mt-1 text-[14px] leading-relaxed text-ink/75">{n.body}</p>

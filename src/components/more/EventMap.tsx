@@ -192,7 +192,7 @@ export default function EventMap() {
           <li key={k} className="text-[12.5px]"><span className="font-bold">{k}</span> <span className="text-sub">{v}</span></li>
         ))}
       </ul>
-      <p className="mt-3 text-[11.5px] text-gray-400">쌍계사 · 하동군 화개면 쌍계사길 59 · 캠핑 사이트 3곳 · 텐트 250동. 거리는 줄여서 그린 안내도이며 현장 사정에 따라 바뀔 수 있습니다.</p>
+      <p className="mt-3 text-[11.5px] text-gray-500">쌍계사 · 하동군 화개면 쌍계사길 59 · 캠핑 사이트 3곳 · 텐트 250동. 거리는 줄여서 그린 안내도이며 현장 사정에 따라 바뀔 수 있습니다.</p>
 
       {open !== null && <MapViewer initial={open || undefined} onClose={() => setOpen(null)} />}
     </div>

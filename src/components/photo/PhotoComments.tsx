@@ -94,7 +94,7 @@ export default function PhotoComments({ photoId, toast }: { photoId: string; toa
         />
         <button type="submit" disabled={busy || !text.trim()} className="btn !px-4 !py-2.5 !text-[13px]">{busy ? '…' : '올리기'}</button>
       </form>
-      <p className="tnum mt-1 text-right text-[11px] text-gray-400">{text.length}/{MAX}</p>
+      <p className="tnum mt-1 text-right text-[11px] text-gray-500">{text.length}/{MAX}</p>
     </section>
   )
 }

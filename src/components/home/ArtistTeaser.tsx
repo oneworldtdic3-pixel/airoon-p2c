@@ -30,7 +30,7 @@ export default function ArtistTeaser() {
 
         {/* 하단 카피 */}
         <div className="absolute bottom-4 left-4 right-12">
-          <span className="inline-block rounded-full bg-pink px-2.5 py-0.5 text-[11px] font-black tracking-[0.06em] shadow-[0_6px_16px_rgba(255,45,138,0.45)]">라인업 확정</span>
+          <span className="inline-block rounded-full bg-pink-deep px-2.5 py-0.5 text-[11px] font-black tracking-[0.06em] shadow-[0_6px_16px_rgba(255,45,138,0.45)]">라인업 확정</span>
           <p className="mt-1.5 text-[32px] font-black leading-none tracking-[-0.04em]">웅산 <span className="align-middle text-[14px] font-extrabold tracking-[0.12em] text-white/80">WOONGSAN</span></p>
           <p className="mt-1.5 text-[12px] font-bold text-white/85">아시아를 대표하는 재즈 보컬리스트 · 산사의 밤을 채웁니다</p>
         </div>

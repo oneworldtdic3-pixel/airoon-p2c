@@ -170,7 +170,7 @@ export default function CampSites({ toast }: { toast: (m: string) => void }) {
 
       {/* 진행 단계 */}
       <ol className="no-scrollbar mb-4 flex gap-1.5 overflow-x-auto">
-        {STEPS.map((s, i) => <li key={s.key} className={`shrink-0 rounded-full px-2.5 py-1 text-[11.5px] font-bold ${i === stepIdx ? 'bg-ink text-white' : i < stepIdx ? 'bg-mint text-deep' : 'bg-gray-100 text-gray-400'}`}>{i + 1} {s.label}</li>)}
+        {STEPS.map((s, i) => <li key={s.key} className={`shrink-0 rounded-full px-2.5 py-1 text-[11.5px] font-bold ${i === stepIdx ? 'bg-ink text-white' : i < stepIdx ? 'bg-mint text-deep' : 'bg-gray-100 text-gray-500'}`}>{i + 1} {s.label}</li>)}
       </ol>
 
       {step === 'order' && (
@@ -212,7 +212,7 @@ export default function CampSites({ toast }: { toast: (m: string) => void }) {
               const st = siteState(s, occ, zone?.id); const on = sel.includes(s.id); const dis = st !== 'free'
               return (
                 <li key={s.id}>
-                  <button type="button" disabled={dis} aria-pressed={on} onClick={() => pick(s)} className={`w-full rounded-xl border px-2 py-2 text-left transition ${on ? 'border-[#FF5A36] bg-[#FF5A36]/10' : dis ? 'border-gray-100 bg-gray-50 text-gray-400' : 'border-line bg-white active:scale-95'}`}>
+                  <button type="button" disabled={dis} aria-pressed={on} onClick={() => pick(s)} className={`w-full rounded-xl border px-2 py-2 text-left transition ${on ? 'border-[#FF5A36] bg-[#FF5A36]/10' : dis ? 'border-gray-100 bg-gray-50 text-gray-500' : 'border-line bg-white active:scale-95'}`}>
                     <span className="tnum block text-[14px] font-extrabold">{s.number}</span>
                     <span className="block text-[11px] text-sub">{s.width_m && s.depth_m ? `${s.width_m}×${s.depth_m}m` : '크기 미정'}{s.ground ? ` · ${s.ground}` : ''}{s.pet_allowed ? ' · 🐾' : ''}</span>
                     <span className="block text-[11px] font-bold">{st === 'free' ? '빈 자리' : st === 'blocked' ? '선택 불가' : '예약됨'}</span>
@@ -262,7 +262,7 @@ export default function CampSites({ toast }: { toast: (m: string) => void }) {
             <div key={i} className="flex items-center gap-2">
               <input className="field flex-1 !py-2.5" value={m.name} onChange={(e) => setMembers(members.map((x, j) => (j === i ? { ...x, name: e.target.value } : x)))} placeholder="이름" maxLength={30} />
               <input className="field tnum flex-1 !py-2.5" inputMode="tel" value={m.phone} onChange={(e) => setMembers(members.map((x, j) => (j === i ? { ...x, phone: e.target.value } : x)))} placeholder="연락처 (선택)" />
-              <button type="button" aria-label="삭제" onClick={() => setMembers(members.filter((_, j) => j !== i))} className="p-1 text-gray-400"><Icon name="close" size={16} /></button>
+              <button type="button" aria-label="삭제" onClick={() => setMembers(members.filter((_, j) => j !== i))} className="p-1 text-gray-500"><Icon name="close" size={16} /></button>
             </div>
           ))}
           <button type="button" onClick={() => setMembers([...members, { name: '', phone: '' }])} disabled={members.length >= 9} className="btn-ghost w-full">+ 동반자 추가</button>

@@ -5,7 +5,7 @@
 
 :root {
   --brand: #35D6BD;
-  --deep: #0AA7A7;
+  --deep: #007C7C;
   --mint: #E8FAF4;
   --sun: #ffd64a;
   --ink: #1f2937;
@@ -33,7 +33,7 @@ h1, h2, h3 { text-wrap: balance; letter-spacing: -0.02em; }
 p { text-wrap: pretty; }
 button { font: inherit; touch-action: manipulation; }
 input, select, textarea { font-size: 16px; }
-:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 6px; }
+:focus-visible { outline: 2px solid var(--deep); outline-offset: 2px; border-radius: 6px; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { scrollbar-width: none; }
 .tnum { font-variant-numeric: tabular-nums; }

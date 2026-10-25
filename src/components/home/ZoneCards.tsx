@@ -45,10 +45,10 @@ export default function ZoneCards() {
           return (
             <article key={z.id} className="w-[78%] shrink-0 snap-start overflow-hidden rounded-card border border-line bg-white">
               <div className="relative aspect-[16/10] bg-mint">
-                {z.photo_url ? <img src={z.photo_url} alt={`${z.code} ${z.name}`} loading="lazy" className="h-full w-full object-cover" /> : <div className="flex h-full items-center justify-center text-[42px] font-black text-deep/30">{z.code}</div>}
+                {z.photo_url ? <img src={z.photo_url} alt={`${z.code} ${z.name}`} loading="lazy" className="h-full w-full object-cover" /> : <div aria-hidden="true" className="flex h-full items-center justify-center text-[42px] font-black text-deep/30">{z.code}</div>}
                 <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11.5px] font-black text-ink">{z.code} 구역</span>
                 {soldOut ? <span className="absolute right-3 top-3 rounded-full bg-ink px-2.5 py-1 text-[11.5px] font-black text-white">매진</span>
-                  : <span className="tnum absolute right-3 top-3 rounded-full bg-[#FF5A36] px-2.5 py-1 text-[11.5px] font-black text-white">남은 자리 {z.remaining}동</span>}
+                  : <span className="tnum absolute right-3 top-3 rounded-full bg-[#D93A1A] px-2.5 py-1 text-[11.5px] font-black text-white">남은 자리 {z.remaining}동</span>}
               </div>
               <div className="p-4">
                 <h3 className="text-[17px] font-extrabold leading-tight">{z.name}</h3>

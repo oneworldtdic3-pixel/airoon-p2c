@@ -144,7 +144,7 @@ export default function PhotoDeck() {
               <img src={c.url} alt={c.kind === 'photo' ? `${c.spot} 사진` : c.kind === 'ad' ? c.title : '2026 산사캠프 포스터'} draggable={false} className={`absolute left-[8%] right-[8%] top-[28%] w-[84%] rounded-2xl object-cover ring-1 ring-white/30 ${c.kind === 'event' ? 'h-[34%]' : 'h-[52%]'}`} />
             )}
             {c.kind === 'ad' && c.full && <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-ink/85 via-ink/40 to-transparent" />}
-            {c.kind === 'event' && c.full && <div className="absolute inset-x-0 bottom-0 h-[34%] bg-gradient-to-t from-black/55 via-black/20 to-transparent" />}
+            {c.kind === 'event' && c.full && <div className="absolute inset-x-0 bottom-0 h-[42%] bg-gradient-to-t from-black/75 via-black/40 to-transparent" />}
             {c.kind === 'ad' && <span className="absolute left-4 top-4 rounded-md bg-white/90 px-1.5 py-0.5 text-[10px] font-extrabold text-ink">부스참여업체</span>}
             <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-5 text-white">
               {c.kind === 'event' && c.full ? (

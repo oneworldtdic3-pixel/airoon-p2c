@@ -63,10 +63,10 @@ export default function ShowerGrid({ toast }: { toast: (m: string) => void }) {
                 toast(r.ok ? '샤워실을 예약했습니다' : r.error)
                 if (r.ok) naverConversion('schedule')
               })}
-              className={`rounded-xl border py-2.5 text-center transition duration-150 active:scale-95 ${mine ? 'border-deep bg-brand-grad text-onbrand' : full ? 'border-transparent bg-gray-50 text-gray-300' : blocked ? 'border-line bg-white text-gray-400' : 'border-line bg-white text-ink'}`}
+              className={`rounded-xl border py-2.5 text-center transition duration-150 active:scale-95 ${mine ? 'border-deep bg-brand-grad text-onbrand' : full ? 'border-transparent bg-gray-50 text-gray-300' : blocked ? 'border-line bg-white text-gray-500' : 'border-line bg-white text-ink'}`}
             >
               <span className="tnum block text-[14px] font-bold">{fmtTime(s.starts_at)}</span>
-              <span className={`tnum block text-[10.5px] ${mine ? 'text-onbrand/80' : full ? '' : blocked ? 'text-gray-400' : 'text-deep'}`}>
+              <span className={`tnum block text-[10.5px] ${mine ? 'text-onbrand/80' : full ? '' : blocked ? 'text-gray-500' : 'text-deep'}`}>
                 {mine ? '내 예약' : full ? '예약 완료' : `${left}자리`}
               </span>
               {/* 채움 막대: 다른 사람 예약이 얼마나 찼는지 한눈에 (정원이 커도 칸을 넘지 않게) */}

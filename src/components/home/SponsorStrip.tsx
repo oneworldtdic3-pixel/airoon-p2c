@@ -21,7 +21,7 @@ export default function SponsorStrip() {
         <span className="eyebrow w-14 shrink-0">SNS</span>
         <SocialLinks compact />
       </div>
-      <p className="mt-6 text-[11px] text-gray-400">2026.11.6 (금) 14:00 – 11.8 (일) 11:00 · 하동 쌍계사 일원 · 캠핑존 / 한옥 방사 스테이</p>
+      <p className="mt-6 text-[11px] text-gray-500">2026.11.6 (금) 14:00 – 11.8 (일) 11:00 · 하동 쌍계사 일원 · 캠핑존 / 한옥 방사 스테이</p>
     </section>
   )
 }

@@ -134,7 +134,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
             <li key={p.id} className="border-t hairline py-5 first:border-t-0">
               <button onClick={() => setOpen(p)} className="block w-full text-left">
                 <div className="flex items-start gap-4">
-                  <span className="tnum mt-1 min-w-[1.8em] shrink-0 text-[12px] font-bold text-gray-400">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="tnum mt-1 min-w-[1.8em] shrink-0 text-[12px] font-bold text-gray-500">{String(i + 1).padStart(2, '0')}</span>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
                       <h3 className="text-[18px] font-extrabold">{p.title}</h3>
@@ -182,9 +182,9 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
                   <li key={s.id} className="flex items-center gap-3 py-3.5">
                     <span className={`tnum min-w-[3.4em] shrink-0 font-extrabold ${timeTbd(open) ? 'text-[13px] text-sub' : 'text-[20px]'}`}>{when}</span>
                     <span className="flex-1 text-[13px]">
-                      <span className={`tnum font-bold ${left ? 'text-deep' : 'text-gray-400'}`}>{left ? `${left}석 남음` : '마감'}</span>
+                      <span className={`tnum font-bold ${left ? 'text-deep' : 'text-gray-500'}`}>{left ? `${left}석 남음` : '마감'}</span>
                       {left > 0 && left <= 5 && <span className="ml-1.5 text-[11px] font-bold text-ember">곧 마감</span>}
-                      <span className="tnum block text-[11px] text-gray-400">정원 {s.capacity}</span>
+                      <span className="tnum block text-[11px] text-gray-500">정원 {s.capacity}</span>
                     </span>
                     {mineB ? (
                       <span className="flex flex-col items-end gap-1">

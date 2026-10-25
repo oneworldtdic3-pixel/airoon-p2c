@@ -5,7 +5,7 @@ export default {
     extend: {
       colors: {
         brand: '#35D6BD',
-        deep: '#0AA7A7',
+        deep: '#007C7C', // 흰 바탕 약 5.0:1 (기존 #0AA7A7 2.96:1)
         mint: '#E8FAF4',
         sun: '#FFD64A',
         ink: '#1F2937',
@@ -14,7 +14,8 @@ export default {
         onbrand: '#0B3D38',
         sky: '#5BC8F5',
         ember: '#F0552A',
-        pink: '#FF2D8A',
+        pink: '#FF2D8A', // 하트 아이콘 등 장식용
+        'pink-deep': '#C8106A', // 흰 글씨를 올리는 배지·작은 글씨용 (약 5.6:1)
       },
       fontFamily: {
         sans: ['Pretendard Variable', 'Pretendard', '-apple-system', 'system-ui', 'sans-serif'],

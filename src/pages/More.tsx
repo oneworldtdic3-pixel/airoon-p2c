@@ -194,7 +194,7 @@ export default function More() {
             ))}
           </dl>
         </section>
-        <p className="mt-10 flex gap-4 text-[12px] text-gray-400">
+        <p className="mt-10 flex gap-4 text-[12px] text-gray-500">
           <Link to="/privacy" className="underline underline-offset-2">개인정보처리방침</Link>
           <Link to="/terms" className="underline underline-offset-2">이용약관</Link>
         </p>

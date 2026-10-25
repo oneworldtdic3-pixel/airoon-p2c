@@ -29,9 +29,9 @@ export default function SponsorBuddhz() {
               <span className="block text-[14.5px] font-extrabold">붓쯔 인스타그램</span>
               <span className="block truncate text-[12.5px] text-sub">@buddhz.official · 새 굿즈와 팝업 소식</span>
             </span>
-            <Icon name="chevron" size={18} className="shrink-0 text-gray-400" />
+            <Icon name="chevron" size={18} className="shrink-0 text-gray-500" />
           </a>
-          <p className="mt-5 text-center text-[11.5px] text-gray-400">후원사 제공 홍보 자료 · 붓쯔(BUDDHZ) · 도반HC</p>
+          <p className="mt-5 text-center text-[11.5px] text-gray-500">후원사 제공 홍보 자료 · 붓쯔(BUDDHZ) · 도반HC</p>
         </div>
       </div>
     </div>

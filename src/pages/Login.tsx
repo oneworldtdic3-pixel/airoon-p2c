@@ -17,7 +17,7 @@ function Check({ on, onChange, children, required }: { on: boolean; onChange: (v
       </span>
       <span className="text-[13.5px] leading-snug">
         {children}
-        {required ? <span className="ml-1 text-red-500">필수</span> : <span className="ml-1 text-gray-400">선택</span>}
+        {required ? <span className="ml-1 text-red-500">필수</span> : <span className="ml-1 text-gray-500">선택</span>}
       </span>
     </label>
   )
@@ -107,7 +107,7 @@ export default function Login() {
 
       <div role="tablist" className="mt-8 flex gap-6 border-b hairline">
         {([['login', '로그인'], ['signup', '회원가입']] as const).map(([m, l]) => (
-          <button key={m} role="tab" aria-selected={mode === m} onClick={() => switchMode(m)} className={`-mb-px border-b-2 py-3 text-[16px] font-bold transition ${mode === m ? 'border-ink text-ink' : 'border-transparent text-gray-400'}`}>{l}</button>
+          <button key={m} role="tab" aria-selected={mode === m} onClick={() => switchMode(m)} className={`-mb-px border-b-2 py-3 text-[16px] font-bold transition ${mode === m ? 'border-ink text-ink' : 'border-transparent text-gray-500'}`}>{l}</button>
         ))}
       </div>
 

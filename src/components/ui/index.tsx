@@ -24,7 +24,7 @@ export function Segmented<T extends string>({ value, onChange, options }: { valu
           role="tab"
           aria-selected={value === o.value}
           onClick={() => onChange(o.value)}
-          className={`-mb-px shrink-0 whitespace-nowrap border-b-2 py-3 text-[16px] font-bold transition ${value === o.value ? 'border-ink text-ink' : 'border-transparent text-gray-400'}`}
+          className={`-mb-px shrink-0 whitespace-nowrap border-b-2 py-3 text-[16px] font-bold transition ${value === o.value ? 'border-ink text-ink' : 'border-transparent text-gray-500'}`}
         >
           {o.label}
         </button>
