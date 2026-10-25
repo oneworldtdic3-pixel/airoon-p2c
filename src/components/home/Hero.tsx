@@ -7,6 +7,7 @@ import { useToast } from '../../hooks/useToast'
 import { Toast } from '../ui'
 import Icon from '../ui/Icon'
 import { useState } from 'react'
+import { InquiryButton } from '../InquirySheet'
 
 export default function Hero() {
   const { user } = useApp()
@@ -22,10 +23,13 @@ export default function Hero() {
         <Link to="/" aria-label="산사캠프 홈">
           <img src="/wordmark.png" alt="산사캠프" className="h-[52px] w-auto" draggable={false} />
         </Link>
-        <Link to={user ? '/more' : '/login'} className="flex items-center gap-2">
-          {user && <span className="text-[12px] font-bold text-sub">{user.nickname}님</span>}
-          <span className="tnum rounded-full bg-sun px-3.5 py-1.5 text-[13px] font-extrabold">{ddayLabel()}</span>
-        </Link>
+        <div className="flex items-center gap-1">
+          <Link to={user ? '/more' : '/login'} className="flex min-h-[44px] items-center gap-2">
+            {user && <span className="text-[12px] font-bold text-sub">{user.nickname}님</span>}
+            <span className="tnum rounded-full bg-sun px-3.5 py-1.5 text-[13px] font-extrabold">{ddayLabel()}</span>
+          </Link>
+          <InquiryButton />
+        </div>
       </div>
 
       <div className="relative mt-7 px-5">

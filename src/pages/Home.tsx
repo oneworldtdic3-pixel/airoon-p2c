@@ -13,15 +13,22 @@ import PushPrompt from '../components/home/PushPrompt'
 import ZoneCards from '../components/home/ZoneCards'
 
 export default function Home() {
-  // 맨 아래 후원사·SNS 영역이 화면 아래쪽 1/3 위로 올라오면 떠 있는 버튼을 숨긴다 (여백 없이도 내용이 가려지지 않게)
+  // 캠핑존 카드 구간(카드마다 예매 버튼이 있음)이나 맨 아래 후원사·SNS 영역이 보이면 떠 있는 예매 버튼을 숨긴다
+  const zones = useRef<HTMLDivElement>(null)
   const footer = useRef<HTMLDivElement>(null)
+  const [atZones, setAtZones] = useState(false)
   const [atFooter, setAtFooter] = useState(false)
   useEffect(() => {
-    const el = footer.current
-    if (!el) return
-    const io = new IntersectionObserver(([e]) => setAtFooter(e.isIntersecting), { rootMargin: '0px 0px -35% 0px' })
-    io.observe(el)
-    return () => io.disconnect()
+    const ios: IntersectionObserver[] = []
+    const watch = (el: HTMLElement | null, set: (v: boolean) => void, rootMargin: string) => {
+      if (!el) return
+      const io = new IntersectionObserver(([e]) => set(e.isIntersecting), { rootMargin })
+      io.observe(el)
+      ios.push(io)
+    }
+    watch(zones.current, setAtZones, '0px')
+    watch(footer.current, setAtFooter, '0px 0px -35% 0px')
+    return () => ios.forEach((io) => io.disconnect())
   }, [])
   return (
     <>
@@ -29,13 +36,13 @@ export default function Home() {
       <div className="pt-8 empty:hidden"><InstallStrip /></div>
       <div className="pt-12"><LiveBanner /></div>
       <ArtistTeaser />
-      <ZoneCards />
+      <div ref={zones}><ZoneCards /></div>
       <QuickLinks />
       <TodaySchedule />
       <LivePhotos />
       <div ref={footer}><SponsorStrip /></div>
       <div className="h-6" />
-      <TicketFab hidden={atFooter} />
+      <TicketFab hidden={atZones || atFooter} />
       <HomePopup />
       <PushPrompt />
     </>

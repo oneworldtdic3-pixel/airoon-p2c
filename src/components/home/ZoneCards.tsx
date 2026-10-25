@@ -62,7 +62,7 @@ export default function ZoneCards() {
                 <p className="tnum mt-3 text-[12px] text-sub">전체 {z.capacity}동{z.recent_bookings ? ` · 최근 ${z.recent_bookings}팀 예약` : ''}</p>
                 {soldOut
                   ? <button type="button" onClick={() => { setAlertFor(z); setPhone(user?.phone ?? '') }} className="btn-ghost mt-3 w-full">빈자리 알림 신청</button>
-                  : <button type="button" onClick={() => buy(z)} className="btn mt-3 w-full">캠핑존 예매하기</button>}
+                  : <button type="button" onClick={() => buy(z)} aria-label={`${z.name} 캠핑존 예매하기 (새 창)`} className="btn-buy mt-3 w-full">캠핑존 예매하기</button>}
               </div>
             </article>
           )
