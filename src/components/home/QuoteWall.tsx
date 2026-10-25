@@ -88,7 +88,7 @@ export default function QuoteSheet({ open, onClose, toast }: { open: boolean; on
           className="field resize-none text-[16px] font-semibold leading-snug"
         />
         <div className="mt-2 flex items-center justify-between">
-          <span className="tnum text-[11px] text-gray-500">{text.length}/{MAX}</span>
+          <span className="tnum text-[12px] text-gray-500">{text.length}/{MAX}</span>
           <button type="submit" disabled={busy || text.trim().length < 2} className="btn !px-5 !py-2.5 !text-[13px]">{busy ? '…' : mine ? '바꾸기' : '올리기'}</button>
         </div>
       </form>
@@ -103,10 +103,10 @@ export default function QuoteSheet({ open, onClose, toast }: { open: boolean; on
                 <span className={`tnum min-w-[1.4em] shrink-0 text-[12px] font-extrabold ${i === 0 ? 'text-ember' : 'text-gray-500'}`}>{i + 1}</span>
                 <div className="min-w-0 flex-1">
                   <p className="text-[15px] font-bold leading-snug">{qt.body}</p>
-                  <p className="text-[11.5px] text-sub">{qt.profiles?.nickname ?? '산사러'}{qt.user_id === user?.id ? ' · 내 문구' : ''}{qt.is_hidden ? ' · 숨김' : ''}</p>
+                  <p className="text-[12px] text-sub">{qt.profiles?.nickname ?? '산사러'}{qt.user_id === user?.id ? ' · 내 문구' : ''}{qt.is_hidden ? ' · 숨김' : ''}</p>
                 </div>
                 {user?.is_admin && (
-                  <button type="button" onClick={async () => { const e = await hide(qt.id, !qt.is_hidden); if (e) toast(e) }} className="shrink-0 text-[11px] font-bold text-sub underline">{qt.is_hidden ? '공개' : '숨김'}</button>
+                  <button type="button" onClick={async () => { const e = await hide(qt.id, !qt.is_hidden); if (e) toast(e) }} className="shrink-0 text-[12px] font-bold text-sub underline">{qt.is_hidden ? '공개' : '숨김'}</button>
                 )}
                 <button type="button" onClick={() => requireAuth(async () => { const e = await toggle(qt.id); if (e) toast(e) })} aria-pressed={on} className={`flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1.5 text-[13px] font-bold ${on ? 'bg-pink/10 text-pink' : 'bg-gray-100 text-sub'}`}>
                   <Icon name="heart" size={14} fill={on} className="text-pink" />{qt.likes_count}

@@ -47,10 +47,10 @@ export function KakaoChatLine({ text = '예약이 잘 안 되거나 궁금한 �
     <p className="mt-8 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-center text-[12.5px] text-sub">
       <span>{text}</span>
       <span className="inline-flex gap-1.5">
-        <a href={KAKAO_CHANNEL.chat} target="_blank" rel="noopener noreferrer" onClick={extClick} className="inline-flex items-center gap-1 rounded-full bg-[#FEE500] px-3 py-1.5 text-[12.5px] font-extrabold text-[#191919] active:scale-95">
+        <a href={KAKAO_CHANNEL.chat} target="_blank" rel="noopener noreferrer" onClick={extClick} className="inline-flex min-h-[44px] items-center gap-1 rounded-full bg-[#FEE500] px-3.5 text-[12.5px] font-extrabold text-[#191919] active:scale-95">
           <KakaoGlyph size={14} />카카오톡
         </a>
-        <a href={NAVER_TALK.chat} target="_blank" rel="noopener noreferrer" onClick={extClick} className="inline-flex items-center gap-1 rounded-full bg-[#03C75A] px-3 py-1.5 text-[12.5px] font-extrabold text-white active:scale-95">
+        <a href={NAVER_TALK.chat} target="_blank" rel="noopener noreferrer" onClick={extClick} className="inline-flex min-h-[44px] items-center gap-1 rounded-full bg-[#03C75A] px-3.5 text-[12.5px] font-extrabold text-white active:scale-95">
           <NaverTalkGlyph size={14} />네이버 톡톡
         </a>
       </span>

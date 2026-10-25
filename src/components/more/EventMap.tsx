@@ -105,8 +105,8 @@ function MapViewer({ onClose, initial }: { onClose: () => void; initial?: number
       <div className="flex items-center justify-between gap-3 px-4 pb-2 pt-[calc(env(safe-area-inset-top)+10px)] text-white">
         {sel ? (
           <p className="flex min-w-0 items-center gap-2">
-            <span className="tnum flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#FF5A36] text-[11.5px] font-black">{sel.n}</span>
-            <span className="min-w-0"><span className="block truncate text-[14px] font-bold">{sel.name}</span><span className="block truncate text-[11px] text-white/60">{sel.info}</span></span>
+            <span className="tnum flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#FF5A36] text-[12px] font-black">{sel.n}</span>
+            <span className="min-w-0"><span className="block truncate text-[14px] font-bold">{sel.name}</span><span className="block truncate text-[12px] text-white/60">{sel.info}</span></span>
           </p>
         ) : <p className="text-[14px] font-bold">행사장 약도</p>}
         <button type="button" onClick={onClose} className="rounded-full bg-white/15 px-3.5 py-1.5 text-[13px] font-bold active:scale-95">닫기</button>
@@ -180,9 +180,9 @@ export default function EventMap() {
               <span className="tnum flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#1F7A8C] text-[12px] font-black text-white">{z.n}</span>
               <span className="min-w-0 flex-1">
                 <span className="block text-[14px] font-bold leading-snug">{z.name}</span>
-                <span className="mt-0.5 block text-[11.5px] text-sub">{z.info}</span>
+                <span className="mt-0.5 block text-[12px] text-sub">{z.info}</span>
               </span>
-              <span className="shrink-0 text-[11.5px] font-bold text-deep">위치 ›</span>
+              <span className="shrink-0 text-[12px] font-bold text-deep">위치 ›</span>
             </button>
           </li>
         ))}
@@ -192,7 +192,7 @@ export default function EventMap() {
           <li key={k} className="text-[12.5px]"><span className="font-bold">{k}</span> <span className="text-sub">{v}</span></li>
         ))}
       </ul>
-      <p className="mt-3 text-[11.5px] text-gray-500">쌍계사 · 하동군 화개면 쌍계사길 59 · 캠핑 사이트 3곳 · 텐트 250동. 거리는 줄여서 그린 안내도이며 현장 사정에 따라 바뀔 수 있습니다.</p>
+      <p className="mt-3 text-[12px] text-gray-500">쌍계사 · 하동군 화개면 쌍계사길 59 · 캠핑 사이트 3곳 · 텐트 250동. 거리는 줄여서 그린 안내도이며 현장 사정에 따라 바뀔 수 있습니다.</p>
 
       {open !== null && <MapViewer initial={open || undefined} onClose={() => setOpen(null)} />}
     </div>

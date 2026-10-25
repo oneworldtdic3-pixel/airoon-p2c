@@ -34,7 +34,7 @@ export default function LivePhotos() {
       <div className="px-5">
         <SectionTitle
           eyebrow={<span className="inline-flex items-center gap-1.5"><span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ember opacity-60" /><span className="relative inline-flex h-2 w-2 rounded-full bg-ember" /></span>Live</span>}
-          right={<Link to="/photo" className="text-[13px] font-bold text-deep">포토 전체</Link>}
+          right={<Link to="/photo" className="-my-3 -mr-2 inline-flex min-h-[44px] items-center px-2 text-[13px] font-bold text-deep">포토 전체</Link>}
         >
           실시간 포토
         </SectionTitle>
@@ -46,11 +46,11 @@ export default function LivePhotos() {
               <button type="button" onClick={() => setView(p.id)} className="block w-full text-left" aria-label={`${p.spot_tag} 사진 크게 보기`}>
                 <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-mint">
                   <img src={p.url} alt={`${p.spot_tag} · ${p.nickname}`} loading={i < 3 ? 'eager' : 'lazy'} className="h-full w-full object-cover" />
-                  {fresh.has(p.id) && <span className="absolute left-2 top-2 rounded-md bg-ember px-1.5 py-0.5 text-[10px] font-extrabold text-white">NEW</span>}
-                  <span className="absolute bottom-2 right-2 inline-flex items-center gap-0.5 rounded-full bg-ink/55 px-1.5 py-0.5 text-[10.5px] font-bold text-white"><Icon name="heart" size={11} fill className="text-pink" />{p.likes_count}</span>
+                  {fresh.has(p.id) && <span className="absolute left-2 top-2 rounded-md bg-ember px-1.5 py-0.5 text-[12px] font-extrabold text-white">NEW</span>}
+                  <span className="absolute bottom-2 right-2 inline-flex items-center gap-0.5 rounded-full bg-ink/55 px-1.5 py-0.5 text-[12px] font-bold text-white"><Icon name="heart" size={11} fill className="text-pink" />{p.likes_count}</span>
                 </div>
                 <p className="mt-1.5 truncate text-[12.5px] font-bold">{p.spot_tag}</p>
-                <p className="truncate text-[11px] text-sub">{p.nickname} · {timeAgo(p.created_at)}</p>
+                <p className="truncate text-[12px] text-sub">{p.nickname} · {timeAgo(p.created_at)}</p>
               </button>
             </li>
           ))}

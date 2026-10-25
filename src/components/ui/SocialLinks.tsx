@@ -27,7 +27,7 @@ export default function SocialLinks({ compact = false }: { compact?: boolean }) 
       {SOCIAL.map((s) => (
         <li key={s.id}>
           <a href={s.url} target="_blank" rel="noopener noreferrer" onClick={extClick} aria-label={`산사캠프 ${s.name} (새 창)`}
-             className={`flex items-center ${compact ? 'gap-1.5' : 'gap-2'} rounded-full border border-line bg-white font-bold text-ink transition active:scale-95 ${compact ? 'px-2.5 py-2 text-[12.5px]' : 'px-4 py-2.5 text-[13.5px]'}`}>
+             className={`flex items-center ${compact ? 'gap-1.5' : 'gap-2'} rounded-full border border-line bg-white font-bold text-ink transition active:scale-95 min-h-[44px] ${compact ? 'px-3 text-[12.5px]' : 'px-4 text-[13.5px]'}`}>
             <span className="text-deep">{icons[s.id]}</span>{s.name}
           </a>
         </li>

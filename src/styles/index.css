@@ -50,7 +50,7 @@ input, select, textarea { font-size: 16px; }
     @apply inline-flex items-center justify-center rounded-full border border-line px-4 py-2.5 text-[14px] font-bold text-ink transition active:scale-[0.97];
   }
   .hairline { border-color: var(--line); }
-  .eyebrow { @apply text-[11px] font-bold uppercase tracking-[0.18em] text-sub; }
+  .eyebrow { @apply text-[12px] font-bold uppercase tracking-[0.18em] text-sub; }
   .field { @apply w-full rounded-2xl border border-line bg-white px-4 py-3.5 font-medium outline-none transition focus:border-brand; }
 }
 

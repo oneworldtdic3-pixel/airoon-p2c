@@ -36,7 +36,7 @@ export default function ZoneCards() {
     <section className="px-5 pt-12">
       <div className="mb-1 flex items-end justify-between">
         <h2 className="text-[21px] font-extrabold tracking-[-0.02em]">캠핑존 고르기</h2>
-        <Link to="/reserve?tab=camp" className="text-[13px] font-bold text-deep">사이트 번호 선택 ›</Link>
+        <Link to="/reserve?tab=camp" className="-my-3 -mr-2 inline-flex min-h-[44px] items-center px-2 text-[13px] font-bold text-deep">사이트 번호 선택 ›</Link>
       </div>
       <p className="mb-4 text-[13px] text-sub">{priceLabel(ev.data)} · 예매 후 앱에서 사이트 번호를 고릅니다</p>
       <div className="no-scrollbar -mx-5 flex snap-x gap-3 overflow-x-auto px-5 pb-1">
@@ -46,9 +46,9 @@ export default function ZoneCards() {
             <article key={z.id} className="w-[78%] shrink-0 snap-start overflow-hidden rounded-card border border-line bg-white">
               <div className="relative aspect-[16/10] bg-mint">
                 {z.photo_url ? <img src={z.photo_url} alt={`${z.code} ${z.name}`} loading="lazy" className="h-full w-full object-cover" /> : <div aria-hidden="true" className="flex h-full items-center justify-center text-[42px] font-black text-deep/30">{z.code}</div>}
-                <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11.5px] font-black text-ink">{z.code} 구역</span>
-                {soldOut ? <span className="absolute right-3 top-3 rounded-full bg-ink px-2.5 py-1 text-[11.5px] font-black text-white">매진</span>
-                  : <span className="tnum absolute right-3 top-3 rounded-full bg-[#D93A1A] px-2.5 py-1 text-[11.5px] font-black text-white">남은 자리 {z.remaining}동</span>}
+                <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[12px] font-black text-ink">{z.code} 구역</span>
+                {soldOut ? <span className="absolute right-3 top-3 rounded-full bg-ink px-2.5 py-1 text-[12px] font-black text-white">매진</span>
+                  : <span className="tnum absolute right-3 top-3 rounded-full bg-[#D93A1A] px-2.5 py-1 text-[12px] font-black text-white">남은 자리 {z.remaining}동</span>}
               </div>
               <div className="p-4">
                 <h3 className="text-[17px] font-extrabold leading-tight">{z.name}</h3>

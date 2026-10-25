@@ -66,7 +66,7 @@ export default function PhotoComments({ photoId, toast }: { photoId: string; toa
             const mine = user?.id === c.user_id
             return (
               <li key={c.id} className="flex items-start gap-2.5">
-                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-mint text-[11px] font-extrabold text-deep">{(c.profiles?.nickname ?? '산')[0]}</span>
+                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-mint text-[12px] font-extrabold text-deep">{(c.profiles?.nickname ?? '산')[0]}</span>
                 <div className="min-w-0 flex-1">
                   <p className="text-[12px] text-sub"><span className="font-bold text-ink">{c.profiles?.nickname ?? '산사러'}</span> · <span className="tnum">{timeAgo(c.created_at)}</span></p>
                   <p className="mt-0.5 whitespace-pre-wrap break-words text-[14px] leading-snug">{c.body}</p>
@@ -94,7 +94,7 @@ export default function PhotoComments({ photoId, toast }: { photoId: string; toa
         />
         <button type="submit" disabled={busy || !text.trim()} className="btn !px-4 !py-2.5 !text-[13px]">{busy ? '…' : '올리기'}</button>
       </form>
-      <p className="tnum mt-1 text-right text-[11px] text-gray-500">{text.length}/{MAX}</p>
+      <p className="tnum mt-1 text-right text-[12px] text-gray-500">{text.length}/{MAX}</p>
     </section>
   )
 }

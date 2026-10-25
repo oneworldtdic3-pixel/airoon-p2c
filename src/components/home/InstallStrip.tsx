@@ -24,7 +24,7 @@ export default function InstallStrip() {
           </span>
           <Icon name="chevron" size={18} className="shrink-0 text-deep" />
         </button>
-        <button type="button" onClick={close} aria-label="닫기" className="p-2 text-sub"><Icon name="close" size={18} /></button>
+        <button type="button" onClick={close} aria-label="닫기" className="-m-1.5 flex h-11 w-11 items-center justify-center text-sub"><Icon name="close" size={18} /></button>
       </div>
       <InstallSheet open={open} onClose={() => setOpen(false)} />
     </>

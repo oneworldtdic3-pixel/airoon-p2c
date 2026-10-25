@@ -63,7 +63,7 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
               </ul>
               <p className="mt-2 text-[12px] text-sub">자리는 다른 분이 예약할 수 있게 열렸습니다. 다시 참여하려면 아래에서 예약해 주세요.</p>
             </div>
-            <button type="button" onClick={() => setCancelled([])} aria-label="닫기" className="-mr-1 -mt-1 p-1 text-sub"><Icon name="close" size={18} /></button>
+            <button type="button" onClick={() => setCancelled([])} aria-label="닫기" className="-mr-3 -mt-3 flex h-11 w-11 items-center justify-center text-sub"><Icon name="close" size={18} /></button>
           </div>
         </section>
       )}
@@ -120,8 +120,8 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
             <li key={m.id} className="flex items-center gap-3 py-2.5">
               <span className="tnum min-w-[3.2em] shrink-0 text-[14px] font-extrabold">{m.time}</span>
               <span className="min-w-0 flex-1 truncate text-[13.5px] font-bold">{m.title}</span>
-              <span className="shrink-0 text-[11.5px] text-sub">{m.location} · {m.note}</span>
-              <span className={`shrink-0 rounded-md px-1.5 py-0.5 text-[10.5px] font-extrabold ${m.kind === 'meal' ? 'bg-sun text-ink' : m.kind === 'info' ? 'bg-sky/40 text-ink' : 'bg-mint text-deep'}`}>{mealTag(m)}</span>
+              <span className="shrink-0 text-[12px] text-sub">{m.location} · {m.note}</span>
+              <span className={`shrink-0 rounded-md px-1.5 py-0.5 text-[12px] font-extrabold ${m.kind === 'meal' ? 'bg-sun text-ink' : m.kind === 'info' ? 'bg-sky/40 text-ink' : 'bg-mint text-deep'}`}>{mealTag(m)}</span>
             </li>
           ))}
         </ul>
@@ -183,8 +183,8 @@ export default function ProgramList({ toast }: { toast: (m: string) => void }) {
                     <span className={`tnum min-w-[3.4em] shrink-0 font-extrabold ${timeTbd(open) ? 'text-[13px] text-sub' : 'text-[20px]'}`}>{when}</span>
                     <span className="flex-1 text-[13px]">
                       <span className={`tnum font-bold ${left ? 'text-deep' : 'text-gray-500'}`}>{left ? `${left}석 남음` : '마감'}</span>
-                      {left > 0 && left <= 5 && <span className="ml-1.5 text-[11px] font-bold text-ember">곧 마감</span>}
-                      <span className="tnum block text-[11px] text-gray-500">정원 {s.capacity}</span>
+                      {left > 0 && left <= 5 && <span className="ml-1.5 text-[12px] font-bold text-ember">곧 마감</span>}
+                      <span className="tnum block text-[12px] text-gray-500">정원 {s.capacity}</span>
                     </span>
                     {mineB ? (
                       <span className="flex flex-col items-end gap-1">

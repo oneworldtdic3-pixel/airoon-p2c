@@ -57,7 +57,7 @@ export default function Hero() {
 
       <div className="relative mt-6 flex items-center justify-between px-5">
         <p className="text-[13px] font-semibold text-ink">지금 산사캠프</p>
-        <Link to="/photo" className="text-[12px] font-semibold text-sub">전체</Link>
+        <Link to="/photo" className="-my-3 -mr-2 inline-flex min-h-[44px] items-center px-2 text-[12px] font-semibold text-sub">전체</Link>
       </div>
       <PhotoDeck />
     </section>

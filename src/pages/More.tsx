@@ -86,7 +86,7 @@ export default function More() {
           <div className="min-w-0">
             <p className="flex items-center gap-2 text-[16px] font-extrabold">
               <span className="truncate">{user ? user.nickname : '로그인 전'}</span>
-              {user && <button type="button" onClick={() => setNickOpen(true)} className="shrink-0 rounded-full border border-line px-2 py-0.5 text-[11.5px] font-bold text-deep active:scale-95">{user.nickname === DEFAULT_NICK ? '닉네임 정하기' : '바꾸기'}</button>}
+              {user && <button type="button" onClick={() => setNickOpen(true)} className="shrink-0 rounded-full border border-line px-2 py-0.5 text-[12px] font-bold text-deep active:scale-95">{user.nickname === DEFAULT_NICK ? '닉네임 정하기' : '바꾸기'}</button>}
             </p>
             <p className="tnum truncate text-[12.5px] text-sub">{user ? (user.phone ? fmtPhone(user.phone) : '소셜 계정') : '예약할 때만 인증하면 됩니다'}</p>
           </div>
@@ -194,9 +194,9 @@ export default function More() {
             ))}
           </dl>
         </section>
-        <p className="mt-10 flex gap-4 text-[12px] text-gray-500">
-          <Link to="/privacy" className="underline underline-offset-2">개인정보처리방침</Link>
-          <Link to="/terms" className="underline underline-offset-2">이용약관</Link>
+        <p className="mt-7 flex gap-2 text-[12px] text-gray-500">
+          <Link to="/privacy" className="-ml-2 inline-flex min-h-[44px] items-center px-2 underline underline-offset-2">개인정보처리방침</Link>
+          <Link to="/terms" className="inline-flex min-h-[44px] items-center px-2 underline underline-offset-2">이용약관</Link>
         </p>
       </div>
       <BottomSheet open={phoneSheet} onClose={() => setPhoneSheet(false)} title="휴대폰 번호 연결">

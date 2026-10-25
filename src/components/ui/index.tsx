@@ -35,7 +35,7 @@ export function Segmented<T extends string>({ value, onChange, options }: { valu
 
 export function Tag({ children, tone = 'ink' }: { children: ReactNode; tone?: 'ink' | 'green' | 'sun' | 'red' }) {
   const t = { ink: 'text-sub', green: 'text-deep', sun: 'bg-sun text-ink px-1.5 rounded-md', red: 'text-red-500' }[tone]
-  return <span className={`text-[11px] font-bold tracking-wide ${t}`}>{children}</span>
+  return <span className={`text-[12px] font-bold tracking-wide ${t}`}>{children}</span>
 }
 
 export function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boolean) => void; label: string }) {
@@ -63,7 +63,7 @@ export function BottomSheet({ open, onClose, title, children }: { open: boolean;
         <div className="mx-auto mb-4 h-1 w-9 rounded-full bg-gray-200" />
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-[20px] font-extrabold">{title}</h2>
-          <button onClick={onClose} aria-label="닫기" className="-mr-2 p-2 text-sub"><Icon name="close" /></button>
+          <button onClick={onClose} aria-label="닫기" className="-mr-2.5 flex h-11 w-11 items-center justify-center text-sub"><Icon name="close" /></button>
         </div>
         {children}
       </div>

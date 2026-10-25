@@ -123,7 +123,7 @@ export default function SiteMap({
 export function SiteLegend({ editable = false }: { editable?: boolean }) {
   const items: [string, string][] = [['bg-[#22C55E]', '빈 자리'], ['bg-gray-400', '예약됨'], ['bg-[repeating-linear-gradient(45deg,#9CA3AF_0_3px,#E5E7EB_3px_6px)]', editable ? '막힘' : '선택 불가'], ['bg-[#FF5A36]', '내 선택']]
   return (
-    <ul className="flex flex-wrap gap-x-3 gap-y-1 text-[11.5px] text-sub">
+    <ul className="flex flex-wrap gap-x-3 gap-y-1 text-[12px] text-sub">
       {items.map(([c, l]) => <li key={l} className="flex items-center gap-1"><span className={`inline-block h-3 w-3 rounded-full ${c}`} />{l}</li>)}
     </ul>
   )

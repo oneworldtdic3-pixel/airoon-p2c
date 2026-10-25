@@ -25,7 +25,7 @@ export default function ShowerGrid({ toast }: { toast: (m: string) => void }) {
     <div>
       <dl className="mb-6 grid grid-cols-3 gap-3 border-y hairline py-4 text-center">
         {[['5개', '샤워 부스'], [`남${SHOWER_BOOTH_CAPACITY}·여${SHOWER_BOOTH_CAPACITY}`, '부스당 30분'], [`${DAILY_MAX}회`, '1인당 하루']].map(([v, k]) => (
-          <div key={k}><dt className="text-[11px] text-sub">{k}</dt><dd className="tnum text-[20px] font-extrabold">{v}</dd></div>
+          <div key={k}><dt className="text-[12px] text-sub">{k}</dt><dd className="tnum text-[20px] font-extrabold">{v}</dd></div>
         ))}
       </dl>
       <div className="no-scrollbar -mx-5 flex gap-2 overflow-x-auto px-5">
@@ -66,7 +66,7 @@ export default function ShowerGrid({ toast }: { toast: (m: string) => void }) {
               className={`rounded-xl border py-2.5 text-center transition duration-150 active:scale-95 ${mine ? 'border-deep bg-brand-grad text-onbrand' : full ? 'border-transparent bg-gray-50 text-gray-300' : blocked ? 'border-line bg-white text-gray-500' : 'border-line bg-white text-ink'}`}
             >
               <span className="tnum block text-[14px] font-bold">{fmtTime(s.starts_at)}</span>
-              <span className={`tnum block text-[10.5px] ${mine ? 'text-onbrand/80' : full ? '' : blocked ? 'text-gray-500' : 'text-deep'}`}>
+              <span className={`tnum block text-[12px] ${mine ? 'text-onbrand/80' : full ? '' : blocked ? 'text-gray-500' : 'text-deep'}`}>
                 {mine ? '내 예약' : full ? '예약 완료' : `${left}자리`}
               </span>
               {/* 채움 막대: 다른 사람 예약이 얼마나 찼는지 한눈에 (정원이 커도 칸을 넘지 않게) */}

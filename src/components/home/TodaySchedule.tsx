@@ -47,7 +47,7 @@ export default function TodaySchedule() {
 
   return (
     <section className="px-5 pt-12">
-      <SectionTitle eyebrow={tab === 'mine' ? '내 스케줄' : `11월 ${Number(day.slice(-2))}일 · Day ${(di ?? 0) + 1}`} right={<Link to="/reserve" className="text-[13px] font-bold text-deep">{tab === 'mine' ? '예약 관리' : '전체 보기'}</Link>}>
+      <SectionTitle eyebrow={tab === 'mine' ? '내 스케줄' : `11월 ${Number(day.slice(-2))}일 · Day ${(di ?? 0) + 1}`} right={<Link to="/reserve" className="-my-3 -mr-2 inline-flex min-h-[44px] items-center px-2 text-[13px] font-bold text-deep">{tab === 'mine' ? '예약 관리' : '전체 보기'}</Link>}>
         {tab === 'mine' ? '내 일정' : allTitle}
       </SectionTitle>
       <div className="-mt-2 mb-2">
@@ -77,7 +77,7 @@ export default function TodaySchedule() {
                       <div className="flex items-baseline gap-4 border-t hairline py-3.5 first:border-t-0">
                         <span className="tnum min-w-[3.4em] shrink-0 text-[17px] font-extrabold text-ink">{fmtTime(m.at)}</span>
                         <span className="min-w-0 flex-1">
-                          <span className="block truncate text-[15px] font-semibold">{m.title} <span className={`ml-1 rounded-md px-1.5 py-0.5 text-[10.5px] font-extrabold ${m.tag === '공양' ? 'bg-sun/50 text-ink' : m.tag === '입장' ? 'bg-sky/30 text-ink' : 'bg-mint text-deep'}`}>{m.tag}</span></span>
+                          <span className="block truncate text-[15px] font-semibold">{m.title} <span className={`ml-1 rounded-md px-1.5 py-0.5 text-[12px] font-extrabold ${m.tag === '공양' ? 'bg-sun/50 text-ink' : m.tag === '입장' ? 'bg-sky/30 text-ink' : 'bg-mint text-deep'}`}>{m.tag}</span></span>
                           <span className="block truncate text-[12px] text-sub">{m.sub}</span>
                         </span>
                       </div>
@@ -103,7 +103,7 @@ export default function TodaySchedule() {
             if (row.kind === 'meal') return (
               <li key={row.m.id} className="flex items-baseline gap-4 border-t hairline py-3.5 first:border-t-0">
                 <span className="tnum min-w-[3.4em] shrink-0 text-[17px] font-extrabold text-ink">{row.m.time}</span>
-                <span className="min-w-0 flex-1 truncate text-[15px] font-semibold">{row.m.title} <span className={`ml-1 rounded-md px-1.5 py-0.5 text-[10.5px] font-extrabold ${row.m.kind === 'meal' ? 'bg-sun/50 text-ink' : row.m.kind === 'info' ? 'bg-sky/30 text-ink' : 'bg-mint text-deep'}`}>{mealTag(row.m)}</span></span>
+                <span className="min-w-0 flex-1 truncate text-[15px] font-semibold">{row.m.title} <span className={`ml-1 rounded-md px-1.5 py-0.5 text-[12px] font-extrabold ${row.m.kind === 'meal' ? 'bg-sun/50 text-ink' : row.m.kind === 'info' ? 'bg-sky/30 text-ink' : 'bg-mint text-deep'}`}>{mealTag(row.m)}</span></span>
                 <span className="shrink-0 text-[12px] font-bold text-sub">{row.m.kind === 'ritual' ? row.m.note : row.m.location}</span>
               </li>
             )

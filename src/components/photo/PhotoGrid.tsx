@@ -17,7 +17,7 @@ export default function PhotoGrid({ list, onOpen }: { list: Photo[]; onOpen: (p:
             <img src={p.url} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
           </button>
           {isNew(p.created_at) && <span className="absolute left-2 top-2 h-2 w-2 rounded-full bg-ember ring-2 ring-white" aria-label="새 사진" />}
-          <button onClick={() => requireAuth(() => { void toggleLike(p.id) })} aria-pressed={likedIds.has(p.id)} aria-label="좋아요" className="absolute bottom-1.5 right-1.5 flex items-center gap-1 text-[11px] font-bold text-white drop-shadow">
+          <button onClick={() => requireAuth(() => { void toggleLike(p.id) })} aria-pressed={likedIds.has(p.id)} aria-label="좋아요" className="absolute bottom-0 right-0 flex min-h-[44px] min-w-[44px] items-end justify-end gap-1 px-1.5 pb-1.5 text-[12px] font-bold text-white drop-shadow">
             <Icon name="heart" size={14} fill={likedIds.has(p.id)} className={likedIds.has(p.id) ? 'text-pink' : ''} />{p.likes_count}
           </button>
         </li>

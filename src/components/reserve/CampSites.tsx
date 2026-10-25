@@ -170,7 +170,7 @@ export default function CampSites({ toast }: { toast: (m: string) => void }) {
 
       {/* 진행 단계 */}
       <ol className="no-scrollbar mb-4 flex gap-1.5 overflow-x-auto">
-        {STEPS.map((s, i) => <li key={s.key} className={`shrink-0 rounded-full px-2.5 py-1 text-[11.5px] font-bold ${i === stepIdx ? 'bg-ink text-white' : i < stepIdx ? 'bg-mint text-deep' : 'bg-gray-100 text-gray-500'}`}>{i + 1} {s.label}</li>)}
+        {STEPS.map((s, i) => <li key={s.key} className={`shrink-0 rounded-full px-2.5 py-1 text-[12px] font-bold ${i === stepIdx ? 'bg-ink text-white' : i < stepIdx ? 'bg-mint text-deep' : 'bg-gray-100 text-gray-500'}`}>{i + 1} {s.label}</li>)}
       </ol>
 
       {step === 'order' && (
@@ -203,7 +203,7 @@ export default function CampSites({ toast }: { toast: (m: string) => void }) {
           {map && mapOff && (
             <div className="fixed right-3 top-[calc(env(safe-area-inset-top)+8px)] z-30 w-[44%] rounded-tile bg-white p-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.25)] ring-1 ring-line">
               <SiteMap map={map} sites={zoneSites} occ={occ} zoneId={zone?.id} selected={sel} onSelect={pick} compact />
-              <p className="tnum mt-1 text-center text-[11px] font-bold text-deep">{sel.length ? sel.map((id) => sites.find((s) => s.id === id)?.number).join(', ') : '사이트를 골라 주세요'}</p>
+              <p className="tnum mt-1 text-center text-[12px] font-bold text-deep">{sel.length ? sel.map((id) => sites.find((s) => s.id === id)?.number).join(', ') : '사이트를 골라 주세요'}</p>
             </div>
           )}
           <p className="eyebrow">사이트 번호</p>
@@ -214,8 +214,8 @@ export default function CampSites({ toast }: { toast: (m: string) => void }) {
                 <li key={s.id}>
                   <button type="button" disabled={dis} aria-pressed={on} onClick={() => pick(s)} className={`w-full rounded-xl border px-2 py-2 text-left transition ${on ? 'border-[#FF5A36] bg-[#FF5A36]/10' : dis ? 'border-gray-100 bg-gray-50 text-gray-500' : 'border-line bg-white active:scale-95'}`}>
                     <span className="tnum block text-[14px] font-extrabold">{s.number}</span>
-                    <span className="block text-[11px] text-sub">{s.width_m && s.depth_m ? `${s.width_m}×${s.depth_m}m` : '크기 미정'}{s.ground ? ` · ${s.ground}` : ''}{s.pet_allowed ? ' · 🐾' : ''}</span>
-                    <span className="block text-[11px] font-bold">{st === 'free' ? '빈 자리' : st === 'blocked' ? '선택 불가' : '예약됨'}</span>
+                    <span className="block text-[12px] text-sub">{s.width_m && s.depth_m ? `${s.width_m}×${s.depth_m}m` : '크기 미정'}{s.ground ? ` · ${s.ground}` : ''}{s.pet_allowed ? ' · 🐾' : ''}</span>
+                    <span className="block text-[12px] font-bold">{st === 'free' ? '빈 자리' : st === 'blocked' ? '선택 불가' : '예약됨'}</span>
                   </button>
                 </li>
               )
@@ -343,7 +343,7 @@ function MyAssignmentsList({ list, fallbackQr = [] }: { list: MyAssignment[]; fa
             {a.members.map((m) => (
               <li key={m.id}>
                 <button type="button" onClick={() => setOpen(open === m.id ? null : m.id)} className="flex w-full items-center justify-between py-2.5 text-left">
-                  <span className="text-[13.5px] font-bold">{m.name}{m.is_lead && <span className="ml-1 rounded bg-mint px-1.5 py-0.5 text-[10px] text-deep">대표</span>}</span>
+                  <span className="text-[13.5px] font-bold">{m.name}{m.is_lead && <span className="ml-1 rounded bg-mint px-1.5 py-0.5 text-[12px] text-deep">대표</span>}</span>
                   <span className="flex items-center gap-1 text-[12px] font-bold text-deep"><Icon name="qr" size={14} />QR 팔찌</span>
                 </button>
                 {open === m.id && <div className="flex flex-col items-center pb-3"><QRCodeSVG value={m.qr_code} size={168} fgColor="#1F2937" /><p className="tnum mt-2 text-[12px] tracking-[0.2em] text-sub">{m.qr_code}</p></div>}
