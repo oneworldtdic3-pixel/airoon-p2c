@@ -11,6 +11,8 @@ import TicketFab from '../components/home/TicketFab'
 import HomePopup from '../components/home/HomePopup'
 import PushPrompt from '../components/home/PushPrompt'
 import ZoneCards from '../components/home/ZoneCards'
+import NotifyFab from '../components/home/NotifyFab'
+import { EVENT_POSTPONED } from '../data/constants'
 
 export default function Home() {
   // 캠핑존 카드 구간(카드마다 예매 버튼이 있음)이나 맨 아래 후원사·SNS 영역이 보이면 떠 있는 예매 버튼을 숨긴다
@@ -55,13 +57,14 @@ export default function Home() {
       <div className="pt-8 empty:hidden"><InstallStrip /></div>
       <div className="pt-12"><LiveBanner /></div>
       <ArtistTeaser />
-      <div ref={zones}><ZoneCards /></div>
-      <QuickLinks />
-      <TodaySchedule />
+      {/* 행사 연기 중(2027년 봄, 장소 미정)에는 캠핑존·사전예약 바로가기·첫날 일정(옛 날짜)을 끈다 */}
+      {!EVENT_POSTPONED && <div ref={zones}><ZoneCards /></div>}
+      {!EVENT_POSTPONED && <QuickLinks />}
+      {!EVENT_POSTPONED && <TodaySchedule />}
       <LivePhotos />
       <div ref={footer}><SponsorStrip /></div>
       <div className="h-6" />
-      <TicketFab hidden={atZones || atFooter || scrollingDown} />
+      {EVENT_POSTPONED ? <NotifyFab hidden={atFooter || scrollingDown} /> : <TicketFab hidden={atZones || atFooter || scrollingDown} />}
       <HomePopup />
       <PushPrompt />
     </>

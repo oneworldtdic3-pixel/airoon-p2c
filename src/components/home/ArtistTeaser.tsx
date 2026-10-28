@@ -1,4 +1,9 @@
-const MARQUEE = 'ARTIST LINE-UP · JAZZ VOCALIST WOONGSAN · SANSA CAMP 2026 · 11.06 – 11.08 · HADONG SSANGGYESA · MORE ARTISTS SOON · '
+import { EVENT_POSTPONED } from '../../data/constants'
+
+// 연기 중에는 날짜·장소를 빼고 'SANSA CAMP 2027 SPRING'
+const MARQUEE = EVENT_POSTPONED
+  ? 'ARTIST LINE-UP · JAZZ VOCALIST WOONGSAN · SANSA CAMP 2027 SPRING · MORE ARTISTS SOON · '
+  : 'ARTIST LINE-UP · JAZZ VOCALIST WOONGSAN · SANSA CAMP 2026 · 11.06 – 11.08 · HADONG SSANGGYESA · MORE ARTISTS SOON · '
 
 /** 아티스트 라인업 배너 — 확정 아티스트: 재즈 보컬리스트 웅산. 클릭 이동 없음 */
 export default function ArtistTeaser() {
@@ -26,7 +31,7 @@ export default function ArtistTeaser() {
 
         {/* 상단 라벨 */}
         <div className="absolute left-4 top-4 flex items-center gap-2 text-[12px] font-extrabold tracking-[0.28em]">
-          <span className="rounded-sm bg-white px-1.5 py-0.5 text-[#0A0A0B]">2026</span>
+          <span className="rounded-sm bg-white px-1.5 py-0.5 text-[#0A0A0B]">{EVENT_POSTPONED ? '2027' : '2026'}</span>
           <span className="text-white/90">ARTIST LINE-UP</span>
         </div>
 

@@ -5,6 +5,7 @@ import Icon from '../ui/Icon'
 import { openExternal } from '../../lib/external'
 import { TICKETS } from './TicketFab'
 import { markBuyClick } from '../../lib/visit'
+import { EVENT_POSTPONED } from '../../data/constants'
 
 type Card =
   | { kind: 'event'; id: string; url: string; full?: boolean; link?: string }
@@ -26,12 +27,16 @@ export default function PhotoDeck() {
     const best = [...photos].filter((p) => !p.is_hidden).sort((a, b) => b.likes_count - a.likes_count)[0]
     // 실제 배너 이미지(seed 가 아닌 것)는 카드 전면에 채우고, 개발용 일러스트는 안쪽 액자형으로
     const ads: Card[] = banners.map((b) => ({ kind: 'ad', id: b.id, url: b.image, sponsor: b.sponsor, title: b.title, sub: b.sub, link: b.link, bg: b.bg, full: !b.image_path.startsWith('seed:') }))
-    const events: Card[] = [
-      // 정사각 포스터 카드 → 네이버 티켓 구매 페이지(새 창). 세로 포스터 카드 → 기획의도
-      { kind: 'event', id: 'poster', url: '/poster-square.jpg', link: TICKETS.hanok.url },
-      { kind: 'event', id: 'poster-full', url: '/poster-card.jpg', full: true },
-    ]
-    return best ? [events[0], { kind: 'photo', id: best.id, url: best.url, spot: best.spot_tag, nickname: best.nickname, likes: best.likes_count }, events[1], ...ads] : [...events, ...ads]
+    // 연기 중: 정사각 포스터는 예매 링크 없이 연기 안내만(누르면 기획의도), 세로 포스터는 이미지에 옛 장소가 있어 뺀다
+    const events: Card[] = EVENT_POSTPONED
+      ? [{ kind: 'event', id: 'poster', url: '/poster-square.jpg' }]
+      : [
+          // 정사각 포스터 카드 → 네이버 티켓 구매 페이지(새 창). 세로 포스터 카드 → 기획의도
+          { kind: 'event', id: 'poster', url: '/poster-square.jpg', link: TICKETS.hanok.url },
+          { kind: 'event', id: 'poster-full', url: '/poster-card.jpg', full: true },
+        ]
+    const photo: Card[] = best ? [{ kind: 'photo', id: best.id, url: best.url, spot: best.spot_tag, nickname: best.nickname, likes: best.likes_count }] : []
+    return [events[0], ...photo, ...events.slice(1), ...ads]
   }, [photos, banners])
   const [idx, setIdx] = useState(0)
   const [drag, setDrag] = useState(0)          // 손가락을 따라가는 가로 이동(px)
@@ -161,9 +166,9 @@ export default function PhotoDeck() {
             <div className={`absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 ${c.kind === 'event' && c.full ? 'to-ink/25' : 'to-ink/70'}`} />
             {!full && <p className="absolute left-0 right-0 top-2 overflow-hidden whitespace-nowrap px-3 text-[64px] font-extrabold leading-none tracking-[-0.04em] text-white/80">{bigWord}</p>}
             {full ? (
-              <img src={c.url} alt={c.kind === 'ad' ? `${c.sponsor} · ${c.title}` : '2026 산사캠프 with 쌍계사 포스터'} width={875} height={1000} draggable={false} className="absolute inset-0 h-full w-full object-cover object-top" />
+              <img src={c.url} alt={c.kind === 'ad' ? `${c.sponsor} · ${c.title}` : '산사캠프 포스터'} width={875} height={1000} draggable={false} className="absolute inset-0 h-full w-full object-cover object-top" />
             ) : (
-              <img src={c.url} alt={c.kind === 'photo' ? `${c.spot} 사진` : c.kind === 'ad' ? c.title : '2026 산사캠프 포스터'} width={1000} height={509} draggable={false} className={`absolute left-[8%] right-[8%] top-[28%] w-[84%] rounded-2xl object-cover ring-1 ring-white/30 ${c.kind === 'event' ? 'h-[34%]' : 'h-[52%]'}`} />
+              <img src={c.url} alt={c.kind === 'photo' ? `${c.spot} 사진` : c.kind === 'ad' ? c.title : '산사캠프 포스터'} width={1000} height={509} draggable={false} className={`absolute left-[8%] right-[8%] top-[28%] w-[84%] rounded-2xl object-cover ring-1 ring-white/30 ${c.kind === 'event' ? 'h-[34%]' : 'h-[52%]'}`} />
             )}
             {c.kind === 'ad' && c.full && <div className="absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-ink/85 via-ink/40 to-transparent" />}
             {c.kind === 'event' && c.full && <div className="absolute inset-x-0 bottom-0 h-[42%] bg-gradient-to-t from-black/75 via-black/40 to-transparent" />}
@@ -176,9 +181,19 @@ export default function PhotoDeck() {
                 </span>
               ) : c.kind === 'event' ? (
                 <div>
-                  <p className="text-[12px] font-semibold tracking-wide opacity-85">2026 산사에서 즐기는 마인드 디톡스</p>
-                  <p className="mt-0.5 whitespace-nowrap text-[16px] font-extrabold leading-tight">11.06 FRI – 11.08 SUN</p>
-                  <p className="mt-1 text-[12px] opacity-80">하동 쌍계사 일원 · 700명 한정</p>
+                  {EVENT_POSTPONED ? (
+                    <>
+                      <p className="text-[12px] font-semibold tracking-wide opacity-85">산사에서 즐기는 마인드 디톡스</p>
+                      <p className="mt-0.5 whitespace-nowrap text-[16px] font-extrabold leading-tight">SANSA CAMP 2027 SPRING</p>
+                      <p className="mt-1 text-[12px] opacity-80">새 일정·장소는 앱에서 가장 먼저 알려드려요</p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="text-[12px] font-semibold tracking-wide opacity-85">2026 산사에서 즐기는 마인드 디톡스</p>
+                      <p className="mt-0.5 whitespace-nowrap text-[16px] font-extrabold leading-tight">11.06 FRI – 11.08 SUN</p>
+                      <p className="mt-1 text-[12px] opacity-80">하동 쌍계사 일원 · 700명 한정</p>
+                    </>
+                  )}
                   {c.link && <p className="mt-2 inline-flex items-center gap-1 rounded-full bg-white/20 px-2.5 py-1 text-[12px] font-extrabold">한옥 예매하기 →</p>}
                 </div>
               ) : c.kind === 'photo' ? (

@@ -22,6 +22,12 @@ export const SHOWER_BOOTHS = [
   { building: '쌍계사', zone: '쌍계사' },
 ] as const
 export const SHOWER_BOOTH_CAPACITY = 6
+/** 행사 연기: 제1회는 한파주의 예보로 2027년 봄으로 옮겨졌고 장소는 미정.
+ *  true 이면 홈에서 옛 날짜·장소·D-day·캠핑존·예매·사전예약 바로가기를 끄고, 예매 버튼 대신 '새 일정 알림 받기'를 띄운다.
+ *  새 일정이 정해지면 false 로 되돌리고 날짜·장소 문구를 고친다. (코드는 지우지 않고 끄기만 함) */
+export const EVENT_POSTPONED = true
+export const POSTPONED_LABEL = '2027년 봄 · 장소 추후 발표'
+
 export interface SponsorLogo { name: string; src?: string; h?: number; w?: number }
 /** 주최·주관·후원·언론사. 로고는 public/sponsors — 화면 표시 크기의 2배 WebP(원본 PNG는 보관용). h·w = 표시 높이·너비(px) */
 export const SPONSOR_TIERS: { tier: string; items: SponsorLogo[] }[] = [

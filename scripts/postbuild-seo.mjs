@@ -90,6 +90,8 @@ for (const p of PAGES) {
   html = replaceOnce(html, /<meta property="og:title" content="[^"]*" \/>/, `<meta property="og:title" content="${esc(p.title)}" />`, 'og:title')
   html = replaceOnce(html, /<meta property="og:description" content="[^"]*" \/>/, `<meta property="og:description" content="${esc(p.description)}" />`, 'og:description')
   html = replaceOnce(html, /<meta property="og:url" content="[^"]*" \/>/, `<meta property="og:url" content="${url}" />`, 'og:url')
+  html = replaceOnce(html, /<meta name="twitter:title" content="[^"]*" \/>/, `<meta name="twitter:title" content="${esc(p.title)}" />`, 'twitter:title')
+  html = replaceOnce(html, /<meta name="twitter:description" content="[^"]*" \/>/, `<meta name="twitter:description" content="${esc(p.description)}" />`, 'twitter:description')
   if (!p.event) html = replaceOnce(html, /\s*<script type="application\/ld\+json">[\s\S]*?<\/script>/, '', 'ld+json')
   html = replaceOnce(html, /<main class="seo-intro">[\s\S]*?<\/main>/, `<main class="seo-intro">
       ${p.body}
