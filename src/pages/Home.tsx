@@ -56,7 +56,8 @@ export default function Home() {
       <Hero />
       <div className="pt-8 empty:hidden"><InstallStrip /></div>
       <div className="pt-12"><LiveBanner /></div>
-      <ArtistTeaser />
+      {/* 연기 중에는 2027년 출연이 확정된 것처럼 보이지 않게 라인업 칸도 끈다 */}
+      {!EVENT_POSTPONED && <ArtistTeaser />}
       {/* 행사 연기 중(2027년 봄, 장소 미정)에는 캠핑존·사전예약 바로가기·첫날 일정(옛 날짜)을 끈다 */}
       {!EVENT_POSTPONED && <div ref={zones}><ZoneCards /></div>}
       {!EVENT_POSTPONED && <QuickLinks />}
