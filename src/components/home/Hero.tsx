@@ -8,6 +8,7 @@ import { Toast } from '../ui'
 import Icon from '../ui/Icon'
 import { useState } from 'react'
 import { InquiryButton } from '../InquirySheet'
+import { EVENT_POSTPONED, POSTPONED_LABEL } from '../../data/constants'
 
 export default function Hero() {
   const { user } = useApp()
@@ -24,16 +25,19 @@ export default function Hero() {
           <img src="/wordmark.webp" alt="산사캠프" width={96} height={52} className="h-[52px] w-auto" draggable={false} fetchPriority="high" />
         </Link>
         <div className="flex items-center gap-1">
-          <Link to={user ? '/more' : '/login'} className="flex min-h-[44px] items-center gap-2">
-            {user && <span className="text-[12px] font-bold text-sub">{user.nickname}님</span>}
-            <span className="tnum rounded-full bg-sun px-3.5 py-1.5 text-[13px] font-extrabold">{ddayLabel()}</span>
-          </Link>
+          {/* 행사 날짜가 정해지기 전(연기)에는 D-day 를 숨긴다 */}
+          {(user || !EVENT_POSTPONED) && (
+            <Link to={user ? '/more' : '/login'} className="flex min-h-[44px] items-center gap-2">
+              {user && <span className="text-[12px] font-bold text-sub">{user.nickname}님</span>}
+              {!EVENT_POSTPONED && <span className="tnum rounded-full bg-sun px-3.5 py-1.5 text-[13px] font-extrabold">{ddayLabel()}</span>}
+            </Link>
+          )}
           <InquiryButton />
         </div>
       </div>
 
       <div className="relative mt-7 px-5">
-        <p className="eyebrow">2026.11.6 – 11.8 · 하동 쌍계사</p>
+        <p className="eyebrow">{EVENT_POSTPONED ? POSTPONED_LABEL : '2026.11.6 – 11.8 · 하동 쌍계사'}</p>
         {top ? (
           <button type="button" onClick={() => setSheet(true)} className="block w-full text-left">
             <h1 className="mt-1.5 text-[26px] font-extrabold leading-[1.25] [text-wrap:balance]">
@@ -47,7 +51,7 @@ export default function Hero() {
           </button>
         ) : (
           <button type="button" onClick={() => setSheet(true)} className="block w-full text-left">
-            <h1 className="mt-1.5 text-[26px] font-extrabold leading-[1.25]">이번 가을 산사는<br /><span className="text-deep">쌍계사</span>에서 쉬어갈까요?</h1>
+            <h1 className="mt-1.5 text-[26px] font-extrabold leading-[1.25]">{EVENT_POSTPONED ? <>다가오는 봄,<br /><span className="text-deep">산사</span>에서 쉬어갈까요?</> : <>이번 가을 산사는<br /><span className="text-deep">쌍계사</span>에서 쉬어갈까요?</>}</h1>
             <p className="mt-2 text-[12.5px] text-sub">캠퍼의 한 줄이 이 자리에 걸립니다 · <span className="font-semibold text-deep">나도 한 줄 남기기{visible.length ? '' : ' (첫 번째!)'}</span></p>
           </button>
         )}
