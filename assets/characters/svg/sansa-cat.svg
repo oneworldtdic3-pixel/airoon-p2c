@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-labelledby="t d">
+<title id="t">산사 — 고양이</title>
+<desc id="d">산사캠프의 주인공 주황 줄무늬 고양이 '산사'. 기존 캐릭터를 SVG로 재구성.</desc>
+<defs></defs>
+<g transform="translate(512 556) scale(1.22) translate(-445 -482)"><ellipse cx="530" cy="756" rx="215" ry="24" fill="#2A1A10" opacity="0.10"/>
+<path d="M410 700 C250 745 185 520 262 372" fill="none" stroke="#E8832A" stroke-width="72" stroke-linecap="round"/>
+<path d="M410 700 C250 745 185 520 262 372" fill="none" stroke="#2A1A10" stroke-width="72" stroke-dasharray="15 47" stroke-dashoffset="-16"/>
+<circle cx="262" cy="372" r="37" fill="#2A1A10"/>
+<path d="M392 305 L412 238 Q428 222 446 238 L500 296 Z" fill="#D9691C" stroke="#D9691C" stroke-width="8" stroke-linejoin="round"/>
+<path d="M416 288 L426 252 Q434 246 442 254 L474 288 Z" fill="#F4A261"/>
+<path d="M668 305 L648 238 Q632 222 614 238 L560 296 Z" fill="#D9691C" stroke="#D9691C" stroke-width="8" stroke-linejoin="round"/>
+<path d="M644 288 L634 252 Q626 246 618 254 L586 288 Z" fill="#F4A261"/>
+<rect x="355" y="285" width="350" height="455" rx="150" fill="#E8832A"/>
+<path d="M482.0 288.0 L492.0 328.0 L502.0 288.0 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M520.0 288.0 L530.0 340.0 L540.0 288.0 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M558.0 288.0 L568.0 328.0 L578.0 288.0 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M351.5 390.5 L414.0 386.0 L352.5 373.5 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M707.5 373.5 L646.0 386.0 L708.5 390.5 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M351.5 432.5 L418.0 428.0 L352.5 415.5 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M707.5 415.5 L642.0 428.0 L708.5 432.5 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M351.5 470.5 L414.0 466.0 L352.5 453.5 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M707.5 453.5 L646.0 466.0 L708.5 470.5 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M351.5 538.5 L422.0 534.0 L352.5 521.5 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M707.5 521.5 L638.0 534.0 L708.5 538.5 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M351.5 582.5 L426.0 578.0 L352.5 565.5 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M707.5 565.5 L634.0 578.0 L708.5 582.5 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M351.5 626.5 L422.0 622.0 L352.5 609.5 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M707.5 609.5 L638.0 622.0 L708.5 626.5 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<circle cx="465" cy="383" r="40" fill="#FFFFFF"/><circle cx="465" cy="387" r="17.0" fill="#2A1A10"/><circle cx="459.6" cy="381.2" r="4.8" fill="#FFFFFF"/>
+<circle cx="595" cy="383" r="40" fill="#FFFFFF"/><circle cx="595" cy="387" r="17.0" fill="#2A1A10"/><circle cx="589.6" cy="381.2" r="4.8" fill="#FFFFFF"/>
+<path d="M514 414 L546 414 L530 434 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="4" stroke-linejoin="round"/>
+<path d="M496 440 Q512 462 530 438 Q548 462 564 440" fill="none" stroke="#2A1A10" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M436 655 L442 718 Q444 742 462 742 Q480 742 482 718 L488 655" fill="none" stroke="#2A1A10" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M462 742 L462 722" stroke="#2A1A10" stroke-width="4" stroke-linecap="round"/>
+<path d="M572 655 L578 718 Q580 742 598 742 Q616 742 618 718 L624 655" fill="none" stroke="#2A1A10" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M598 742 L598 722" stroke="#2A1A10" stroke-width="4" stroke-linecap="round"/>
+<path d="M351.7 668.5 L396.0 664.0 L352.3 655.5 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M707.7 655.5 L664.0 664.0 L708.3 668.5 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M351.6 698.5 L388.0 694.0 L352.4 685.5 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M707.6 685.5 L672.0 694.0 L708.4 698.5 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/></g>
+</svg>
