@@ -1,0 +1,314 @@
+#!/usr/bin/env python3
+"""Cyber 산사캠프 characters — v3: plush "flocked felt" texture + outfits.
+
+Builds on v2 (chibi proportions, soft gradients) and adds, per the
+Animal-Crossing-style key-art reference:
+  - plush / flocked texture (feTurbulence speckle clipped to each shape)
+  - fuzzy silhouettes and a soft rim light on the heads
+  - two eye families: dark ovals (villager) and white+iris eyes (Nook / player)
+  - outfits and props: neckerchief, leaf-print shirt, sprout, flag, straps
+All characters are original; only the look/feel is referenced.
+Writes SVGs to assets/characters/v3/svg/.
+Run:  python3 tools/generate_characters_v3.py
+"""
+import math
+import os
+
+from generate_characters import fuzz, stripe, DARK
+from generate_characters_v2 import Doc, ell, ac_eye, cheek, omega
+
+OUT = os.path.join(os.path.dirname(__file__), "..", "assets", "characters", "v3", "svg")
+
+
+# ---------------------------------------------------------------- helpers
+class Doc3(Doc):
+    def __init__(self, p):
+        super().__init__(p)
+        self.defs.append(
+            f'<filter id="{p}plush" filterUnits="userSpaceOnUse" x="-512" y="-512" width="2048" height="2048" '
+            f'color-interpolation-filters="sRGB">'
+            '<feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="7" result="n1"/>'
+            '<feColorMatrix in="n1" type="matrix" values="0 0 0 0 1  0 0 0 0 .96  0 0 0 0 .88  2.6 0 0 0 -1.25" result="light"/>'
+            '<feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="21" result="n2"/>'
+            '<feColorMatrix in="n2" type="matrix" values="0 0 0 0 .25  0 0 0 0 .13  0 0 0 0 .05  2.4 0 0 0 -1.2" result="dark"/>'
+            '<feMerge result="m"><feMergeNode in="dark"/><feMergeNode in="light"/></feMerge>'
+            '<feComposite in="m" in2="SourceAlpha" operator="in"/></filter>'
+            f'<filter id="{p}rim" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/></filter>')
+
+    def ground(self, cx, cy, rx):
+        # tinted toward grass instead of grey
+        self.add(f'<ellipse cx="{cx}" cy="{cy}" rx="{rx}" ry="26" fill="#3B5A2A" opacity=".22" filter="url(#{self.p}soft)"/>')
+
+    def plush(self, cx, cy, rx, ry, rot=0, op=0.85):
+        tr = f' transform="rotate({rot} {cx} {cy})"' if rot else ""
+        self.add(f'<ellipse cx="{cx}" cy="{cy}" rx="{rx}" ry="{ry}" fill="#000" opacity="{op}" '
+                 f'filter="url(#{self.p}plush)"{tr}/>')
+
+    def rim(self, cx, cy, rx, ry, a1=198, a2=258, w=9, op=0.3):
+        rx2, ry2 = rx - 12, ry - 12
+        pt = lambda a: (cx + rx2 * math.cos(math.radians(a)), cy + ry2 * math.sin(math.radians(a)))
+        (x1, y1), (x2, y2) = pt(a1), pt(a2)
+        self.add(f'<path d="M{x1:.1f} {y1:.1f} A{rx2} {ry2} 0 0 1 {x2:.1f} {y2:.1f}" fill="none" stroke="#fff" '
+                 f'stroke-width="{w}" stroke-linecap="round" opacity="{op}" filter="url(#{self.p}rim)"/>')
+
+
+def leaf(cx, cy, s, rot, color, op=1):
+    return (f'<path d="M0 0 C{s*.35:.1f} {-s*.5:.1f} {s*.9:.1f} {-s*.45:.1f} {s*1.2:.1f} 0 '
+            f'C{s*.9:.1f} {s*.45:.1f} {s*.35:.1f} {s*.5:.1f} 0 0Z" fill="{color}" opacity="{op}" '
+            f'transform="translate({cx} {cy}) rotate({rot})"/>')
+
+
+def ac_eye_iris(cx, cy, rx=24, ry=30, iris="#5B8FD6", side=0, lash=False):
+    """White-sclera eye with coloured iris (Nook / player style)."""
+    ir = rx * 0.8
+    cy2 = cy + ry * 0.1
+    s = ell(cx, cy, rx, ry, "#fff", extra='stroke="#3A2A20" stroke-width="3" stroke-opacity=".55"')
+    s += f'<circle cx="{cx}" cy="{cy2:.1f}" r="{ir:.1f}" fill="{iris}"/>'
+    s += f'<circle cx="{cx}" cy="{cy2:.1f}" r="{ir*0.52:.1f}" fill="{DARK}"/>'
+    s += f'<circle cx="{cx - ir*0.35:.1f}" cy="{cy2 - ir*0.4:.1f}" r="{ir*0.3:.1f}" fill="#fff"/>'
+    s += f'<circle cx="{cx + ir*0.38:.1f}" cy="{cy2 + ir*0.4:.1f}" r="{ir*0.14:.1f}" fill="#fff" opacity=".85"/>'
+    if lash and side:
+        for k, (a, b) in enumerate(((0.95, 0.5), (0.85, 0.82))):
+            x1, y1 = cx + side * rx * a, cy - ry * b
+            s += (f'<path d="M{x1:.1f} {y1:.1f} L{x1 + side*13:.1f} {y1 - 9 - k*3:.1f}" stroke="{DARK}" '
+                  f'stroke-width="4" stroke-linecap="round"/>')
+    return s
+
+
+# ------------------------------------------------------------ 1. 산사 (cat)
+def sansa():
+    d = Doc3("sa")
+    O = d.grad("o", "#FFB45E", "#E8832A")
+    OD = d.grad("od", "#F59A48", "#D9691C")
+    CR = d.grad("c", "#FFF8E8", "#F5E0B8")
+    mx = lambda x: 1024 - x
+    d.ground(512, 904, 280)
+    tail = "M610 810 C900 850 970 610 902 430"
+    d.add(f'<path d="{tail}" fill="none" stroke="{O}" stroke-width="64" stroke-linecap="round"/>',
+          f'<path d="{tail}" fill="none" stroke="{DARK}" stroke-width="64" stroke-dasharray="14 44" stroke-dashoffset="-10"/>',
+          f'<circle cx="902" cy="430" r="32" fill="{DARK}"/>')
+    for cx in (424, 600):
+        d.add(ell(cx, 884, 68, 34, OD))
+    d.add(ell(512, 762, 178, 132, O))
+    d.plush(512, 762, 176, 130)
+    d.add(ell(512, 792, 106, 90, CR))  # belly stays clean (no speckle)
+    d.add(ell(350, 762, 44, 66, OD, 18), ell(674, 762, 44, 66, OD, -18))
+    # camp neckerchief with leaf badge
+    d.add('<path d="M392 660 Q512 706 632 660 L512 784 Z" fill="#46B8A8" stroke="#46B8A8" stroke-width="12" stroke-linejoin="round"/>',
+          '<path d="M392 660 Q512 706 632 660" fill="none" stroke="#2F9C8D" stroke-width="8" stroke-linecap="round" opacity=".6"/>',
+          leaf(498, 742, 30, -20, "#E8F7C8"))
+    d.head_shadow(512, 690, 150)
+    for f in (lambda x: x, mx):
+        d.add(f'<path d="M{f(262)} 340 Q{f(232)} 186 {f(292)} 142 Q{f(386)} 166 {f(446)} 246 Z" fill="{OD}" stroke="{OD}" stroke-width="14" stroke-linejoin="round"/>',
+              f'<path d="M{f(292)} 306 Q{f(278)} 214 {f(302)} 188 Q{f(352)} 204 {f(396)} 256 Z" fill="#F8B890"/>')
+    # cheek fur tufts (behind head)
+    for f in (lambda x: x, mx):
+        d.add(stripe(f(228), 546, f(186), 566, 44, "#F59A48"), stripe(f(262), 590, f(222), 614, 40, "#F59A48"))
+    d.add(fuzz(512, 430, 322, 262, O, n=80, amp=7, seed=5))
+    d.plush(512, 430, 318, 258)
+    for x, y2, w in ((512, 252, 34), (442, 246, 26), (582, 246, 26)):
+        d.add(stripe(x, 176, x, y2, w))
+    for y, l in ((372, 80), (432, 84), (492, 76)):
+        d.add(stripe(194, y, 194 + l, y + 6, 26), stripe(830, y, 830 - l, y + 6, 26))
+    d.add(ell(512, 524, 132, 84, CR))
+    d.add('<path d="M490 476 Q512 466 534 476 Q528 500 512 506 Q496 500 490 476Z" fill="#D9737A" stroke="#D9737A" stroke-width="6" stroke-linejoin="round"/>')
+    d.add(f'<path d="M512 506 V520" stroke="{DARK}" stroke-width="5" stroke-linecap="round"/>', omega(512, 520, 26))
+    d.add(ac_eye(392, 440), ac_eye(632, 440), cheek(320, 506), cheek(704, 506))
+    d.rim(512, 430, 322, 262)
+    return d.render("산사 — 고양이 (v3)", "플러시 질감과 캠프 스카프를 더한 주황 줄무늬 고양이 산사.")
+
+
+# ----------------------------------------------------------------- 2. 동글스님
+def monk():
+    d = Doc3("mk")
+    SK = d.grad("sk", "#FFDDBF", "#F2B58C")
+    RB = d.grad("rb", "#D4D4CF", "#A9A9A3")
+    RL = d.grad("rl", "#E4E4DF", "#C2C2BC")
+    D = "#8E8E89"
+    d.ground(512, 910, 250)
+    for cx in (424, 600):
+        d.add(ell(cx, 888, 68, 32, "#6C5A48"))
+    robe = "M336 676 Q512 626 688 676 L728 872 Q512 918 296 872 Z"
+    d.add(f'<path d="{robe}" fill="{RB}" stroke="{RB}" stroke-width="18" stroke-linejoin="round"/>')
+    d.add(f'<path d="M438 664 L512 790" stroke="{D}" stroke-width="22" stroke-linecap="round"/>',
+          f'<path d="M586 664 L512 790" stroke="{D}" stroke-width="22" stroke-linecap="round"/>',
+          f'<path d="M312 826 Q512 858 712 826" stroke="{D}" stroke-width="26" stroke-linecap="round" fill="none"/>')
+    # leaf print on the robe
+    for x, y, r in ((352, 836, -20), (432, 862, 15), (590, 864, 165), (668, 838, 200), (330, 760, -40), (690, 762, 220)):
+        d.add(leaf(x, y, 28, r, "#C9DDB0", .85))
+    d.add(ell(414, 776, 60, 74, RL, 28), ell(610, 776, 60, 74, RL, -28))
+    for i in range(11):
+        t = i / 10
+        x = (1 - t) ** 2 * 404 + 2 * (1 - t) * t * 512 + t ** 2 * 620
+        y = (1 - t) ** 2 * 676 + 2 * (1 - t) * t * 810 + t ** 2 * 676
+        d.add(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="13" fill="#7B4B2A"/><circle cx="{x-3.5:.1f}" cy="{y-4:.1f}" r="3.5" fill="#fff" opacity=".4"/>')
+    d.add(f'<path d="M512 694 Q556 730 550 796 Q512 814 474 796 Q468 730 512 694 Z" fill="{SK}"/>',
+          '<path d="M512 708 V800" stroke="#E4A47C" stroke-width="5" stroke-linecap="round"/>')
+    d.head_shadow(512, 692, 160)
+    d.add(ell(216, 430, 46, 52, SK), ell(808, 430, 46, 52, SK),
+          ell(216, 432, 22, 28, "#E9A07A", extra='opacity=".55"'), ell(808, 432, 22, 28, "#E9A07A", extra='opacity=".55"'))
+    # sprout on the bald head
+    d.add('<path d="M512 156 Q516 124 514 100" stroke="#6E9340" stroke-width="12" fill="none" stroke-linecap="round"/>',
+          leaf(514, 108, 52, -28, "#8DB05C"), leaf(512, 114, 46, -152, "#7BA14B"))
+    d.add(ell(512, 410, 300, 265, SK))
+    d.add('<ellipse cx="400" cy="232" rx="96" ry="34" fill="#fff" opacity=".22" transform="rotate(-20 400 232)"/>')
+    d.add(f'<path d="M352 358 Q404 326 458 350" stroke="{DARK}" stroke-width="13" stroke-linecap="round" fill="none"/>',
+          f'<path d="M566 350 Q620 326 672 358" stroke="{DARK}" stroke-width="13" stroke-linecap="round" fill="none"/>')
+    d.add(ac_eye_iris(398, 436, 25, 31, "#7A5236", -1, True), ac_eye_iris(626, 436, 25, 31, "#7A5236", 1, True))
+    d.add(ell(512, 480, 15, 11, "#E4977A"), omega(512, 526, 32, 6, "#8B4A33"))
+    d.add(cheek(316, 506, 44), cheek(708, 506, 44))
+    d.rim(512, 410, 300, 265)
+    return d.render("동글스님 — 동자승 (v3)", "정수리에 새싹이 돋고 잎사귀 승복을 입은 동자승.")
+
+
+# ------------------------------------------------------------ 3. 다람이 (squirrel)
+def squirrel():
+    d = Doc3("sq")
+    B = d.grad("b", "#DE9150", "#B86A2E")
+    BD = d.grad("bd", "#C97A3A", "#9A5424")
+    BL = d.grad("bl", "#F0AE72", "#D98B4A")
+    CR = d.grad("c", "#FFF6E0", "#F3DDB4")
+    T = d.grad("tl", "#7ED3C4", "#3FA898")  # not "t": collides with <title id="sqt">
+    d.ground(480, 906, 280)
+    d.add(fuzz(792, 560, 118, 262, BD, n=26, amp=12, seed=21, rot=20),
+          fuzz(792, 560, 76, 208, BL, n=20, amp=9, seed=22, rot=20))
+    d.plush(792, 560, 112, 256, 20)
+    for k, y in enumerate((420, 490, 560, 630)):
+        d.add(f'<path d="M{712+k*3} {y} Q792 {y-22} {872-k*3} {y}" stroke="#B86A2E" stroke-width="15" fill="none" stroke-linecap="round" opacity=".65" transform="rotate(20 792 560)"/>')
+    for cx in (402, 558):
+        d.add(ell(cx, 886, 64, 32, BD))
+    # leaf-print aloha-style shirt
+    d.add(ell(330, 770, 50, 64, T, 18), ell(630, 770, 50, 64, T, -18), ell(480, 762, 170, 134, T))
+    for x, y, r in ((378, 740, -20), (572, 744, 160), (350, 812, 20), (610, 816, 200), (432, 866, -10), (532, 866, 170)):
+        d.add(leaf(x, y, 28, r, "#C8F0E6", .85))
+    d.add('<path d="M444 690 L480 742 L420 716Z M516 690 L480 742 L540 716Z" fill="#F4FFFB"/>')
+    d.add(ell(480, 806, 38, 42, "#DDA663"),
+          '<path d="M438 794 Q480 752 522 794 Q522 806 480 806 Q438 806 438 794Z" fill="#7A4B2A"/>',
+          ell(432, 814, 28, 24, BD), ell(528, 814, 28, 24, BD))
+    d.head_shadow(480, 690, 150)
+    for cx, rot in ((316, -12), (644, 12)):
+        d.add(ell(cx, 206, 60, 66, B, rot), ell(cx, 214, 30, 36, "#F2B07C", rot),
+              f'<path d="M{cx-4} 150 Q{cx+2} 112 {cx+14} 146" stroke="#9A5424" stroke-width="14" fill="none" stroke-linecap="round"/>')
+    d.add(fuzz(480, 420, 306, 252, B, n=76, amp=7, seed=31))
+    d.plush(480, 420, 302, 248)
+    for dx in (-52, 0, 52):
+        d.add(f'<path d="M{480+dx} {172 + abs(dx)*0.35:.0f} V{234 + abs(dx)*0.2:.0f}" stroke="#9A5424" stroke-width="14" stroke-linecap="round" opacity=".7"/>')
+    # dark eye patches + blue-iris eyes
+    d.add(ell(372, 440, 56, 64, "#5A3320", -12, 'opacity=".92"'), ell(588, 440, 56, 64, "#5A3320", 12, 'opacity=".92"'))
+    d.add(ell(480, 508, 150, 104, CR))
+    d.add(ell(480, 474, 25, 18, DARK), ell(474, 468, 7, 4, "#fff", extra='opacity=".55"'))
+    d.add(f'<path d="M480 490 V504" stroke="{DARK}" stroke-width="5" stroke-linecap="round"/>', omega(480, 504, 28))
+    d.add('<rect x="467" y="514" width="26" height="30" rx="6" fill="#fff"/><path d="M480 514 V544" stroke="#D9C7A6" stroke-width="3"/>')
+    d.add(ac_eye_iris(372, 436, 24, 30, "#5B8FD6"), ac_eye_iris(588, 436, 24, 30, "#5B8FD6"))
+    d.add(cheek(298, 520), cheek(662, 520))
+    d.rim(480, 420, 306, 252)
+    return d.render("다람이 — 다람쥐 (v3)", "잎사귀 무늬 알로하 셔츠를 입고 눈 주위 패치가 있는 플러시 다람쥐.")
+
+
+# -------------------------------------------------------------- 4. 토리 (acorn)
+def acorn():
+    d = Doc3("ac")
+    NUT = d.grad("n", "#F0C48A", "#D4994F")
+    NUTD = d.grad("nd", "#DDA663", "#B97F3A")
+    CAP = d.grad("cp", "#9A6338", "#6B4226")
+    d.ground(512, 906, 250)
+    for cx in (420, 604):
+        d.add(ell(cx, 874, 64, 32, NUTD))
+    d.add(ell(236, 660, 42, 62, NUTD, -20))
+    d.add(ell(512, 612, 276, 258, NUT))
+    d.plush(512, 612, 272, 254)
+    d.add('<ellipse cx="400" cy="760" rx="86" ry="40" fill="#fff" opacity=".2" transform="rotate(-28 400 760)"/>')
+    cap = "M206 504 C206 282 340 192 512 192 C684 192 818 282 818 504 C700 566 324 566 206 504 Z"
+    d.defs.append(f'<clipPath id="accap"><path d="{cap}"/></clipPath>')
+    d.add('<path d="M512 204 Q516 142 548 114" stroke="#5E3820" stroke-width="30" fill="none" stroke-linecap="round"/>',
+          '<path d="M550 122 C600 42 712 58 738 98 C692 150 606 158 550 122 Z" fill="#8DB05C"/>',
+          '<path d="M558 118 C612 96 672 94 716 102" stroke="#6E9340" stroke-width="6" fill="none" stroke-linecap="round"/>')
+    d.add(f'<path d="{cap}" fill="{CAP}"/>', '<g clip-path="url(#accap)">')
+    for r, y in enumerate((276, 332, 388, 444, 500, 556)):
+        off = 0 if r % 2 == 0 else 34
+        for c in range(11):
+            x = 200 + c * 68 + off
+            d.add(f'<path d="M{x-24} {y} Q{x} {y+28} {x+24} {y}" stroke="#9A6338" stroke-width="7" fill="none" stroke-linecap="round" opacity=".8"/>')
+    d.add('<ellipse cx="372" cy="296" rx="92" ry="28" fill="#fff" opacity=".18" transform="rotate(-26 372 296)"/>', '</g>')
+    d.plush(512, 380, 300, 180, 0, .6)
+    d.add('<path d="M206 504 C324 566 700 566 818 504" fill="none" stroke="#5E3820" stroke-width="10" stroke-linecap="round" opacity=".5"/>')
+    d.add(ac_eye(420, 622), ac_eye(604, 622), omega(512, 668, 24), cheek(348, 666, 36), cheek(676, 666, 36))
+    # right arm in front, holding a leaf-emblem flag
+    d.add(ell(788, 664, 42, 62, NUTD, 20),
+          '<path d="M800 676 L822 352" stroke="#7A4B2A" stroke-width="11" stroke-linecap="round"/>',
+          '<path d="M824 358 L930 398 L824 448 Z" fill="#F2793A" stroke="#F2793A" stroke-width="8" stroke-linejoin="round"/>',
+          leaf(846, 404, 30, -8, "#FFF3DA"),
+          ell(802, 676, 30, 28, NUTD))
+    d.rim(512, 612, 276, 258, 200, 250, 8, .35)
+    return d.render("토리 — 도토리 (v3)", "플러시 질감 도토리 요정. 잎사귀 깃발을 들고 있다.")
+
+
+# ------------------------------------------------------------ 5. 밤이 (owl)
+def owl():
+    d = Doc3("ow")
+    B = d.grad("b", "#A98764", "#7C5E42")
+    BD = d.grad("bd", "#8A6A4C", "#5E452E")
+    CR = d.grad("c", "#FFF3DA", "#EBD6AE")
+    FC = d.grad("f", "#F6E7C8", "#E4CDA2")
+    d.defs.append('<radialGradient id="owglow"><stop offset="0" stop-color="#FFD9A0" stop-opacity=".95"/>'
+                  '<stop offset="1" stop-color="#FFD9A0" stop-opacity="0"/></radialGradient>')
+    d.ground(470, 906, 270)
+    for cx, rot in ((330, -26), (610, 26)):
+        d.add(f'<ellipse cx="{cx}" cy="318" rx="58" ry="92" fill="{BD}" transform="rotate({rot} {cx} 318)"/>')
+        d.plush(cx, 318, 56, 90, rot, .7)
+    d.add(fuzz(470, 606, 296, 272, B, n=64, amp=12, seed=53))
+    d.plush(470, 606, 290, 266)
+    d.add(ell(206, 650, 82, 164, BD, 10), ell(734, 650, 82, 164, BD, -10))
+    d.plush(206, 650, 80, 162, 10, .7)
+    d.plush(734, 650, 80, 162, -10, .7)
+    d.add(ell(470, 724, 176, 150, CR))
+    for r, y in enumerate((650, 706, 762, 818)):
+        for c in range(-2, 3):
+            x = 470 + c * 54 + (27 if r % 2 else 0)
+            if abs(x - 470) < 140:
+                d.add(f'<path d="M{x-16} {y} Q{x} {y+20} {x+16} {y}" stroke="#C9AE86" stroke-width="6" fill="none" stroke-linecap="round"/>')
+    # backpack straps
+    for x1, x2 in ((366, 410), (574, 530)):
+        d.add(f'<path d="M{x1} 612 L{x2} 842" stroke="#D9534F" stroke-width="24" stroke-linecap="round"/>',
+              f'<path d="M{x1-6} 612 L{x2-6} 842" stroke="#F07A74" stroke-width="5" stroke-linecap="round" opacity=".7"/>')
+    for x in (391, 549):
+        d.add(f'<rect x="{x-14}" y="740" width="28" height="20" rx="5" fill="#E8C26A"/>')
+    d.add(ell(384, 480, 122, 116, FC), ell(556, 480, 122, 116, FC))
+    for cx in (384, 556):
+        d.add(ell(cx, 486, 66, 72, "#fff"), ell(cx, 492, 46, 54, DARK),
+              f'<circle cx="{cx-16}" cy="466" r="17" fill="#fff"/><circle cx="{cx+14}" cy="516" r="8" fill="#fff" opacity=".85"/>')
+    d.add('<path d="M448 540 Q470 526 492 540 Q482 586 470 592 Q458 586 448 540Z" fill="#F2A03A" stroke="#F2A03A" stroke-width="6" stroke-linejoin="round"/>')
+    d.add(cheek(292, 572, 30, .55), cheek(648, 572, 30, .55))
+    for cx in (400, 540):
+        for dx in (-22, 0, 22):
+            d.add(ell(cx + dx, 884, 13, 22, "#F2A03A"))
+    lx = 846
+    d.add(f'<path d="M742 650 L{lx-10} 430" stroke="#6E4A2A" stroke-width="12" stroke-linecap="round"/>',
+          f'<circle cx="{lx}" cy="526" r="124" fill="url(#owglow)"/>',
+          f'<path d="M{lx} 430 V458" stroke="#6E4A2A" stroke-width="6"/>',
+          ell(lx, 520, 56, 66, "#F59CB8"))
+    for dx in (-26, 0, 26):
+        d.add(f'<path d="M{lx+dx} 456 Q{lx+dx*1.9:.0f} 520 {lx+dx} 584" stroke="#E5789C" stroke-width="5" fill="none"/>')
+    d.add(f'<rect x="{lx-20}" y="450" width="40" height="14" rx="6" fill="#6E4A2A"/><rect x="{lx-20}" y="576" width="40" height="14" rx="6" fill="#6E4A2A"/>')
+    for dx in (-14, 0, 14):
+        d.add(f'<path d="M{lx+dx} 590 V{618+abs(dx)}" stroke="#E5789C" stroke-width="5" stroke-linecap="round"/>')
+    d.add(ell(734, 664, 40, 30, BD))
+    d.rim(470, 606, 296, 272, 200, 250)
+    return d.render("밤이 — 부엉이 (v3)", "깃털 질감에 배낭끈을 멘 부엉이. 분홍 연등으로 밤길을 밝힌다.")
+
+
+CHARACTERS = {
+    "sansa-cat": sansa,
+    "dongeul-monk": monk,
+    "daram-squirrel": squirrel,
+    "tori-acorn": acorn,
+    "bami-owl": owl,
+}
+
+if __name__ == "__main__":
+    os.makedirs(OUT, exist_ok=True)
+    for name, fn in CHARACTERS.items():
+        path = os.path.join(OUT, f"{name}.svg")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(fn())
+        print("wrote", os.path.normpath(path))
