@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-labelledby="sat sad">
+<title id="sat">산사 — 고양이 (v2)</title>
+<desc id="sad">모여봐요 동물의 숲 스타일로 다시 그린 주황 줄무늬 고양이 산사.</desc>
+<defs><filter id="sasoft" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="9"/></filter><radialGradient id="sao" cx=".36" cy=".28" r=".9"><stop offset="0" stop-color="#FFB45E"/><stop offset="1" stop-color="#E8832A"/></radialGradient><radialGradient id="saod" cx=".36" cy=".28" r=".9"><stop offset="0" stop-color="#F59A48"/><stop offset="1" stop-color="#D9691C"/></radialGradient><radialGradient id="sac" cx=".36" cy=".28" r=".9"><stop offset="0" stop-color="#FFF8E8"/><stop offset="1" stop-color="#F5E0B8"/></radialGradient></defs>
+<ellipse cx="512" cy="904" rx="280" ry="26" fill="#2A1A10" opacity=".13" filter="url(#sasoft)"/>
+<path d="M610 810 C900 850 970 610 902 430" fill="none" stroke="url(#sao)" stroke-width="64" stroke-linecap="round"/>
+<path d="M610 810 C900 850 970 610 902 430" fill="none" stroke="#2A1A10" stroke-width="64" stroke-dasharray="14 44" stroke-dashoffset="-10"/>
+<circle cx="902" cy="430" r="32" fill="#2A1A10"/>
+<ellipse cx="424" cy="884" rx="68" ry="34" fill="url(#saod)" />
+<ellipse cx="600" cy="884" rx="68" ry="34" fill="url(#saod)" />
+<ellipse cx="512" cy="762" rx="178" ry="132" fill="url(#sao)" />
+<ellipse cx="512" cy="792" rx="106" ry="90" fill="url(#sac)" />
+<ellipse cx="350" cy="762" rx="44" ry="66" fill="url(#saod)" transform="rotate(18 350 762)" />
+<ellipse cx="674" cy="762" rx="44" ry="66" fill="url(#saod)" transform="rotate(-18 674 762)" />
+<ellipse cx="512" cy="690" rx="150" ry="34" fill="#2A1A10" opacity=".22" filter="url(#sasoft)"/>
+<path d="M262 340 Q232 186 292 142 Q386 166 446 246 Z" fill="url(#saod)" stroke="url(#saod)" stroke-width="14" stroke-linejoin="round"/>
+<path d="M292 306 Q278 214 302 188 Q352 204 396 256 Z" fill="#F8B890"/>
+<path d="M762 340 Q792 186 732 142 Q638 166 578 246 Z" fill="url(#saod)" stroke="url(#saod)" stroke-width="14" stroke-linejoin="round"/>
+<path d="M732 306 Q746 214 722 188 Q672 204 628 256 Z" fill="#F8B890"/>
+<ellipse cx="512" cy="430" rx="322" ry="262" fill="url(#sao)" />
+<path d="M495.0 176.0 L512.0 252.0 L529.0 176.0 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M429.0 176.0 L442.0 246.0 L455.0 176.0 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M569.0 176.0 L582.0 246.0 L595.0 176.0 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M193.0 385.0 L274.0 378.0 L195.0 359.0 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M829.0 359.0 L750.0 378.0 L831.0 385.0 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M193.1 445.0 L278.0 438.0 L194.9 419.0 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M829.1 419.0 L746.0 438.0 L830.9 445.0 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M193.0 505.0 L270.0 498.0 L195.0 479.0 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<path d="M829.0 479.0 L754.0 498.0 L831.0 505.0 Z" fill="#2A1A10" stroke="#2A1A10" stroke-width="3" stroke-linejoin="round"/>
+<ellipse cx="512" cy="524" rx="132" ry="84" fill="url(#sac)" />
+<path d="M490 476 Q512 466 534 476 Q528 500 512 506 Q496 500 490 476Z" fill="#D9737A" stroke="#D9737A" stroke-width="6" stroke-linejoin="round"/>
+<path d="M512 506 V520" stroke="#2A1A10" stroke-width="5" stroke-linecap="round"/>
+<path d="M486 520 Q499.0 538.2 512 520 Q525.0 538.2 538 520" fill="none" stroke="#2A1A10" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="392" cy="440" rx="19" ry="27" fill="#2A1A10" /><circle cx="385.9" cy="430.3" r="8.0" fill="#fff"/><circle cx="398.5" cy="449.7" r="3.8" fill="#fff" opacity=".85"/>
+<ellipse cx="632" cy="440" rx="19" ry="27" fill="#2A1A10" /><circle cx="625.9" cy="430.3" r="8.0" fill="#fff"/><circle cx="638.5" cy="449.7" r="3.8" fill="#fff" opacity=".85"/>
+<ellipse cx="320" cy="506" rx="38" ry="26.599999999999998" fill="#F58C8C" opacity="0.6"/>
+<ellipse cx="704" cy="506" rx="38" ry="26.599999999999998" fill="#F58C8C" opacity="0.6"/>
+<ellipse cx="390" cy="250" rx="100" ry="34" fill="#fff" opacity=".22" transform="rotate(-18 390 250)"/>
+</svg>

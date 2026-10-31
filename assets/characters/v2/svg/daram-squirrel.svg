@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-labelledby="sqt sqd">
+<title id="sqt">다람이 — 다람쥐 (v2)</title>
+<desc id="sqd">모여봐요 동물의 숲 스타일 다람쥐. 도토리를 안고 큰 꼬리를 말았다.</desc>
+<defs><filter id="sqsoft" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="9"/></filter><radialGradient id="sqb" cx=".36" cy=".28" r=".9"><stop offset="0" stop-color="#DE9150"/><stop offset="1" stop-color="#B86A2E"/></radialGradient><radialGradient id="sqbd" cx=".36" cy=".28" r=".9"><stop offset="0" stop-color="#C97A3A"/><stop offset="1" stop-color="#9A5424"/></radialGradient><radialGradient id="sqbl" cx=".36" cy=".28" r=".9"><stop offset="0" stop-color="#F0AE72"/><stop offset="1" stop-color="#D98B4A"/></radialGradient><radialGradient id="sqc" cx=".36" cy=".28" r=".9"><stop offset="0" stop-color="#FFF6E0"/><stop offset="1" stop-color="#F3DDB4"/></radialGradient></defs>
+<ellipse cx="480" cy="906" rx="280" ry="26" fill="#2A1A10" opacity=".13" filter="url(#sqsoft)"/>
+<path d="M908.9,560.0 L914.5,597.1 L907.0,606.6 L912.1,644.7 L901.4,651.7 L902.8,689.1 L892.3,693.8 L889.6,728.9 L880.0,731.6 L873.1,762.6 L864.9,764.0 L856.6,793.2 L847.4,789.7 L836.1,814.2 L828.1,808.1 L813.9,825.4 L807.7,818.5 L791.4,829.5 L786.8,820.6 L769.3,823.5 L766.0,814.3 L748.3,809.4 L746.1,799.9 L727.5,790.1 L727.6,777.7 L708.8,762.4 L711.2,748.6 L695.3,725.7 L697.4,713.3 L679.9,687.3 L686.7,673.2 L673.9,641.7 L679.3,629.4 L669.0,594.8 L675.6,583.4 L669.1,546.8 L675.6,536.6 L667.3,498.3 L679.3,490.6 L675.7,452.5 L686.7,446.8 L686.0,409.5 L697.4,406.7 L701.3,372.5 L711.2,371.4 L720.1,343.3 L727.6,342.3 L738.5,317.5 L746.1,320.1 L759.2,300.0 L766.0,305.7 L781.5,293.5 L786.8,299.4 L804.0,289.4 L807.7,301.5 L825.7,301.3 L828.1,311.9 L846.1,319.4 L847.4,330.3 L867.2,341.4 L864.9,356.0 L881.6,376.0 L880.0,388.4 L898.9,411.4 L892.3,426.2 L907.3,455.3 L901.4,468.3 L914.7,501.2 L907.0,513.4 L916.5,549.2Z" fill="url(#sqbd)" stroke="url(#sqbd)" stroke-width="9" stroke-linejoin="round" transform="rotate(20 792 560)" />
+<path d="M867.2,560.0 L874.0,598.6 L865.1,607.8 L865.4,645.2 L859.2,653.0 L855.7,687.4 L849.6,693.2 L845.3,725.9 L836.9,726.2 L827.6,750.3 L821.8,750.2 L810.0,766.7 L805.1,764.0 L791.5,774.2 L787.6,766.8 L772.9,766.9 L770.4,758.5 L754.3,751.7 L754.4,739.4 L739.9,722.0 L740.4,710.7 L724.8,687.6 L729.2,673.8 L717.6,643.2 L721.4,630.9 L711.2,595.9 L717.3,584.1 L708.9,546.2 L717.3,535.9 L713.3,497.3 L721.4,489.1 L720.2,451.3 L729.2,446.2 L732.4,412.0 L740.4,409.3 L748.5,382.4 L754.4,380.6 L764.0,357.5 L770.4,361.5 L783.0,347.4 L787.6,353.2 L801.9,348.7 L805.1,356.0 L819.9,360.9 L821.8,369.8 L838.0,381.1 L836.9,393.8 L851.9,414.1 L849.6,426.8 L864.4,453.4 L859.2,467.0 L871.3,499.6 L865.1,512.2 L875.3,548.7Z" fill="url(#sqbl)" stroke="url(#sqbl)" stroke-width="9" stroke-linejoin="round" transform="rotate(20 792 560)" />
+<path d="M712 420 Q792 398 872 420" stroke="#B86A2E" stroke-width="15" fill="none" stroke-linecap="round" opacity=".65" transform="rotate(20 792 560)"/>
+<path d="M715 490 Q792 468 869 490" stroke="#B86A2E" stroke-width="15" fill="none" stroke-linecap="round" opacity=".65" transform="rotate(20 792 560)"/>
+<path d="M718 560 Q792 538 866 560" stroke="#B86A2E" stroke-width="15" fill="none" stroke-linecap="round" opacity=".65" transform="rotate(20 792 560)"/>
+<path d="M721 630 Q792 608 863 630" stroke="#B86A2E" stroke-width="15" fill="none" stroke-linecap="round" opacity=".65" transform="rotate(20 792 560)"/>
+<ellipse cx="402" cy="886" rx="64" ry="32" fill="url(#sqbd)" />
+<ellipse cx="558" cy="886" rx="64" ry="32" fill="url(#sqbd)" />
+<ellipse cx="480" cy="762" rx="168" ry="134" fill="url(#sqb)" />
+<ellipse cx="480" cy="790" rx="106" ry="90" fill="url(#sqc)" />
+<ellipse cx="480" cy="806" rx="38" ry="42" fill="#DDA663" />
+<path d="M438 794 Q480 752 522 794 Q522 806 480 806 Q438 806 438 794Z" fill="#7A4B2A"/>
+<ellipse cx="432" cy="812" rx="28" ry="24" fill="url(#sqbd)" />
+<ellipse cx="528" cy="812" rx="28" ry="24" fill="url(#sqbd)" />
+<ellipse cx="480" cy="690" rx="150" ry="34" fill="#2A1A10" opacity=".22" filter="url(#sqsoft)"/>
+<ellipse cx="316" cy="206" rx="60" ry="66" fill="url(#sqb)" transform="rotate(-12 316 206)" />
+<ellipse cx="316" cy="214" rx="30" ry="36" fill="#F2B07C" transform="rotate(-12 316 214)" />
+<path d="M312 150 Q318 112 330 146" stroke="#9A5424" stroke-width="14" fill="none" stroke-linecap="round"/>
+<ellipse cx="644" cy="206" rx="60" ry="66" fill="url(#sqb)" transform="rotate(12 644 206)" />
+<ellipse cx="644" cy="214" rx="30" ry="36" fill="#F2B07C" transform="rotate(12 644 214)" />
+<path d="M640 150 Q646 112 658 146" stroke="#9A5424" stroke-width="14" fill="none" stroke-linecap="round"/>
+<ellipse cx="480" cy="420" rx="306" ry="252" fill="url(#sqb)" />
+<path d="M428 190 V244" stroke="#9A5424" stroke-width="14" stroke-linecap="round" opacity=".7"/>
+<path d="M480 172 V234" stroke="#9A5424" stroke-width="14" stroke-linecap="round" opacity=".7"/>
+<path d="M532 190 V244" stroke="#9A5424" stroke-width="14" stroke-linecap="round" opacity=".7"/>
+<ellipse cx="480" cy="508" rx="152" ry="108" fill="url(#sqc)" />
+<ellipse cx="480" cy="474" rx="25" ry="18" fill="#2A1A10" />
+<ellipse cx="474" cy="468" rx="7" ry="4" fill="#fff" opacity=".55"/>
+<path d="M480 490 V504" stroke="#2A1A10" stroke-width="5" stroke-linecap="round"/>
+<path d="M452 504 Q466.0 523.6 480 504 Q494.0 523.6 508 504" fill="none" stroke="#2A1A10" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="467" y="514" width="26" height="30" rx="6" fill="#fff"/><path d="M480 514 V544" stroke="#D9C7A6" stroke-width="3"/>
+<ellipse cx="372" cy="432" rx="19" ry="27" fill="#2A1A10" /><circle cx="365.9" cy="422.3" r="8.0" fill="#fff"/><circle cx="378.5" cy="441.7" r="3.8" fill="#fff" opacity=".85"/>
+<ellipse cx="588" cy="432" rx="19" ry="27" fill="#2A1A10" /><circle cx="581.9" cy="422.3" r="8.0" fill="#fff"/><circle cx="594.5" cy="441.7" r="3.8" fill="#fff" opacity=".85"/>
+<ellipse cx="298" cy="510" rx="38" ry="26.599999999999998" fill="#F58C8C" opacity="0.6"/>
+<ellipse cx="662" cy="510" rx="38" ry="26.599999999999998" fill="#F58C8C" opacity="0.6"/>
+<ellipse cx="370" cy="240" rx="96" ry="30" fill="#fff" opacity=".2" transform="rotate(-18 370 240)"/>
+</svg>

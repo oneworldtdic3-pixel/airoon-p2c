@@ -3,7 +3,8 @@
 const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
-const root = path.join(__dirname, '..', 'assets', 'characters');
+const sub = process.argv[2] || '';
+const root = path.join(__dirname, '..', 'assets', 'characters', sub);
 const names = [
   ['sansa-cat', '산사', 'Sansa · 고양이'],
   ['dongeul-monk', '동글스님', 'Dongeul · 동자승'],
@@ -35,7 +36,7 @@ const names = [
     .art{aspect-ratio:1}
     figcaption b{display:block;font-size:34px}
     figcaption span{font-size:18px;color:#8a7a68}
-  </style><h1>사이버 산사캠프 캐릭터</h1><p>Cyber Sansa Camp · character set v1</p><div class="grid">${cards}</div>`;
+  </style><h1>사이버 산사캠프 캐릭터</h1><p>Cyber Sansa Camp · character set ${sub || 'v1'}</p><div class="grid">${cards}</div>`;
   const sheet = await browser.newPage({ viewport: { width: 1800, height: 1300 } });
   await sheet.setContent(html);
   await sheet.screenshot({ path: path.join(root, 'character-sheet.png'), fullPage: true });

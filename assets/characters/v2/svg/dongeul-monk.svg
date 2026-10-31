@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-labelledby="mkt mkd">
+<title id="mkt">동글스님 — 동자승 (v2)</title>
+<desc id="mkd">모여봐요 동물의 숲 스타일의 동글동글한 동자승. 합장하고 염주를 걸었다.</desc>
+<defs><filter id="mksoft" x="-30%" y="-80%" width="160%" height="260%"><feGaussianBlur stdDeviation="9"/></filter><radialGradient id="mksk" cx=".36" cy=".28" r=".9"><stop offset="0" stop-color="#FFDDBF"/><stop offset="1" stop-color="#F2B58C"/></radialGradient><radialGradient id="mkrb" cx=".36" cy=".28" r=".9"><stop offset="0" stop-color="#D4D4CF"/><stop offset="1" stop-color="#A9A9A3"/></radialGradient><radialGradient id="mkrl" cx=".36" cy=".28" r=".9"><stop offset="0" stop-color="#E4E4DF"/><stop offset="1" stop-color="#C2C2BC"/></radialGradient></defs>
+<ellipse cx="512" cy="910" rx="250" ry="26" fill="#2A1A10" opacity=".13" filter="url(#mksoft)"/>
+<ellipse cx="424" cy="888" rx="68" ry="32" fill="#6C5A48" />
+<ellipse cx="600" cy="888" rx="68" ry="32" fill="#6C5A48" />
+<path d="M336 676 Q512 626 688 676 L728 872 Q512 918 296 872 Z" fill="url(#mkrb)" stroke="url(#mkrb)" stroke-width="18" stroke-linejoin="round"/>
+<path d="M438 664 L512 790" stroke="#8E8E89" stroke-width="22" stroke-linecap="round"/>
+<path d="M586 664 L512 790" stroke="#8E8E89" stroke-width="22" stroke-linecap="round"/>
+<path d="M312 826 Q512 858 712 826" stroke="#8E8E89" stroke-width="26" stroke-linecap="round" fill="none"/>
+<ellipse cx="414" cy="776" rx="60" ry="74" fill="url(#mkrl)" transform="rotate(28 414 776)" />
+<ellipse cx="610" cy="776" rx="60" ry="74" fill="url(#mkrl)" transform="rotate(-28 610 776)" />
+<circle cx="404.0" cy="676.0" r="13" fill="#7B4B2A"/><circle cx="400.5" cy="672.0" r="3.5" fill="#fff" opacity=".4"/>
+<circle cx="425.6" cy="700.1" r="13" fill="#7B4B2A"/><circle cx="422.1" cy="696.1" r="3.5" fill="#fff" opacity=".4"/>
+<circle cx="447.2" cy="718.9" r="13" fill="#7B4B2A"/><circle cx="443.7" cy="714.9" r="3.5" fill="#fff" opacity=".4"/>
+<circle cx="468.8" cy="732.3" r="13" fill="#7B4B2A"/><circle cx="465.3" cy="728.3" r="3.5" fill="#fff" opacity=".4"/>
+<circle cx="490.4" cy="740.3" r="13" fill="#7B4B2A"/><circle cx="486.9" cy="736.3" r="3.5" fill="#fff" opacity=".4"/>
+<circle cx="512.0" cy="743.0" r="13" fill="#7B4B2A"/><circle cx="508.5" cy="739.0" r="3.5" fill="#fff" opacity=".4"/>
+<circle cx="533.6" cy="740.3" r="13" fill="#7B4B2A"/><circle cx="530.1" cy="736.3" r="3.5" fill="#fff" opacity=".4"/>
+<circle cx="555.2" cy="732.3" r="13" fill="#7B4B2A"/><circle cx="551.7" cy="728.3" r="3.5" fill="#fff" opacity=".4"/>
+<circle cx="576.8" cy="718.9" r="13" fill="#7B4B2A"/><circle cx="573.3" cy="714.9" r="3.5" fill="#fff" opacity=".4"/>
+<circle cx="598.4" cy="700.1" r="13" fill="#7B4B2A"/><circle cx="594.9" cy="696.1" r="3.5" fill="#fff" opacity=".4"/>
+<circle cx="620.0" cy="676.0" r="13" fill="#7B4B2A"/><circle cx="616.5" cy="672.0" r="3.5" fill="#fff" opacity=".4"/>
+<path d="M512 694 Q556 730 550 796 Q512 814 474 796 Q468 730 512 694 Z" fill="url(#mksk)"/>
+<path d="M512 708 V800" stroke="#E4A47C" stroke-width="5" stroke-linecap="round"/>
+<ellipse cx="512" cy="692" rx="160" ry="34" fill="#2A1A10" opacity=".22" filter="url(#mksoft)"/>
+<ellipse cx="216" cy="430" rx="46" ry="52" fill="url(#mksk)" />
+<ellipse cx="808" cy="430" rx="46" ry="52" fill="url(#mksk)" />
+<ellipse cx="216" cy="432" rx="22" ry="28" fill="#E9A07A" opacity=".55"/>
+<ellipse cx="808" cy="432" rx="22" ry="28" fill="#E9A07A" opacity=".55"/>
+<ellipse cx="512" cy="410" rx="300" ry="265" fill="url(#mksk)" />
+<ellipse cx="400" cy="232" rx="96" ry="34" fill="#fff" opacity=".3" transform="rotate(-20 400 232)"/>
+<path d="M352 358 Q404 326 458 350" stroke="#2A1A10" stroke-width="13" stroke-linecap="round" fill="none"/>
+<path d="M566 350 Q620 326 672 358" stroke="#2A1A10" stroke-width="13" stroke-linecap="round" fill="none"/>
+<ellipse cx="398" cy="432" rx="19" ry="27" fill="#2A1A10" /><circle cx="391.9" cy="422.3" r="8.0" fill="#fff"/><circle cx="404.5" cy="441.7" r="3.8" fill="#fff" opacity=".85"/>
+<ellipse cx="626" cy="432" rx="19" ry="27" fill="#2A1A10" /><circle cx="619.9" cy="422.3" r="8.0" fill="#fff"/><circle cx="632.5" cy="441.7" r="3.8" fill="#fff" opacity=".85"/>
+<ellipse cx="512" cy="478" rx="15" ry="11" fill="#E4977A" />
+<path d="M480 524 Q496.0 546.4 512 524 Q528.0 546.4 544 524" fill="none" stroke="#8B4A33" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<ellipse cx="316" cy="504" rx="44" ry="30.799999999999997" fill="#F58C8C" opacity="0.6"/>
+<ellipse cx="708" cy="504" rx="44" ry="30.799999999999997" fill="#F58C8C" opacity="0.6"/>
+</svg>
