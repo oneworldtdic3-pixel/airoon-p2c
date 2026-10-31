@@ -21,9 +21,22 @@ OUT = os.path.join(os.path.dirname(__file__), "..", "assets", "characters", "v3"
 
 
 # ---------------------------------------------------------------- helpers
+EXPRESSIONS = ("smile", "happy", "surprised", "wink")
+POSES = ("stand", "wave", "jump")
+
+
 class Doc3(Doc):
-    def __init__(self, p):
+    """v2 Doc + plush texture, rim light, and expression/pose hooks.
+
+    expr: smile (default) | happy (closed ^^ eyes, open mouth) | surprised | wink
+    pose: stand (default) | wave (viewer-left arm raised, drawn in front) | jump
+    """
+
+    def __init__(self, p, expr="smile", pose="stand"):
         super().__init__(p)
+        self.expr, self.pose = expr, pose
+        self.shadow_el = ""   # ground shadow, emitted before the figure
+        self.front = []       # elements drawn last (raised arm, etc.)
         self.defs.append(
             f'<filter id="{p}plush" filterUnits="userSpaceOnUse" x="-512" y="-512" width="2048" height="2048" '
             f'color-interpolation-filters="sRGB">'
@@ -36,8 +49,72 @@ class Doc3(Doc):
             f'<filter id="{p}rim" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3"/></filter>')
 
     def ground(self, cx, cy, rx):
-        # tinted toward grass instead of grey
-        self.add(f'<ellipse cx="{cx}" cy="{cy}" rx="{rx}" ry="26" fill="#3B5A2A" opacity=".22" filter="url(#{self.p}soft)"/>')
+        # tinted toward grass instead of grey; smaller + lighter when jumping
+        k, op = (0.72, 0.14) if self.pose == "jump" else (1, 0.22)
+        self.shadow_el = (f'<ellipse cx="{cx}" cy="{cy}" rx="{rx*k:.0f}" ry="{26*k:.0f}" fill="#3B5A2A" '
+                          f'opacity="{op}" filter="url(#{self.p}soft)"/>')
+
+    def arm(self, stand, wave):
+        """Viewer-left arm: normal position, or raised + drawn in front when waving."""
+        if self.pose == "wave":
+            self.front.extend(wave)
+        else:
+            self.add(*stand)
+
+    # ---- expression parts -------------------------------------------------
+    def _closed(self, cx, cy, rx, ry, sw=7):
+        return (f'<path d="M{cx-rx} {cy+6} Q{cx} {cy-ry*0.85:.0f} {cx+rx} {cy+6}" fill="none" '
+                f'stroke="{DARK}" stroke-width="{sw}" stroke-linecap="round"/>')
+
+    def eyes(self, lx, rx_, cy, rx=19, ry=27, style="oval", iris="#5B8FD6", lash=False):
+        """Eye pair honoring self.expr. style: oval | iris | owl."""
+        e = self.expr
+        if style == "owl":
+            open_ = lambda cx, k=1: (ell(cx, cy, 66*k, 72*k, "#fff") + ell(cx, cy+6, 46*k, 54*k, DARK)
+                                     + f'<circle cx="{cx-16}" cy="{cy-20}" r="{17*k:.0f}" fill="#fff"/>'
+                                     f'<circle cx="{cx+14}" cy="{cy+30}" r="8" fill="#fff" opacity=".85"/>')
+            closed = lambda cx: self._closed(cx, cy + 10, 50, 40, 9)
+        elif style == "iris":
+            open_ = lambda cx, k=1, side=0: ac_eye_iris(cx, cy, rx*k, ry*k, iris, side, lash)
+            closed = lambda cx: self._closed(cx, cy, rx + 6, ry)
+        else:
+            open_ = lambda cx, k=1: ac_eye(cx, cy, rx*k, ry*k)
+            closed = lambda cx: self._closed(cx, cy, rx + 8, ry)
+        if e == "happy":
+            self.add(closed(lx), closed(rx_))
+        elif e == "wink":
+            self.add(open_(lx) if style != "iris" else open_(lx, 1, -1), closed(rx_))
+        elif e == "surprised":
+            k = 1.28
+            self.add(open_(lx, k) if style != "iris" else open_(lx, k, -1),
+                     open_(rx_, k) if style != "iris" else open_(rx_, k, 1))
+        else:
+            self.add(open_(lx) if style != "iris" else open_(lx, 1, -1),
+                     open_(rx_) if style != "iris" else open_(rx_, 1, 1))
+
+    def mouth(self, cx, cy, w=24, sw=5, color=DARK):
+        e = self.expr
+        if e == "happy":   # open laughing mouth with tongue
+            self.add(f'<path d="M{cx-w} {cy-2} Q{cx} {cy+w*1.5:.0f} {cx+w} {cy-2} Z" fill="{DARK}" '
+                     f'stroke="{DARK}" stroke-width="4" stroke-linejoin="round"/>',
+                     f'<ellipse cx="{cx}" cy="{cy+w*0.75:.0f}" rx="{w*0.5:.0f}" ry="{w*0.38:.0f}" fill="#F08A9A"/>')
+        elif e == "surprised":
+            self.add(ell(cx, cy + 6, w * 0.42, w * 0.55, DARK))
+        elif e == "wink":
+            self.add(f'<path d="M{cx-w} {cy} Q{cx} {cy+w*0.9:.0f} {cx+w*1.1:.0f} {cy-6}" fill="none" '
+                     f'stroke="{color}" stroke-width="{sw}" stroke-linecap="round"/>')
+        else:
+            self.add(omega(cx, cy, w, sw, color))
+
+    def render(self, title, desc):
+        body = "\n".join(self.b + self.front)
+        if self.pose == "jump":
+            body = '<g transform="translate(0 -70)">\n' + body + "\n</g>"
+        suffix = f" · {self.expr} / {self.pose}"
+        return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" '
+                f'role="img" aria-labelledby="{self.p}t {self.p}d">\n'
+                f'<title id="{self.p}t">{title}{suffix}</title>\n<desc id="{self.p}d">{desc}</desc>\n'
+                f'<defs>{"".join(self.defs)}</defs>\n{self.shadow_el}\n{body}\n</svg>\n')
 
     def plush(self, cx, cy, rx, ry, rot=0, op=0.85):
         tr = f' transform="rotate({rot} {cx} {cy})"' if rot else ""
@@ -76,8 +153,8 @@ def ac_eye_iris(cx, cy, rx=24, ry=30, iris="#5B8FD6", side=0, lash=False):
 
 
 # ------------------------------------------------------------ 1. 산사 (cat)
-def sansa():
-    d = Doc3("sa")
+def sansa(expr="smile", pose="stand"):
+    d = Doc3("sa", expr, pose)
     O = d.grad("o", "#FFB45E", "#E8832A")
     OD = d.grad("od", "#F59A48", "#D9691C")
     CR = d.grad("c", "#FFF8E8", "#F5E0B8")
@@ -92,7 +169,9 @@ def sansa():
     d.add(ell(512, 762, 178, 132, O))
     d.plush(512, 762, 176, 130)
     d.add(ell(512, 792, 106, 90, CR))  # belly stays clean (no speckle)
-    d.add(ell(350, 762, 44, 66, OD, 18), ell(674, 762, 44, 66, OD, -18))
+    d.add(ell(674, 762, 44, 66, OD, -18))
+    d.arm([ell(350, 762, 44, 66, OD, 18)],
+          [ell(246, 612, 44, 66, OD, -52), ell(202, 544, 34, 30, OD)])
     # camp neckerchief with leaf badge
     d.add('<path d="M392 660 Q512 706 632 660 L512 784 Z" fill="#46B8A8" stroke="#46B8A8" stroke-width="12" stroke-linejoin="round"/>',
           '<path d="M392 660 Q512 706 632 660" fill="none" stroke="#2F9C8D" stroke-width="8" stroke-linecap="round" opacity=".6"/>',
@@ -112,15 +191,17 @@ def sansa():
         d.add(stripe(194, y, 194 + l, y + 6, 26), stripe(830, y, 830 - l, y + 6, 26))
     d.add(ell(512, 524, 132, 84, CR))
     d.add('<path d="M490 476 Q512 466 534 476 Q528 500 512 506 Q496 500 490 476Z" fill="#D9737A" stroke="#D9737A" stroke-width="6" stroke-linejoin="round"/>')
-    d.add(f'<path d="M512 506 V520" stroke="{DARK}" stroke-width="5" stroke-linecap="round"/>', omega(512, 520, 26))
-    d.add(ac_eye(392, 440), ac_eye(632, 440), cheek(320, 506), cheek(704, 506))
+    d.add(f'<path d="M512 506 V520" stroke="{DARK}" stroke-width="5" stroke-linecap="round"/>')
+    d.mouth(512, 520, 26)
+    d.eyes(392, 632, 440)
+    d.add(cheek(320, 506), cheek(704, 506))
     d.rim(512, 430, 322, 262)
     return d.render("산사 — 고양이 (v3)", "플러시 질감과 캠프 스카프를 더한 주황 줄무늬 고양이 산사.")
 
 
 # ----------------------------------------------------------------- 2. 동글스님
-def monk():
-    d = Doc3("mk")
+def monk(expr="smile", pose="stand"):
+    d = Doc3("mk", expr, pose)
     SK = d.grad("sk", "#FFDDBF", "#F2B58C")
     RB = d.grad("rb", "#D4D4CF", "#A9A9A3")
     RL = d.grad("rl", "#E4E4DF", "#C2C2BC")
@@ -136,14 +217,17 @@ def monk():
     # leaf print on the robe
     for x, y, r in ((352, 836, -20), (432, 862, 15), (590, 864, 165), (668, 838, 200), (330, 760, -40), (690, 762, 220)):
         d.add(leaf(x, y, 28, r, "#C9DDB0", .85))
-    d.add(ell(414, 776, 60, 74, RL, 28), ell(610, 776, 60, 74, RL, -28))
+    d.add(ell(610, 776, 60, 74, RL, -28))
+    d.arm([ell(414, 776, 60, 74, RL, 28)],
+          [ell(322, 640, 60, 74, RL, -48), ell(280, 572, 30, 34, SK)])
     for i in range(11):
         t = i / 10
         x = (1 - t) ** 2 * 404 + 2 * (1 - t) * t * 512 + t ** 2 * 620
         y = (1 - t) ** 2 * 676 + 2 * (1 - t) * t * 810 + t ** 2 * 676
         d.add(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="13" fill="#7B4B2A"/><circle cx="{x-3.5:.1f}" cy="{y-4:.1f}" r="3.5" fill="#fff" opacity=".4"/>')
-    d.add(f'<path d="M512 694 Q556 730 550 796 Q512 814 474 796 Q468 730 512 694 Z" fill="{SK}"/>',
-          '<path d="M512 708 V800" stroke="#E4A47C" stroke-width="5" stroke-linecap="round"/>')
+    if pose != "wave":  # prayer hands only when both hands are free
+        d.add(f'<path d="M512 694 Q556 730 550 796 Q512 814 474 796 Q468 730 512 694 Z" fill="{SK}"/>',
+              '<path d="M512 708 V800" stroke="#E4A47C" stroke-width="5" stroke-linecap="round"/>')
     d.head_shadow(512, 692, 160)
     d.add(ell(216, 430, 46, 52, SK), ell(808, 430, 46, 52, SK),
           ell(216, 432, 22, 28, "#E9A07A", extra='opacity=".55"'), ell(808, 432, 22, 28, "#E9A07A", extra='opacity=".55"'))
@@ -154,16 +238,17 @@ def monk():
     d.add('<ellipse cx="400" cy="232" rx="96" ry="34" fill="#fff" opacity=".22" transform="rotate(-20 400 232)"/>')
     d.add(f'<path d="M352 358 Q404 326 458 350" stroke="{DARK}" stroke-width="13" stroke-linecap="round" fill="none"/>',
           f'<path d="M566 350 Q620 326 672 358" stroke="{DARK}" stroke-width="13" stroke-linecap="round" fill="none"/>')
-    d.add(ac_eye_iris(398, 436, 25, 31, "#7A5236", -1, True), ac_eye_iris(626, 436, 25, 31, "#7A5236", 1, True))
-    d.add(ell(512, 480, 15, 11, "#E4977A"), omega(512, 526, 32, 6, "#8B4A33"))
+    d.eyes(398, 626, 436, 25, 31, "iris", "#7A5236", True)
+    d.add(ell(512, 480, 15, 11, "#E4977A"))
+    d.mouth(512, 526, 32, 6, "#8B4A33")
     d.add(cheek(316, 506, 44), cheek(708, 506, 44))
     d.rim(512, 410, 300, 265)
     return d.render("동글스님 — 동자승 (v3)", "정수리에 새싹이 돋고 잎사귀 승복을 입은 동자승.")
 
 
 # ------------------------------------------------------------ 3. 다람이 (squirrel)
-def squirrel():
-    d = Doc3("sq")
+def squirrel(expr="smile", pose="stand"):
+    d = Doc3("sq", expr, pose)
     B = d.grad("b", "#DE9150", "#B86A2E")
     BD = d.grad("bd", "#C97A3A", "#9A5424")
     BL = d.grad("bl", "#F0AE72", "#D98B4A")
@@ -178,7 +263,9 @@ def squirrel():
     for cx in (402, 558):
         d.add(ell(cx, 886, 64, 32, BD))
     # leaf-print aloha-style shirt
-    d.add(ell(330, 770, 50, 64, T, 18), ell(630, 770, 50, 64, T, -18), ell(480, 762, 170, 134, T))
+    d.add(ell(630, 770, 50, 64, T, -18), ell(480, 762, 170, 134, T))
+    d.arm([ell(330, 770, 50, 64, T, 18)],
+          [ell(254, 646, 50, 64, T, -50), ell(212, 578, 30, 28, BD)])
     for x, y, r in ((378, 740, -20), (572, 744, 160), (350, 812, 20), (610, 816, 200), (432, 866, -10), (532, 866, 170)):
         d.add(leaf(x, y, 28, r, "#C8F0E6", .85))
     d.add('<path d="M444 690 L480 742 L420 716Z M516 690 L480 742 L540 716Z" fill="#F4FFFB"/>')
@@ -197,24 +284,26 @@ def squirrel():
     d.add(ell(372, 440, 56, 64, "#5A3320", -12, 'opacity=".92"'), ell(588, 440, 56, 64, "#5A3320", 12, 'opacity=".92"'))
     d.add(ell(480, 508, 150, 104, CR))
     d.add(ell(480, 474, 25, 18, DARK), ell(474, 468, 7, 4, "#fff", extra='opacity=".55"'))
-    d.add(f'<path d="M480 490 V504" stroke="{DARK}" stroke-width="5" stroke-linecap="round"/>', omega(480, 504, 28))
+    d.add(f'<path d="M480 490 V504" stroke="{DARK}" stroke-width="5" stroke-linecap="round"/>')
+    d.mouth(480, 504, 28)
     d.add('<rect x="467" y="514" width="26" height="30" rx="6" fill="#fff"/><path d="M480 514 V544" stroke="#D9C7A6" stroke-width="3"/>')
-    d.add(ac_eye_iris(372, 436, 24, 30, "#5B8FD6"), ac_eye_iris(588, 436, 24, 30, "#5B8FD6"))
+    d.eyes(372, 588, 436, 24, 30, "iris", "#5B8FD6")
     d.add(cheek(298, 520), cheek(662, 520))
     d.rim(480, 420, 306, 252)
     return d.render("다람이 — 다람쥐 (v3)", "잎사귀 무늬 알로하 셔츠를 입고 눈 주위 패치가 있는 플러시 다람쥐.")
 
 
 # -------------------------------------------------------------- 4. 토리 (acorn)
-def acorn():
-    d = Doc3("ac")
+def acorn(expr="smile", pose="stand"):
+    d = Doc3("ac", expr, pose)
     NUT = d.grad("n", "#F0C48A", "#D4994F")
     NUTD = d.grad("nd", "#DDA663", "#B97F3A")
     CAP = d.grad("cp", "#9A6338", "#6B4226")
     d.ground(512, 906, 250)
     for cx in (420, 604):
         d.add(ell(cx, 874, 64, 32, NUTD))
-    d.add(ell(236, 660, 42, 62, NUTD, -20))
+    d.arm([ell(236, 660, 42, 62, NUTD, -20)],
+          [ell(222, 540, 42, 62, NUTD, -52), ell(190, 478, 28, 26, NUTD)])
     d.add(ell(512, 612, 276, 258, NUT))
     d.plush(512, 612, 272, 254)
     d.add('<ellipse cx="400" cy="760" rx="86" ry="40" fill="#fff" opacity=".2" transform="rotate(-28 400 760)"/>')
@@ -232,7 +321,9 @@ def acorn():
     d.add('<ellipse cx="372" cy="296" rx="92" ry="28" fill="#fff" opacity=".18" transform="rotate(-26 372 296)"/>', '</g>')
     d.plush(512, 380, 300, 180, 0, .6)
     d.add('<path d="M206 504 C324 566 700 566 818 504" fill="none" stroke="#5E3820" stroke-width="10" stroke-linecap="round" opacity=".5"/>')
-    d.add(ac_eye(420, 622), ac_eye(604, 622), omega(512, 668, 24), cheek(348, 666, 36), cheek(676, 666, 36))
+    d.eyes(420, 604, 622)
+    d.mouth(512, 668, 24)
+    d.add(cheek(348, 666, 36), cheek(676, 666, 36))
     # right arm in front, holding a leaf-emblem flag
     d.add(ell(788, 664, 42, 62, NUTD, 20),
           '<path d="M800 676 L822 352" stroke="#7A4B2A" stroke-width="11" stroke-linecap="round"/>',
@@ -244,8 +335,8 @@ def acorn():
 
 
 # ------------------------------------------------------------ 5. 밤이 (owl)
-def owl():
-    d = Doc3("ow")
+def owl(expr="smile", pose="stand"):
+    d = Doc3("ow", expr, pose)
     B = d.grad("b", "#A98764", "#7C5E42")
     BD = d.grad("bd", "#8A6A4C", "#5E452E")
     CR = d.grad("c", "#FFF3DA", "#EBD6AE")
@@ -258,9 +349,11 @@ def owl():
         d.plush(cx, 318, 56, 90, rot, .7)
     d.add(fuzz(470, 606, 296, 272, B, n=64, amp=12, seed=53))
     d.plush(470, 606, 290, 266)
-    d.add(ell(206, 650, 82, 164, BD, 10), ell(734, 650, 82, 164, BD, -10))
-    d.plush(206, 650, 80, 162, 10, .7)
+    d.add(ell(734, 650, 82, 164, BD, -10))
     d.plush(734, 650, 80, 162, -10, .7)
+    d.arm([ell(206, 650, 82, 164, BD, 10)], [ell(232, 498, 82, 164, BD, -42)])
+    if pose != "wave":
+        d.plush(206, 650, 80, 162, 10, .7)
     d.add(ell(470, 724, 176, 150, CR))
     for r, y in enumerate((650, 706, 762, 818)):
         for c in range(-2, 3):
@@ -274,9 +367,7 @@ def owl():
     for x in (391, 549):
         d.add(f'<rect x="{x-14}" y="740" width="28" height="20" rx="5" fill="#E8C26A"/>')
     d.add(ell(384, 480, 122, 116, FC), ell(556, 480, 122, 116, FC))
-    for cx in (384, 556):
-        d.add(ell(cx, 486, 66, 72, "#fff"), ell(cx, 492, 46, 54, DARK),
-              f'<circle cx="{cx-16}" cy="466" r="17" fill="#fff"/><circle cx="{cx+14}" cy="516" r="8" fill="#fff" opacity=".85"/>')
+    d.eyes(384, 556, 486, style="owl")
     d.add('<path d="M448 540 Q470 526 492 540 Q482 586 470 592 Q458 586 448 540Z" fill="#F2A03A" stroke="#F2A03A" stroke-width="6" stroke-linejoin="round"/>')
     d.add(cheek(292, 572, 30, .55), cheek(648, 572, 30, .55))
     for cx in (400, 540):
