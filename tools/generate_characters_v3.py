@@ -388,12 +388,75 @@ def owl(expr="smile", pose="stand"):
     return d.render("밤이 — 부엉이 (v3)", "깃털 질감에 배낭끈을 멘 부엉이. 분홍 연등으로 밤길을 밝힌다.")
 
 
+# ----------------------------------------------------------- 6. 둥실이 (balloon)
+def balloon(expr="smile", pose="stand"):
+    """Hot-air balloon with the camp's green/orange/yellow geometric patchwork.
+    No arms: a passenger's mitten hands peek out of the basket (one waves)."""
+    d = Doc3("bl", expr, pose)
+    G1, G2, G3 = "#5BB847", "#2E8B3A", "#9BD35A"
+    OR, YL, CR = "#F26B2B", "#F5C842", "#FBF1D2"
+    env = "M512 64 C842 64 862 468 648 672 L606 732 L418 732 L376 672 C162 468 182 64 512 64 Z"
+    d.defs.append(f'<clipPath id="blenv"><path d="{env}"/></clipPath>')
+    d.defs.append('<radialGradient id="blglow"><stop offset="0" stop-color="#FFE08A" stop-opacity=".9"/>'
+                  '<stop offset="1" stop-color="#FFE08A" stop-opacity="0"/></radialGradient>')
+    d.ground(512, 906, 190)
+    # ropes + burner glow behind the basket
+    for x1, x2 in ((430, 448), (594, 576)):
+        d.add(f'<path d="M{x1} 728 L{x2} 800" stroke="#6E4A2A" stroke-width="7" stroke-linecap="round"/>')
+    d.add('<circle cx="512" cy="770" r="86" fill="url(#blglow)"/>',
+          '<path d="M488 790 Q512 716 536 790 Q512 772 488 790Z" fill="#F7A531"/>',
+          '<path d="M498 790 Q512 742 526 790 Q512 778 498 790Z" fill="#FFE27A"/>')
+    # envelope: base + patchwork clipped to it
+    d.add(f'<path d="{env}" fill="{d.grad("g", "#8FD460", G1)}"/>', '<g clip-path="url(#blenv)">')
+    pal = (G2, OR, YL, G3, G1, OR)
+    k = 0
+    for row, y in enumerate(range(40, 760, 90)):
+        off = 45 if row % 2 else 0
+        for x in range(120 - off, 940, 90):
+            c1, c2 = pal[k % 6], pal[(k * 5 + 2) % 6]
+            k += 1
+            if (row + x // 90) % 3 == 0:      # split cell: two triangles
+                d.add(f'<path d="M{x} {y} L{x+90} {y} L{x} {y+90}Z" fill="{c1}"/>',
+                      f'<path d="M{x+90} {y} L{x+90} {y+90} L{x} {y+90}Z" fill="{c2}"/>')
+            elif (row + x // 90) % 3 == 1:    # cell with a small centred diamond
+                d.add(f'<rect x="{x}" y="{y}" width="90" height="90" fill="{c1}"/>',
+                      f'<path d="M{x+45} {y+14} L{x+76} {y+45} L{x+45} {y+76} L{x+14} {y+45}Z" fill="{c2}"/>')
+            else:
+                d.add(f'<rect x="{x}" y="{y}" width="90" height="90" fill="{c1}"/>')
+    # gores: soft vertical seams so it reads as a balloon, plus a light sheen
+    for x in (300, 406, 512, 618, 724):
+        d.add(f'<path d="M{x} 60 Q{x} 400 {512 + (x-512)*0.45:.0f} 736" stroke="#1F5E27" stroke-width="5" fill="none" opacity=".35"/>')
+    d.add('<ellipse cx="370" cy="200" rx="110" ry="46" fill="#fff" opacity=".22" transform="rotate(-28 370 200)"/>')
+    d.plush(512, 380, 330, 330, 0, .22)  # light (nylon, not fur), clipped to the envelope
+    d.add('</g>')
+    # neck band
+    d.add('<path d="M376 672 Q512 712 648 672" stroke="#1F5E27" stroke-width="14" fill="none" stroke-linecap="round" opacity=".6"/>')
+    # face (on the envelope, slightly below centre)
+    d.add(ell(512, 470, 150, 108, CR, extra='stroke="#1F5E27" stroke-width="5" stroke-opacity=".35"'))
+    d.eyes(438, 586, 448)
+    d.mouth(512, 512, 26)
+    d.add(cheek(380, 500, 34), cheek(644, 500, 34))
+    d.rim(512, 380, 330, 320, 200, 250, 9, .3)
+    # basket (wicker) with a passenger's mitten hands
+    d.add('<rect x="432" y="796" width="160" height="84" rx="18" fill="#B57A3E"/>',
+          '<rect x="432" y="796" width="160" height="20" rx="10" fill="#8C5A2B"/>')
+    for y in (834, 854):
+        d.add(f'<path d="M444 {y} H580" stroke="#8C5A2B" stroke-width="5" stroke-linecap="round" opacity=".7"/>')
+    for x in (470, 512, 554):
+        d.add(f'<path d="M{x} 818 V874" stroke="#8C5A2B" stroke-width="4" opacity=".4"/>')
+    d.add(ell(598, 814, 30, 24, CR))
+    d.arm([ell(426, 814, 30, 24, CR)],
+          [f'<path d="M436 808 L334 712" stroke="{CR}" stroke-width="26" stroke-linecap="round"/>', ell(318, 690, 34, 30, CR)])
+    return d.render("둥실이 — 열기구 (v3)", "산사캠프 패치워크 외피에 얼굴이 있는 열기구. 바구니에서 작은 손이 인사한다.")
+
+
 CHARACTERS = {
     "sansa-cat": sansa,
     "dongeul-monk": monk,
     "daram-squirrel": squirrel,
     "tori-acorn": acorn,
     "bami-owl": owl,
+    "dungsil-balloon": balloon,
 }
 
 if __name__ == "__main__":

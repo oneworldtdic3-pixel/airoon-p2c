@@ -7,11 +7,12 @@
 | `daram-squirrel` | 다람이 (다람쥐) |
 | `tori-acorn` | 토리 (도토리) |
 | `bami-owl` | 밤이 (부엉이, 연등을 듦) |
+| `dungsil-balloon` | 둥실이 (열기구, 캠프 패치워크 외피) — v3 전용 |
 
 ## 버전
 - `v3/` — **확정본.** 플러시 질감, 옷·소품, 표정/포즈 확장 포함.
   - `v3/svg/`, `v3/png/`, `v3/character-sheet.png` — 기본형(기본 표정, 서 있는 포즈)
-  - `v3/variants/svg/`, `v3/variants/png/` — 변형 30종. 파일명 `{캐릭터}--{표정}--{포즈}`
+  - `v3/variants/svg/`, `v3/variants/png/` — 변형 36종. 파일명 `{캐릭터}--{표정}--{포즈}`
     - 표정: `smile`(기본) · `happy`(활짝) · `surprised`(놀람) · `wink`(윙크)
     - 포즈: `stand` · `wave`(손 흔들기) · `jump`(점프)
   - `v3/variants/variants-sheet.png` — 표정/포즈 시트

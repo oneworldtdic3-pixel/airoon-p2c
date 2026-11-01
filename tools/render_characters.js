@@ -11,6 +11,7 @@ const names = [
   ['daram-squirrel', '다람이', 'Daram · 다람쥐'],
   ['tori-acorn', '토리', 'Tori · 도토리'],
   ['bami-owl', '밤이', 'Bami · 부엉이'],
+  ['dungsil-balloon', '둥실이', 'Dungsil · 열기구'],
 ];
 (async () => {
   const browser = await chromium.launch();
@@ -32,7 +33,7 @@ const names = [
     p{margin:8px 0 0;text-align:center;color:#8a7a68;font-size:20px}
     .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px 24px;padding:24px 64px 64px}
     figure{margin:0;grid-column:span 2;text-align:center}
-    figure:nth-child(4){grid-column:2/span 2}
+    /* 6 figures: 3 per row */
     .art{aspect-ratio:1}
     figcaption b{display:block;font-size:34px}
     figcaption span{font-size:18px;color:#8a7a68}
