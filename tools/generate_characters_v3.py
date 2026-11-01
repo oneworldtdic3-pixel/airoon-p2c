@@ -16,6 +16,7 @@ import os
 
 from generate_characters import fuzz, stripe, DARK
 from generate_characters_v2 import Doc, ell, ac_eye, cheek, omega
+from buddhz_logo import logo_group, KO_PATHS, KO_BBOX, LAT_PATHS, LAT_BBOX
 
 OUT = os.path.join(os.path.dirname(__file__), "..", "assets", "characters", "v3", "svg")
 
@@ -450,6 +451,59 @@ def balloon(expr="smile", pose="stand"):
     return d.render("둥실이 — 열기구 (v3)", "산사캠프 패치워크 외피에 얼굴이 있는 열기구. 바구니에서 작은 손이 인사한다.")
 
 
+# -------------------------------------------------------- 7. 붓쯔부스 (pop-up booth)
+def booth(expr="smile", pose="stand"):
+    """BUDDHZ pop-up booth as a character, after the tomato-stand reference:
+    wooden posts, brand-green header with the 붓쯔 wordmark, scalloped awning,
+    bunting, and a counter whose front panel is the face. Mitten hands rest on
+    the countertop; the left one rises to wave."""
+    d = Doc3("bt", expr, pose)
+    G, GD, GL = "#1E9771", "#157A5A", "#5FC49C"
+    W, WD = "#DDAA6E", "#B8844A"
+    CR, YL = "#FBF3E0", "#F4B942"
+    GG = d.grad("g", "#2FB088", G)
+    d.ground(512, 908, 340)
+    # posts
+    for x in (150, 830):
+        d.add(f'<rect x="{x}" y="200" width="44" height="690" rx="16" fill="{W}"/>',
+              f'<rect x="{x+8}" y="210" width="10" height="670" rx="5" fill="#fff" opacity=".28"/>')
+    # bunting between the posts
+    d.add(f'<path d="M194 412 Q512 470 830 412" stroke="{WD}" stroke-width="5" fill="none"/>')
+    for i in range(7):
+        t = (i + 0.5) / 7
+        x = 194 + (830 - 194) * t
+        y = (1 - t) ** 2 * 412 + 2 * (1 - t) * t * 441 + t ** 2 * 412
+        c = (G, CR, YL)[i % 3]
+        d.add(f'<path d="M{x-26:.0f} {y:.0f} L{x+26:.0f} {y:.0f} L{x:.0f} {y+52:.0f}Z" fill="{c}" stroke="{c}" stroke-width="4" stroke-linejoin="round"/>')
+    # counter
+    d.add(f'<rect x="170" y="562" width="684" height="318" rx="26" fill="{GG}"/>',
+          f'<rect x="196" y="590" width="632" height="262" rx="18" fill="none" stroke="{CR}" stroke-width="5" opacity=".45"/>')
+    d.add(logo_group(LAT_PATHS, LAT_BBOX, 512, 848, 240, "#fff"))
+    d.add(ell(512, 702, 172, 118, CR, extra=f'stroke="{GD}" stroke-width="6" stroke-opacity=".5"'))
+    d.eyes(438, 586, 684)
+    d.mouth(512, 744, 26)
+    d.add(cheek(376, 740, 34), cheek(648, 740, 34))
+    # countertop (wood) + hands resting on it
+    d.add(f'<rect x="146" y="536" width="732" height="42" rx="14" fill="{W}"/>',
+          f'<path d="M180 556 H844" stroke="{WD}" stroke-width="3" opacity=".5"/>')
+    mitt = lambda cx, cy, k=1, side=1: (ell(cx, cy, 36*k, 28*k, GL, extra=f'stroke="{GD}" stroke-width="4"')
+                                        + ell(cx + side*26*k, cy - 14*k, 14*k, 12*k, GL, extra=f'stroke="{GD}" stroke-width="4"'))
+    d.add(mitt(724, 534, 1, 1))
+    d.arm([mitt(300, 534, 1, -1)],
+          [f'<path d="M304 540 L236 420" stroke="{GD}" stroke-width="30" stroke-linecap="round"/>', mitt(226, 396, 1.1, -1)])
+    # header: roof beam, green board with inset frame, Korean wordmark, scalloped awning
+    d.add(f'<rect x="100" y="116" width="824" height="24" rx="10" fill="{WD}"/>',
+          f'<rect x="120" y="132" width="784" height="232" rx="28" fill="{GG}"/>',
+          f'<rect x="138" y="150" width="748" height="196" rx="18" fill="none" stroke="{CR}" stroke-width="5" opacity=".55"/>')
+    d.add(logo_group(KO_PATHS, KO_BBOX, 512, 248, 380, "#fff"))
+    d.add(f'<rect x="120" y="356" width="784" height="22" fill="{CR}"/>')
+    for i in range(8):
+        cx = 169 + i * 98
+        d.add(f'<path d="M{cx-49} 370 A49 49 0 0 0 {cx+49} 370Z" fill="{CR if i % 2 else G}" stroke="{GD}" stroke-width="3" stroke-opacity=".35"/>')
+    d.add(f'<rect x="120" y="364" width="784" height="8" fill="{GD}" opacity=".35"/>')
+    return d.render("붓쯔부스 — 팝업 부스 (v3)", "BUDDHZ 팝업 부스 캐릭터. 녹색 간판에 붓쯔 로고, 카운터 앞판이 얼굴이다.")
+
+
 CHARACTERS = {
     "sansa-cat": sansa,
     "dongeul-monk": monk,
@@ -457,6 +511,7 @@ CHARACTERS = {
     "tori-acorn": acorn,
     "bami-owl": owl,
     "dungsil-balloon": balloon,
+    "buddhz-booth": booth,
 }
 
 if __name__ == "__main__":

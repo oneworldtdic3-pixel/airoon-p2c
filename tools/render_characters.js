@@ -12,6 +12,7 @@ const names = [
   ['tori-acorn', '토리', 'Tori · 도토리'],
   ['bami-owl', '밤이', 'Bami · 부엉이'],
   ['dungsil-balloon', '둥실이', 'Dungsil · 열기구'],
+  ['buddhz-booth', '붓쯔부스', 'Buddhz · 팝업 부스'],
 ];
 (async () => {
   const browser = await chromium.launch();
@@ -31,7 +32,7 @@ const names = [
     body{margin:0;background:#FAF9F4;font-family:'WenQuanYi Zen Hei','Unifont-JP',sans-serif;color:#2A1A10}
     h1{margin:0;padding:56px 0 0;text-align:center;font-size:44px}
     p{margin:8px 0 0;text-align:center;color:#8a7a68;font-size:20px}
-    .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px 24px;padding:24px 64px 64px}
+    .grid{display:grid;grid-template-columns:repeat(8,1fr);gap:8px 24px;padding:24px 64px 64px}
     figure{margin:0;grid-column:span 2;text-align:center}
     /* 6 figures: 3 per row */
     .art{aspect-ratio:1}
