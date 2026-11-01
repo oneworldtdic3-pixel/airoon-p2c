@@ -17,6 +17,8 @@
     - 표정: `smile`(기본) · `happy`(활짝) · `surprised`(놀람) · `wink`(윙크)
     - 포즈: `stand` · `wave`(손 흔들기) · `jump`(점프)
   - `v3/variants/variants-sheet.png` — 표정/포즈 시트
+  - `v3/group/group-photo.svg|png` — 7종 단체 사진(2400×1200, 초원 배경). 배치·표정·포즈는 `tools/generate_group.py`의 `place(...)` 줄에서 바꾼다.
+    재생성: `python3 tools/generate_group.py && node tools/render_group.js`
   - 재생성: `python3 tools/generate_characters_v3.py && python3 tools/generate_variants.py && node tools/render_characters.js v3 && node tools/render_variants.js`
   - 다른 조합이 필요하면 `generate_characters_v3.py`의 각 캐릭터 함수에 `fn(expr, pose)`로 호출하면 된다.
 - `v2/` — 동물의 숲 스타일 1차 시안(비교용). `svg/`, `png/`는 v1 플랫 버전(비교용).
